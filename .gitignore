@@ -1,0 +1,7 @@
+node_modules/
+out/
+*.tmp.html
+__pycache__/
+.env
+*.mp4
+*.mov

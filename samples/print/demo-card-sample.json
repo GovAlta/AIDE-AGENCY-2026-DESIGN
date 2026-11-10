@@ -1,0 +1,23 @@
+{
+ "template": "print/demo-card",
+ "title": "Demo card (sample)",
+ "headline": "Sample Demo",
+ "lead": "A fictional demo used to show this layout. Say in one or two plain sentences what the service does and for whom.",
+ "accent": "green",
+ "day": "wed",
+ "points": [
+  "The first thing visitors will see",
+  "A second thing, in under seven words",
+  "A third thing"
+ ],
+ "team": "Example Team, Example Ministry",
+ "qr": {
+  "url": "https://www.alberta.ca",
+  "title": "Learn more",
+  "display": "alberta.ca"
+ },
+ "classification": "UNCLASSIFIED",
+ "seed": "demo",
+ "name": "demo-card-sample",
+ "$note": "Sample content: every name, figure and session here is a placeholder. Replace it with your own facts. Event facts come from brand/tokens/tokens.json."
+}

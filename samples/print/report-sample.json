@@ -1,0 +1,157 @@
+{
+ "template": "print/report",
+ "title": "Sample report",
+ "cover": {
+  "kicker": "Agency 2026 · Report",
+  "headline": "Sample Report Title",
+  "subtitle": "A subtitle that says in one line what the report finds.",
+  "date": "December 2026",
+  "by": "Prepared by: Example Team"
+ },
+ "pages": [
+  {
+   "kicker": "Summary",
+   "title": "Summary",
+   "lead": "Lead with the plain point of the report in one or two sentences.",
+   "blocks": [
+    {
+     "type": "section",
+     "title": "Key Figures",
+     "accent": "blue",
+     "blocks": [
+      {
+       "type": "tiles",
+       "items": [
+        {
+         "value": "00",
+         "label": "example figure",
+         "accent": "blue"
+        },
+        {
+         "value": "00",
+         "unit": "%",
+         "label": "example share",
+         "accent": "green"
+        },
+        {
+         "value": "0.0",
+         "unit": "M",
+         "label": "example count",
+         "accent": "orange"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Findings",
+     "accent": "green",
+     "blocks": [
+      {
+       "type": "dots",
+       "accent": "green",
+       "items": [
+        "Example finding one, with its source",
+        "Example finding two",
+        "Example finding three"
+       ]
+      }
+     ]
+    },
+    {
+     "type": "cards",
+     "items": [
+      {
+       "title": "Example comparison",
+       "text": "Example values.",
+       "bars": [
+        {
+         "label": "Option A",
+         "value": 72,
+         "accent": "green"
+        },
+        {
+         "label": "Option B",
+         "value": 54,
+         "neutral": true
+        }
+       ]
+      },
+      {
+       "title": "What happens next",
+       "text": "Name who decides, and when."
+      }
+     ]
+    },
+    {
+     "type": "callout",
+     "title": "Note on sources",
+     "text": "Every figure in a real report names its source.",
+     "accent": "yellow"
+    }
+   ]
+  },
+  {
+   "kicker": "Method",
+   "title": "How the Work Was Done",
+   "blocks": [
+    {
+     "type": "flow",
+     "steps": [
+      {
+       "title": "Collect",
+       "text": "Example step"
+      },
+      {
+       "title": "Measure",
+       "text": "Example step"
+      },
+      {
+       "title": "Change",
+       "text": "Example step"
+      },
+      {
+       "title": "Check",
+       "text": "Example step"
+      }
+     ]
+    },
+    {
+     "type": "table",
+     "head": [
+      "Measure",
+      "Earlier",
+      "Now"
+     ],
+     "rows": [
+      [
+       "Example measure",
+       "0.0",
+       "0.0"
+      ],
+      [
+       "Example measure",
+       "0.0",
+       "0.0"
+      ],
+      [
+       "Example measure",
+       "0.0",
+       "0.0"
+      ]
+     ]
+    },
+    {
+     "type": "terms",
+     "text": "**Figures.** Example values only. Replace with sourced figures."
+    }
+   ]
+  }
+ ],
+ "footer": "Sample Report · Agency 2026",
+ "classification": "UNCLASSIFIED",
+ "seed": "report",
+ "name": "report-sample",
+ "$note": "Sample content: every name, figure and session here is a placeholder. Replace it with your own facts. Event facts come from brand/tokens/tokens.json."
+}

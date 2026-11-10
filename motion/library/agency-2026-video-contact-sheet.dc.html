@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./image-slot.js"></script>
+<style>
+body{margin:0;background:#F4F5F8;color:#002C4E;font-family:"Liberation Sans",Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#0077CD}a:hover{color:#002C4E}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <header style="position:relative;background:#FFFFFF url('assets/pptx/TITLE-image-2.png') center/cover no-repeat;min-height:540px;display:flex;align-items:center;justify-content:center;padding:72px 24px;border-bottom:1px solid #D0D1DB">
+    <div style="max-width:760px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;background:rgba(255,255,255,0.86);padding:28px 32px;border-radius:4px">
+      <div style="font-size:14px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700;color:#002C4E">Hosted by Technology and Innovation</div>
+      <h1 style="margin:0;font-size:clamp(56px,8vw,104px);line-height:0.95;font-weight:700;letter-spacing:-0.02em">Agency 2026</h1>
+      <div style="font-size:clamp(22px,2.6vw,32px);font-weight:700;line-height:1.2;text-wrap:balance">Motion graphics, animation and video</div>
+      <div style="font-size:20px;font-weight:700;color:#9E2B33">December 7–9, 2026 · Edmonton and Calgary</div>
+    </div>
+  </header>
+
+  <nav style="position:sticky;top:0;z-index:5;background:#002C4E;color:#FFFFFF">
+    <div style="max-width:1480px;margin:0 auto;padding:14px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+      <div style="display:flex;align-items:baseline;gap:14px;flex-wrap:wrap">
+        <span style="font-size:18px;font-weight:700">Video contact sheet</span>
+        <span style="font-size:15px;color:#D0D1DB">{{ summary }}</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="4">
+          <button onClick="{{ f.onClick }}" style="{{ f.style }}">
+            <span style="width:10px;height:10px;display:inline-block;background:{{ f.color }}"></span>
+            <span>{{ f.label }}</span>
+            <span style="opacity:0.75">{{ f.count }}</span>
+          </button>
+        </sc-for>
+      </div>
+    </div>
+  </nav>
+
+  <main style="flex:1;max-width:1480px;width:100%;margin:0 auto;padding:48px 32px 72px;display:flex;flex-direction:column;gap:64px">
+    <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="3">
+      <section style="display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;border-bottom:2px solid #002C4E;padding-bottom:14px">
+          <div style="display:flex;align-items:center;gap:16px">
+            <span style="width:18px;height:18px;background:{{ sec.color }};flex:none"></span>
+            <h2 style="margin:0;font-size:30px;font-weight:700;letter-spacing:-0.01em">{{ sec.label }}</h2>
+          </div>
+          <div style="font-size:15px;color:#3D4F63">{{ sec.meta }}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:{{ gridCols }};gap:32px 28px">
+          <sc-for list="{{ sec.clips }}" as="clip" hint-placeholder-count="4">
+            <article style="background:#FFFFFF;border:1px solid #D0D1DB;display:flex;flex-direction:column;min-width:0">
+              <div style="position:relative;aspect-ratio:16/9;background:#0E2238;display:flex;align-items:center;justify-content:center;overflow:hidden">
+                <div style="position:relative;height:100%;width:{{ clip.innerW }}">
+                  <image-slot id="{{ clip.slotId }}" shape="rect" placeholder="{{ clip.placeholder }}"></image-slot>
+                </div>
+                <div style="position:absolute;top:12px;left:12px;background:#FFFFFF;color:#002C4E;font-size:12px;font-weight:700;letter-spacing:0.08em;padding:5px 8px;pointer-events:none">{{ clip.code }}</div>
+                <div style="position:absolute;bottom:12px;right:12px;background:#002C4E;color:#FFFFFF;font-family:'Liberation Mono',Menlo,Consolas,monospace;font-size:13px;padding:5px 8px;pointer-events:none">{{ clip.durationTC }}</div>
+                <sc-if value="{{ clip.notWide }}" hint-placeholder-val="{{ false }}">
+                  <div style="position:absolute;bottom:12px;left:12px;background:#FFFFFF;color:#002C4E;font-size:12px;font-weight:700;padding:5px 8px;pointer-events:none">{{ clip.aspect }}</div>
+                </sc-if>
+              </div>
+              <sc-if value="{{ showStrip }}" hint-placeholder-val="{{ true }}">
+                <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;background:#0E2238">
+                  <sc-for list="{{ clip.frames }}" as="fr" hint-placeholder-count="4">
+                    <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                      <div style="position:relative;aspect-ratio:16/9">
+                        <image-slot id="{{ fr.slotId }}" shape="rect" placeholder="Frame"></image-slot>
+                      </div>
+                      <div style="font-family:'Liberation Mono',Menlo,Consolas,monospace;font-size:11px;color:#D0D1DB;padding:0 2px 2px">{{ fr.tc }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="padding:20px 22px 22px;display:flex;flex-direction:column;gap:12px;flex:1">
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3D4F63">
+                  <span style="width:9px;height:9px;background:{{ clip.color }}"></span>
+                  <span>{{ clip.catLabel }}</span>
+                  <span style="color:#9AA3AF">·</span>
+                  <span>{{ clip.day }}</span>
+                </div>
+                <h3 style="margin:0;font-size:22px;line-height:1.2;font-weight:700;text-wrap:pretty">{{ clip.title }}</h3>
+                <p style="margin:0;font-size:15px;line-height:1.5;color:#3D4F63;text-wrap:pretty">{{ clip.desc }}</p>
+                <sc-if value="{{ showSpecs }}" hint-placeholder-val="{{ true }}">
+                  <dl style="margin:auto 0 0;padding-top:14px;border-top:1px solid #E3E5EB;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font-size:13px">
+                    <dt style="color:#5A6878">Resolution</dt><dd style="margin:0;font-weight:700">{{ clip.res }}</dd>
+                    <dt style="color:#5A6878">Frame rate</dt><dd style="margin:0;font-weight:700">{{ clip.fps }}</dd>
+                    <dt style="color:#5A6878">Delivery</dt><dd style="margin:0;font-weight:700">{{ clip.format }}</dd>
+                    <dt style="color:#5A6878">Placement</dt><dd style="margin:0;font-weight:700">{{ clip.use }}</dd>
+                  </dl>
+                </sc-if>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </section>
+    </sc-for>
+  </main>
+
+  <footer style="background:#FFFFFF;border-top:1px solid #D0D1DB">
+    <div style="max-width:1480px;margin:0 auto;padding:36px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="font-size:18px">Anchored by the Velocity White Papers</div>
+        <div style="font-size:15px;color:#3D4F63">Questions? <a href="mailto:jaimee.kepa@gov.ab.ca">jaimee.kepa@gov.ab.ca</a></div>
+      </div>
+      <img src="assets/pptx/image-1005-1.png" alt="Government of Alberta" style="height:56px;width:auto"></img>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Compact&quot;,&quot;Standard&quot;,&quot;Large&quot;],&quot;default&quot;:&quot;Standard&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;showKeyframes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;showSpecs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+const CATS = {
+  mg: { label: 'Motion graphics', color: '#EF4B8B' },
+  an: { label: 'Animation', color: '#ED8C00' },
+  vd: { label: 'Video', color: '#0077CD' },
+};
+const CLIPS = [
+  { code:'MG-01', cat:'mg', title:'Opening title sequence', desc:'Circuit traces draw in from all four edges and resolve into the Agency 2026 lockup.', dur:45, aspect:'16:9', res:'3840 × 2160', fps:'29.97', format:'ProRes 422 HQ', use:'Main stage open', day:'All days' },
+  { code:'MG-02', cat:'mg', title:'Day bumpers', desc:'Three 10-second bumpers, one per day, each with its own theme and venue.', dur:10, aspect:'16:9', res:'1920 × 1080', fps:'29.97', format:'H.264 MP4', use:'Stage transitions', day:'All days' },
+  { code:'MG-03', cat:'mg', title:'Speaker lower thirds', desc:'Name, title and organization fields. Loops with an alpha channel for live switching.', dur:8, aspect:'16:9', res:'1920 × 1080', fps:'29.97', format:'ProRes 4444 + alpha', use:'Live broadcast', day:'All days' },
+  { code:'MG-04', cat:'mg', title:'Session countdown loop', desc:'A five-minute countdown with moving circuit traces, used before each session starts.', dur:300, aspect:'16:9', res:'3840 × 2160', fps:'29.97', format:'H.264 MP4', use:'Lobby and stage screens', day:'All days' },
+  { code:'MG-05', cat:'mg', title:'Stat reveal: 40 working demos', desc:'A kinetic type piece for the Day 1 keynote. Each figure builds out from a chip node.', dur:20, aspect:'16:9', res:'1920 × 1080', fps:'29.97', format:'ProRes 422', use:'Keynote insert', day:'Dec. 7' },
+  { code:'AN-01', cat:'an', title:'Circuit logo sting', desc:'A short logo reveal for the open and close of every recorded asset.', dur:6, aspect:'16:9', res:'3840 × 2160', fps:'29.97', format:'ProRes 4444 + alpha', use:'Video open and close', day:'All days' },
+  { code:'AN-02', cat:'an', title:'The Velocity White Papers explained', desc:'An animated explainer on the playbook: two challenges from government, and responses from industry.', dur:90, aspect:'16:9', res:'1920 × 1080', fps:'29.97', format:'H.264 MP4', use:'Web and stage', day:'Dec. 9' },
+  { code:'AN-03', cat:'an', title:'Build an agent on tools you already use', desc:'A step-by-step animation for the AI Academy hands-on sessions.', dur:60, aspect:'16:9', res:'1920 × 1080', fps:'29.97', format:'H.264 MP4', use:'AI Academy', day:'Dec. 7' },
+  { code:'AN-04', cat:'an', title:'Save a demo: QR toolbox', desc:'A looping how-to that shows attendees how to scan a QR code and save a demo to their toolbox.', dur:15, aspect:'1:1', res:'1080 × 1080', fps:'30', format:'H.264 MP4', use:'Demo booth screens', day:'Dec. 7' },
+  { code:'VD-01', cat:'vd', title:'Agency 2026 sizzle reel', desc:'Three days, two cities and 40 demos, cut to a single two-minute reel.', dur:120, aspect:'16:9', res:'3840 × 2160', fps:'23.976', format:'ProRes 422 HQ', use:'Web, social, stage', day:'All days' },
+  { code:'VD-02', cat:'vd', title:'Day 1 recap: The Art of the Possible', desc:'Highlights from the government showcase at the Edmonton Convention Centre.', dur:180, aspect:'16:9', res:'1920 × 1080', fps:'23.976', format:'H.264 MP4', use:'Internal channels', day:'Dec. 7' },
+  { code:'VD-03', cat:'vd', title:'Alberta Velocity: Full Speed Ahead highlights', desc:'Government and industry on one stage at Platform Calgary.', dur:150, aspect:'16:9', res:'1920 × 1080', fps:'23.976', format:'H.264 MP4', use:'Web and social', day:'Dec. 9' },
+  { code:'VD-04', cat:'vd', title:'Social cutdown: "Alberta is moving"', desc:'A vertical cut of the sizzle reel with burned-in captions.', dur:30, aspect:'9:16', res:'1080 × 1920', fps:'30', format:'H.264 MP4', use:'Instagram, LinkedIn', day:'All days' },
+];
+const INNER = { '16:9':'100%', '1:1':'56.25%', '9:16':'31.64%' };
+const p2 = n => String(n).padStart(2,'0');
+const tc = (s, fps) => { const f = Math.round((s % 1) * fps); s = Math.floor(s); return `${p2(Math.floor(s/3600))}:${p2(Math.floor(s/60)%60)}:${p2(s%60)}:${p2(f)}`; };
+const fmtRun = s => { const m = Math.floor(s/60), r = s%60; return m ? `${m} min ${r ? r+' s' : ''}`.trim() : `${r} s`; };
+
+class Component extends DCLogic {
+  state = { filter: 'all' };
+  renderVals() {
+    const filter = this.state.filter;
+    const showStrip = this.props.showKeyframes ?? true;
+    const showSpecs = this.props.showSpecs ?? true;
+    const minCol = { Compact: 300, Standard: 380, Large: 520 }[this.props.density ?? 'Standard'] || 380;
+    const clips = CLIPS.map(c => {
+      const fps = parseFloat(c.fps);
+      return { ...c, color: CATS[c.cat].color, catLabel: CATS[c.cat].label,
+        slotId: 'clip-' + c.code, placeholder: c.code + ' poster frame · ' + c.aspect,
+        durationTC: tc(c.dur, fps), innerW: INNER[c.aspect], notWide: c.aspect !== '16:9',
+        frames: [0.05, 0.35, 0.65, 0.95].map((t, i) => ({ slotId: `clip-${c.code}-f${i+1}`, tc: tc(c.dur * t, fps) })) };
+    });
+    const total = CLIPS.reduce((a, c) => a + c.dur, 0);
+    const btn = active => `display:flex;align-items:center;gap:8px;padding:9px 14px;font:700 14px "Liberation Sans",Arial,sans-serif;cursor:pointer;border:1px solid ${active ? '#FFFFFF' : 'rgba(255,255,255,0.35)'};background:${active ? '#FFFFFF' : 'transparent'};color:${active ? '#002C4E' : '#FFFFFF'};min-height:40px`;
+    const toStyle = s => Object.fromEntries(s.split(';').filter(Boolean).map(d => { const i = d.indexOf(':'); return [d.slice(0,i).replace(/-([a-z])/g,(_,x)=>x.toUpperCase()), d.slice(i+1)]; }));
+    const filters = [{ key:'all', label:'All', color:'#FFFFFF', count: CLIPS.length },
+      ...Object.entries(CATS).map(([k,v]) => ({ key:k, label:v.label, color:v.color, count: CLIPS.filter(c=>c.cat===k).length }))]
+      .map(f => ({ ...f, style: toStyle(btn(filter === f.key)), onClick: () => this.setState({ filter: f.key }) }));
+    const sections = Object.entries(CATS).filter(([k]) => filter === 'all' || filter === k).map(([k, v], i) => {
+      const list = clips.filter(c => c.cat === k);
+      return { ...v, clips: list, meta: `${list.length} pieces · ${fmtRun(list.reduce((a,c)=>a+c.dur,0))} total runtime` };
+    });
+    return { filters, sections, showStrip, showSpecs,
+      gridCols: `repeat(auto-fill,minmax(min(100%,${minCol}px),1fr))`,
+      summary: `${CLIPS.length} pieces · ${fmtRun(total)} total runtime` };
+  }
+}
+</script>
+</body>
+</html>

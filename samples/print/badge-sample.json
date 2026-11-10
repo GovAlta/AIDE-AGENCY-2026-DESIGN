@@ -1,0 +1,29 @@
+{
+ "template": "print/badge",
+ "title": "Agency 2026 badges (sample)",
+ "people": [
+  {
+   "name": "Sample Name",
+   "role": "Role or title",
+   "org": "Ministry or organisation",
+   "day": "all",
+   "qr": "https://www.alberta.ca"
+  },
+  {
+   "name": "Alex Example",
+   "role": "Speaker",
+   "org": "Example Ministry",
+   "day": "mon",
+   "tag": "Speaker"
+  },
+  {
+   "name": "Jordan Placeholder",
+   "role": "Demo lead",
+   "org": "Example Team",
+   "day": "wed",
+   "tag": "Demo"
+  }
+ ],
+ "name": "badge-sample",
+ "$note": "Sample content: every name, figure and session here is a placeholder. Replace it with your own facts. Event facts come from brand/tokens/tokens.json."
+}

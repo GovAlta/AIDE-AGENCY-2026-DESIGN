@@ -1,0 +1,1 @@
+{ "template": "digital/signage", "name": "signage-portrait-day3", "orientation": "portrait", "preset": "day3", "qr": { "url": "https://www.alberta.ca", "label": "Scan for the agenda" }, "sample": "Sample QR: replace the link" }

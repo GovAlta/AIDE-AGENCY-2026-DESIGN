@@ -1,0 +1,22 @@
+{
+  "name": "aide-agency-2026-design",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Agency 2026 design system: tokens, fonts, styles, templates and scripts for print, slides, digital and video (MVAI).",
+  "type": "module",
+  "scripts": {
+    "tokens": "node scripts/build-tokens.mjs",
+    "vectors": "node scripts/vectors.mjs all",
+    "samples": "node scripts/make.mjs --all",
+    "sheets": "node scripts/contact-sheets.mjs",
+    "build": "npm run tokens && npm run vectors && npm run samples && node scripts/motion-render.mjs --all && npm run sheets",
+    "check": "node scripts/make.mjs --all --check",
+    "motion": "node scripts/motion-render.mjs --all"
+  },
+  "dependencies": {
+    "jsqr": "^1.4.0",
+    "playwright": "1.62.0",
+    "pngjs": "^7.0.0",
+    "qrcode": "1.5.4"
+  }
+}

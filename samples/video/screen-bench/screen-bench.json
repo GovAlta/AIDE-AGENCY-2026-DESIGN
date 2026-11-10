@@ -1,0 +1,1995 @@
+{
+ "kit": "goa-agency",
+ "theme": "agency-light",
+ "title": "Agency 2026: the screen bench (design repo reference)",
+ "voice": {
+  "provider": "google-ca",
+  "name": "Kore"
+ },
+ "captions": false,
+ "classification": "Unclassified",
+ "kit_options": {
+  "event": "Agency",
+  "year": "2026",
+  "date": "Dec. 7–9, 2026",
+  "place": "Edmonton · Calgary",
+  "host": "Ministry of Technology and Innovation",
+  "host_label": "Hosted by",
+  "series": "Explainer 01"
+ },
+ "assets": {
+  "p1": {
+   "upload": "avatar-ao.png",
+   "kind": "photo"
+  },
+  "p2": {
+   "upload": "avatar-dk.png",
+   "kind": "photo"
+  },
+  "p3": {
+   "upload": "avatar-ml.png",
+   "kind": "photo"
+  },
+  "permit": {
+   "upload": "form.png"
+  },
+  "wallet": {
+   "upload": "phone.png"
+  }
+ },
+ "scenes": [
+  {
+   "type": "splash",
+   "duration": 6,
+   "id": "s1"
+  },
+  {
+   "type": "title",
+   "kicker": "Agency 2026 · Explainer 01",
+   "headline": "How an AI agent books your road test",
+   "subtitle": "From one request to a confirmed booking, with a person in the loop.",
+   "icon": "route",
+   "narration": "How an AI agent books your road test, from one request to a confirmed booking.",
+   "id": "s2"
+  },
+  {
+   "type": "chapter",
+   "number": "01",
+   "title": "Stories and ideas",
+   "subtitle": "Points, quotes, questions, comparisons and conversations.",
+   "duration": 4,
+   "id": "s3"
+  },
+  {
+   "id": "b1",
+   "type": "bullets",
+   "label": "U4 · How it works",
+   "headline": "What the permit agent does for you",
+   "highlight": [
+    "agent"
+   ],
+   "narration": "The permit agent reads your application, checks it against the bylaw, flags anything missing and books your inspection.",
+   "points": [
+    {
+     "text": "Reads your application in seconds",
+     "icon": "file-text",
+     "cue": "reads"
+    },
+    {
+     "text": "Checks it against the municipal bylaw",
+     "icon": "scale",
+     "cue": "checks"
+    },
+    {
+     "text": "Flags anything missing before you submit",
+     "icon": "flag",
+     "cue": "flags"
+    },
+    {
+     "text": "Books your inspection on a date that suits you",
+     "icon": "calendar-check",
+     "cue": "books"
+    }
+   ]
+  },
+  {
+   "id": "b2",
+   "type": "bullets",
+   "label": "U5",
+   "headline": "Six things to bring to a registry office for your first Alberta driver's licence",
+   "narration": "Bring six things to the registry office. You need your identification, proof of residency, your learner's licence and your vision test result. You also need payment, and the person who will sign for you if you are under eighteen.",
+   "points": [
+    "Two pieces of identification",
+    "Proof of Alberta residency",
+    "Your learner's licence",
+    "Your vision test result",
+    "Payment by card or cash",
+    "A parent or guardian signature if you are under 18"
+   ]
+  },
+  {
+   "id": "i1",
+   "type": "icons",
+   "label": "U6 · Features",
+   "headline": "One digital ID, many services",
+   "narration": "Alberta.ca Account works for health, licences, benefits and school records.",
+   "items": [
+    {
+     "icon": "heart-pulse",
+     "title": "Health records",
+     "text": "See your immunizations and lab results",
+     "cue": "health"
+    },
+    {
+     "icon": "car",
+     "title": "Licences",
+     "text": "Renew a driver's licence or registration",
+     "cue": "licences"
+    },
+    {
+     "icon": "hand-coins",
+     "title": "Benefits",
+     "text": "Apply once, track every payment",
+     "cue": "benefits"
+    },
+    {
+     "icon": "graduation-cap",
+     "title": "School records",
+     "text": "Request transcripts for post-secondary",
+     "cue": "school"
+    }
+   ]
+  },
+  {
+   "id": "i2",
+   "type": "icons",
+   "label": "U7",
+   "headline": "Wildfire season tools",
+   "narration": "Nine tools keep crews and communities ready through the whole wildfire season, from the first spark to the last patrol.",
+   "items": [
+    {
+     "icon": "flame",
+     "title": "Fire map",
+     "text": "Every active fire, updated hourly"
+    },
+    {
+     "icon": "bell-ring",
+     "title": "Alerts",
+     "text": "Evacuation alerts to your phone"
+    },
+    {
+     "icon": "wind",
+     "title": "Smoke",
+     "text": "Air quality forecasts by town"
+    },
+    {
+     "icon": "plane",
+     "title": "Air tankers",
+     "text": "Dispatch status in real time"
+    },
+    {
+     "icon": "map-pin",
+     "title": "Ban areas",
+     "text": "Fire bans by municipality"
+    },
+    {
+     "icon": "users",
+     "title": "Crews",
+     "text": "Who is deployed and where"
+    },
+    {
+     "icon": "droplets",
+     "title": "Water sources",
+     "text": "Lakes and hydrants on the map"
+    },
+    {
+     "icon": "radio",
+     "title": "Radio",
+     "text": "Channel plans for each zone"
+    },
+    {
+     "icon": "clipboard-list",
+     "title": "Reports",
+     "text": "Daily situation reports"
+    }
+   ]
+  },
+  {
+   "id": "q1",
+   "type": "quote",
+   "label": "U8 · Voices",
+   "quote": "The agent didn't replace our inspectors. It gave them back the two hours a day they used to spend on paperwork.",
+   "highlight": [
+    "two",
+    "hours"
+   ],
+   "name": "Dana Whitford",
+   "role": "Permit services lead, fictional municipality",
+   "narration": "The agent didn't replace our inspectors. It gave them back the two hours a day they used to spend on paperwork."
+  },
+  {
+   "id": "qn1",
+   "type": "question",
+   "label": "U9",
+   "question": "Can an AI agent approve my permit?",
+   "answer": "No. A person makes every decision.",
+   "highlight": [
+    "person"
+   ],
+   "detail": "The agent prepares the file and explains its reasoning; an inspector signs off.",
+   "answerCue": "No",
+   "narration": "Can an AI agent approve my permit? No. A person makes every decision. The agent prepares the file and an inspector signs off."
+  },
+  {
+   "id": "d1",
+   "type": "definition",
+   "label": "U10 · Glossary",
+   "term": "Agent",
+   "pronunciation": "/ˈeɪ·dʒənt/",
+   "part": "noun",
+   "definition": "Software that plans a series of steps toward a goal, uses tools to carry them out, and checks its own work before handing back.",
+   "example": "The intake agent gathered the forms, filled the gaps and booked the inspection.",
+   "definitionCue": "software",
+   "exampleCue": "for",
+   "narration": "An agent is software that plans steps toward a goal, uses tools, and checks its own work. For example, an intake agent can book your inspection."
+  },
+  {
+   "id": "m1",
+   "type": "myth-fact",
+   "label": "U11",
+   "myth": "AI agents send your health records to servers outside Canada.",
+   "fact": "Protected health data stays in Canadian data centres, and every access is logged.",
+   "highlight": [
+    "Canadian"
+   ],
+   "strikeCue": "myth",
+   "factCue": "in",
+   "narration": "You may have heard that agents send your health records abroad. That is a myth. In fact, protected data stays in Canada."
+  },
+  {
+   "id": "i3",
+   "type": "icons",
+   "headline": "What school boards get",
+   "narration": "School boards get six shared services from the province, at no cost.",
+   "items": [
+    {
+     "icon": "server",
+     "title": "Hosting",
+     "text": "Secure Canadian data centres"
+    },
+    {
+     "icon": "shield-check",
+     "title": "Security",
+     "text": "24/7 monitoring and response"
+    },
+    {
+     "icon": "wifi",
+     "title": "SuperNet",
+     "text": "Fast links to every school"
+    },
+    {
+     "icon": "book-open",
+     "title": "Learning tools",
+     "text": "One sign-in for every app"
+    },
+    {
+     "icon": "life-buoy",
+     "title": "Help desk",
+     "text": "One number, staffed all day"
+    },
+    {
+     "icon": "bar-chart-3",
+     "title": "Reporting",
+     "text": "Dashboards for every board"
+    }
+   ]
+  },
+  {
+   "id": "c1",
+   "type": "compare",
+   "label": "U12 · Before and after",
+   "headline": "Booking a road test",
+   "vs": "vs",
+   "left": {
+    "title": "Before",
+    "icon": "clock",
+    "rows": [
+     {
+      "text": "Phone line, 40-minute wait",
+      "icon": "phone"
+     },
+     {
+      "text": "Paper form at the registry",
+      "icon": "file"
+     },
+     {
+      "text": "Results by mail in two weeks",
+      "icon": "mail"
+     }
+    ]
+   },
+   "right": {
+    "title": "With the agent",
+    "icon": "sparkles",
+    "rows": [
+     {
+      "text": "Book in a chat, any time",
+      "icon": "message-circle"
+     },
+     {
+      "text": "Form filled from your account",
+      "icon": "user-check"
+     },
+     {
+      "text": "Results on your phone the same day",
+      "icon": "smartphone"
+     }
+    ]
+   },
+   "narration": "Before, booking a road test meant a phone line, a paper form and results by mail. With the agent you book in a chat, the form fills itself and results arrive the same day."
+  },
+  {
+   "id": "k1",
+   "type": "checklist",
+   "label": "U13 · Readiness",
+   "headline": "Before an agent goes live",
+   "narration": "Before an agent goes live we check privacy, security, accessibility, bias testing, a human fallback, plain language, and the public notice.",
+   "items": [
+    {
+     "text": "Privacy impact assessment",
+     "status": "Approved",
+     "cue": "privacy"
+    },
+    {
+     "text": "Security review",
+     "status": "Passed",
+     "cue": "security"
+    },
+    {
+     "text": "Accessibility (WCAG 2.2 AA)",
+     "status": "Passed",
+     "cue": "accessibility"
+    },
+    {
+     "text": "Bias and fairness testing",
+     "status": "Flagged",
+     "state": "warn",
+     "cue": "bias"
+    },
+    {
+     "text": "A person can always take over",
+     "status": "Done",
+     "cue": "human"
+    },
+    {
+     "text": "Plain-language answers",
+     "status": "Done",
+     "cue": "plain"
+    },
+    {
+     "text": "Public notice published",
+     "status": "Pending",
+     "state": "todo",
+     "cue": "public"
+    }
+   ]
+  },
+  {
+   "id": "p1",
+   "type": "people",
+   "label": "U14 · Team",
+   "headline": "Who keeps the agent honest",
+   "narration": "Three people keep the agent honest: the service owner, the privacy officer and the front-line inspector.",
+   "people": [
+    {
+     "name": "Service owner",
+     "role": "Accountable",
+     "text": "Decides what the agent may do and signs off each change.",
+     "portrait": "p1",
+     "cue": "service"
+    },
+    {
+     "name": "Privacy officer",
+     "role": "Oversight",
+     "text": "Reviews the data it touches and audits the logs monthly.",
+     "portrait": "p2",
+     "cue": "privacy"
+    },
+    {
+     "name": "Inspector",
+     "role": "Front line",
+     "text": "Makes every final decision and flags mistakes.",
+     "icon": "hard-hat",
+     "cue": "inspector"
+    }
+   ]
+  },
+  {
+   "id": "p2",
+   "type": "people",
+   "headline": "A wildfire response cell",
+   "narration": "Five roles make up a response cell.",
+   "people": [
+    {
+     "name": "Incident commander",
+     "role": "Leads",
+     "text": "Sets objectives for each shift.",
+     "icon": "flag"
+    },
+    {
+     "name": "Planning chief",
+     "text": "Builds the next day's plan.",
+     "icon": "clipboard-list"
+    },
+    {
+     "name": "Operations",
+     "role": "Crews",
+     "text": "Puts crews and aircraft on the fire.",
+     "icon": "flame"
+    },
+    {
+     "name": "Logistics",
+     "text": "Food, fuel, camps and gear.",
+     "icon": "truck"
+    },
+    {
+     "name": "Information officer",
+     "role": "Public",
+     "text": "Keeps residents informed.",
+     "icon": "megaphone"
+    }
+   ]
+  },
+  {
+   "id": "ch1",
+   "type": "chat",
+   "label": "U15 · Demo",
+   "agent": "Road test agent",
+   "person": "Resident",
+   "narration": "A resident asks to book a road test. The agent finds a slot in Red Deer, confirms the licence class, and books it.",
+   "messages": [
+    {
+     "from": "person",
+     "text": "Can I book my class 5 road test for next week?",
+     "cue": "resident"
+    },
+    {
+     "from": "agent",
+     "text": "Yes. The first opening near you is Tuesday at 10:30 in Red Deer. Shall I book it?",
+     "cue": "finds"
+    },
+    {
+     "from": "person",
+     "text": "Yes please.",
+     "cue": "confirms"
+    },
+    {
+     "from": "agent",
+     "text": "Booked. Your confirmation is RT-4821, and a reminder will reach your phone the day before.",
+     "cue": "books"
+    }
+   ]
+  },
+  {
+   "id": "ch2",
+   "type": "chat",
+   "headline": "Asking about a benefit",
+   "agent": "Benefits agent",
+   "narration": "Six messages: a longer conversation scrolls as it grows, and the agent always shows where its answer comes from and who to call.",
+   "messages": [
+    {
+     "from": "person",
+     "text": "My hours were cut. Can I get help with rent?"
+    },
+    {
+     "from": "agent",
+     "text": "You may qualify for the rent assistance benefit. I need your household size and monthly income."
+    },
+    {
+     "from": "person",
+     "text": "Two people, about 2,900 a month."
+    },
+    {
+     "from": "agent",
+     "text": "Based on the published criteria you likely qualify for about 310 dollars a month. A caseworker confirms every application."
+    },
+    {
+     "from": "person",
+     "text": "How do I apply?"
+    },
+    {
+     "from": "agent",
+     "text": "I can start the form now with what you've told me, or you can call 310-0000 to speak with someone."
+    }
+   ]
+  },
+  {
+   "type": "chapter",
+   "number": "02",
+   "title": "Numbers that matter",
+   "subtitle": "Big numbers, charts, rankings and change.",
+   "duration": 4,
+   "id": "s19"
+  },
+  {
+   "type": "statement",
+   "kicker": "The big idea",
+   "headline": "Agents do the busywork so people can do the judgement",
+   "highlight": [
+    "judgement"
+   ],
+   "support": "Every action is logged, and a person approves anything that matters.",
+   "label": "U2 · Idea",
+   "narration": "Agents do the busywork so people can do the judgement.",
+   "id": "s20"
+  },
+  {
+   "type": "statement",
+   "duration": 4,
+   "ground": "spectrum",
+   "accent": "pink",
+   "headline": "Three days became nine minutes",
+   "highlight": [
+    "nine",
+    "minutes"
+   ],
+   "label": "U3",
+   "id": "s21"
+  },
+  {
+   "type": "big-number",
+   "id": "hero",
+   "label": "Road tests",
+   "kicker": "Booking a road test",
+   "from": "3 days",
+   "fromLabel": "Before",
+   "value": "9 min",
+   "caption": "to book a road test, start to finish",
+   "narration": "It used to take three days to book a road test. With the agent, it takes nine minutes from request to confirmation.",
+   "valueCue": "nine minutes",
+   "context": "Median time from request to confirmed booking, pilot registries, spring 2026.",
+   "source": "Source: registry pilot (fictional data)",
+   "icon": "calendar-check"
+  },
+  {
+   "type": "stats",
+   "id": "stats",
+   "label": "Digital ID",
+   "headline": "Alberta.ca Account, one year in",
+   "narration": "In one year, nine hundred thousand Albertans signed up. Eighty-seven percent verified online, and the average sign-in takes twelve seconds.",
+   "items": [
+    {
+     "value": 900000,
+     "label": "Albertans signed up",
+     "sub": "Up from 610,000 the year before",
+     "cue": "nine hundred thousand",
+     "icon": "users"
+    },
+    {
+     "value": 87,
+     "suffix": "%",
+     "label": "verified online",
+     "sub": "No trip to a registry office",
+     "cue": "Eighty-seven percent",
+     "icon": "shield-check"
+    },
+    {
+     "value": 12,
+     "suffix": " s",
+     "label": "average sign-in",
+     "sub": "With a passkey on a phone",
+     "cue": "twelve seconds",
+     "icon": "timer"
+    }
+   ],
+   "source": "Source: Technology and Innovation, account analytics 2025–26"
+  },
+  {
+   "type": "bars",
+   "id": "bars",
+   "label": "Permits",
+   "headline": "Days to approve a building permit, by region",
+   "highlight": [
+    "Red Deer"
+   ],
+   "suffix": " days",
+   "unit": "Median days",
+   "narration": "Red Deer approves building permits fastest, in eleven days, after moving every step online.",
+   "items": [
+    {
+     "label": "Calgary",
+     "value": 24
+    },
+    {
+     "label": "Edmonton",
+     "value": 21
+    },
+    {
+     "label": "Lethbridge",
+     "value": 17
+    },
+    {
+     "label": "Red Deer",
+     "value": 11
+    },
+    {
+     "label": "Grande Prairie",
+     "value": 19
+    },
+    {
+     "label": "Medicine Hat",
+     "value": 15
+    },
+    {
+     "label": "Fort McMurray",
+     "value": 27
+    }
+   ],
+   "note": "Red Deer moved every step online in 2025.",
+   "source": "Source: Municipal Affairs permit survey, 2025 (fictional)"
+  },
+  {
+   "type": "columns",
+   "id": "cols",
+   "label": "Wildfire",
+   "headline": "Wildfires spotted within an hour of ignition",
+   "suffix": "%",
+   "target": 80,
+   "targetLabel": "Target 80%",
+   "narration": "AI-assisted detection lifted early spotting every year, and in 2026 it passed the eighty percent target.",
+   "items": [
+    {
+     "label": "2019",
+     "value": 41
+    },
+    {
+     "label": "2020",
+     "value": 44
+    },
+    {
+     "label": "2021",
+     "value": 49
+    },
+    {
+     "label": "2022",
+     "value": 55
+    },
+    {
+     "label": "2023",
+     "value": 61
+    },
+    {
+     "label": "2024",
+     "value": 68
+    },
+    {
+     "label": "2025",
+     "value": 76
+    },
+    {
+     "label": "2026",
+     "value": 84,
+     "highlight": true
+    }
+   ],
+   "source": "Source: Forestry and Parks, detection log (fictional)"
+  },
+  {
+   "type": "line",
+   "id": "line",
+   "label": "Health",
+   "headline": "Health Link wait times fell after the AI triage pilot",
+   "suffix": " min",
+   "unit": "Average wait, minutes",
+   "narration": "Average wait times on Health Link fell from thirty-eight minutes to nine after the triage pilot started in April.",
+   "labels": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+   ],
+   "series": [
+    {
+     "name": "Average wait",
+     "values": [
+      36,
+      38,
+      37,
+      31,
+      24,
+      19,
+      16,
+      14,
+      12,
+      11,
+      10,
+      9
+     ]
+    }
+   ],
+   "annotation": {
+    "index": 3,
+    "text": "Triage pilot starts in April",
+    "cue": "triage pilot"
+   },
+   "source": "Source: Alberta Health Services, Health Link (fictional)"
+  },
+  {
+   "type": "line",
+   "id": "line3",
+   "label": "Roads",
+   "headline": "Road reports by channel",
+   "unit": "Reports per day",
+   "narration": "Reports through the app overtook phone calls in the summer, while email stayed flat.",
+   "labels": [
+    "Q1 24",
+    "Q2 24",
+    "Q3 24",
+    "Q4 24",
+    "Q1 25",
+    "Q2 25",
+    "Q3 25",
+    "Q4 25"
+   ],
+   "series": [
+    {
+     "name": "511 app",
+     "values": [
+      120,
+      180,
+      260,
+      340,
+      420,
+      520,
+      610,
+      690
+     ]
+    },
+    {
+     "name": "Phone",
+     "values": [
+      480,
+      470,
+      450,
+      430,
+      400,
+      380,
+      350,
+      330
+     ]
+    },
+    {
+     "name": "Email",
+     "values": [
+      90,
+      95,
+      92,
+      96,
+      94,
+      98,
+      97,
+      99
+     ]
+    }
+   ],
+   "marks": [
+    4
+   ],
+   "source": "Source: Transportation and Economic Corridors (fictional)"
+  },
+  {
+   "type": "donut",
+   "id": "donut",
+   "label": "Requests",
+   "headline": "Who handles a service request",
+   "total": 4200000,
+   "totalDisplay": "4.2M",
+   "totalLabel": "requests in 2026",
+   "narration": "There were four point two million requests. An agent finished more than half of them, and people approved every decision that matters.",
+   "segments": [
+    {
+     "label": "Finished by an agent",
+     "value": 2310000
+    },
+    {
+     "label": "Agent, then a person approves",
+     "value": 1050000
+    },
+    {
+     "label": "Handled by a person",
+     "value": 630000
+    },
+    {
+     "label": "Referred elsewhere",
+     "value": 210000
+    }
+   ],
+   "source": "Source: Service Alberta service desk (fictional)"
+  },
+  {
+   "type": "gauge",
+   "id": "gauge",
+   "label": "Broadband",
+   "kicker": "Rural broadband",
+   "headline": "Homes connected toward the 2027 goal",
+   "value": 68400,
+   "goal": 90000,
+   "caption": "homes connected",
+   "context": "Every connected home gets 50 Mbps or better.",
+   "narration": "Sixty-eight thousand four hundred rural homes are connected, three quarters of the way to the goal.",
+   "valueCue": "Sixty-eight thousand",
+   "source": "Source: Technology and Innovation, broadband program (fictional)"
+  },
+  {
+   "type": "ranking",
+   "id": "rank",
+   "label": "Services",
+   "headline": "Most-used online services in 2026",
+   "suffix": "K",
+   "narration": "Vehicle registration renewals topped the list, ahead of birth certificates and fishing licences.",
+   "items": [
+    {
+     "name": "Vehicle registration renewal",
+     "value": 1840
+    },
+    {
+     "name": "Birth certificate",
+     "value": 920
+    },
+    {
+     "name": "Fishing licence",
+     "value": 760
+    },
+    {
+     "name": "Campground booking",
+     "value": 640
+    },
+    {
+     "name": "Student aid application",
+     "value": 410
+    },
+    {
+     "name": "Business name search",
+     "value": 300
+    }
+   ],
+   "note": "Thousands of transactions, January to October.",
+   "source": "Source: Alberta.ca analytics (fictional)"
+  },
+  {
+   "type": "waffle",
+   "id": "waffle",
+   "label": "Education",
+   "kicker": "Learning online",
+   "value": 1,
+   "of": 4,
+   "display": "1 in 4",
+   "caption": "high-school students took a course online this year",
+   "context": "Most of them live outside Edmonton and Calgary.",
+   "narration": "One in four high-school students took at least one course online this year.",
+   "source": "Source: Education, enrolment data (fictional)"
+  },
+  {
+   "type": "waffle",
+   "id": "waffle2",
+   "label": "Digital ID",
+   "value": 37,
+   "of": 100,
+   "display": "37%",
+   "caption": "of renewals now start on a phone",
+   "context": "Up from 12% two years ago.",
+   "narration": "Thirty-seven percent of renewals now start on a phone.",
+   "source": "Source: Service Alberta (fictional)"
+  },
+  {
+   "type": "before-after",
+   "id": "ba",
+   "label": "Grants",
+   "headline": "Processing a community grant",
+   "change": "−84%",
+   "narration": "Before, a grant took fifty days and four hand-offs. Now an agent drafts the review and a person approves it in eight days.",
+   "before": {
+    "title": "2024 · paper",
+    "value": 50,
+    "suffix": " days",
+    "line": "Four hand-offs, three re-keyed forms",
+    "icon": "file-text",
+    "cue": "fifty days"
+   },
+   "after": {
+    "title": "2026 · agent + person",
+    "value": 8,
+    "suffix": " days",
+    "line": "The agent drafts the review; a person approves",
+    "icon": "file-check",
+    "cue": "eight days"
+   },
+   "changeCue": "approves",
+   "source": "Source: Arts, Culture and Status of Women grant desk (fictional)"
+  },
+  {
+   "type": "chapter",
+   "number": "03",
+   "title": "Time and process",
+   "subtitle": "Timelines, roadmaps, steps, loops and journeys.",
+   "duration": 4,
+   "id": "s34"
+  },
+  {
+   "type": "timeline",
+   "id": "tl",
+   "label": "T1 · Digital ID",
+   "kicker": "Alberta.ca Account",
+   "headline": "Six years of digital ID",
+   "highlight": [
+    "digital"
+   ],
+   "narration": "It started in 2019 with a simple login. In 2021 we added identity checks. By 2023 a million Albertans had signed up. In 2025 came the mobile wallet. Today agents can act for you, and next year every ministry joins.",
+   "now": 5,
+   "items": [
+    {
+     "date": "2019",
+     "title": "Single login",
+     "text": "One account for twelve services",
+     "cue": "2019"
+    },
+    {
+     "date": "2021",
+     "title": "Verified identity",
+     "text": "Driver's licence checks online",
+     "cue": "2021"
+    },
+    {
+     "date": "2023",
+     "title": "One million users",
+     "text": "A quarter of adult Albertans",
+     "cue": "2023"
+    },
+    {
+     "date": "2025",
+     "title": "Mobile wallet",
+     "text": "Credentials on your phone",
+     "cue": "2025"
+    },
+    {
+     "date": "2026",
+     "title": "Agents act for you",
+     "text": "With your consent, logged",
+     "cue": "Today"
+    },
+    {
+     "date": "2027",
+     "title": "Every ministry",
+     "text": "All 300 services on one ID",
+     "cue": "next year"
+    }
+   ]
+  },
+  {
+   "type": "roadmap",
+   "id": "rm",
+   "label": "T2 · Roadmap",
+   "kicker": "Wildfire services",
+   "headline": "What ships when",
+   "narration": "Three teams share one roadmap. Field teams get offline maps this spring and drone feeds by summer. Analytics adds spread models and a risk index. The public app gets alerts first, then evacuation routes.",
+   "columns": [
+    "Spring 2027",
+    "Summer 2027",
+    "Fall 2027",
+    "Winter 2027"
+   ],
+   "now": 1.5,
+   "lanes": [
+    {
+     "label": "Field teams",
+     "items": [
+      {
+       "text": "Offline maps",
+       "col": 1,
+       "cue": "offline maps"
+      },
+      {
+       "text": "Drone feeds",
+       "col": 2,
+       "span": 2,
+       "icon": "radio",
+       "cue": "drone feeds"
+      }
+     ]
+    },
+    {
+     "label": "Analytics",
+     "items": [
+      {
+       "text": "Spread models",
+       "col": 1,
+       "span": 2,
+       "cue": "spread models"
+      },
+      {
+       "text": "Risk index",
+       "col": 3,
+       "cue": "risk index"
+      }
+     ]
+    },
+    {
+     "label": "Public app",
+     "items": [
+      {
+       "text": "Fire alerts",
+       "col": 1,
+       "icon": "bell",
+       "cue": "alerts"
+      },
+      {
+       "text": "Evacuation routes",
+       "col": 3,
+       "span": 2,
+       "cue": "evacuation routes"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "process",
+   "id": "pr",
+   "label": "T3 · Permits",
+   "kicker": "Development permits",
+   "headline": "Four steps from idea to permit",
+   "narration": "You apply online, a planner reviews your drawings, neighbours get a chance to comment, and the decision arrives in your inbox.",
+   "steps": [
+    {
+     "title": "Apply online",
+     "text": "Upload drawings and pay the fee in one visit",
+     "icon": "laptop",
+     "cue": "apply online"
+    },
+    {
+     "title": "Planner review",
+     "text": "Checked against the land use bylaw",
+     "icon": "clipboard-check",
+     "cue": "planner"
+    },
+    {
+     "title": "Neighbour notice",
+     "text": "21 days for comments",
+     "icon": "users",
+     "cue": "neighbours"
+    },
+    {
+     "title": "Decision",
+     "text": "Sent to your inbox with conditions",
+     "icon": "mail-check",
+     "cue": "decision"
+    }
+   ]
+  },
+  {
+   "type": "process",
+   "id": "pr6",
+   "label": "T3b · Snake",
+   "headline": "How a pothole report gets fixed",
+   "narration": "Report it, we triage it, schedule a crew, repair, inspect, and close the ticket.",
+   "steps": [
+    {
+     "title": "Report",
+     "text": "Photo and pin from the app"
+    },
+    {
+     "title": "Triage",
+     "text": "Rated by size and traffic"
+    },
+    {
+     "title": "Schedule",
+     "text": "Crew booked within 72 hours"
+    },
+    {
+     "title": "Repair",
+     "text": "Hot mix patch"
+    },
+    {
+     "title": "Inspect",
+     "text": "Supervisor sign-off"
+    },
+    {
+     "title": "Close",
+     "text": "You get a before and after photo"
+    }
+   ]
+  },
+  {
+   "type": "cycle",
+   "id": "cy",
+   "label": "T4 · Improve",
+   "kicker": "Continuous improvement",
+   "headline": "How a service gets better every month",
+   "centre": "Monthly",
+   "centreSub": "Service review loop",
+   "narration": "Each month we plan a change, try it with real users, check the numbers, and learn what to keep.",
+   "stages": [
+    {
+     "title": "Plan",
+     "text": "Pick one pain point",
+     "cue": "plan"
+    },
+    {
+     "title": "Act",
+     "text": "Ship a small change",
+     "cue": "try"
+    },
+    {
+     "title": "Check",
+     "text": "Measure wait time and drop-off",
+     "cue": "check"
+    },
+    {
+     "title": "Learn",
+     "text": "Keep it, change it or drop it",
+     "cue": "learn"
+    }
+   ]
+  },
+  {
+   "type": "funnel",
+   "id": "fn",
+   "label": "T5 · Grants",
+   "kicker": "Community grants 2026",
+   "headline": "From application to approval",
+   "rates": true,
+   "narration": "We received twelve thousand applications. Nine thousand were complete, five thousand were reviewed, and two thousand one hundred were approved.",
+   "stages": [
+    {
+     "label": "Applications",
+     "value": 12480,
+     "cue": "received"
+    },
+    {
+     "label": "Complete",
+     "value": 9120,
+     "cue": "complete"
+    },
+    {
+     "label": "Reviewed",
+     "value": 5040,
+     "cue": "reviewed"
+    },
+    {
+     "label": "Approved",
+     "value": 2130,
+     "cue": "approved"
+    }
+   ]
+  },
+  {
+   "type": "journey",
+   "id": "jr",
+   "label": "T6 · Journey",
+   "kicker": "Renewing a health card",
+   "headline": "One renewal, five moments",
+   "scaleTop": "Delighted",
+   "scaleBottom": "Frustrated",
+   "narration": "The reminder email is welcome. People sign in with no trouble. The photo upload is where people get stuck. Payment is quick, and the card arrives in a week.",
+   "touchpoints": [
+    {
+     "label": "Reminder",
+     "text": "Email 60 days out",
+     "score": 1,
+     "cue": "reminder"
+    },
+    {
+     "label": "Sign in",
+     "text": "Alberta.ca Account",
+     "score": 2,
+     "cue": "sign in"
+    },
+    {
+     "label": "Photo upload",
+     "text": "Rejected twice",
+     "score": -2,
+     "pain": true,
+     "note": "40% retry the photo",
+     "cue": "photo upload"
+    },
+    {
+     "label": "Payment",
+     "text": "Card or bank",
+     "score": 0,
+     "cue": "payment"
+    },
+    {
+     "label": "Card arrives",
+     "text": "In 7 days",
+     "score": 2,
+     "cue": "arrives"
+    }
+   ]
+  },
+  {
+   "type": "agent-loop",
+   "id": "al",
+   "label": "T7 · Agent",
+   "kicker": "AI agent, road test booking",
+   "headline": "How the agent books your road test",
+   "narration": "The goal is a road test next week. The agent plans, then acts with its tools. It checks the result. The slot was taken, so it plans again. A clerk approves, and you are booked.",
+   "goal": "Road test in Red Deer next week",
+   "goalCue": "goal",
+   "plan": "Find open slots near the applicant",
+   "planCue": "plans",
+   "act": "Query the scheduler, hold a slot",
+   "actCue": "acts",
+   "tools": [
+    "scheduler.search",
+    "calendar.hold",
+    "notify.sms"
+   ],
+   "check": "Slot still free? Licence class right?",
+   "checkCue": "checks",
+   "retry": "Slot taken: plan again",
+   "retryCue": "taken",
+   "gate": "Clerk confirms the booking",
+   "gateCue": "clerk",
+   "done": "Booked: Tue 9:40, SMS sent",
+   "doneCue": "booked"
+  },
+  {
+   "type": "countdown",
+   "id": "cd",
+   "label": "T8 · Countdown",
+   "date": "Dec. 7, 2026",
+   "value": "32",
+   "unit": "days to go",
+   "note": "Agency 2026 opens in Edmonton and Calgary",
+   "narration": "The date is December seventh. There are thirty two days to go until Agency opens."
+  },
+  {
+   "type": "countdown",
+   "id": "cd2",
+   "label": "T8b · Elapsed",
+   "kicker": "Average permit time",
+   "headline": "Now it takes",
+   "units": [
+    {
+     "value": "04",
+     "unit": "hours"
+    },
+    {
+     "value": "12",
+     "unit": "minutes"
+    },
+    {
+     "value": "09",
+     "unit": "seconds"
+    }
+   ],
+   "note": "Down from 21 days in 2024",
+   "narration": "Now it takes four hours and twelve minutes, down from twenty one days."
+  },
+  {
+   "type": "phases",
+   "id": "ph",
+   "label": "T9 · Change",
+   "kicker": "Moving to digital intake",
+   "headline": "Before, during and after",
+   "current": 2,
+   "narration": "Before, every claim was paper. During the switch, both run side by side. After, claims are digital end to end.",
+   "phases": [
+    {
+     "name": "Before",
+     "headline": "Paper forms",
+     "text": "Mailed, keyed in by hand, 14 days",
+     "icon": "file-text",
+     "cue": "Before"
+    },
+    {
+     "name": "During",
+     "headline": "Side by side",
+     "text": "Online and paper both accepted while staff train",
+     "icon": "git-compare",
+     "cue": "During"
+    },
+    {
+     "name": "After",
+     "headline": "Digital end to end",
+     "text": "Same-day decisions for simple claims",
+     "icon": "zap",
+     "cue": "After"
+    }
+   ]
+  },
+  {
+   "type": "chapter",
+   "number": "04",
+   "title": "How it fits together",
+   "subtitle": "Architectures, networks, maps and screens.",
+   "duration": 4,
+   "id": "s46"
+  },
+  {
+   "type": "architecture",
+   "id": "arch",
+   "label": "Stack",
+   "kicker": "How it fits together",
+   "headline": "One platform under every service",
+   "highlight": [
+    "platform"
+   ],
+   "narration": "Infrastructure sits at the bottom. Data flows up into the platform. Apps are built on top, and people use the apps.",
+   "focus": "Platform",
+   "focusCue": "platform",
+   "layers": [
+    {
+     "label": "People",
+     "sub": "Albertans and staff",
+     "icon": "users",
+     "cue": "people",
+     "components": [
+      {
+       "label": "Albertans",
+       "icon": "user"
+      },
+      {
+       "label": "Caseworkers",
+       "icon": "briefcase"
+      },
+      {
+       "label": "Partners",
+       "icon": "handshake"
+      }
+     ]
+    },
+    {
+     "label": "Apps",
+     "sub": "Built once, reused",
+     "icon": "app-window",
+     "cue": "Apps",
+     "components": [
+      "Permits",
+      "Benefits",
+      "Licensing",
+      "Health cards",
+      "Grants"
+     ]
+    },
+    {
+     "label": "Platform",
+     "sub": "Shared services",
+     "icon": "cpu",
+     "cue": "platform",
+     "components": [
+      {
+       "label": "Digital ID",
+       "icon": "id-card"
+      },
+      {
+       "label": "Payments",
+       "icon": "credit-card"
+      },
+      {
+       "label": "Notify",
+       "icon": "bell"
+      },
+      {
+       "label": "AI agents",
+       "icon": "bot"
+      }
+     ]
+    },
+    {
+     "label": "Data",
+     "sub": "Governed and shared",
+     "icon": "database",
+     "cue": "Data",
+     "components": [
+      "Registries",
+      "Open data",
+      "Analytics"
+     ]
+    },
+    {
+     "label": "Infrastructure",
+     "sub": "Hosted in Canada",
+     "icon": "server",
+     "cue": "Infrastructure",
+     "components": [
+      {
+       "label": "Cloud",
+       "icon": "cloud"
+      },
+      {
+       "label": "Network",
+       "icon": "network"
+      },
+      {
+       "label": "Security",
+       "icon": "shield-check"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "hub",
+   "id": "hub",
+   "label": "Hub",
+   "kicker": "Digital ID",
+   "headline": "One sign-in, many services",
+   "narration": "Your Alberta.ca Account connects to health, licensing, benefits, permits, education and your wallet.",
+   "center": {
+    "label": "Alberta.ca Account",
+    "sub": "Verified digital identity",
+    "icon": "fingerprint"
+   },
+   "direction": "out",
+   "satellites": [
+    {
+     "label": "MyHealth Records",
+     "icon": "heart-pulse",
+     "cue": "health"
+    },
+    {
+     "label": "Driver licensing",
+     "icon": "car",
+     "cue": "licensing"
+    },
+    {
+     "label": "Income supports",
+     "note": "Apply and track",
+     "icon": "hand-coins",
+     "cue": "benefits"
+    },
+    {
+     "label": "Burn permits",
+     "icon": "flame",
+     "cue": "permits"
+    },
+    {
+     "label": "Student aid",
+     "icon": "graduation-cap",
+     "cue": "education"
+    },
+    {
+     "label": "Alberta Wallet",
+     "icon": "wallet",
+     "cue": "wallet"
+    }
+   ]
+  },
+  {
+   "type": "network",
+   "id": "net",
+   "label": "Network",
+   "kicker": "Wildfire response",
+   "headline": "Who talks to whom in a wildfire",
+   "narration": "The operations centre links crews, aircraft and weather. Municipalities and the public get alerts. Health and roads stay in the loop.",
+   "focus": "ops",
+   "focusCue": "loop",
+   "nodes": [
+    {
+     "id": "ops",
+     "label": "Operations centre",
+     "group": "Province",
+     "icon": "radio-tower",
+     "cue": "operations"
+    },
+    {
+     "id": "crews",
+     "label": "Fire crews",
+     "group": "Field",
+     "icon": "flame",
+     "cue": "crews"
+    },
+    {
+     "id": "air",
+     "label": "Air tankers",
+     "group": "Field",
+     "icon": "plane",
+     "cue": "aircraft"
+    },
+    {
+     "id": "wx",
+     "label": "Weather service",
+     "group": "Province",
+     "icon": "cloud-sun",
+     "cue": "weather"
+    },
+    {
+     "id": "muni",
+     "label": "Municipalities",
+     "group": "Partners",
+     "icon": "landmark",
+     "cue": "Municipalities"
+    },
+    {
+     "id": "pub",
+     "label": "Public alerts",
+     "group": "Partners",
+     "icon": "megaphone",
+     "cue": "alerts"
+    },
+    {
+     "id": "ahs",
+     "label": "Health services",
+     "group": "Province",
+     "icon": "hospital",
+     "cue": "Health"
+    },
+    {
+     "id": "roads",
+     "label": "Roads and closures",
+     "group": "Partners",
+     "icon": "construction",
+     "cue": "roads"
+    }
+   ],
+   "edges": [
+    {
+     "from": "ops",
+     "to": "crews",
+     "label": "Dispatch"
+    },
+    {
+     "from": "ops",
+     "to": "air"
+    },
+    {
+     "from": "wx",
+     "to": "ops",
+     "label": "Forecasts"
+    },
+    {
+     "from": "ops",
+     "to": "muni"
+    },
+    {
+     "from": "muni",
+     "to": "pub",
+     "label": "Alerts"
+    },
+    {
+     "from": "ops",
+     "to": "ahs"
+    },
+    {
+     "from": "ops",
+     "to": "roads"
+    },
+    {
+     "from": "crews",
+     "to": "air"
+    }
+   ]
+  },
+  {
+   "type": "tree",
+   "id": "tree",
+   "label": "Org",
+   "kicker": "Who does what",
+   "headline": "Inside the digital service team",
+   "narration": "The service owner leads three squads: product, engineering and support. Each squad has its own roles.",
+   "root": {
+    "label": "Service owner",
+    "sub": "Accountable for outcomes",
+    "icon": "user-round-check",
+    "children": [
+     {
+      "label": "Product",
+      "cue": "product",
+      "children": [
+       {
+        "label": "Research"
+       },
+       {
+        "label": "Design"
+       },
+       {
+        "label": "Content"
+       }
+      ]
+     },
+     {
+      "label": "Engineering",
+      "cue": "engineering",
+      "children": [
+       {
+        "label": "Platform"
+       },
+       {
+        "label": "Apps"
+       },
+       {
+        "label": "AI agents"
+       }
+      ]
+     },
+     {
+      "label": "Support",
+      "cue": "support",
+      "children": [
+       {
+        "label": "Contact centre"
+       },
+       {
+        "label": "Training"
+       }
+      ]
+     }
+    ]
+   }
+  },
+  {
+   "type": "matrix",
+   "id": "matrix",
+   "label": "Priorities",
+   "kicker": "Where to start",
+   "headline": "Pick the quick wins first",
+   "highlight": [
+    "quick",
+    "wins"
+   ],
+   "support": "We scored twelve ideas on value to Albertans and effort to build.",
+   "narration": "We placed each idea by value and effort. Online renewals is the clearest quick win.",
+   "xAxis": {
+    "label": "Effort",
+    "low": "Low",
+    "high": "High"
+   },
+   "yAxis": {
+    "label": "Value",
+    "low": "Low",
+    "high": "High"
+   },
+   "quadrants": [
+    "Quick wins",
+    "Big bets",
+    "Nice to have",
+    "Rethink"
+   ],
+   "focus": "Online renewals",
+   "focusCue": "clearest",
+   "items": [
+    {
+     "label": "Online renewals",
+     "x": 0.2,
+     "y": 0.84,
+     "icon": "refresh-cw"
+    },
+    {
+     "label": "Chat assistant",
+     "x": 0.38,
+     "y": 0.66
+    },
+    {
+     "label": "Digital ID",
+     "x": 0.72,
+     "y": 0.88
+    },
+    {
+     "label": "Wildfire app",
+     "x": 0.62,
+     "y": 0.6
+    },
+    {
+     "label": "New letterhead",
+     "x": 0.18,
+     "y": 0.22
+    },
+    {
+     "label": "Legacy rewrite",
+     "x": 0.86,
+     "y": 0.18
+    },
+    {
+     "label": "Form tidy-up",
+     "x": 0.35,
+     "y": 0.36
+    }
+   ]
+  },
+  {
+   "type": "venn",
+   "id": "venn",
+   "label": "Overlap",
+   "kicker": "Responsible AI",
+   "headline": "Where good AI services live",
+   "narration": "A good service is useful, it is safe, and it is fair. Where all three meet, Albertans can trust it.",
+   "sets": [
+    {
+     "title": "Useful",
+     "cue": "useful",
+     "items": [
+      "Saves time",
+      "Plain language"
+     ]
+    },
+    {
+     "title": "Safe",
+     "cue": "safe",
+     "items": [
+      "Private",
+      "Secure"
+     ]
+    },
+    {
+     "title": "Fair",
+     "cue": "fair",
+     "items": [
+      "Explainable",
+      "Appealable"
+     ]
+    }
+   ],
+   "shared": [
+    {
+     "of": [
+      1,
+      2
+     ],
+     "items": [
+      "Reliable"
+     ]
+    },
+    {
+     "of": [
+      2,
+      3
+     ],
+     "items": [
+      "Audited"
+     ]
+    },
+    {
+     "of": [
+      1,
+      3
+     ],
+     "items": [
+      "Inclusive"
+     ]
+    }
+   ],
+   "centre": "Trusted",
+   "centreCue": "trust"
+  },
+  {
+   "type": "flow",
+   "id": "flow",
+   "label": "Flow",
+   "kicker": "Health data",
+   "headline": "From many sources to better care",
+   "narration": "Clinics, labs and pharmacies feed one secure record. Out come faster referrals, fewer repeat tests and better planning.",
+   "sourcesTitle": "Sources",
+   "outcomesTitle": "Outcomes",
+   "stage": "Single record",
+   "sources": [
+    {
+     "label": "Family clinics",
+     "icon": "stethoscope",
+     "cue": "Clinics"
+    },
+    {
+     "label": "Labs",
+     "icon": "flask-conical",
+     "cue": "labs"
+    },
+    {
+     "label": "Pharmacies",
+     "icon": "pill",
+     "cue": "pharmacies"
+    }
+   ],
+   "system": {
+    "label": "Provincial health record",
+    "sub": "Secure, consented access",
+    "icon": "shield-check",
+    "cue": "secure"
+   },
+   "outcomes": [
+    {
+     "label": "Faster referrals",
+     "cue": "faster"
+    },
+    {
+     "label": "Fewer repeat tests",
+     "cue": "fewer"
+    },
+    {
+     "label": "Better planning",
+     "note": "Capacity by region",
+     "cue": "planning"
+    }
+   ]
+  },
+  {
+   "type": "map",
+   "id": "map",
+   "label": "Map",
+   "kicker": "Registry agents",
+   "headline": "Same-day service across Alberta",
+   "narration": "Edmonton and Calgary lead, with Red Deer, Lethbridge and the north close behind. The Edmonton to Calgary corridor carries most transfers.",
+   "valueLabel": "Same-day rate",
+   "places": [
+    {
+     "name": "Edmonton",
+     "value": "94%",
+     "cue": "Edmonton"
+    },
+    {
+     "name": "Calgary",
+     "value": "92%",
+     "cue": "Calgary"
+    },
+    {
+     "name": "Red Deer",
+     "value": "89%",
+     "cue": "Red"
+    },
+    {
+     "name": "Lethbridge",
+     "value": "87%",
+     "cue": "Lethbridge"
+    },
+    {
+     "name": "Grande Prairie",
+     "value": "81%",
+     "cue": "north"
+    },
+    {
+     "name": "Fort McMurray",
+     "value": "78%"
+    },
+    {
+     "name": "Medicine Hat",
+     "value": "85%"
+    },
+    {
+     "name": "Jasper",
+     "value": "72%",
+     "note": "Seasonal staff"
+    }
+   ],
+   "routes": [
+    {
+     "from": "Edmonton",
+     "to": "Calgary",
+     "label": "QE II corridor",
+     "cue": "corridor"
+    }
+   ]
+  },
+  {
+   "type": "layers",
+   "id": "layers",
+   "label": "Exploded",
+   "kicker": "Anatomy of an agent",
+   "headline": "What is inside an AI agent",
+   "narration": "At the top is the conversation. Under it, the plan. Then the tools it may use, and at the base, the rules it must follow.",
+   "layers": [
+    {
+     "label": "Conversation",
+     "sub": "Plain-language requests",
+     "icon": "message-square",
+     "cue": "conversation"
+    },
+    {
+     "label": "Plan",
+     "sub": "Steps it will take",
+     "icon": "list-checks",
+     "cue": "plan"
+    },
+    {
+     "label": "Tools",
+     "sub": "Forms, records, calendars",
+     "icon": "wrench",
+     "cue": "tools"
+    },
+    {
+     "label": "Rules",
+     "sub": "Policy, privacy, approvals",
+     "icon": "scale",
+     "cue": "rules"
+    }
+   ]
+  },
+  {
+   "type": "screen",
+   "id": "screen",
+   "label": "Walkthrough",
+   "kicker": "Burn permits",
+   "headline": "Applying for a burn permit online",
+   "device": "laptop",
+   "asset": "permit",
+   "narration": "The steps show where you are. Enter the land location, pin the burn site on the map, then continue to the burn type.",
+   "callouts": [
+    {
+     "x": 0.03,
+     "y": 0.115,
+     "w": 0.19,
+     "h": 0.29,
+     "label": "Five short steps",
+     "cue": "steps"
+    },
+    {
+     "x": 0.265,
+     "y": 0.27,
+     "w": 0.68,
+     "h": 0.085,
+     "label": "Land location, filled from your last permit",
+     "cue": "land"
+    },
+    {
+     "x": 0.267,
+     "y": 0.403,
+     "w": 0.676,
+     "h": 0.15,
+     "label": "Pin the site; fire danger is checked live",
+     "cue": "pin"
+    },
+    {
+     "x": 0.755,
+     "y": 0.654,
+     "w": 0.188,
+     "h": 0.06,
+     "label": "Continue to the burn type",
+     "cue": "continue"
+    }
+   ]
+  },
+  {
+   "type": "screen",
+   "id": "phone",
+   "label": "Wallet",
+   "kicker": "Digital ID",
+   "headline": "Prove your age without showing your card",
+   "device": "phone",
+   "asset": "wallet",
+   "narration": "Open the wallet, show the code, and only the answer is shared: over eighteen, yes.",
+   "callouts": [
+    {
+     "x": 0.04,
+     "y": 0.1,
+     "w": 0.92,
+     "h": 0.16,
+     "label": "Your verified digital ID",
+     "cue": "wallet"
+    },
+    {
+     "x": 0.2,
+     "y": 0.33,
+     "w": 0.6,
+     "h": 0.25,
+     "label": "A code that refreshes every 30 seconds",
+     "cue": "code"
+    },
+    {
+     "x": 0.04,
+     "y": 0.64,
+     "w": 0.92,
+     "h": 0.07,
+     "label": "Only the answer is shared",
+     "cue": "answer"
+    }
+   ]
+  },
+  {
+   "type": "end",
+   "duration": 5,
+   "headline": "See it live at Agency 2026",
+   "lines": [
+    "Dec. 7–9, 2026 · Edmonton and Calgary"
+   ],
+   "cta": "Visit the Technology and Innovation booth",
+   "url": "alberta.ca/agency",
+   "id": "s58"
+  }
+ ]
+}

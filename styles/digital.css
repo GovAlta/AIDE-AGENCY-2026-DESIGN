@@ -1,0 +1,45 @@
+/* Agency 2026 digital family (banners, social, signage, thumbnails). Loaded by templates/digital/* through meta.css.
+   Every size is in em: a template sets the page font-size from its canvas (about 1/60 of the short side), so one layout scales
+   from a 600x200 email header to a 33x80 in roll-up banner. */
+.dg { position: relative; overflow: hidden; font-size: var(--fs, 18px); --u: 1px; line-height: 1.15; }
+.dg.g-night { background: radial-gradient(ellipse at 50% 45%, #0C3152 0%, #062440 45%, #041B30 100%); }
+.dg.g-navy { background: radial-gradient(ellipse at 50% 45%, #0A3A62 0%, #022C4C 60%, #02223B 100%); }
+.dg .safe { position: absolute; z-index: 2; }
+.dg-center { display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.dg-left { display: flex; flex-direction: column; justify-content: center; text-align: left; align-items: flex-start; }
+
+.dg-event { font-weight: 700; font-size: 1.5em; color: var(--g-ink); letter-spacing: -0.005em; }
+.dg-date { font-weight: 700; font-size: 1.5em; color: var(--maroon); letter-spacing: -0.005em; margin-top: 0.25em; }
+.dark .dg-date, .g-night .dg-date, .g-navy .dg-date { color: var(--text-dark-pink); }
+.dg-title { text-wrap: balance; max-width: 100%; font-weight: 800; color: var(--g-ink); letter-spacing: -0.028em; line-height: 1.02; padding: 0.1em 0; margin: 0.14em 0 -0.02em; }
+.dg-sub { font-weight: 700; font-size: 1.95em; color: var(--g-ink); letter-spacing: -0.01em; margin-top: 0.2em; }
+.dg-line { font-weight: 700; font-size: 1.32em; color: var(--g-ink); margin-top: 0.42em; }
+.dg-line + .dg-line { margin-top: 0.25em; }
+.dg-cta { font-weight: 800; font-size: 3.1em; color: var(--maroon); letter-spacing: -0.015em; margin-top: 0.3em; }
+.g-night .dg-cta, .g-navy .dg-cta { color: var(--text-dark-pink); }
+.dg-kicker { font-family: var(--font-mono); font-weight: 600; font-size: 0.82em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ct, var(--text-purple)); }
+.g-night .dg-kicker, .g-navy .dg-kicker { color: var(--ct, var(--text-dark-lilac)); }
+.dg-hosted { font-family: var(--font-mono); font-size: 0.72em; letter-spacing: 0.2em; text-transform: uppercase; color: var(--g-soft); }
+.dg-host { font-weight: 700; font-size: 1.05em; color: var(--g-ink); margin-top: 0.3em; }
+.dg-body { font-weight: 500; font-size: 1.25em; line-height: 1.35; color: var(--g-soft); max-width: 30em; }
+.dg-anchor { position: absolute; z-index: 2; font-size: 0.95em; line-height: 1.3; color: var(--g-ink); font-weight: 400; }
+.dg-logo { position: absolute; z-index: 2; display: block; }
+.dg-logo svg { display: block; width: 100%; height: auto; }
+.dg-mark { position: absolute; z-index: 2; font-weight: 800; color: var(--g-ink); letter-spacing: -0.01em; line-height: 1; white-space: nowrap; }
+.dg-mark b { color: var(--maroon); margin-left: 0.22em; }
+.g-night .dg-mark b, .g-navy .dg-mark b { color: var(--text-dark-maroon); }
+.dg-mark::after { content: ""; display: block; height: 0.17em; margin-top: 0.22em; background: var(--spectrum); }
+.dg-bus { display: grid; gap: 0.22em; width: 12em; margin: 0.7em 0; }
+.dg-bus i { display: block; height: 0.2em; border-radius: 0.1em; background: var(--c); }
+.dg-bus i:nth-child(2) { width: 85%; } .dg-bus i:nth-child(3) { width: 70%; }
+.dg-cls { position: absolute; z-index: 3; font-family: var(--font-mono); font-size: 0.62em; letter-spacing: 0.16em; text-transform: uppercase; border: 1px solid #8aa3ba;
+  color: #fff; border-radius: 99px; padding: 0.25em 1em; background: rgba(2, 44, 76, 0.9); }
+.dg-cls.light { color: var(--navy); background: rgba(255, 255, 255, 0.9); border-color: rgba(2, 44, 76, 0.3); }
+.dg-band { position: absolute; left: 0; right: 0; bottom: 0; z-index: 2; background: var(--navy); }
+.dg-band::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 0.2em; background: var(--spectrum); }
+.dg-qr { background: #fff; border-radius: 0.6em; padding: 0.5em; display: inline-flex; flex-direction: column; align-items: center; gap: 0.3em; }
+.dg-qr svg { display: block; }
+.dg-qr span { font-family: var(--font-mono); font-size: 0.7em; color: var(--navy); letter-spacing: 0.04em; }
+.dg-sample { position: absolute; z-index: 3; font-family: var(--font-mono); font-size: 0.6em; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; background: var(--coral); padding: 0.25em 0.7em; border-radius: 0.3em; }
+.chip-halo { position: absolute; background: var(--g-bg); border-radius: 18%; }
+.dg.g-night .chip-halo { background: #0A2E4E; } .dg.g-navy .chip-halo { background: #06355B; }

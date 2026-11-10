@@ -1,0 +1,28 @@
+/* Print family additions (templates/print/*). Inlined by each print template; loads after agency.css. */
+.ab-logo { display: block; height: calc(30 * var(--u)); width: auto; }
+.anchor { font-size: calc(9.5 * var(--u)); line-height: 1.3; color: var(--navy); font-weight: 400; }
+.center { text-align: center; }
+.fill { position: absolute; inset: 0; }
+
+/* invite-style poster / postcard front */
+.poster { --u: 1pt; }
+.poster .pz { position: absolute; z-index: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
+.poster .ev { font-weight: 700; font-size: calc(17 * var(--u)); color: var(--navy); letter-spacing: -0.005em; }
+.poster .dt { font-weight: 700; font-size: calc(17 * var(--u)); color: var(--maroon); margin-top: calc(4 * var(--u)); }
+.poster .tt { white-space: nowrap; max-width: 100%; overflow: hidden; padding: 0.04em 0.02em 0.14em; font-weight: 800; color: var(--navy); line-height: 1.0; letter-spacing: -0.02em; margin: calc(10 * var(--u)) 0 calc(6 * var(--u)); }
+.poster .sb { font-weight: 700; font-size: calc(17 * var(--u)); color: var(--navy); }
+.poster .pl { font-weight: 700; font-size: calc(14 * var(--u)); color: var(--navy); margin-top: calc(4 * var(--u)); }
+.poster .cta { font-weight: 800; font-size: calc(28 * var(--u)); color: var(--maroon); margin-top: calc(10 * var(--u)); }
+.poster .foot { position: absolute; z-index: 1; display: flex; justify-content: space-between; align-items: flex-end; }
+.poster .qr-box { margin-top: calc(16 * var(--u)); background: #fff; padding: calc(6 * var(--u)) calc(10 * var(--u)) calc(6 * var(--u)) calc(6 * var(--u)); border-radius: calc(8 * var(--u)); border: 1px solid var(--line); text-align: left; }
+
+/* agenda */
+.agenda-day { border-top: calc(5 * var(--u)) solid var(--c); background: var(--field); border-radius: calc(7 * var(--u)); padding: calc(9 * var(--u)) calc(11 * var(--u)) calc(10 * var(--u)); }
+.agenda-day .dd { font-family: var(--font-mono); font-size: calc(7.6 * var(--u)); letter-spacing: .14em; text-transform: uppercase; color: var(--ct); font-weight: 600; }
+.agenda-day h3 { font-size: calc(14 * var(--u)); margin: calc(2 * var(--u)) 0 calc(1 * var(--u)); }
+.agenda-day .pl { font-size: calc(8.6 * var(--u)); color: var(--mute); margin-bottom: calc(6 * var(--u)); }
+.sess { display: grid; grid-template-columns: calc(62 * var(--u)) 1fr; gap: calc(8 * var(--u)); padding: calc(5 * var(--u)) 0; border-top: 1px solid var(--line); font-size: calc(8.8 * var(--u)); }
+.sess .tm { font-family: var(--font-mono); font-weight: 600; color: var(--navy); font-size: calc(8.2 * var(--u)); }
+.sess b { color: var(--navy); display: block; font-size: calc(9.6 * var(--u)); }
+.sess span { color: var(--mute); font-size: calc(8.2 * var(--u)); }
+[data-fit] { padding-bottom: 0.14em; }

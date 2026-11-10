@@ -1,0 +1,411 @@
+{
+ "template": "print/handout",
+ "name": "contact-alberta-handout",
+ "title": "Contact Alberta AI: Agency 2026 Handout",
+ "$source": "Reproduces contact-alberta/docs/handout/agency-2026-handout.html (sponsor-approved, 2026-11-10). Every figure is from that project's record: contact-alberta/docs/video/agency/NOTES.md. Do not reuse these figures for another project.",
+ "footer": "Contact Alberta AI · Agency 2026 Showcase · November 2026",
+ "classification": "UNCLASSIFIED",
+ "art": "handout",
+ "pages": [
+  {
+   "kicker": "Agency 2026 · Showcase",
+   "title": "Contact Alberta AI",
+   "lead": "**Contact Alberta** is a Government of Alberta AI agent that answers Albertans’ general questions by voice or text, using published government sources only.",
+   "blocks": [
+    {
+     "type": "section",
+     "title": "Opportunity",
+     "accent": "purple",
+     "blocks": [
+      {
+       "type": "tiles",
+       "items": [
+        {
+         "value": "~100",
+         "label": "contact centres serve Albertans",
+         "accent": "purple"
+        },
+        {
+         "value": "2.7",
+         "unit": "M",
+         "label": "cases a year",
+         "accent": "blue"
+        },
+        {
+         "value": "3.4",
+         "unit": "M",
+         "label": "phone interactions a year",
+         "accent": "cyan"
+        },
+        {
+         "value": "770,000",
+         "label": "conversations a year answerable from published knowledge",
+         "accent": "yellow",
+         "dark": true
+        }
+       ]
+      },
+      {
+       "type": "split",
+       "parts": [
+        {
+         "value": 31,
+         "label": "31% published knowledge",
+         "accent": "yellow"
+        },
+        {
+         "value": 55,
+         "label": "55% need a ministry system",
+         "accent": "navy2"
+        },
+        {
+         "value": 12.5,
+         "label": "12.5% need a person",
+         "accent": "purple"
+        },
+        {
+         "value": 1.5,
+         "label": "",
+         "accent": "neutral-bar"
+        }
+       ],
+       "note": "About 2.5 million conversations a year, sorted by need. Source: contact centre assessment of one year of case records, 12 months to September 2026."
+      }
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Results on Real Calls",
+     "accent": "green",
+     "blocks": [
+      {
+       "type": "text",
+       "size": 9,
+       "text": "Real questions from 1,000 recorded calls. Each side is scored alone, with the same method, on questions kept back from all tuning."
+      },
+      {
+       "type": "cards",
+       "items": [
+        {
+         "title": "Correct information, strict check",
+         "text": "A call counts as correct when no statement is proven wrong by a live official page. 336 calls.",
+         "bars": [
+          {
+           "label": "AI agent",
+           "value": 95.5,
+           "accent": "green"
+          },
+          {
+           "label": "Staff",
+           "value": 83.6,
+           "neutral": true
+          }
+         ]
+        },
+        {
+         "title": "Correct information, blind grading",
+         "text": "A grader scores each answer without knowing who gave it. 675 questions.",
+         "bars": [
+          {
+           "label": "AI agent",
+           "value": 98.5,
+           "accent": "green"
+          },
+          {
+           "label": "Staff",
+           "value": 76.1,
+           "neutral": true
+          }
+         ]
+        }
+       ]
+      },
+      {
+       "type": "tiles",
+       "items": [
+        {
+         "value": "0.6",
+         "unit": "%",
+         "label": "of AI agent statements proven wrong (staff: 4.6%)",
+         "accent": "green"
+        },
+        {
+         "value": "~1",
+         "unit": " s",
+         "label": "from the caller’s last word to the AI agent’s first sound",
+         "accent": "blue"
+        },
+        {
+         "value": "60",
+         "unit": "/60",
+         "label": "spoken questions with no AI agent speech before the caller finished",
+         "accent": "orange"
+        },
+        {
+         "value": "99.3",
+         "unit": "%",
+         "label": "of questions with correct AI agent behaviour",
+         "accent": "pink"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "quote",
+     "text": "Contact Alberta can offer value to Albertans, addressing their questions day and night.",
+     "small": "The general questions in the assessment need no ministry system and no person to answer."
+    }
+   ]
+  },
+  {
+   "kicker": "Contact Alberta AI",
+   "title": "How the AI Agent Works",
+   "titleSize": 26,
+   "bus": [
+    "green",
+    "orange"
+   ],
+   "gap": 0.15,
+   "blocks": [
+    {
+     "type": "section",
+     "blocks": [
+      {
+       "type": "text",
+       "size": 9.2,
+       "text": "Two models make the AI agent both quick and careful. A **fast talker** replies at once and decides what to look up. A **slow thinker** writes the answer from the sources."
+      },
+      {
+       "type": "flow",
+       "steps": [
+        {
+         "title": "Listen",
+         "text": "A live speech engine turns speech into text",
+         "accent": "purple"
+        },
+        {
+         "title": "Reply",
+         "text": "The fast talker, in Montréal, replies and starts the search",
+         "accent": "blue"
+        },
+        {
+         "title": "Search",
+         "text": "Published documents and a map of 70 topics",
+         "accent": "cyan"
+        },
+        {
+         "title": "Answer",
+         "text": "The slow thinker writes from the sources only",
+         "accent": "green"
+        },
+        {
+         "title": "Check",
+         "text": "Code checks every number against a source",
+         "accent": "yellow"
+        },
+        {
+         "title": "Speak",
+         "text": "A natural voice speaks the answer",
+         "accent": "orange"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "section",
+        "title": "Knowledge Base",
+        "accent": "cyan",
+        "blocks": [
+         {
+          "type": "tiles",
+          "items": [
+           {
+            "value": "5,907",
+            "size": 17,
+            "label": "alberta.ca pages",
+            "accent": "cyan"
+           },
+           {
+            "value": "1,784",
+            "size": 17,
+            "label": "official forms",
+            "accent": "blue"
+           },
+           {
+            "value": "707",
+            "size": 17,
+            "label": "handbooks and laws",
+            "accent": "purple"
+           }
+          ]
+         },
+         {
+          "type": "note",
+          "text": "The whole alberta.ca sitemap, the official forms, and handbooks and laws found from real questions. No AI-written text."
+         }
+        ]
+       }
+      ],
+      [
+       {
+        "type": "section",
+        "title": "Speech Recognition",
+        "accent": "orange",
+        "blocks": [
+         {
+          "type": "dots",
+          "accent": "orange",
+          "items": [
+           "More than 30 speech engines tested on the same recorded calls",
+           "A free model on a government machine matched the Montréal cloud service: about 8 word errors in 100",
+           "The local model costs about 1 cent an hour of audio, against about 1 dollar",
+           "Engines that write words on silent audio are not used"
+          ]
+         }
+        ]
+       }
+      ]
+     ]
+    },
+    {
+     "type": "section",
+     "blocks": [
+      {
+       "type": "cols",
+       "cols": [
+        [
+         {
+          "type": "section",
+          "title": "Thousands of Tests",
+          "accent": "yellow",
+          "blocks": [
+           {
+            "type": "text",
+            "size": 8.8,
+            "text": "The project builds toward evaluating AI agents through thousands of tests, hill climbing toward one hundred percent across all meaningful metrics. **Hill climbing** means measuring, changing one thing, and keeping the change only when the measure improves."
+           }
+          ]
+         }
+        ],
+        [
+         {
+          "type": "section",
+          "title": "Gains from Hill Climbing",
+          "accent": "green",
+          "blocks": [
+           {
+            "type": "table",
+            "head": [
+             "Measure",
+             "Earlier",
+             "Now"
+            ],
+            "rows": [
+             [
+              "First sound after the caller’s last word",
+              "1.6 s",
+              "1.06 s"
+             ],
+             [
+              "Each knowledge search",
+              "Up to 5 s",
+              "0.25 s"
+             ],
+             [
+              "Words misheard, whole simulated calls",
+              "9.1 in 100",
+              "0.8 in 100"
+             ],
+             [
+              "Long silences, 12 simulated calls",
+              "8",
+              "2"
+             ],
+             [
+              "Spoken answer start, latest change",
+              "3.9 s",
+              "3.1 s"
+             ]
+            ]
+           }
+          ]
+         }
+        ]
+       ]
+      },
+      {
+       "type": "spacer",
+       "size": 3
+      },
+      {
+       "type": "tiles",
+       "items": [
+        {
+         "value": "450,000",
+         "size": 16,
+         "label": "speech segments transcribed",
+         "accent": "yellow"
+        },
+        {
+         "value": "14,941",
+         "size": 16,
+         "label": "AI agent answers graded",
+         "accent": "green"
+        },
+        {
+         "value": "2,441",
+         "size": 16,
+         "label": "search tests",
+         "accent": "cyan"
+        },
+        {
+         "value": "171",
+         "size": 16,
+         "label": "simulated calls, with an AI caller",
+         "accent": "pink"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Way Forward",
+     "accent": "purple",
+     "blocks": [
+      {
+       "type": "tiles",
+       "items": [
+        {
+         "title": "Value to Albertans",
+         "label": "General questions answered day and night, from published sources.",
+         "accent": "yellow"
+        },
+        {
+         "title": "Future integration",
+         "label": "Connections to ministry case systems, which more than half of conversations need. File checks only for callers with a verified Alberta.ca Account.",
+         "accent": "blue"
+        },
+        {
+         "title": "Knowledge growth",
+         "label": "The next 10,000 recordings show which published documents answer real questions. Documents join the knowledge base by written rule.",
+         "accent": "green"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "terms",
+     "text": "**Figures.** The deployed setting of the AI agent. Correct information and statements: real questions kept back from all tuning, both sides checked against live official pages; the staff side is a de-identified summary of what was said on the call. Speed: 60 spoken questions. Simulated calls: an AI plays an invented caller; the AI agent is the real system. Results are reported by program, never by employee."
+    }
+   ]
+  }
+ ]
+}

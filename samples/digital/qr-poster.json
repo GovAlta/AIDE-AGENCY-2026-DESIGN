@@ -1,0 +1,1 @@
+{ "template": "digital/qr-poster", "name": "qr-poster", "preset": "event", "qr": { "url": "https://www.alberta.ca", "label": "Scan for details" }, "sample": "Sample QR: replace the link" }

@@ -1,0 +1,556 @@
+{
+ "kit": "goa-agency",
+ "theme": "agency-light",
+ "title": "Agency 2026: The Art of the Possible (MVAI sizzle)",
+ "voice": {
+  "provider": "elevenlabs",
+  "name": "FyYFoP6qNryBV7G8rnI9"
+ },
+ "captions": true,
+ "classification": "Unclassified",
+ "kit_options": {
+  "event": "Agency",
+  "year": "2026",
+  "date": "Dec. 7–9, 2026",
+  "place": "Edmonton · Calgary",
+  "host": "Ministry of Technology and Innovation",
+  "host_label": "Hosted by",
+  "series": "The Art of the Possible"
+ },
+ "assets": {
+  "permit": {
+   "upload": "form.png",
+   "kind": "screenshot"
+  },
+  "wallet": {
+   "upload": "phone.png",
+   "kind": "screenshot"
+  }
+ },
+ "scenes": [
+  {
+   "type": "splash",
+   "duration": 6,
+   "id": "z1"
+  },
+  {
+   "type": "title",
+   "kicker": "Agency 2026 · A showcase for government",
+   "headline": "The Art of the Possible",
+   "subtitle": "What public servants have built with AI, what each tool cost, and how long it took to build.",
+   "narration": "Agency twenty twenty-six presents The Art of the Possible: a showcase for government.",
+   "icon": "sparkles",
+   "id": "z2"
+  },
+  {
+   "type": "statement",
+   "ground": "spectrum",
+   "accent": "pink",
+   "headline": "Technology and Innovation has been building with AI. This is your chance to see it.",
+   "highlight": [
+    "see"
+   ],
+   "narration": "Technology and Innovation has been building with A I. This is your chance to see it.",
+   "id": "z3"
+  },
+  {
+   "type": "chapter",
+   "number": "01",
+   "title": "The showcase",
+   "subtitle": "One day, about forty working prototypes, all open to try.",
+   "duration": 3.5,
+   "id": "z4"
+  },
+  {
+   "type": "big-number",
+   "kicker": "On the showcase floor",
+   "value": 40,
+   "display": "About 40",
+   "caption": "working prototypes, built by public servants",
+   "context": "Each one has headphones and a QR code.",
+   "valueCue": "forty",
+   "narration": "On the floor, you can try about forty working prototypes, built by public servants. Each one has headphones and a QR code.",
+   "icon": "monitor-play",
+   "source": "Source: Agency 2026 event page",
+   "id": "z5"
+  },
+  {
+   "type": "icons",
+   "headline": "What is on through the day",
+   "narration": "Try the prototypes, and scan any demo to save it to your toolbox. Visit the main stage and watch live builds by the A I Maximalist team. Meet our technology partners, and join a hands-on session with the A I Academy.",
+   "items": [
+    {
+     "icon": "monitor-play",
+     "title": "Prototypes",
+     "text": "About 40 to try, with headphones",
+     "cue": "prototypes"
+    },
+    {
+     "icon": "qr-code",
+     "title": "Toolbox",
+     "text": "Scan to save any demo",
+     "cue": "Scan"
+    },
+    {
+     "icon": "mic",
+     "title": "Main stage",
+     "text": "The Minister, executives and partners",
+     "cue": "main stage"
+    },
+    {
+     "icon": "hammer",
+     "title": "Live builds",
+     "text": "The AI Maximalist team, building live",
+     "cue": "live builds"
+    },
+    {
+     "icon": "handshake",
+     "title": "Partner booths",
+     "text": "How partners would scale each idea",
+     "cue": "partners"
+    },
+    {
+     "icon": "graduation-cap",
+     "title": "AI Academy",
+     "text": "Hands-on breakout sessions",
+     "cue": "hands-on"
+    }
+   ],
+   "id": "z6"
+  },
+  {
+   "type": "process",
+   "ground": "night",
+   "kicker": "Your day",
+   "headline": "How a visit works",
+   "narration": "Drop in any time between nine and four. Put on the headphones and try a prototype. Scan its code, and at the end of the day you get the links and a short write-up.",
+   "steps": [
+    {
+     "title": "Drop in",
+     "text": "Any time, 9 a.m. to 4 p.m.",
+     "icon": "door-open",
+     "cue": "Drop in"
+    },
+    {
+     "title": "Try a prototype",
+     "text": "Headphones on, hands on",
+     "icon": "headphones",
+     "cue": "headphones"
+    },
+    {
+     "title": "Scan the code",
+     "text": "It goes into your toolbox",
+     "icon": "qr-code",
+     "cue": "Scan"
+    },
+    {
+     "title": "Get your links",
+     "text": "Links and a short write-up at the end of the day",
+     "icon": "mail",
+     "cue": "links"
+    }
+   ],
+   "id": "z7"
+  },
+  {
+   "type": "chapter",
+   "number": "02",
+   "title": "Made with MVAI",
+   "subtitle": "This film is a demo of the Agency template.",
+   "duration": 3.5,
+   "id": "z8"
+  },
+  {
+   "type": "statement",
+   "ground": "night",
+   "kicker": "How this video was made",
+   "headline": "Written as a script. Voiced, timed and rendered by MVAI.",
+   "highlight": [
+    "MVAI."
+   ],
+   "narration": "This video is also a demo. It was written as a script, then voiced, timed and rendered by M V A I.",
+   "id": "z9"
+  },
+  {
+   "type": "stats",
+   "headline": "The Agency template",
+   "narration": "The template has forty-four screen types and two themes, light and dark. One script goes in, and a finished video comes out.",
+   "items": [
+    {
+     "value": 44,
+     "label": "screen types",
+     "sub": "Stories, data, time and structure",
+     "cue": "forty-four",
+     "icon": "layout-grid"
+    },
+    {
+     "value": 2,
+     "label": "themes",
+     "sub": "Light board and night board",
+     "cue": "two themes",
+     "icon": "contrast"
+    },
+    {
+     "value": 1,
+     "label": "script",
+     "sub": "In: a script. Out: a finished video",
+     "cue": "One script",
+     "icon": "file-text"
+    }
+   ],
+   "id": "z10"
+  },
+  {
+   "type": "line",
+   "id": "z11",
+   "label": "Health",
+   "headline": "Charts draw on as the voice speaks",
+   "suffix": " min",
+   "unit": "Average wait, minutes",
+   "narration": "Charts draw on as the voice speaks, and every number is labelled as example data.",
+   "labels": [
+    "Jan",
+    "Feb",
+    "Mar",
+    "Apr",
+    "May",
+    "Jun",
+    "Jul",
+    "Aug",
+    "Sep",
+    "Oct",
+    "Nov",
+    "Dec"
+   ],
+   "series": [
+    {
+     "name": "Average wait",
+     "values": [
+      36,
+      38,
+      37,
+      31,
+      24,
+      19,
+      16,
+      14,
+      12,
+      11,
+      10,
+      9
+     ]
+    }
+   ],
+   "annotation": {
+    "index": 3,
+    "text": "Example annotation",
+    "cue": "voice"
+   },
+   "source": "Example data (fictional)",
+   "ground": "paper"
+  },
+  {
+   "type": "map",
+   "id": "z12",
+   "label": "Map",
+   "kicker": "Maps",
+   "headline": "Maps of Alberta, with routes",
+   "narration": "Maps of Alberta show places and the routes between them, like Edmonton and Calgary.",
+   "places": [
+    {
+     "name": "Edmonton",
+     "cue": "Edmonton"
+    },
+    {
+     "name": "Calgary",
+     "cue": "Calgary"
+    },
+    {
+     "name": "Red Deer"
+    },
+    {
+     "name": "Lethbridge"
+    },
+    {
+     "name": "Grande Prairie"
+    },
+    {
+     "name": "Fort McMurray"
+    }
+   ],
+   "routes": [
+    {
+     "from": "Edmonton",
+     "to": "Calgary",
+     "cue": "routes"
+    }
+   ]
+  },
+  {
+   "type": "agent-loop",
+   "id": "z13",
+   "label": "T7 · Agent",
+   "kicker": "AI agent, road test booking",
+   "headline": "How the agent books your road test",
+   "narration": "Diagrams explain how an A I agent works. It plans, acts with its tools, checks the result, and a person approves before anything is final.",
+   "goal": "Road test in Red Deer next week",
+   "goalCue": "agent works",
+   "plan": "Find open slots near the applicant",
+   "planCue": "plans",
+   "act": "Query the scheduler, hold a slot",
+   "actCue": "acts",
+   "tools": [
+    "scheduler.search",
+    "calendar.hold",
+    "notify.sms"
+   ],
+   "check": "Slot still free? Licence class right?",
+   "checkCue": "checks",
+   "retry": "Slot taken: plan again",
+   "gate": "Clerk confirms the booking",
+   "gateCue": "person approves",
+   "done": "Booked: Tue 9:40, SMS sent",
+   "doneCue": "final",
+   "ground": "navy"
+  },
+  {
+   "type": "architecture",
+   "id": "z14",
+   "label": "Stack",
+   "kicker": "How it fits together",
+   "headline": "One platform under every service",
+   "highlight": [
+    "platform"
+   ],
+   "narration": "Architectures build up layer by layer, from infrastructure to the people who use the service.",
+   "focus": "Platform",
+   "layers": [
+    {
+     "label": "People",
+     "sub": "Albertans and staff",
+     "icon": "users",
+     "components": [
+      {
+       "label": "Albertans",
+       "icon": "user"
+      },
+      {
+       "label": "Caseworkers",
+       "icon": "briefcase"
+      },
+      {
+       "label": "Partners",
+       "icon": "handshake"
+      }
+     ],
+     "cue": "people"
+    },
+    {
+     "label": "Apps",
+     "sub": "Built once, reused",
+     "icon": "app-window",
+     "components": [
+      "Permits",
+      "Benefits",
+      "Licensing",
+      "Health cards",
+      "Grants"
+     ]
+    },
+    {
+     "label": "Platform",
+     "sub": "Shared services",
+     "icon": "cpu",
+     "components": [
+      {
+       "label": "Digital ID",
+       "icon": "id-card"
+      },
+      {
+       "label": "Payments",
+       "icon": "credit-card"
+      },
+      {
+       "label": "Notify",
+       "icon": "bell"
+      },
+      {
+       "label": "AI agents",
+       "icon": "bot"
+      }
+     ]
+    },
+    {
+     "label": "Data",
+     "sub": "Governed and shared",
+     "icon": "database",
+     "components": [
+      "Registries",
+      "Open data",
+      "Analytics"
+     ]
+    },
+    {
+     "label": "Infrastructure",
+     "sub": "Hosted in Canada",
+     "icon": "server",
+     "components": [
+      {
+       "label": "Cloud",
+       "icon": "cloud"
+      },
+      {
+       "label": "Network",
+       "icon": "network"
+      },
+      {
+       "label": "Security",
+       "icon": "shield-check"
+      }
+     ],
+     "cue": "infrastructure"
+    }
+   ]
+  },
+  {
+   "id": "z15",
+   "type": "chat",
+   "label": "U15 · Demo",
+   "agent": "Road test agent",
+   "person": "Resident",
+   "narration": "Conversations play out message by message, as a resident books a road test with an agent.",
+   "messages": [
+    {
+     "from": "person",
+     "text": "Can I book my class 5 road test for next week?",
+     "cue": "Conversations"
+    },
+    {
+     "from": "agent",
+     "text": "Yes. The first opening near you is Tuesday at 10:30 in Red Deer. Shall I book it?",
+     "cue": "message by message"
+    },
+    {
+     "from": "person",
+     "text": "Yes please.",
+     "cue": "resident"
+    },
+    {
+     "from": "agent",
+     "text": "Booked. Your confirmation is RT-4821, and a reminder will reach your phone the day before.",
+     "cue": "agent"
+    }
+   ],
+   "ground": "night"
+  },
+  {
+   "type": "screen",
+   "id": "z16",
+   "label": "Wallet",
+   "kicker": "Digital ID",
+   "headline": "Prove your age without showing your card",
+   "device": "phone",
+   "asset": "wallet",
+   "narration": "And real screens get callouts, step by step, on a phone or a laptop.",
+   "callouts": [
+    {
+     "x": 0.04,
+     "y": 0.1,
+     "w": 0.92,
+     "h": 0.16,
+     "label": "Your verified digital ID",
+     "cue": "screens"
+    },
+    {
+     "x": 0.2,
+     "y": 0.33,
+     "w": 0.6,
+     "h": 0.25,
+     "label": "A code that refreshes every 30 seconds",
+     "cue": "callouts"
+    },
+    {
+     "x": 0.04,
+     "y": 0.64,
+     "w": 0.92,
+     "h": 0.07,
+     "label": "Only the answer is shared",
+     "cue": "step by step"
+    }
+   ]
+  },
+  {
+   "type": "compare",
+   "headline": "Why a template",
+   "narration": "Instead of weeks of editing, a team writes a script. A change is an edit and a rebuild. And every ministry shares one look.",
+   "left": {
+    "title": "A hand-made video",
+    "icon": "clock",
+    "rows": [
+     {
+      "text": "Weeks of editing",
+      "icon": "film",
+      "cue": "weeks"
+     },
+     {
+      "text": "A change means starting over",
+      "icon": "rotate-ccw",
+      "cue": "change"
+     },
+     {
+      "text": "A different look every time",
+      "icon": "shuffle",
+      "cue": "every ministry"
+     }
+    ]
+   },
+   "right": {
+    "title": "With MVAI",
+    "icon": "sparkles",
+    "rows": [
+     {
+      "text": "A script, then minutes to render",
+      "icon": "file-text",
+      "cue": "script"
+     },
+     {
+      "text": "Edit the script and rebuild",
+      "icon": "refresh-cw",
+      "cue": "rebuild"
+     },
+     {
+      "text": "One look across government",
+      "icon": "layers",
+      "cue": "one look"
+     }
+    ]
+   },
+   "id": "z17"
+  },
+  {
+   "type": "statement",
+   "ground": "spectrum",
+   "accent": "green",
+   "headline": "What would you build?",
+   "highlight": [
+    "you"
+   ],
+   "narration": "So, what would you build?",
+   "hold": 0.6,
+   "id": "z18"
+  },
+  {
+   "type": "end",
+   "headline": "Join us at Agency 2026",
+   "lines": [
+    "December 7 · Edmonton · drop in 9 a.m. to 4 p.m.",
+    "Open to all public servants"
+   ],
+   "cta": "Request to join on Luma",
+   "url": "luma.com/ehmpc54d",
+   "narration": "Agency twenty twenty-six starts December seventh in Edmonton. Drop in any time. Request to join on Luma.",
+   "hold": 1.5,
+   "id": "z19"
+  }
+ ]
+}

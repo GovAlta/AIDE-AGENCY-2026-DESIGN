@@ -1,0 +1,19 @@
+{
+ "template": "print/certificate",
+ "title": "Certificate (sample)",
+ "recipient": "Sample Name",
+ "body": "took part in **Agency 2026** as a showcase presenter.",
+ "signatures": [
+  {
+   "name": "Name",
+   "title": "Title (to be confirmed)"
+  },
+  {
+   "name": "Name",
+   "title": "Title (to be confirmed)"
+  }
+ ],
+ "seed": "cert",
+ "name": "certificate-sample",
+ "$note": "Sample content: every name, figure and session here is a placeholder. Replace it with your own facts. Event facts come from brand/tokens/tokens.json."
+}

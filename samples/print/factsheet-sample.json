@@ -1,0 +1,161 @@
+{
+ "template": "print/factsheet",
+ "title": "Sample Program fact sheet",
+ "kicker": "Agency 2026 · Showcase",
+ "sample": "Example values",
+ "headline": "Sample Program",
+ "lead": "**Sample Program** is a fictional service used to show this layout. Replace every value with your own sourced facts.",
+ "blocks": [
+  {
+   "type": "section",
+   "title": "At a Glance",
+   "accent": "purple",
+   "blocks": [
+    {
+     "type": "tiles",
+     "items": [
+      {
+       "value": "12",
+       "label": "example offices",
+       "accent": "purple"
+      },
+      {
+       "value": "4.5",
+       "unit": "K",
+       "label": "example requests a month",
+       "accent": "blue"
+      },
+      {
+       "value": "3",
+       "unit": " days",
+       "label": "example time to a decision",
+       "accent": "cyan"
+      },
+      {
+       "value": "Example",
+       "label": "a dark tile for the one number people should remember",
+       "accent": "yellow",
+       "dark": true
+      }
+     ]
+    },
+    {
+     "type": "split",
+     "parts": [
+      {
+       "value": 40,
+       "label": "40% example share A",
+       "accent": "yellow"
+      },
+      {
+       "value": 35,
+       "label": "35% example share B",
+       "accent": "navy2"
+      },
+      {
+       "value": 25,
+       "label": "25% example C",
+       "accent": "purple"
+      }
+     ],
+     "note": "Example values. State the source of every real figure here."
+    }
+   ]
+  },
+  {
+   "type": "section",
+   "title": "How It Works",
+   "accent": "green",
+   "blocks": [
+    {
+     "type": "flow",
+     "steps": [
+      {
+       "title": "Ask",
+       "text": "A person asks a question"
+      },
+      {
+       "title": "Find",
+       "text": "The service finds the published source"
+      },
+      {
+       "title": "Answer",
+       "text": "It answers from that source only"
+      },
+      {
+       "title": "Check",
+       "text": "A person reviews the hard cases"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "type": "cols",
+   "cols": [
+    [
+     {
+      "type": "section",
+      "title": "What Changes",
+      "accent": "orange",
+      "blocks": [
+       {
+        "type": "dots",
+        "accent": "orange",
+        "items": [
+         "Example point one",
+         "Example point two",
+         "Example point three"
+        ]
+       }
+      ]
+     }
+    ],
+    [
+     {
+      "type": "section",
+      "title": "Example Measures",
+      "accent": "blue",
+      "blocks": [
+       {
+        "type": "table",
+        "head": [
+         "Measure",
+         "Before",
+         "After"
+        ],
+        "rows": [
+         [
+          "Example measure A",
+          "10",
+          "8"
+         ],
+         [
+          "Example measure B",
+          "5 s",
+          "2 s"
+         ]
+        ]
+       }
+      ]
+     }
+    ]
+   ]
+  },
+  {
+   "type": "quote",
+   "text": "Put the one sentence the owner wants people to remember here.",
+   "small": "Attribute it, or leave this line out."
+  }
+ ],
+ "qr": {
+  "url": "https://www.alberta.ca",
+  "title": "Learn more",
+  "display": "alberta.ca"
+ },
+ "footer": "Sample Program · Agency 2026 Showcase · December 2026",
+ "classification": "UNCLASSIFIED",
+ "seed": "factsheet",
+ "name": "factsheet-sample",
+ "$note": "Sample content: every name, figure and session here is a placeholder. Replace it with your own facts. Event facts come from brand/tokens/tokens.json."
+}

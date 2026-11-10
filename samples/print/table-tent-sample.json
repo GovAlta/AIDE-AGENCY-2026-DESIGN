@@ -1,0 +1,17 @@
+{
+ "template": "print/table-tent",
+ "title": "Demo table tent (sample)",
+ "headline": "Sample Demo",
+ "team": "Example Team, Example Ministry",
+ "text": "One line on what visitors will see at this station.",
+ "number": "Demo 00",
+ "accent": "blue",
+ "qr": {
+  "url": "https://www.alberta.ca",
+  "title": "Try it",
+  "display": "alberta.ca"
+ },
+ "seed": "tent",
+ "name": "table-tent-sample",
+ "$note": "Sample content: every name, figure and session here is a placeholder. Replace it with your own facts. Event facts come from brand/tokens/tokens.json."
+}

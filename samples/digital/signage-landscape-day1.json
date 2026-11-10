@@ -1,0 +1,1 @@
+{ "template": "digital/signage", "name": "signage-landscape-day1", "preset": "day1", "qr": { "url": "https://www.alberta.ca", "label": "Scan for the agenda" }, "sample": "Sample QR: replace the link" }

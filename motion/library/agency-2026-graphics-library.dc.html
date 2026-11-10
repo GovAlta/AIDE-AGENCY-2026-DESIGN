@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script src="./agency-pieces.js"></script>
+<style>
+body{margin:0;background:#F4F5F8;color:#002C4E;font-family:"Liberation Sans",Arial,Helvetica,sans-serif;-webkit-font-smoothing:antialiased}
+a{color:#0077CD}a:hover{color:#002C4E}
+*{box-sizing:border-box}
+</style>
+</helmet>
+<div style="min-height:100vh;display:flex;flex-direction:column">
+  <header style="position:relative;background:#FFFFFF url('assets/pptx/TITLE-image-2.png') center/cover no-repeat;min-height:500px;display:flex;align-items:center;justify-content:center;padding:64px 24px;border-bottom:1px solid #D0D1DB">
+    <div style="max-width:760px;width:100%;text-align:center;display:flex;flex-direction:column;align-items:center;gap:18px;background:rgba(255,255,255,0.86);padding:28px 32px;border-radius:4px">
+      <div style="font-size:14px;letter-spacing:0.14em;text-transform:uppercase;font-weight:700">Hosted by Technology and Innovation</div>
+      <h1 style="margin:0;font-size:clamp(56px,8vw,104px);line-height:0.95;font-weight:700;letter-spacing:-0.02em">Agency 2026</h1>
+      <div style="font-size:clamp(22px,2.6vw,32px);font-weight:700;line-height:1.2;text-wrap:balance">Motion graphics and animation library</div>
+      <div style="font-size:20px;font-weight:700;color:#9E2B33">December 7–9, 2026 · Edmonton and Calgary</div>
+    </div>
+  </header>
+
+  <nav style="position:sticky;top:0;z-index:5;background:#002C4E;color:#FFFFFF">
+    <div style="max-width:1480px;margin:0 auto;padding:12px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px">
+      <div style="display:flex;align-items:center;gap:16px;flex-wrap:wrap">
+        <span style="font-size:18px;font-weight:700">Graphics library</span>
+        <span style="font-size:15px;color:#D0D1DB">{{ summary }}</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;gap:8px;align-items:center">
+        <sc-for list="{{ filters }}" as="f" hint-placeholder-count="3">
+          <button onClick="{{ f.onClick }}" style="{{ f.style }}">
+            <span style="width:10px;height:10px;display:inline-block;background:{{ f.color }}"></span>
+            <span>{{ f.label }}</span>
+            <span style="opacity:0.75">{{ f.count }}</span>
+          </button>
+        </sc-for>
+        <span style="width:1px;height:28px;background:rgba(255,255,255,0.3);margin:0 6px"></span>
+        <button onClick="{{ togglePlay }}" style="min-height:40px;min-width:92px;padding:9px 14px;font:700 14px 'Liberation Sans',Arial,sans-serif;cursor:pointer;border:1px solid #FFFFFF;background:#FFFFFF;color:#002C4E">{{ playLabel }}</button>
+        <button onClick="{{ restart }}" style="min-height:40px;padding:9px 14px;font:700 14px 'Liberation Sans',Arial,sans-serif;cursor:pointer;border:1px solid rgba(255,255,255,0.35);background:transparent;color:#FFFFFF">Restart</button>
+      </div>
+    </div>
+  </nav>
+
+  <main style="flex:1;max-width:1480px;width:100%;margin:0 auto;padding:48px 32px 72px;display:flex;flex-direction:column;gap:64px">
+    <sc-for list="{{ sections }}" as="sec" hint-placeholder-count="2">
+      <section style="display:flex;flex-direction:column;gap:24px">
+        <div style="display:flex;align-items:flex-end;justify-content:space-between;gap:24px;flex-wrap:wrap;border-bottom:2px solid #002C4E;padding-bottom:14px">
+          <div style="display:flex;align-items:center;gap:16px">
+            <span style="width:18px;height:18px;background:{{ sec.color }};flex:none"></span>
+            <h2 style="margin:0;font-size:30px;font-weight:700;letter-spacing:-0.01em">{{ sec.label }}</h2>
+          </div>
+          <div style="font-size:15px;color:#3D4F63">{{ sec.meta }}</div>
+        </div>
+        <div style="display:grid;grid-template-columns:{{ gridCols }};gap:32px 28px">
+          <sc-for list="{{ sec.clips }}" as="clip" hint-placeholder-count="3">
+            <article style="background:#FFFFFF;border:1px solid #D0D1DB;display:flex;flex-direction:column;min-width:0">
+              <div style="position:relative;aspect-ratio:16/9;background:#0E2238;display:flex;justify-content:center;overflow:hidden">
+                <div style="position:relative;height:100%;width:{{ clip.innerW }}">{{ clip.preview }}</div>
+              </div>
+              <div style="background:#0E2238;color:#FFFFFF;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:8px 12px;font-family:'Liberation Mono',Menlo,Consolas,monospace;font-size:12px">
+                <span style="font-weight:700;letter-spacing:0.08em">{{ clip.code }}</span>
+                <span style="color:#D0D1DB">{{ clip.tcLive }}</span>
+              </div>
+              <div style="height:3px;background:#1E3550">
+                <div style="height:100%;width:{{ clip.progress }};background:{{ clip.color }}"></div>
+              </div>
+              <sc-if value="{{ showStrip }}" hint-placeholder-val="{{ true }}">
+                <div style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:4px;padding:4px;background:#0E2238">
+                  <sc-for list="{{ clip.frames }}" as="fr" hint-placeholder-count="4">
+                    <div style="display:flex;flex-direction:column;gap:3px;min-width:0">
+                      <div style="position:relative;aspect-ratio:16/9;background:#081726;display:flex;justify-content:center;overflow:hidden">
+                        <div style="position:relative;height:100%;width:{{ clip.innerW }}">{{ fr.node }}</div>
+                      </div>
+                      <div style="font-family:'Liberation Mono',Menlo,Consolas,monospace;font-size:11px;color:#D0D1DB;padding:0 2px 2px">{{ fr.tc }}</div>
+                    </div>
+                  </sc-for>
+                </div>
+              </sc-if>
+              <div style="padding:20px 22px 22px;display:flex;flex-direction:column;gap:12px;flex:1">
+                <div style="display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#3D4F63">
+                  <span style="width:9px;height:9px;background:{{ clip.color }}"></span>
+                  <span>{{ clip.catLabel }}</span>
+                  <span style="color:#9AA3AF">·</span>
+                  <span>{{ clip.aspect }}</span>
+                </div>
+                <h3 style="margin:0;font-size:22px;line-height:1.2;font-weight:700;text-wrap:pretty">{{ clip.title }}</h3>
+                <p style="margin:0;font-size:15px;line-height:1.5;color:#3D4F63;text-wrap:pretty">{{ clip.desc }}</p>
+                <sc-if value="{{ showSpecs }}" hint-placeholder-val="{{ true }}">
+                  <dl style="margin:auto 0 0;padding-top:14px;border-top:1px solid #E3E5EB;display:grid;grid-template-columns:auto minmax(0,1fr);gap:6px 16px;font-size:13px">
+                    <dt style="color:#5A6878">Resolution</dt><dd style="margin:0;font-weight:700">{{ clip.res }}</dd>
+                    <dt style="color:#5A6878">Duration</dt><dd style="margin:0;font-weight:700">{{ clip.durLabel }}</dd>
+                    <dt style="color:#5A6878">Delivery</dt><dd style="margin:0;font-weight:700">{{ clip.format }}</dd>
+                    <dt style="color:#5A6878">Placement</dt><dd style="margin:0;font-weight:700">{{ clip.use }}</dd>
+                  </dl>
+                </sc-if>
+                <a href="{{ clip.href }}" style="margin-top:6px;display:flex;align-items:center;justify-content:center;gap:8px;min-height:44px;padding:10px 16px;background:#002C4E;color:#FFFFFF;font-size:14px;font-weight:700;text-decoration:none" style-hover="background:#0077CD;color:#FFFFFF">Open and export video</a>
+              </div>
+            </article>
+          </sc-for>
+        </div>
+      </section>
+    </sc-for>
+  </main>
+
+  <footer style="background:#FFFFFF;border-top:1px solid #D0D1DB">
+    <div style="max-width:1480px;margin:0 auto;padding:36px 32px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:24px">
+      <div style="display:flex;flex-direction:column;gap:6px">
+        <div style="font-size:18px">Anchored by the Velocity White Papers</div>
+        <div style="font-size:15px;color:#3D4F63">Questions? <a href="mailto:jaimee.kepa@gov.ab.ca">jaimee.kepa@gov.ab.ca</a></div>
+      </div>
+      <img src="assets/pptx/image-1005-1.png" alt="Government of Alberta" style="height:56px;width:auto"></img>
+    </div>
+  </footer>
+</div>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;density&quot;:{&quot;editor&quot;:&quot;enum&quot;,&quot;options&quot;:[&quot;Compact&quot;,&quot;Standard&quot;,&quot;Large&quot;],&quot;default&quot;:&quot;Standard&quot;,&quot;tsType&quot;:&quot;string&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;showKeyframes&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;},&quot;showSpecs&quot;:{&quot;editor&quot;:&quot;boolean&quot;,&quot;default&quot;:true,&quot;tsType&quot;:&quot;boolean&quot;,&quot;section&quot;:&quot;Layout&quot;}}">
+const h = React.createElement;
+class Component extends DCLogic {
+  state = { filter: 'all', t: 0, playing: true };
+  componentDidMount() {
+    if (!window.AgencyPieces) this.poll = setInterval(() => { if (window.AgencyPieces) { clearInterval(this.poll); this.forceUpdate(); } }, 50);
+    this.base = performance.now();
+    const loop = now => {
+      this.raf = requestAnimationFrame(loop);
+      if (this.state.playing && now - (this.last || 0) > 30) { this.last = now; this.setState({ t: (now - this.base) / 1000 }); }
+    };
+    this.raf = requestAnimationFrame(loop);
+  }
+  componentWillUnmount() { cancelAnimationFrame(this.raf); clearInterval(this.poll); }
+  renderVals() {
+    const { filter, t, playing } = this.state;
+    const AP = window.AgencyPieces;
+    if (!AP) return { filters: [], sections: [], showStrip: false, showSpecs: false, gridCols: '1fr', summary: '', playLabel: 'Pause', togglePlay: () => {}, restart: () => {} };
+    AP.init(React); AP.setUnit(1, 'cqw');
+    const { CLIPS, CATS, INNER, tc, durLabel, toStyle } = AP;
+    if (this.framesKey !== AP.IMG.title) this.framesKey = AP.IMG.title, this.frames = CLIPS.map(c => c.keys.map(k => ({ tc: tc(k), node: h('div', { style: { position: 'absolute', inset: 0 } }, c.fn(k)) })));
+    const FRAMES = this.frames;
+    const minCol = { Compact: 320, Standard: 400, Large: 560 }[this.props.density ?? 'Standard'] || 400;
+    const clips = CLIPS.map((c, ci) => {
+      const lt = t % c.dur;
+      return { ...c, color: CATS[c.cat].color, catLabel: CATS[c.cat].short, innerW: INNER[c.aspect], durLabel: durLabel(c.dur),
+        preview: h('div', { style: { position: 'absolute', inset: 0 } }, c.fn(lt)),
+        tcLive: `${tc(lt)} / ${tc(c.dur)}`, href: encodeURI(c.file), progress: `${(lt / c.dur) * 100}%`, frames: FRAMES[ci] };
+    });
+    const btn = a => `display:flex;align-items:center;gap:8px;padding:9px 14px;font:700 14px "Liberation Sans",Arial,sans-serif;cursor:pointer;border:1px solid ${a ? '#FFFFFF' : 'rgba(255,255,255,0.35)'};background:${a ? '#FFFFFF' : 'transparent'};color:${a ? '#002C4E' : '#FFFFFF'};min-height:40px`;
+    const filters = [{ key: 'all', label: 'All', color: '#FFFFFF', count: CLIPS.length },
+      ...Object.entries(CATS).map(([k, v]) => ({ key: k, label: v.short, color: v.color, count: CLIPS.filter(c => c.cat === k).length }))]
+      .map(f => ({ ...f, style: toStyle(btn(filter === f.key)), onClick: () => this.setState({ filter: f.key }) }));
+    const sections = Object.entries(CATS).filter(([k]) => filter === 'all' || filter === k).map(([k, v]) => {
+      const list = clips.filter(c => c.cat === k);
+      return { ...v, clips: list, meta: `${list.length} pieces · playing live` };
+    });
+    return { filters, sections,
+      showStrip: this.props.showKeyframes ?? true, showSpecs: this.props.showSpecs ?? true,
+      gridCols: `repeat(auto-fill,minmax(min(100%,${minCol}px),1fr))`,
+      summary: `${CLIPS.length} pieces · Edmonton and Calgary`,
+      playLabel: playing ? 'Pause' : 'Play',
+      togglePlay: () => { if (playing) this.setState({ playing: false }); else { this.base = performance.now() - t * 1000; this.setState({ playing: true }); } },
+      restart: () => { this.base = performance.now(); this.setState({ t: 0 }); } };
+  }
+}
+</script>
+</body>
+</html>

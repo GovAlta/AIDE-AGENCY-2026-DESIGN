@@ -1,0 +1,16 @@
+{
+ "template": "print/postcard",
+ "title": "Agency 2026 postcard",
+ "back": {
+  "headline": "Three Days",
+  "qr": {
+   "url": "https://www.alberta.ca",
+   "title": "Replace with your link",
+   "display": "alberta.ca"
+  },
+  "note": "Anchored by the Velocity White Papers"
+ },
+ "seed": "postcard",
+ "name": "postcard-sample",
+ "$note": "Sample content: every name, figure and session here is a placeholder. Replace it with your own facts. Event facts come from brand/tokens/tokens.json."
+}

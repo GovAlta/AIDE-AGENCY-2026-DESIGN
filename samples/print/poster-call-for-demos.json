@@ -1,0 +1,14 @@
+{
+ "template": "print/poster",
+ "name": "poster-call-for-demos",
+ "event": "How do you fuel",
+ "date": "",
+ "sub": "",
+ "place": "",
+ "cta": "Call for Demos",
+ "titleSize": 78,
+ "seed": "poster-cfd",
+ "$note": "Event facts come from brand/tokens/tokens.json (event).",
+ "headline": "velocity?",
+ "title": "Agency 2026 Call for Demos poster"
+}

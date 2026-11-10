@@ -1,0 +1,13 @@
+{
+ "template": "print/poster",
+ "name": "poster-wed",
+ "title": "Agency 2026 Wednesday poster",
+ "day": "wed",
+ "seed": "poster-wed",
+ "qr": {
+  "url": "https://www.alberta.ca",
+  "title": "Replace with your event link",
+  "display": "alberta.ca"
+ },
+ "$note": "Event facts come from brand/tokens/tokens.json (event). The QR link is a placeholder: replace it with the real page and scan the printed code with a phone."
+}

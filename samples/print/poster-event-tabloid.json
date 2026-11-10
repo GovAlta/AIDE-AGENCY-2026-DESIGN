@@ -1,0 +1,8 @@
+{
+ "template": "print/poster",
+ "name": "poster-event-tabloid",
+ "title": "Agency 2026 poster (11x17)",
+ "size": "tabloid",
+ "seed": "poster-event",
+ "$note": "Event facts come from brand/tokens/tokens.json (event)."
+}

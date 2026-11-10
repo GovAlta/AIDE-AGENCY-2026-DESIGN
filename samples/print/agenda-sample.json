@@ -1,0 +1,87 @@
+{
+ "template": "print/agenda",
+ "title": "Agency 2026 program (sample)",
+ "headline": "Three Days",
+ "lead": "**Agency 2026** runs Dec. 7–9, 2026 in Edmonton and Calgary. Sessions below are placeholders.",
+ "days": [
+  {
+   "day": "mon",
+   "sessions": [
+    {
+     "time": "9:00",
+     "title": "Session title",
+     "text": "Speaker and room TBC"
+    },
+    {
+     "time": "10:30",
+     "title": "Session title",
+     "text": "TBC"
+    },
+    {
+     "time": "13:00",
+     "title": "Session title",
+     "text": "TBC"
+    },
+    {
+     "time": "15:00",
+     "title": "Session title",
+     "text": "TBC"
+    }
+   ]
+  },
+  {
+   "day": "tue",
+   "sessions": [
+    {
+     "time": "9:00",
+     "title": "Session title",
+     "text": "Speaker and room TBC"
+    },
+    {
+     "time": "10:30",
+     "title": "Session title",
+     "text": "TBC"
+    },
+    {
+     "time": "13:00",
+     "title": "Session title",
+     "text": "TBC"
+    },
+    {
+     "time": "15:00",
+     "title": "Session title",
+     "text": "TBC"
+    }
+   ]
+  },
+  {
+   "day": "wed",
+   "sessions": [
+    {
+     "time": "9:00",
+     "title": "Session title",
+     "text": "Speaker and room TBC"
+    },
+    {
+     "time": "10:30",
+     "title": "Session title",
+     "text": "TBC"
+    },
+    {
+     "time": "13:00",
+     "title": "Session title",
+     "text": "TBC"
+    },
+    {
+     "time": "15:00",
+     "title": "Session title",
+     "text": "TBC"
+    }
+   ]
+  }
+ ],
+ "note": "Times and sessions are placeholders. Day titles and places are from the official invites.",
+ "classification": "UNCLASSIFIED",
+ "name": "agenda-sample",
+ "$note": "Sample content: every name, figure and session here is a placeholder. Replace it with your own facts. Event facts come from brand/tokens/tokens.json."
+}

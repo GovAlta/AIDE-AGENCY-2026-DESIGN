@@ -1,0 +1,8 @@
+{
+ "template": "print/poster",
+ "name": "poster-tue",
+ "title": "Agency 2026 Tuesday poster",
+ "day": "tue",
+ "seed": "poster-tue",
+ "$note": "Event facts come from brand/tokens/tokens.json (event)."
+}

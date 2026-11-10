@@ -1,0 +1,191 @@
+{
+ "kit": "goa-agency",
+ "theme": "agency-light",
+ "title": "Agency 2026 sample explainer: Trail Pass Finder (fictional)",
+ "$about": "A fictional service, made up for this design repo to show a complete agency-explainer spec. Every name and number is invented and labelled as example values. Do not reuse the figures. Check: python3 scripts/mvai/mvai.py check samples/video/explainer-sample.json",
+ "voice": {
+  "provider": "google-ca",
+  "name": "Kore"
+ },
+ "captions": true,
+ "classification": "Unclassified",
+ "terms": [
+  "Trail Pass Finder"
+ ],
+ "kit_options": {
+  "event": "Agency",
+  "year": "2026",
+  "date": "Dec. 7–9, 2026",
+  "place": "Edmonton · Calgary",
+  "host": "Ministry of Technology and Innovation",
+  "host_label": "Hosted by",
+  "series": "Sample explainer"
+ },
+ "scenes": [
+  {
+   "type": "splash",
+   "duration": 6
+  },
+  {
+   "type": "title",
+   "kicker": "Agency 2026 · Sample explainer",
+   "headline": "Trail Pass Finder",
+   "subtitle": "A fictional service that shows the explainer format.",
+   "icon": "map",
+   "narration": "Trail Pass Finder is a fictional service. The sample shows how an Agency explainer fits together."
+  },
+  {
+   "type": "statement",
+   "kicker": "The problem",
+   "headline": "Visitors search four websites for one pass",
+   "highlight": [
+    "four"
+   ],
+   "support": "Example scenario for this sample.",
+   "narration": "In this example, a visitor searches four websites to find one trail pass. Each website asks the same questions again."
+  },
+  {
+   "type": "process",
+   "headline": "How the service works",
+   "label": "How it works",
+   "narration": "The visitor names a trail and a date. The service checks which passes cover that trail. The service shows the price and the rules. The visitor pays once and gets the pass by email.",
+   "steps": [
+    {
+     "title": "Name a trail",
+     "text": "Trail and date",
+     "icon": "search",
+     "cue": "The visitor names"
+    },
+    {
+     "title": "Check passes",
+     "text": "Which passes cover it",
+     "icon": "list-checks",
+     "cue": "The service checks"
+    },
+    {
+     "title": "Show the rules",
+     "text": "Price and conditions",
+     "icon": "file-text",
+     "cue": "The service shows"
+    },
+    {
+     "title": "Pay once",
+     "text": "Pass by email",
+     "icon": "credit-card",
+     "cue": "The visitor pays"
+    }
+   ],
+   "hold": 1.5
+  },
+  {
+   "type": "icons",
+   "headline": "What the visitor gets",
+   "label": "Features",
+   "narration": "The visitor gets one search box, a clear price, the trail rules and a pass on the phone.",
+   "items": [
+    {
+     "title": "One search box",
+     "text": "Every trail in one place",
+     "icon": "search",
+     "cue": "one search box"
+    },
+    {
+     "title": "A clear price",
+     "text": "Before any payment",
+     "icon": "badge-dollar-sign",
+     "cue": "a clear price"
+    },
+    {
+     "title": "Trail rules",
+     "text": "Dogs, fires, closures",
+     "icon": "scroll-text",
+     "cue": "the trail rules"
+    },
+    {
+     "title": "Pass on the phone",
+     "text": "No printer needed",
+     "icon": "smartphone",
+     "cue": "a pass on the phone"
+    }
+   ]
+  },
+  {
+   "type": "stats",
+   "headline": "Example results",
+   "label": "Example values",
+   "narration": "The sample uses example values. A pass takes two minutes to buy, with one payment and zero repeated questions.",
+   "items": [
+    {
+     "value": 2,
+     "suffix": " min",
+     "label": "to buy a pass",
+     "sub": "Example value",
+     "icon": "timer",
+     "cue": "two minutes"
+    },
+    {
+     "value": 1,
+     "label": "payment",
+     "sub": "Example value",
+     "icon": "credit-card",
+     "cue": "one payment"
+    },
+    {
+     "value": 0,
+     "label": "repeated questions",
+     "sub": "Example value",
+     "icon": "circle-check",
+     "cue": "zero repeated questions"
+    }
+   ]
+  },
+  {
+   "type": "bars",
+   "headline": "Example searches by region",
+   "label": "Synthetic data",
+   "suffix": " searches",
+   "highlight": [
+    "Region B"
+   ],
+   "narration": "The chart uses synthetic data. Region B has the most searches in the example.",
+   "items": [
+    {
+     "label": "Region A",
+     "value": 420
+    },
+    {
+     "label": "Region B",
+     "value": 910
+    },
+    {
+     "label": "Region C",
+     "value": 380
+    },
+    {
+     "label": "Region D",
+     "value": 260
+    }
+   ]
+  },
+  {
+   "type": "statement",
+   "ground": "spectrum",
+   "accent": "green",
+   "headline": "A visitor buys a pass in one visit",
+   "highlight": [
+    "one",
+    "visit"
+   ],
+   "narration": "With Trail Pass Finder, a visitor buys a pass in one visit."
+  },
+  {
+   "type": "end",
+   "headline": "Sample explainer",
+   "lines": [
+    "A fictional service, made for the Agency 2026 design repo"
+   ],
+   "cta": "Build your own from the template",
+   "duration": 6
+  }
+ ]
+}
