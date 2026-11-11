@@ -33,7 +33,7 @@ function elevation(r, f, ox, oy) {
     const L = f.lockup;
     p.push(`<rect x="${ox + L.x * S}" y="${oy + (L.baseline - L.S * 0.73) * S}" width="${L.wordW * S}" height="${L.S * 0.73 * S}" class="lock"/><text class="ll" x="${ox + L.x * S + 4}" y="${oy + (L.baseline - L.S * 0.73) * S + 15}">"${L.words.join(' ')}" cap ${fmt(L.S * 0.7275)}</text>`,
       `<rect x="${ox + L.logo.x * S}" y="${oy + L.logo.y * S}" width="${L.logo.w * S}" height="${L.logo.h * S}" class="lock"/><text class="ll" x="${ox + L.logo.x * S + 4}" y="${oy + L.logo.y * S + 15}">Alberta logo ${fmt(L.logo.w)} wide</text>`,
-      `<rect x="${ox + (L.sub.right - L.sub.width) * S}" y="${oy + (L.sub.baseline - L.sub.cap) * S}" width="${L.sub.width * S}" height="${L.sub.cap * S}" class="lock"/><text class="ll" x="${ox + (L.sub.right - L.sub.width) * S + 4}" y="${oy + (L.sub.baseline + 0.9) * S}">Technology and Innovation · cap ${fmt(L.sub.cap)}</text>`);
+      `<rect x="${ox + L.sub.x * S}" y="${oy + (L.sub.baselines[0] - L.sub.cap) * S}" width="${L.sub.width * S}" height="${(L.sub.baselines[L.sub.baselines.length - 1] - L.sub.baselines[0] + L.sub.cap) * S}" class="lock"/><text class="ll" x="${ox + L.sub.x * S + 4}" y="${oy + (L.sub.baselines[L.sub.baselines.length - 1] + 0.9) * S}">Technology and Innovation · cap ${fmt(L.sub.cap)}</text>`);
   }
   if (f.monitor) {
     const M = f.monitor;

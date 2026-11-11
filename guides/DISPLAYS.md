@@ -14,16 +14,19 @@ redraw art for a new size, change the spec and rebuild.
 
 ## The lockup
 
-Every face carries the same header, in this order and nowhere else on the face:
+Every face carries the same header, centred across the top of the face (owner review, 2026-11-11):
 
-1. **"Agency"** across the top left, with the trace underline under it (a thin blue trace, a 45-degree step and a ring pad). The word stands alone: **no date** on a display (the stands stay
-   in use across all three days). `"wordmark": "Agency 2026"` is allowed when the owner asks for the year; never a date or a city list.
-2. **The Alberta logo** top right, the official vector (`brand/logos/alberta-logo.svg`), never redrawn, stretched or recoloured
-   (white on a night or navy ground).
-3. **"Technology and Innovation"** right-aligned under the logo.
+1. **Row 1: "Agency" and the Alberta logo, side by side at the same height.** The cap height of "Agency" equals the height of the logo's
+   script, and both sit on one baseline. The pair is centred and spans the content width of the face. "Agency" stands alone: **no date**
+   on a display (the stands stay in use across all three days). `"wordmark": "Agency 2026"` is allowed when the owner asks for the year;
+   never a date or a city list. The Alberta logo is the official vector (`brand/logos/alberta-logo.svg`), never redrawn, stretched or
+   recoloured (white on a night or navy ground).
+2. **The trace underline under "Agency":** a thin blue trace exactly as wide as the word, a 45-degree step and a ring pad under its last
+   letter.
+3. **Row 2: "Technology and Innovation"** on one line, centred, as wide as row 1, never below a 0.75 in cap height.
 
-The scripts size the lockup to the face: "Agency" about half the content width, the logo about a third, and "Technology and Innovation"
-at a cap height of at least 0.75 in. All of it is outlined in the production files, so it prints the same on every machine.
+The scripts size the whole header from the face width (`headerWidth`, default 1 = the full content width), so a 24 in panel and a 30 in
+kiosk face get the same proportions. All of it is outlined in the production files, so it prints the same on every machine.
 
 ## Clear zones
 
@@ -62,7 +65,8 @@ Cap height (the height of a capital letter) sets how far away a line can be read
 | 10 ft (across an aisle) | 1 in | 2 in |
 | 20 ft (across a hall) | 2 in | 4 in |
 
-The defaults give "Agency" a cap height of about 3 in (readable at 30 ft) and "Technology and Innovation" 0.75 in (about 7.5 ft). Raise
+On a 30 in face the defaults give "Agency" a cap height of about 2.7 in (readable at about 27 ft) and "Technology and Innovation" about
+1.7 in. A narrower header (`headerWidth` 0.8) scales both down together. Raise
 `subCapHeight` for stands seen mainly from farther away. A session title defaults to about 1.6 in cap height; keep titles under eight words.
 
 ## Content

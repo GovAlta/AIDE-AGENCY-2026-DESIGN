@@ -31,17 +31,17 @@ export function artFor(r) {
 function lockupSvg(r, f, dark) {
   const L = f.lockup; if (!L) return '';
   const F = FONT[r.font];
-  const reqs = L.words.map((w) => ({ text: w, font: F.word, size: L.S, tracking: -0.01 })).concat([{ text: 'Technology and Innovation', font: F.sub, size: L.sub.size }]);
+  const reqs = L.words.map((w) => ({ text: w, font: F.word, size: L.S, tracking: -0.01 })).concat(L.sub.lines.map((t) => ({ text: t, font: F.sub, size: L.sub.size })));
   const o = outlineBatch(reqs);
   const ink = dark ? '#FFFFFF' : C.navy, yr = dark ? T.textOnDark.maroon : C.maroon;
   let x = L.x; const words = o.slice(0, L.words.length).map((g, i) => { const s = `<path fill="${i ? yr : ink}" transform="translate(${r3(x)} ${r3(L.baseline)})" d="${g.d}"/>`; x += g.width + 0.12 * L.S; return s; }).join('');
-  const sub = o[L.words.length];
+  const subs = o.slice(L.words.length);
   const logo = dark ? LOGO.replace(/#5f6a72/gi, '#FFFFFF') : LOGO;
   return `<g id="Brand">` +
     `<title>Agency${L.words.length > 1 ? ' 2026' : ''} · Alberta · Technology and Innovation</title>${words}` +
-    `<g transform="translate(${r3(L.rule.x)} ${r3(L.rule.y - 0.06 * L.S)})">${traceUnderline({ size: L.S, w: r3(L.rule.w), dark })}</g>` +   // owner 2026-11-11: trace underline, no rainbow
+    `<g transform="translate(${r3(L.rule.x)} ${r3(L.rule.y - 0.06 * L.S)})">${traceUnderline({ size: L.S, w: r3(L.rule.w), dark })}</g>` +   // owner 2026-11-11: trace underline, word width   // owner 2026-11-11: trace underline, no rainbow
     `<g transform="translate(${r3(L.logo.x)} ${r3(L.logo.y)}) scale(${r3(L.logo.w / 216)})">${logo}</g>` +
-    `<path fill="${dark ? '#E6EEF5' : C.navy}" transform="translate(${r3(L.sub.right - sub.width)} ${r3(L.sub.baseline)})" d="${sub.d}"/></g>`;
+    subs.map((g, i) => `<path fill="${dark ? '#E6EEF5' : C.navy}" transform="translate(${r3(L.sub.x)} ${r3(L.sub.baselines[i])})" d="${g.d}"/>`).join('') + `</g>`;
 }
 
 function contentSvg(r, f, dark) {

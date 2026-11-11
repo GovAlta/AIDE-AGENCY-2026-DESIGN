@@ -4,8 +4,8 @@ Parametric print graphics for the Agency 2026 floor: single **stand panels** (ab
 (a 2.5 × 2.5 ft column with a monitor on the front and a small desk ledge, wrapped on all four sides). You give a size; the scripts draw the
 art in real inches and write the files a large-format printer needs.
 
-Every face carries the same header lockup: **"Agency"** across the top (no date), the **Alberta logo** top right, and **"Technology and
-Innovation"** beneath it, with the circuit-trace art of the event below. Six designs share that lockup.
+Every face carries the same centred header: **"Agency"** (no date) and the **Alberta logo** side by side at the same height, the trace
+underline under "Agency", and **"Technology and Innovation"** on one line beneath, as wide as the row above, with the circuit-trace art below. Six designs share that lockup.
 
 ![A row of demo kiosks](../examples/displays/renders/kiosk-row.jpg)
 
@@ -60,8 +60,8 @@ Same seed, same art. Change `seed` in the spec for a fresh arrangement in the sa
 | `font` | `inter` | `inter` (the MVAI kit's type) or `liberation` (Arial metrics, the event team's compliant set). Owner decision pending: guides/BRAND.md, "Two palettes" |
 | `bleed` | 0.125 | in the spec's unit; many large-format vendors ask for 0.5 to 1 in, so set it to their spec |
 | `margin` | 1.5 | safe margin: type, the logo and QR codes stay inside it |
+| `headerWidth` | 1 | share of the content width the header spans (both rows) |
 | `subCapHeight` | 0.75 | cap height of "Technology and Innovation" (0.75 in reads at about 7.5 ft; see the table in guides/DISPLAYS.md) |
-| `agencyWidth`, `logoWidth` | auto | share of the content width for "Agency" and for the logo, if you need to rebalance |
 | `monitor` | kiosk front | `{ w, h, bottom, centerX, clear }`: the screen window, 16:9 unless `h` is given. Default 37.5 in wide (a 43 in screen) fitted to the face inside the margins (27 in on a 30 in face, about a 31 in screen), bottom 46 in from the floor. `false` removes it; a panel can ask for one |
 | `ledge` | kiosk front | `{ height: 38, depth: 12, thickness: 1.5 }`. The art runs behind it; it shows in drawings and renders only |
 | `title` | none | `{ kicker, text, face, size }`: a session or demo title under the header |

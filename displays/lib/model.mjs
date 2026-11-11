@@ -70,30 +70,40 @@ export function resolve(raw) {
   // ---- header lockup: "Agency" across the top left, the Alberta logo top right with "Technology and Innovation" beneath ----
   const F = FONT[font];
   const words = wordmark === 'Agency 2026' ? ['Agency', '2026'] : ['Agency'];
-  const unit1 = outlineBatch([...words.map((t) => ({ text: t, font: F.word, size: 1, tracking: -0.01 })), { text: 'Technology and Innovation', font: F.sub, size: 1 }, { text: ' ', font: F.word, size: 1 }]);
+  // Header (owner review 2026-11-11): row 1 is "Agency" and the Alberta logo at the same height, side by side, centred as one group across
+  // the panel; the trace underline sits under "Agency". Row 2 is "Technology and Innovation" on one line, centred, the full content width.
+  const SUB = 'Technology and Innovation';
+  const unit1 = outlineBatch([...words.map((t) => ({ text: t, font: F.word, size: 1, tracking: -0.01 })), { text: SUB, font: F.sub, size: 1 }]);
+  // The Alberta logo (viewBox 216 x 61): the top of the script "A" is at y 2 and the script baseline (bottom of the blue square) at 50.6.
+  const LOGO_TOP = 2 / 61, LOGO_BASE = 50.6 / 61;
   for (const face of r.faces) {
     if (!face.lockup) continue;
     const CW = face.W - 2 * m;
     const wordRatio = words.reduce((a, _, i) => a + unit1[i].width, 0) + (words.length > 1 ? 0.12 : 0);
-    // row 1: "Agency" left, the Alberta logo right, both about the same height; row 2: "Technology and Innovation" right-aligned under
-    // the logo, at a cap height readable from the stand's viewing distance (default 0.75 in, about 8 to 10 ft; guides/DISPLAYS.md)
-    const capRatio = unit1[0].cap, subRatio = unit1[words.length].width;
-    const lw = CW * (s.logoWidth ?? (words.length > 1 ? 0.3 : 0.34)), lh = lw * 61 / 216;
-    let S = Math.min((CW - lw - 1.6) / wordRatio, (lh * 1.18) / capRatio, (H * 0.09) / capRatio);
-    const cap = capRatio * S, top = m + 0.2;
+    const capRatio = unit1[0].cap;
+    const logoPerS = capRatio / (LOGO_BASE - LOGO_TOP) * 216 / 61;      // logo width per unit of S when its script spans the cap height
+    const gutterPerS = 0.75 * capRatio;
+    const rowW = CW * (s.headerWidth ?? 1);                               // row 1 spans this width (default: the full content width)
+    const S = Math.min(rowW / (wordRatio + gutterPerS + logoPerS), (H * 0.075) / capRatio);
+    const cap = capRatio * S, top = m + 0.2, baseline = top + cap;
+    const lh = cap / (LOGO_BASE - LOGO_TOP), lw = lh * 216 / 61;
+    const groupW = (wordRatio + gutterPerS) * S + lw, x0 = m + (CW - groupW) / 2;
+    const row2 = baseline + 0.27 * S;                                     // the underline: clears the descenders of "g" and "y"
+    // row 2: one line, centred, as wide as row 1 (owner: "full width of the panel"), never below the readable cap height
     const capMin = toIn(s.subCapHeight ?? 0.75, u);
-    let ts = Math.max(capMin / capRatio, (lw * 1.15) / subRatio); ts = Math.min(ts, CW / subRatio, (S * 0.36));
-    if (capRatio * ts < capMin) ts = Math.min(capMin / capRatio, CW / subRatio);
-    const tcap = capRatio * ts;
+    let ts = Math.min(groupW / unit1[words.length].width, (0.62 * cap) / capRatio);
+    ts = Math.max(ts, capMin / capRatio);
+    const tcap = capRatio * ts, subW = unit1[words.length].width * ts;
+    const subBase = row2 + 0.24 * S + 0.45 * cap + tcap;
     const lock = {
-      S, x: m, baseline: top + cap, words, wordW: wordRatio * S,
-      rule: { x: m, y: top + cap + 0.28 * S, w: wordRatio * S, h: 0.075 * S },
-      logo: { x: face.W - m - lw, y: top + (cap - lh * 0.86) / 2, w: lw, h: lh },
-      sub: { size: ts, cap: tcap, width: subRatio * ts, right: face.W - m, baseline: Math.max(top + cap + 0.28 * S + 0.34 * S, top + lh) + 0.55 + tcap },
+      S, x: x0, baseline, words, wordW: wordRatio * S,
+      rule: { x: x0, y: row2, w: wordRatio * S, h: 0.045 * S },
+      logo: { x: x0 + groupW - lw, y: baseline - LOGO_BASE * lh, w: lw, h: lh },
+      sub: { size: ts, cap: tcap, lines: [SUB], x: m + (CW - subW) / 2, baselines: [subBase], width: subW },
     };
-    lock.bottom = Math.max(lock.rule.y + 0.32 * S, lock.sub.baseline + 0.25 * ts);   // the trace underline reaches 0.32 S below its top
+    lock.bottom = subBase + 0.24 * ts;
     face.lockup = lock;
-    face.zones.push({ id: 'header', rect: [-bleed - 1, -bleed - 1, face.W + bleed + 1, lock.bottom + 0.9] });
+    face.zones.push({ id: 'header', rect: [-bleed - 1, -bleed - 1, face.W + bleed + 1, lock.bottom + 0.6 * cap] });
   }
   // optional title (session / demo) under the header and QR block; both are clear zones for the art
   for (const face of r.faces) {
