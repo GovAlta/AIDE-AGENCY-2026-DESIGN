@@ -1,0 +1,57 @@
+{
+  "$schema": "https://raw.githubusercontent.com/GovAlta/governance/main/schema/repo.schema.json",
+  "schema_version": "2.0.0",
+  "repo": {
+    "name": "AIDE-AGENCY-2026-DESIGN",
+    "description": "Agency 2026 design system: tokens, fonts, templates and scripts for print, slides, digital, motion and MVAI video (owner: janak)",
+    "ministry": "TBD",
+    "system": "TBD",
+    "app_id": "XX999",
+    "code_classification": "public",
+    "tech_stack": [
+      "JavaScript",
+      "Python",
+      "HTML",
+      "CSS",
+      "Dockerfile",
+      "Shell"
+    ],
+    "infrastructure": [
+      "GitHub"
+    ],
+    "status": "active"
+  },
+  "team": {
+    "product_owner": "tbd@gov.ab.ca",
+    "tech_lead": "tbd@gov.ab.ca",
+    "codeowners_team": "TBD"
+  },
+  "governance": {
+    "criticality": "tier-3",
+    "environment": "development",
+    "cloud_eligible": false,
+    "innersource": false
+  },
+  "jira": {
+    "project_key": null,
+    "board_url": null
+  },
+  "confluence": {
+    "space_key": null,
+    "runbook_url": null
+  },
+  "compliance": {
+    "data_classification": "public",
+    "privacy_impact_assessed": false,
+    "security_reviewed": false,
+    "last_security_review": null
+  },
+  "records": {
+    "records_class": "active"
+  },
+  "ai": {
+    "agent_enabled": false
+  },
+  "license": "MIT",
+  "last_updated": "2026-11-11"
+}
