@@ -1,0 +1,15 @@
+{
+ "template": "onsite/booth-backdrop",
+ "name": "booth",
+ "title": "Demo name",
+ "$note": "Fictional sample: the demo name, line and team are placeholders. Replace with the confirmed demo details.",
+ "kicker": "Agency 2026 · Showcase demo",
+ "sub": "One line on what the demo does for people",
+ "team": "Team or ministry name",
+ "qr": {
+  "url": "https://www.alberta.ca",
+  "label": "Scan to save this demo"
+ },
+ "accent": "blue",
+ "sample": "Sample"
+}

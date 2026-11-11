@@ -1,0 +1,303 @@
+{
+  "$comment": "Introduction formulas: the fixed wording for introducing the event, a day, a session, a speaker, a panel, a demo, a video, a break and a close. One formula per moment, so every announcement, film and run of show introduces things the same way. Slots are {name}; [square brackets] mark an optional part that is dropped when its slot is empty. Fill slots only with supplied facts (the agenda, the person's own approved title). guides/NARRATION.md (Introductions) explains each rule. scripts/voice/say.py fills and voices them; scripts/lint/lint.py checks any text tagged \"intro\": \"<id>\" against its formula.",
+  "version": "1.0.0",
+  "slots": {
+    "event": "Event name as spoken: 'Agency twenty twenty six' (brand/voice/lexicon.json).",
+    "greeting": "'Good morning' before noon, 'Good afternoon' after, 'Good evening' after 5 p.m.",
+    "name": "The person's name exactly as they gave it, with the honorific they use ('the Honourable Jordan Sample'). Ask how it is said; add it to the lexicon.",
+    "role": "The person's own job title, as approved by the person ('Deputy Minister of Technology and Innovation'). No adjectives.",
+    "org": "Organization, full name, no acronym ('the Alberta Energy Regulator').",
+    "title": "Session, demo or video title exactly as in the agenda.",
+    "place": "Room or venue as in the agenda ('Hall D', 'the Edmonton Convention Centre').",
+    "time": "Clock time as spoken: 'ten thirty', 'one o'clock' (no 'a.m.' unless ambiguous).",
+    "minutes": "A whole number in words: 'five', 'fifteen'.",
+    "day_number": "'one', 'two' or 'three'.",
+    "day_title": "The day's title from tokens.json event.days[].title.",
+    "day_sub": "The day's subtitle from tokens.json event.days[].sub, starting lower case: 'a showcase for government'.",
+    "what": "The product's or organization's purpose in plain words, starting lower case: 'an AI agent that answers general questions by phone'. Supplied by its owner.",
+    "team": "Team or branch that built it, full name.",
+    "subject": "The video's subject in plain words, starting lower case.",
+    "where": "A place with its preposition, as said: 'in Edmonton' for a city, 'at Platform Calgary' for a venue. Only the first part of an agenda place before ' · ' is spoken."
+  },
+  "intros": [
+    {
+      "id": "event-open",
+      "speaker": "announcer",
+      "when": "First words of each day, after the opening sequence (MG-01).",
+      "template": "{greeting}, and welcome to {event}.",
+      "max_words": 12,
+      "example": {
+        "greeting": "Good morning",
+        "event": "Agency twenty twenty six"
+      },
+      "spoken": "Good morning, and welcome to Agency twenty twenty six."
+    },
+    {
+      "id": "day-open",
+      "speaker": "announcer",
+      "when": "After event-open, or after the day bumper (MG-02).",
+      "template": "Day {day_number} of {event} is {day_title}[, {day_sub}].",
+      "max_words": 24,
+      "example": {
+        "day_number": "one",
+        "event": "Agency twenty twenty six",
+        "day_title": "The Art of the Possible",
+        "day_sub": "a showcase for government"
+      },
+      "spoken": "Day one of Agency twenty twenty six is The Art of the Possible, a showcase for government."
+    },
+    {
+      "id": "house-notes",
+      "speaker": "announcer",
+      "when": "Safety, exits, phones, washrooms, accessibility services.",
+      "owner_only": true,
+      "template": null,
+      "rule": "Read the venue's and the event owner's text word for word. Do not write or improve it."
+    },
+    {
+      "id": "land-acknowledgement",
+      "speaker": "host",
+      "when": "As the event owner directs.",
+      "owner_only": true,
+      "template": null,
+      "rule": "Read the event owner's text word for word, by the person the owner names. Never generated, never shortened, never voiced by text to speech unless the owner says so."
+    },
+    {
+      "id": "speaker-walkup",
+      "speaker": "announcer",
+      "when": "As a speaker walks to the lectern; plays over a walk-up sting (brand/audio/cues.json walkup-*).",
+      "template": "Please welcome {name}, {role}[, {org}].",
+      "max_words": 25,
+      "example": {
+        "name": "Jordan Sample",
+        "role": "Director of Sample Services",
+        "org": "the Ministry of Example Affairs"
+      },
+      "spoken": "Please welcome Jordan Sample, Director of Sample Services, the Ministry of Example Affairs.",
+      "screen": "lower-third"
+    },
+    {
+      "id": "speaker-handoff",
+      "speaker": "host",
+      "when": "A host introduces the next speaker from the stage.",
+      "template": "To present {title}, please welcome {name}, {role}[, {org}].",
+      "max_words": 30,
+      "example": {
+        "title": "Sample Session Title",
+        "name": "Jordan Sample",
+        "role": "Director of Sample Services",
+        "org": "the Ministry of Example Affairs"
+      },
+      "spoken": "To present Sample Session Title, please welcome Jordan Sample, Director of Sample Services, the Ministry of Example Affairs.",
+      "screen": "lower-third"
+    },
+    {
+      "id": "speaker-fact",
+      "speaker": "announcer",
+      "when": "Optional second sentence after a walk-up or handoff, only with a fact the speaker approved.",
+      "owner_only": false,
+      "template": "{name} {fact}.",
+      "max_words": 20,
+      "rule": "One sentence, one fact the speaker supplied or approved (a role held, a program led). Repeat the name; no pronoun. No praise words.",
+      "example": {
+        "name": "Jordan Sample",
+        "fact": "leads the Sample Services modernization program"
+      },
+      "spoken": "Jordan Sample leads the Sample Services modernization program."
+    },
+    {
+      "id": "panel-open",
+      "speaker": "announcer",
+      "when": "Before a panel takes the stage.",
+      "template": "Please welcome the panel for {title}.",
+      "max_words": 18,
+      "example": {
+        "title": "Sample Panel Title"
+      },
+      "spoken": "Please welcome the panel for Sample Panel Title."
+    },
+    {
+      "id": "panel-member",
+      "speaker": "announcer",
+      "when": "One line per panellist, in the agenda's order, moderator last.",
+      "template": "{name}, {role}[, {org}].",
+      "max_words": 22,
+      "example": {
+        "name": "Alex Example",
+        "role": "Chief Data Officer",
+        "org": "the Sample Agency"
+      },
+      "spoken": "Alex Example, Chief Data Officer, the Sample Agency."
+    },
+    {
+      "id": "panel-moderator",
+      "speaker": "announcer",
+      "when": "The last panel line.",
+      "template": "{name}, {role}[, {org}], moderates the panel.",
+      "max_words": 25,
+      "example": {
+        "name": "Casey Placeholder",
+        "role": "Executive Director",
+        "org": "the Example Office"
+      },
+      "spoken": "Casey Placeholder, Executive Director, the Example Office, moderates the panel."
+    },
+    {
+      "id": "session-now",
+      "speaker": "announcer",
+      "when": "A session title card goes up.",
+      "template": "{title} begins now[, in {place}].",
+      "max_words": 20,
+      "example": {
+        "title": "Sample Session Title",
+        "place": "Hall D"
+      },
+      "spoken": "Sample Session Title begins now, in Hall D."
+    },
+    {
+      "id": "session-soon",
+      "speaker": "announcer",
+      "when": "Lobby or countdown call before a session.",
+      "template": "{title} begins in {minutes} minutes[, in {place}].",
+      "max_words": 22,
+      "example": {
+        "title": "Sample Session Title",
+        "minutes": "five",
+        "place": "Hall D"
+      },
+      "spoken": "Sample Session Title begins in five minutes, in Hall D."
+    },
+    {
+      "id": "demo-intro",
+      "speaker": "announcer",
+      "when": "Before a showcase demo.",
+      "template": "{title} is {what}, built by {team}.",
+      "max_words": 30,
+      "rule": "Defines the product in the same sentence that names it (appositive rule). 'what' comes from the demo's owner.",
+      "example": {
+        "title": "Sample Demo",
+        "what": "a tool that drafts replies to ministerial letters for staff to review",
+        "team": "the Example Branch"
+      },
+      "spoken": "Sample Demo is a tool that drafts replies to ministerial letters for staff to review, built by the Example Branch."
+    },
+    {
+      "id": "demo-presenter",
+      "speaker": "announcer",
+      "when": "After demo-intro.",
+      "template": "{name}, {role}, presents the demo.",
+      "max_words": 18,
+      "example": {
+        "name": "Jordan Sample",
+        "role": "Product Lead"
+      },
+      "spoken": "Jordan Sample, Product Lead, presents the demo."
+    },
+    {
+      "id": "video-intro",
+      "speaker": "announcer",
+      "when": "Before a video plays in the room.",
+      "template": "{title} is a video about {subject}.",
+      "max_words": 22,
+      "example": {
+        "title": "Sample Video Title",
+        "subject": "how one team replaced a paper form"
+      },
+      "spoken": "Sample Video Title is a video about how one team replaced a paper form."
+    },
+    {
+      "id": "break",
+      "speaker": "announcer",
+      "when": "Start of a break.",
+      "template": "The program resumes at {time}[ in {place}].",
+      "max_words": 16,
+      "example": {
+        "time": "ten thirty",
+        "place": "Hall D"
+      },
+      "spoken": "The program resumes at ten thirty in Hall D."
+    },
+    {
+      "id": "lunch",
+      "speaker": "announcer",
+      "when": "Start of lunch.",
+      "template": "Lunch is served in {place}. The program resumes at {time}.",
+      "max_words": 20,
+      "example": {
+        "place": "the north foyer",
+        "time": "one o'clock"
+      },
+      "spoken": "Lunch is served in the north foyer. The program resumes at one o'clock."
+    },
+    {
+      "id": "return",
+      "speaker": "announcer",
+      "when": "Return-from-break countdown, a few minutes before the restart.",
+      "template": "The program resumes in {minutes} minutes. Please take your seats.",
+      "max_words": 14,
+      "example": {
+        "minutes": "five"
+      },
+      "spoken": "The program resumes in five minutes. Please take your seats."
+    },
+    {
+      "id": "day-close",
+      "speaker": "announcer",
+      "when": "After the last session of a day. Thanks come from the owner.",
+      "template": "Day {day_number} of {event} is complete. Day {next_day_number} begins at {time}[ {where}].",
+      "max_words": 30,
+      "example": {
+        "day_number": "one",
+        "event": "Agency twenty twenty six",
+        "next_day_number": "two",
+        "time": "nine o'clock",
+        "where": "in Edmonton"
+      },
+      "spoken": "Day one of Agency twenty twenty six is complete. Day two begins at nine o'clock in Edmonton."
+    },
+    {
+      "id": "event-close",
+      "speaker": "host",
+      "when": "The end of the event.",
+      "owner_only": true,
+      "template": null,
+      "rule": "Thanks, credit and closing words are the event owner's. Leave a placeholder and ask."
+    },
+    {
+      "id": "org-first-mention",
+      "speaker": "narrator",
+      "when": "Any film, the first time an organization is named.",
+      "template": "{org}, which {what}, ",
+      "max_words": 25,
+      "pattern_only": true,
+      "rule": "An organization enters with what it does: 'The Alberta Energy Regulator, which licenses oil and gas wells, checks those taxes.'"
+    },
+    {
+      "id": "person-in-film",
+      "speaker": "narrator",
+      "when": "A film names a person or quotes one.",
+      "template": "{name}, {role}[ at {org}], ",
+      "max_words": 25,
+      "pattern_only": true,
+      "rule": "Full name and approved title on first mention, then the full name again (no pronoun). Quote only words the person approved, and say who said them before the quote."
+    },
+    {
+      "id": "lower-third",
+      "speaker": "screen",
+      "when": "On screen while a person speaks (show lower third, MG-03, MVAI people).",
+      "template": "{name}\n{role}[ · {org}]",
+      "max_words": 18,
+      "screen_only": true,
+      "rule": "Two lines. Name as given; role and organization on line two separated by ' · '. No full stops, no 'Mr.' or 'Dr.' unless the person uses it."
+    }
+  ],
+  "fixed_lines": {
+    "$comment": "Lines that open or close a section of a system or prototype explainer (the client-approved Prototype Lab profile, adapted for Agency). They are allowed exactly as written, although 'Here's how' is wayfinding elsewhere.",
+    "roles-open": "Let's have a look at this system, which will support several roles.",
+    "how-open": "Here's how the system works.",
+    "integrations-open": "In production, several integrations are needed, including",
+    "integrations-close": "In the test environment, these integrations are all simulated.",
+    "integrations-close-partial": "The other integrations are simulated.",
+    "try-open": "You can try this system now"
+  }
+}

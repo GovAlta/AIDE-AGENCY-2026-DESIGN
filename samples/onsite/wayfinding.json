@@ -1,0 +1,8 @@
+{ "template": "onsite/wayfinding", "name": "wayfinding", "title": "Agency 2026 directional sign (24 x 36 in, sample)",
+  "$note": "Fictional sample: room names and directions are placeholders. Use the venue's confirmed room names.",
+  "day": "day1", "sample": "Sample",
+  "rows": [ { "label": "Main stage", "sub": "Keynotes and panels", "arrow": "up", "accent": "blue" },
+            { "label": "Demo floor", "sub": "Working demos", "arrow": "right", "accent": "orange" },
+            { "label": "Registration", "arrow": "left", "accent": "purple" },
+            { "label": "Washrooms", "arrow": "down-right", "accent": "green" } ],
+  "qr": { "url": "https://www.alberta.ca", "label": "Full agenda" } }

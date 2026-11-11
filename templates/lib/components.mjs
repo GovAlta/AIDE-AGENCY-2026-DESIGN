@@ -2,17 +2,24 @@
 // Templates import these; content JSON never contains HTML except the inline marks below.
 //
 // Inline marks in any text field: **bold**, ==highlight== (accent colour), \n = line break. Everything else is escaped.
+// Icons: tiles, flow steps and dots items take an optional "icon" (a Lucide name, guides/ICONS.md). Charts: block types line, column,
+// stacked, donut, waffle, gauge, timeline (templates/lib/charts.mjs, guides/CHARTS.md).
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { traces as tracesSvg, corner as cornerSvg, chip as chipSvg, svgDoc, T } from '../../scripts/lib/vectors.mjs';
 import { qrSvg } from '../../scripts/lib/qr.mjs';
+import { icon } from './icons.mjs';
+import { CHARTS } from './charts.mjs';
+export { icon, CHARTS };
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 export { T };
 
 export const esc = (s) => String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;').replace(/"/g, '&quot;');
 export const md = (s) => esc(s).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>').replace(/==(.+?)==/g, '<span class="hi">$1</span>').replace(/\n/g, '<br>');
+// text colour for words set ON an accent fill (WCAG AA): white only on the dark accents, navy on every other
+export const inkOn = (name) => (['purple', 'blue', 'maroon', 'navy', 'navy2', 'night'].includes(name) ? '#FFFFFF' : T.color.navy);
 export const acc = (name, fallback = 'blue') => `a-${T.color[name] ? name : fallback}`;
 const SPEC = T.spectrumNames;
 export const nth = (i) => SPEC[(i * 3) % SPEC.length];        // spread accents across the spectrum when none is given
@@ -31,18 +38,19 @@ export const busRule = (colors = ['purple', 'yellow', 'cyan'], width) => `<div c
 // full-bleed traces behind content. w/h are the canvas size in CSS px; depth limits how far art reaches (fractions).
 export const tracesLayer = (o) => `<div class="traces-layer">${svgDoc(o.w, o.h, tracesSvg(o)).replace('<svg ', '<svg preserveAspectRatio="none" ')}</div>`;
 export const cornerArt = (o) => `<div class="art" style="${o.style ?? ''}">${svgDoc(o.w ?? 300, o.h ?? 270, cornerSvg(o))}</div>`;
-export const chipArt = (o = {}) => `<div class="chip-art" style="${o.style ?? ''}">${svgDoc(o.size ?? 80, Math.round((o.size ?? 80) * 2.05), chipSvg({ size: o.size ?? 80, lead: o.lead }))}</div>`;
+export const chipArt = () => '';   // retired 2026-11-11 (owner: no chip icon). Kept so old templates still build.
+export const chipArtRetired = (o = {}) => `<div class="chip-art" style="${o.style ?? ''}">${svgDoc(o.size ?? 80, Math.round((o.size ?? 80) * 2.05), chipSvg({ size: o.size ?? 80, lead: o.lead }))}</div>`;
 export const qr = (url, o = {}) => `<div class="qr">${qrSvg(url, { style: o.style ?? 'rounded', accent: o.accent ?? 'blue', badge: o.badge })}${o.title || o.show !== false ? `<div class="qr-t">${o.title ? `<b>${md(o.title)}</b>` : ''}${o.show !== false ? `<span>${esc(o.display ?? url.replace(/^https?:\/\//, ''))}</span>` : ''}</div>` : ''}</div>`;
 
 // ---------- blocks ----------
 const style = (o) => (o.accent ? ` style="--c:var(--${o.accent})"` : '');
-export const tile = (t, i = 0) => `<div class="tile ${t.dark ? 'dark' : ''}" style="--c:var(--${t.accent ?? nth(i)})">${t.value != null ? `<div class="v"${t.size ? ` style="font-size:calc(${t.size} * var(--u))"` : ''}>${md(t.value)}${t.unit ? `<small>${esc(t.unit)}</small>` : ''}</div>` : ''}${t.title ? `<div class="l"><b style="font-size:1.16em">${md(t.title)}</b><br>${md(t.label ?? '')}</div>` : `<div class="l">${md(t.label ?? '')}</div>`}</div>`;
+export const tile = (t, i = 0) => `<div class="tile ${t.dark ? 'dark' : ''}" style="--c:var(--${t.accent ?? nth(i)})">${t.icon ? icon(t.icon, { cls: 'tile-ico' }) : ''}${t.value != null ? `<div class="v"${t.size ? ` style="font-size:calc(${t.size} * var(--u))"` : ''}>${md(t.value)}${t.unit ? `<small>${esc(t.unit)}</small>` : ''}</div>` : ''}${t.title ? `<div class="l"><b style="font-size:1.16em">${md(t.title)}</b><br>${md(t.label ?? '')}</div>` : `<div class="l">${md(t.label ?? '')}</div>`}</div>`;
 export const tiles = (items, n) => `<div class="tiles" style="--n:${n ?? items.length}">${items.map(tile).join('')}</div>`;
 export const split = (parts) => `<div class="split">${parts.map((p, i) => `<div class="${['yellow', 'lime', 'rose', 'lilac'].includes(p.accent) ? 'lightc' : ''}" style="flex:${p.value};--c:var(--${p.accent ?? nth(i)})">${md(p.label ?? '')}</div>`).join('')}</div>`;
 export const bars = (rows) => rows.map((r, i) => `<div class="bar" style="--c:${r.neutral ? 'var(--neutral-bar)' : `var(--${r.accent ?? 'green'})`}"><span>${md(r.label)}</span><div class="t"><i style="width:${Math.max(0, Math.min(100, r.pct ?? r.value))}%"></i></div><b>${md(r.display ?? (r.value + '%'))}</b></div>`).join('');
 export const card = (c) => `<div class="card">${c.title ? `<h3>${md(c.title)}</h3>` : ''}${c.text ? `<p>${md(c.text)}</p>` : ''}${c.bars ? bars(c.bars) : ''}${c.blocks ? blocks(c.blocks) : ''}</div>`;
-export const flow = (steps) => `<div class="flow" style="--n:${steps.length}">${steps.map((s, i) => `<div class="step" style="--c:var(--${s.accent ?? nth(i)})"><div class="n">${String(i + 1).padStart(2, '0')}</div><div class="h">${md(s.title)}</div><div class="d">${md(s.text ?? '')}</div></div>`).join('')}</div>`;
-export const dots = (items, accent) => `<ul class="dots"${accent ? ` style="--c:var(--${accent})"` : ''}>${items.map((x) => `<li>${md(x)}</li>`).join('')}</ul>`;
+export const flow = (steps) => `<div class="flow" style="--n:${steps.length}">${steps.map((s, i) => `<div class="step" style="--c:var(--${s.accent ?? nth(i)})"><div class="n">${s.icon ? icon(s.icon, { cls: 'step-ico' }) : ''}${String(i + 1).padStart(2, '0')}</div><div class="h">${md(s.title)}</div><div class="d">${md(s.text ?? '')}</div></div>`).join('')}</div>`;
+export const dots = (items, accent) => `<ul class="dots"${accent ? ` style="--c:var(--${accent})"` : ''}>${items.map((x) => (typeof x === 'object' && x ? `<li${x.icon ? ' class="has-ico"' : ''}>${x.icon ? icon(x.icon, { cls: 'li-ico' }) : ''}${md(x.text)}</li>` : `<li>${md(x)}</li>`)).join('')}</ul>`;
 export const table = (t) => `<table class="agency"><tr>${t.head.map((h) => `<th>${md(h)}</th>`).join('')}</tr>${t.rows.map((r) => `<tr>${r.map((c, j) => `<td${j > 0 && t.numeric !== false ? ' class="n"' : ''}>${md(c)}</td>`).join('')}</tr>`).join('')}</table>`;
 export const quote = (q) => `<div class="quote">${md(q.text)}${q.small ? `<small>${md(q.small)}</small>` : ''}</div>`;
 
@@ -68,6 +76,9 @@ export function blocks(list = [], ctx = {}) {
       case 'terms': return `<p class="note">${md(b.text)}</p>`;
       case 'qr': return qr(b.url, b);
       case 'image': return `<img src="${b.src.startsWith('http') || b.src.startsWith('data:') ? b.src : asset(ctx, b.src)}" alt="${esc(b.alt ?? '')}" style="width:100%;${b.height ? `height:${b.height};object-fit:cover;` : ''}border-radius:calc(7 * var(--u))">`;
+      case 'line': case 'column': case 'stacked': case 'donut': case 'waffle': case 'gauge': case 'timeline': return CHARTS[b.type](b);
+      case 'charts': return `<div class="cols" style="--n:${b.items.length}">${b.items.map((c) => `<div>${CHARTS[c.type](c)}</div>`).join('')}</div>`;
+      case 'icon': return icon(b.name, b);
       case 'spacer': return `<div style="height:calc(${b.size ?? 8} * var(--u))"></div>`;
       case 'html': throw new Error('html blocks are not allowed: add a component instead');
       default: throw new Error(`unknown block type: ${b.type}`);

@@ -28,7 +28,13 @@
 .dg-mark { position: absolute; z-index: 2; font-weight: 800; color: var(--g-ink); letter-spacing: -0.01em; line-height: 1; white-space: nowrap; }
 .dg-mark b { color: var(--maroon); margin-left: 0.22em; }
 .g-night .dg-mark b, .g-navy .dg-mark b { color: var(--text-dark-maroon); }
-.dg-mark::after { content: ""; display: block; height: 0.17em; margin-top: 0.22em; background: var(--spectrum); }
+/* trace underline (owner 2026-11-11): same shape as .mark in agency.css */
+.dg-mark { --mark-trace: var(--blue); }
+.dark .dg-mark, .g-night .dg-mark, .g-navy .dg-mark { --mark-trace: var(--text-dark-blue); }
+.dg-mark::after { content: ""; display: block; height: 0.32em; margin-top: 0.1em; background: var(--mark-trace, var(--blue));
+  -webkit-mask: linear-gradient(#000 0 0) left 0.0375em / calc(100% - 0.45em) 0.045em no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 32'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M-2 6 L16 22 H32' stroke-width='4.5'/%3E%3Ccircle cx='39' cy='22' r='5' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E") right top / 0.46em 0.32em no-repeat;
+  mask: linear-gradient(#000 0 0) left 0.0375em / calc(100% - 0.45em) 0.045em no-repeat, url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 46 32'%3E%3Cg fill='none' stroke='%23000' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpath d='M-2 6 L16 22 H32' stroke-width='4.5'/%3E%3Ccircle cx='39' cy='22' r='5' stroke-width='4'/%3E%3C/g%3E%3C/svg%3E") right top / 0.46em 0.32em no-repeat; }
+
 .dg-bus { display: grid; gap: 0.22em; width: 12em; margin: 0.7em 0; }
 .dg-bus i { display: block; height: 0.2em; border-radius: 0.1em; background: var(--c); }
 .dg-bus i:nth-child(2) { width: 85%; } .dg-bus i:nth-child(3) { width: 70%; }
@@ -40,6 +46,6 @@
 .dg-qr { background: #fff; border-radius: 0.6em; padding: 0.5em; display: inline-flex; flex-direction: column; align-items: center; gap: 0.3em; }
 .dg-qr svg { display: block; }
 .dg-qr span { font-family: var(--font-mono); font-size: 0.7em; color: var(--navy); letter-spacing: 0.04em; }
-.dg-sample { position: absolute; z-index: 3; font-family: var(--font-mono); font-size: 0.6em; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; background: var(--coral); padding: 0.25em 0.7em; border-radius: 0.3em; }
+.dg-sample { position: absolute; z-index: 3; font-family: var(--font-mono); font-size: 0.6em; letter-spacing: 0.16em; text-transform: uppercase; color: #fff; background: var(--text-coral); padding: 0.25em 0.7em; border-radius: 0.3em; }
 .chip-halo { position: absolute; background: var(--g-bg); border-radius: 18%; }
 .dg.g-night .chip-halo { background: #0A2E4E; } .dg.g-navy .chip-halo { background: #06355B; }

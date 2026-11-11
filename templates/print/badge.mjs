@@ -4,7 +4,7 @@
 //   "people": [ { "name": "Sample Name", "role": "Role or title", "org": "Ministry or organisation", "day": "all" | "mon" | "tue" | "wed",
 //                 "tag": "optional pill e.g. Speaker", "qr": "https://... (optional)" } ] }
 // The colour stripe follows the day (all days: the full spectrum).
-import { T, md, esc, qr, tracesLayer } from '../lib/components.mjs';
+import { T, md, esc, qr, tracesLayer, inkOn } from '../lib/components.mjs';
 import { printCss, day, logo } from './lib/print.mjs';
 export const meta = { kind: 'pdf', size: 'Badge 4x3 in', about: 'Name badges, one per page, day colour stripe, optional QR', vw: 384, vh: 288,
   css: printCss() + `@page { size: 4in 3in; margin: 0; }
@@ -24,7 +24,7 @@ export function render(d, ctx) {
   <div class="top" style="position:relative;z-index:1"><div class="mark" style="font-size:12pt">Agency<b>2026</b></div>${logo(ctx)}</div>
   <div class="mid"><div style="max-width:${p.qr ? '2.4in' : '3.2in'}">${p.tag ? `<span class="pill a-${e?.accent ?? 'blue'}" style="margin-bottom:5pt">${esc(p.tag)}</span>` : ''}<div class="nm" data-fit style="overflow:hidden">${md(p.name)}</div><div class="rl">${md(p.role ?? '')}</div><div class="og">${md(p.org ?? '')}</div></div>
   ${p.qr ? qr(p.qr, { show: false, style: 'rounded' }) : ''}</div>
-  <div class="stripe" style="background:${bg}">${esc(e ? e.day : T.event.dates + ' · ' + T.event.cities)}</div>
+  <div class="stripe" style="background:${bg};color:${e ? inkOn(e.accent) : '#FFFFFF'}${e ? '' : ';text-shadow:0 0 2px rgba(2,44,76,.9)'}">${esc(e ? e.day : T.event.dates + ' · ' + T.event.cities)}</div>
 </section>`;
   }).join('\n');
 }

@@ -2,7 +2,7 @@
 
 Agency 2026 is the Government of Alberta public-service showcase, hosted by the Ministry of Technology and Innovation (Dec. 7–9, 2026,
 Edmonton and Calgary). Its look comes from the event invite: rainbow circuit traces that run in from the edges of a white board, white
-ring solder pads at the trace ends, a pink microchip, deep-navy type and a maroon date line.
+ring solder pads at the trace ends, deep-navy type and a maroon date line.
 
 The same look runs through every medium. The MVAI video kit `goa-agency` defined it first, and this repo takes its values from that kit
 (`aide-motion-video/engine/kits/goa-agency.js`). One file holds them all: `brand/tokens/tokens.json`. Every stylesheet, template, slide
@@ -115,8 +115,12 @@ Video sizes belong to the MVAI kit, which fits headlines between 92 and 60 px. S
 
 ## The marks
 
-**The Agency wordmark.** "Agency" in navy Inter 800 with "2026" in maroon, over a 3-point spectrum rule. Files:
-`brand/logos/agency-2026-wordmark.svg|png` and `agency-2026-wordmark-white.svg|png` (for night and navy). Templates draw it as live text
+**The Agency wordmark.** "Agency" in navy Inter 800 with "2026" in maroon, over the **trace underline**: one thin circuit trace in blue
+(light blue on night and navy) that runs under the word, steps down at 45 degrees near the end and stops in a hollow ring pad. It replaced
+the rainbow rule on 2026-11-11 (owner direction: "make it techier"). The geometry is fixed in `UNDERLINE` in `scripts/lib/vectors.mjs`;
+never draw a spectrum or gradient rule under the word. Files: `brand/logos/agency-2026-wordmark.svg|png`, `agency-2026-wordmark-white.svg|png`,
+the outlined `agency-2026-wordmark-outlined.svg` and `-white-outlined.svg`, and `agency-wordmark-outlined.svg` / `-white-outlined.svg` for
+"Agency" alone (displays). Templates draw it as live text
 in the top-left corner of every page, slide and frame, which matches every MVAI frame.
 
 **The Alberta signature.** The official Government of Alberta logo sits top-right (`brand/logos/goa-signature.png` on light grounds,
@@ -148,13 +152,16 @@ Rules for the traces themselves:
 - Use `scripts/vectors.mjs` with a seed for new arrangements. The same seed always gives the same art, so record the seed with the piece.
 - The invite artwork in `brand/art/invites` is the reference. Reuse it unchanged for the event's own announcements.
 
-**The microchip.** The pink chip appears on the splash, a cover or a title card only, once per piece, with its lead trace running to a pad.
+**Thin traces only, no chip (owner direction, 2026-11-11).** Every trace is a thin line of even weight, like a real circuit trace. There
+are no thick ribbons or bold bands, and the pink microchip icon is retired: do not draw, place or generate it. The supplied invite
+vectors and the compliant slide template's images still contain both; use them only as supplied, for the event's own announcements,
+until the event team issues versions without them. The MVAI video kit's splash still draws the chip; that is MVAI's to change.
 
 **The bus rule.** Two to four stacked coloured rules, each shorter than the one above, sit under a page or slide title. Choose the colours
 of the section that follows.
 
-**The spectrum bar.** A 3 to 4 point gradient rule in spectrum order. It sits under the wordmark and along the bottom edge of the navy
-quote box.
+**The spectrum bar.** A 3 to 4 point gradient rule in spectrum order, along the bottom edge of the navy quote box and the top of footer
+bands. It never sits under the wordmark.
 
 ## The classification band
 

@@ -1,0 +1,74 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agency 2026 · Control</title>
+<!-- The control booth. Opens the stage window, steps through the day, fires sound, lower thirds, blackout and freeze.
+     ?agenda=show/samples/agency-2026.json picks the agenda (laptop mode). ?code=ABC-123&pin=123456 joins an event-code show on the
+     show server (the PIN is moved out of the address bar at once). Hotkeys are listed on screen and in guides/SHOW.md. -->
+<link rel="stylesheet" href="control.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="title">Agency<b>2026</b> · Show control</div>
+    <div class="days" id="days"></div>
+    <button id="openStage" title="Open the stage window; drag it to the projector and press F11">Open stage window</button>
+    <span class="pill" id="codePill" hidden></span>
+    <span class="pill" id="connPill">link: …</span>
+    <span class="pill" id="stagePill">stage: none</span>
+    <span class="pill" id="audioPill">sound: ?</span>
+    <span class="drift" id="drift">on time</span>
+    <div class="clock" id="clock">--:--</div>
+  </header>
+  <nav class="rundown" id="rundown"></nav>
+  <main class="centre">
+    <div class="mons">
+      <div class="mon pgm"><span class="lab">PROGRAM</span><div class="frame"><iframe id="pgm" src="about:blank" title="Program monitor"></iframe></div><div class="cap" id="pgmCap"></div></div>
+      <div class="mon pvw"><span class="lab">PREVIEW · NEXT</span><div class="frame"><iframe id="pvw" src="about:blank" title="Preview monitor"></iframe></div><div class="cap" id="pvwCap"></div></div>
+    </div>
+    <div class="go">
+      <button id="back" title="Back one step (← or Page Up)">◀ BACK</button>
+      <button id="go" class="gobtn" title="Next step (Space, → or Page Down)">GO ▶</button>
+      <button id="take" class="take" title="Put the selected segment on air (Enter)">TAKE SELECTED</button>
+    </div>
+    <div class="notes"><h4>Operator notes</h4><div class="op" id="notes"></div></div>
+    <div class="keys">
+      <span><kbd>Space</kbd>/<kbd>→</kbd>/<kbd>PgDn</kbd> GO</span><span><kbd>←</kbd>/<kbd>PgUp</kbd> back</span><span><kbd>↑</kbd><kbd>↓</kbd> select</span><span><kbd>Enter</kbd> take</span>
+      <span><kbd>L</kbd> lower third</span><span><kbd>B</kbd> blackout</span><span><kbd>F</kbd> freeze</span><span><kbd>M</kbd> mute</span>
+      <span><kbd>V</kbd> play/pause video</span><span><kbd>R</kbd> restart video</span><span><kbd>1</kbd>–<kbd>9</kbd> sound pads</span><span><kbd>0</kbd> stop pads</span><span><kbd>A</kbd> next announcement</span><span><kbd>Esc</kbd> clear lower third</span>
+    </div>
+  </main>
+  <aside class="side">
+    <div class="box" id="share" hidden><h4>Event code links</h4>
+      <div class="row"><span class="small" style="width:50px">Stage</span><input id="stageUrl" readonly style="flex:1"><button data-copy="stageUrl">Copy</button></div>
+      <div class="row" style="margin-top:5px"><span class="small" style="width:50px">Control</span><input id="ctlUrl" readonly style="flex:1"><button data-copy="ctlUrl">Copy</button></div>
+      <div class="small" style="margin-top:4px">The control link holds the PIN: share it only with operators.</div></div>
+    <div class="box"><h4>Announce <span class="small"><kbd>A</kbd> next</span></h4><div class="spk ann" id="announce"></div></div>
+    <div class="box"><h4>Lower third <span class="small" id="lowerState">off</span></h4><div class="spk" id="speakers"></div></div>
+    <div class="box"><h4>Screen</h4><div class="grid3">
+      <button id="blackout" class="danger">Blackout <kbd>B</kbd></button><button id="freeze">Freeze <kbd>F</kbd></button><button id="mute" class="danger">Mute <kbd>M</kbd></button></div></div>
+    <div class="box"><h4>Video <span class="small" id="vtime"></span></h4><div class="grid3">
+      <button data-v="play">Play</button><button data-v="pause">Pause</button><button data-v="restart">Restart</button></div><div class="vbar"><i id="vbar"></i></div></div>
+    <div class="box"><h4>Music bed <span class="small" id="bedName">none</span></h4>
+      <div class="row"><select id="bedSel" style="flex:1"></select><button id="bedPlay">Play</button><button id="bedStop">Fade out</button></div>
+      <div class="row" style="margin-top:6px"><span class="small">Bed</span><input type="range" id="bedVol" min="0" max="1" step="0.05" value="1"></div>
+      <div class="row"><span class="small">Master</span><input type="range" id="master" min="0" max="1" step="0.05" value="1"></div>
+      <div class="meter"><i id="meter"></i></div></div>
+    <div class="box"><h4>Sound pads <span class="small">1–9</span></h4><div class="pads" id="pads"></div></div>
+    <div class="box"><h4>Countdown override</h4>
+      <div class="row"><input id="cdMin" type="number" min="0" step="1" value="5" style="width:70px"><span class="small">min from now, or</span><input id="cdAt" type="time" style="width:110px"></div>
+      <div class="row" style="margin-top:6px"><button id="cdSet">Set</button><button id="cdClear">Use agenda time</button><span class="small" id="cdState"></span></div></div>
+    <div class="box"><h4>Rehearsal clock</h4>
+      <div class="row"><input id="rhDate" type="date"><input id="rhTime" type="time"><button id="rhSet">Set</button><button id="rhLive">Live</button></div>
+      <div class="small" id="rhState">Live clock</div></div>
+    <div class="box"><h4>Command log</h4><div id="log" class="small" style="display:grid;gap:3px"></div></div>
+    <div class="box"><h4>Look</h4><div class="row"><select id="theme"><option value="compliant">Event template (Arial)</option><option value="mvai">MVAI kit (Inter)</option></select>
+      <button id="reloadStage" title="Reload every stage window; each returns to the step on air">Reload stage</button></div></div>
+  </aside>
+</div>
+<div class="err" id="err"></div>
+<script type="module" src="control.js"></script>
+</body>
+</html>

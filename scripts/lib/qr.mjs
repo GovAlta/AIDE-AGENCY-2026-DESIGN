@@ -9,7 +9,7 @@ const C = T.color;
 const r2 = (n) => Math.round(n * 100) / 100;
 
 export function qrSvg(text, o = {}) {
-  const badge = o.badge ?? null;                                          // null | 'chip' | 'a' (Agency "A") | text up to 4 chars
+  const badge = o.badge === 'chip' ? 'a' : (o.badge ?? null);   // the chip badge is retired (owner 2026-11-11); 'chip' now gives the navy A                                          // null | 'chip' | 'a' (Agency "A") | text up to 4 chars
   const ecl = badge ? 'H' : (o.ecl ?? 'M');
   const q = QRCode.create(String(text), { errorCorrectionLevel: ecl });
   const n = q.modules.size, data = q.modules.data, quiet = o.quiet ?? 4, cell = o.cell ?? 10;

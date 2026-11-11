@@ -142,6 +142,7 @@ class Deck:
         self.prs.slide_width, self.prs.slide_height = px(1920), px(1080)
         self.blank = self.prs.slide_layouts[6]
         self.n = len(d.get("slides", []))
+        self.pics = {}
 
     # ---- chrome shared by every slide (same geometry as styles/slides.css) ----
     def chrome(self, sl, s, i, ground):
@@ -203,8 +204,19 @@ class Deck:
             acc = s.get("accent") or nth(i + 1)
             sl = self.prs.slides.add_slide(self.blank)
             self.chrome(sl, s, i, ground)
-            getattr(self, "l_" + s["type"].replace("-", "_"))(sl, s, g, dark, acc)
+            fn = getattr(self, "l_" + s["type"].replace("-", "_"), None)
+            if fn: fn(sl, s, g, dark, acc)
+            else: self.l_picture(sl, i, s)
         return self.prs
+
+    def l_picture(self, sl, i, s):
+        """Slide types with no native layout (charts): the HTML deck's own render of this slide, full size. Edit the data in the deck JSON."""
+        png = (self.pics or {}).get(i)
+        if not png:
+            raise SystemExit(f"slide {i + 1}: type {s['type']!r} has no native layout and no HTML render")
+        sl.shapes.add_picture(png, 0, 0, self.prs.slide_width, self.prs.slide_height)
+        note = f"[{s['type']} slide: a picture of the HTML render. Change its data in the deck JSON and rebuild.]"
+        tf = sl.notes_slide.notes_text_frame; tf.text = (tf.text + "\n" if tf.text else "") + note
 
     def l_title(self, sl, s, g, dark, acc):
         y = self.head(sl, s, g, dark, acc, y=262, title_size=84, w=1500)
@@ -308,7 +320,8 @@ class Deck:
             box(sl, x, y, w, h, g["field"], radius=18)
             box(sl, x, y, w, 8, c)
             box(sl, x + 34, y + 36, 52, 52, c, shape=MSO_SHAPE.OVAL)
-            text(sl, x + 34, y + 36, 52, 52, str(j + 1), 26, "#FFFFFF", bold=True, align="c", anchor="m")
+            ink = "#FFFFFF" if (st.get("accent") or nth(j)) in ("purple", "blue", "maroon", "navy", "navy2", "night") else T["color"]["navy"]   # WCAG AA on the fill
+            text(sl, x + 34, y + 36, 52, 52, str(j + 1), 26, ink, bold=True, align="c", anchor="m")
             text(sl, x + 34, y + 110, w - 68, 96, st.get("title", ""), 40, g["ink"], bold=True, lh=1.0)
             text(sl, x + 34, y + 110 + self.lines(st.get("title", ""), 40, w - 68) * 46 + 10, w - 68, 120, st.get("text", ""), 28, g["soft"], lh=1.2)
         self.source(sl, s, g)
@@ -423,7 +436,16 @@ def main(argv):
             f = cache / f"qr-{i + 1:02d}.svg"
             subprocess.run(["node", str(ROOT / "scripts/qr.mjs"), s["url"], "--out", str(f), "--png", "--style", "rounded", "--accent", s.get("accent", "blue"), "--size", "680"], check=True, cwd=ROOT, stdout=subprocess.DEVNULL)
             qr[s["url"]] = str(f.with_suffix(".png"))
-    deck = Deck(d, art); deck.qr = qr
+    # slide types with no native layout (e.g. chart) are placed as pictures of the HTML deck's render
+    pics = {}
+    if any(not hasattr(Deck, "l_" + sl["type"].replace("-", "_")) for sl in d.get("slides", [])):
+        html = cache / "html"
+        subprocess.run(["node", str(ROOT / "scripts/make.mjs"), str(src), "--out", str(html)], check=True, cwd=ROOT, stdout=subprocess.DEVNULL)
+        name = d.get("name", src.stem); n = len(d.get("slides", []))
+        for i in range(n):
+            f = html / "slides" / (f"{name}-{i + 1:02d}.png" if n > 1 else f"{name}.png")
+            if f.exists(): pics[i] = str(f)
+    deck = Deck(d, art); deck.qr = qr; deck.pics = pics
     prs = deck.build()
     prs.core_properties.title = d.get("title", d.get("name", ""))
     prs.core_properties.subject = "Agency 2026"

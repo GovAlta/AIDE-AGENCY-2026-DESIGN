@@ -73,6 +73,7 @@ const pngsIn = (d) => walk(path.join(ROOT, d)).filter((f) => /\.(png|jpg)$/.test
   // 2. families rendered by make.mjs
   const fam = [['print', 'Print and PDF', 'Letter, tabloid, badges, tents, cards, certificates, reports, postcards', 4, 520],
     ['slides', 'Slides', 'One deck JSON renders to PNG and PDF here, and to an editable .pptx (scripts/pptx/build_deck.py)', 4, 290],
+    ['onsite', 'On-site and large format', 'Stage and booth backdrops, media wall, wayfinding and room signs, stickers, lanyard (previews of real-size vector PDFs)', 4, 420],
     ['digital', 'Digital and social', 'Social, story, Teams backgrounds, email header, web hero, signage, thumbnails, lower third, banners', 4, 380]];
   for (const [d, title, sub, cols, h] of fam) {
     const items = pngsIn('out/' + d).map((f) => ({ file: f, label: label(f), meta: size(f) }));
@@ -83,7 +84,7 @@ const pngsIn = (d) => walk(path.join(ROOT, d)).filter((f) => /\.(png|jpg)$/.test
   const colours = [...T.spectrumNames, 'navy', 'maroon', 'night', 'grey', 'field', 'rose', 'lime'].map((n) => sw(n, T.color[n], ['field', 'yellow', 'lime', 'rose'].includes(n) ? T.color.navy : '#fff'));
   const vec = pngsIn('brand/art/generated').concat(pngsIn('brand/logos')).map((f) => ({ file: f, label: label(f), meta: size(f) }));
   const qrs = ['rounded', 'dots', 'square'].map((s) => ({ svg: qrSvg('https://www.alberta.ca', { style: s, size: 260 }), label: `QR ${s}`, meta: 'scripts/qr.mjs --style ' + s }))
-    .concat([{ svg: qrSvg('https://www.alberta.ca', { style: 'dots', badge: 'chip', size: 260 }), label: 'QR dots + chip badge', meta: '--badge chip (ECL H)' }]);
+    .concat([{ svg: qrSvg('https://www.alberta.ca', { style: 'dots', badge: 'a', size: 260 }), label: 'QR dots + A badge', meta: '--badge a (ECL H)' }]);
   const type = [{ svg: `<svg width="100%" height="100%" viewBox="0 0 900 300"><text x="20" y="120" font-family="Inter" font-weight="800" font-size="110" fill="${T.color.navy}" letter-spacing="-3">Agency <tspan fill="${T.color.maroon}">2026</tspan></text><text x="24" y="190" font-family="Inter" font-weight="500" font-size="34" fill="${T.color.body}">Inter 400 · 500 · 600 · 700 · 800</text><text x="24" y="250" font-family="Geist Mono" font-weight="600" font-size="26" letter-spacing="5" fill="${T.color.purple}">GEIST MONO · KICKERS · LABELS</text></svg>`, label: 'Type', meta: 'brand/fonts (SIL OFL)' }];
   const inv = pngsIn('brand/art/invites').map((f) => ({ file: f, label: label(f).replace('agency 2026 ', ''), meta: 'official invite vector (VSAI)' }));
   made.push(await sheet('brand', 'Brand foundations', 'Tokens (brand/tokens/tokens.json), type, invite art, generated vectors and QR styles', {

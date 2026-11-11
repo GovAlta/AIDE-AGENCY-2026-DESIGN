@@ -1,0 +1,382 @@
+{
+ "template": "print/handout",
+ "name": "charts-sample",
+ "title": "Agency 2026 chart and icon blocks (sample)",
+ "$note": "Fictional sample. Every number on these pages is an example value made up to show the chart blocks; none is a real result. Replace them with sourced figures and record each source in a NOTES.md.",
+ "footer": "Chart and icon blocks · Sample with example values",
+ "classification": "UNCLASSIFIED",
+ "art": "none",
+ "pages": [
+  {
+   "kicker": "Sample · Example values",
+   "title": "Chart Blocks",
+   "bus": [
+    "blue",
+    "green",
+    "orange"
+   ],
+   "lead": "Every chart on this page uses **example values**. The block types are line, column, stacked, donut, waffle, gauge and timeline.",
+   "blocks": [
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "line",
+        "title": "Requests per month, example values",
+        "width": 258,
+        "height": 118,
+        "x": [
+         "Jan",
+         "Feb",
+         "Mar",
+         "Apr",
+         "May",
+         "Jun"
+        ],
+        "series": [
+         {
+          "name": "Online",
+          "values": [
+           120,
+           160,
+           210,
+           260,
+           330,
+           410
+          ]
+         },
+         {
+          "name": "Phone",
+          "values": [
+           300,
+           290,
+           270,
+           240,
+           220,
+           190
+          ],
+          "accent": "neutral"
+         }
+        ],
+        "y": {
+         "min": 0
+        }
+       }
+      ],
+      [
+       {
+        "type": "column",
+        "title": "Median days to decision, example values",
+        "width": 258,
+        "height": 118,
+        "x": [
+         "Region A",
+         "Region B",
+         "Region C",
+         "Region D"
+        ],
+        "values": [
+         24,
+         21,
+         17,
+         11
+        ],
+        "colors": [
+         "neutral",
+         "neutral",
+         "neutral",
+         "green"
+        ],
+        "y": {
+         "unit": " d"
+        },
+        "axis": false
+       }
+      ]
+     ]
+    },
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "donut",
+        "title": "Requests by channel, example values",
+        "width": 258,
+        "parts": [
+         {
+          "label": "Online",
+          "value": 52
+         },
+         {
+          "label": "Phone",
+          "value": 31
+         },
+         {
+          "label": "In person",
+          "value": 17
+         }
+        ],
+        "center": {
+         "value": "52%",
+         "label": "online"
+        },
+        "size": 92
+       }
+      ],
+      [
+       {
+        "type": "waffle",
+        "title": "Share answered on first contact, example value",
+        "width": 258,
+        "value": 72,
+        "label": "answered on first contact",
+        "accent": "green",
+        "cell": 8.4
+       }
+      ]
+     ]
+    },
+    {
+     "type": "stacked",
+     "title": "Outcome by request type, example values",
+     "width": 540,
+     "labelWidth": 92,
+     "parts": [
+      {
+       "label": "Resolved"
+      },
+      {
+       "label": "Referred"
+      },
+      {
+       "label": "Follow-up"
+      }
+     ],
+     "rows": [
+      {
+       "label": "Licences",
+       "values": [
+        62,
+        23,
+        15
+       ]
+      },
+      {
+       "label": "Benefits",
+       "values": [
+        48,
+        34,
+        18
+       ]
+      },
+      {
+       "label": "Permits",
+       "values": [
+        71,
+        17,
+        12
+       ]
+      }
+     ],
+     "table": "hidden"
+    },
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "gauge",
+        "title": "Test pass rate toward 100%, example value",
+        "width": 200,
+        "value": 96.5,
+        "decimals": 1,
+        "unit": "%",
+        "target": 100,
+        "label": "tests passing, target 100%",
+        "accent": "green",
+        "size": 118
+       }
+      ],
+      [
+       {
+        "type": "timeline",
+        "title": "Sample milestones",
+        "width": 320,
+        "showTitle": true,
+        "items": [
+         {
+          "when": "Week 1",
+          "title": "Brief"
+         },
+         {
+          "when": "Week 3",
+          "title": "Prototype",
+          "now": true
+         },
+         {
+          "when": "Week 6",
+          "title": "Pilot"
+         },
+         {
+          "when": "Week 9",
+          "title": "Review"
+         }
+        ]
+       }
+      ]
+     ]
+    },
+    {
+     "type": "note",
+     "text": "All values on this page are examples."
+    }
+   ]
+  },
+  {
+   "kicker": "Sample · Icons",
+   "title": "Icon Blocks",
+   "titleSize": 26,
+   "bus": [
+    "purple",
+    "pink"
+   ],
+   "lead": "Tiles, flow steps and list items take an optional **icon**: a Lucide name from brand/icons/lucide. The words carry the meaning; the icon helps the eye find it.",
+   "blocks": [
+    {
+     "type": "section",
+     "title": "Tiles with icons",
+     "accent": "blue",
+     "blocks": [
+      {
+       "type": "tiles",
+       "items": [
+        {
+         "icon": "calendar-days",
+         "value": "3",
+         "label": "days of programming",
+         "accent": "blue"
+        },
+        {
+         "icon": "map-pin",
+         "value": "2",
+         "label": "cities: Edmonton and Calgary",
+         "accent": "purple"
+        },
+        {
+         "icon": "monitor-play",
+         "value": "40",
+         "label": "working demos built by Technology and Innovation",
+         "accent": "orange"
+        },
+        {
+         "icon": "target",
+         "value": "2",
+         "label": "challenges set by government",
+         "accent": "green"
+        }
+       ]
+      },
+      {
+       "type": "note",
+       "text": "These four figures are printed on the event's compliant slide template."
+      }
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Flow with icons",
+     "accent": "green",
+     "blocks": [
+      {
+       "type": "flow",
+       "steps": [
+        {
+         "icon": "mic",
+         "title": "Listen",
+         "text": "Speech becomes text"
+        },
+        {
+         "icon": "search",
+         "title": "Search",
+         "text": "Published sources only"
+        },
+        {
+         "icon": "file-check",
+         "title": "Answer",
+         "text": "Written from the sources"
+        },
+        {
+         "icon": "shield-check",
+         "title": "Check",
+         "text": "Every number checked"
+        },
+        {
+         "icon": "volume-2",
+         "title": "Speak",
+         "text": "A natural voice replies"
+        }
+       ]
+      },
+      {
+       "type": "note",
+       "text": "Sample flow: steps and wording are examples."
+      }
+     ]
+    },
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "section",
+        "title": "List with icons",
+        "accent": "orange",
+        "blocks": [
+         {
+          "type": "dots",
+          "items": [
+           {
+            "icon": "qr-code",
+            "text": "Scan a QR code on any screen to save a demo"
+           },
+           {
+            "icon": "graduation-cap",
+            "text": "Hands-on sessions with the tools you already use"
+           },
+           {
+            "icon": "users",
+            "text": "Fireside chats and vendor demos"
+           },
+           "A plain item keeps its round dot"
+          ]
+         }
+        ]
+       }
+      ],
+      [
+       {
+        "type": "section",
+        "title": "Rules",
+        "accent": "pink",
+        "blocks": [
+         {
+          "type": "dots",
+          "accent": "pink",
+          "items": [
+           "One icon per item, from the Lucide set only",
+           "Stroke 2 at 24 px; no fills, no mixing sets",
+           "Never the only carrier of meaning: always with words",
+           "Curated list: guides/ICONS.md"
+          ]
+         }
+        ]
+       }
+      ]
+     ]
+    }
+   ]
+  }
+ ]
+}

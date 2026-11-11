@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agency 2026 · Show</title>
+<!-- Start page of the show server: make a show with an event code, or join one as the stage screen or as a control. -->
+<link rel="stylesheet" href="../styles/tokens.css">
+<style>
+:root { --navy: #002C4E; --red: #9E2B33; --blue: #0077CD; --rule: #D0D1DB; --ground: #F4F5F8; --ink2: #3D4F63; }
+* { box-sizing: border-box; }
+body { margin: 0; font: 17px/1.45 "Liberation Sans", Arial, Helvetica, sans-serif; color: var(--navy); background: var(--ground); }
+header { background: #fff; border-bottom: 1px solid var(--rule); position: relative; }
+header::after { content: ""; position: absolute; left: 0; right: 0; bottom: -1px; height: 6px; background: linear-gradient(90deg, #730067, #0077CD, #00B6ED, #EF4B8B, #ED8C00, #FFC836, #78BF26); }
+.wrap { max-width: 1080px; margin: 0 auto; padding: 0 24px; }
+header .wrap { display: flex; align-items: center; justify-content: space-between; padding-top: 22px; padding-bottom: 26px; }
+.mark { font-weight: 700; font-size: 26px; } .mark b { color: var(--red); }
+header img { height: 40px; }
+h1 { font-size: 40px; margin: 34px 0 6px; letter-spacing: -0.01em; }
+.lead { color: var(--ink2); margin: 0 0 26px; max-width: 760px; }
+.grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+@media (max-width: 860px) { .grid { grid-template-columns: 1fr; } }
+.card { background: #fff; border: 1px solid var(--rule); border-top: 8px solid var(--c, var(--blue)); padding: 20px 22px 22px; display: flex; flex-direction: column; gap: 10px; }
+.card h2 { margin: 0; font-size: 22px; }
+.card p { margin: 0; color: var(--ink2); font-size: 15px; }
+label { font-size: 13px; font-weight: 700; color: var(--ink2); display: block; margin-top: 4px; }
+input, select { width: 100%; font: inherit; padding: 9px 10px; border: 1px solid var(--rule); border-radius: 4px; background: #fff; color: var(--navy); }
+input.code { font: 700 26px/1 "Liberation Mono", Consolas, monospace; letter-spacing: .12em; text-transform: uppercase; text-align: center; }
+button, .btn { font: inherit; font-weight: 700; background: var(--navy); color: #fff; border: 0; border-radius: 4px; padding: 11px 14px; cursor: pointer; text-decoration: none; text-align: center; display: inline-block; }
+button.alt, .btn.alt { background: #fff; color: var(--navy); border: 1px solid var(--navy); }
+.made { display: none; margin-top: 22px; background: #fff; border: 1px solid var(--rule); border-left: 8px solid #78BF26; padding: 20px 24px; }
+.made .codebig { font: 700 64px/1 "Liberation Mono", Consolas, monospace; letter-spacing: .1em; margin: 6px 0 4px; }
+.made .pin { font: 700 26px "Liberation Mono", Consolas, monospace; }
+.row { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; margin-top: 10px; }
+.row input { flex: 1; min-width: 260px; font-size: 14px; }
+.note { font-size: 14px; color: var(--ink2); margin-top: 26px; }
+.err { color: var(--red); font-weight: 700; min-height: 1.4em; }
+footer { margin: 40px 0 30px; font-size: 13px; color: var(--ink2); }
+</style>
+</head>
+<body>
+<header><div class="wrap"><div class="mark">Agency <b>2026</b> · Show</div><img src="../brand/logos/alberta-logo.svg" alt="Government of Alberta"></div></header>
+<main class="wrap">
+  <h1>Run the event day on screen</h1>
+  <p class="lead">One screen shows the program to the room. A control on the operator's laptop moves it forward and back, fires the sound,
+    the speaker banners and the videos. The two connect with an event code, so they can be on different machines.</p>
+  <div class="grid">
+    <section class="card" style="--c:#0077CD">
+      <h2>New show</h2>
+      <p>Pick the agenda. You get an event code for the screens and a PIN for the operators.</p>
+      <label for="agenda">Agenda</label><select id="agenda"></select>
+      <label for="file">Or your own agenda file (JSON)</label><input id="file" type="file" accept=".json,application/json">
+      <label for="zip">Media for your agenda (zip, optional)</label><input id="zip" type="file" accept=".zip,application/zip">
+      <button id="create">Make the show</button>
+      <div class="err" id="cerr"></div>
+    </section>
+    <section class="card" style="--c:#ED8C00">
+      <h2>Join as the stage screen</h2>
+      <p>Open this on the machine that drives the projector, then press F11. It shows the code until the operator starts.</p>
+      <label for="scode">Event code</label><input id="scode" class="code" maxlength="7" placeholder="ABC-123" autocomplete="off">
+      <button id="joinStage">Open the stage</button>
+    </section>
+    <section class="card" style="--c:#730067">
+      <h2>Join as a control</h2>
+      <p>For the operator. The PIN lets this browser change what the room sees.</p>
+      <label for="ccode">Event code</label><input id="ccode" class="code" maxlength="7" placeholder="ABC-123" autocomplete="off">
+      <label for="cpin">PIN</label><input id="cpin" inputmode="numeric" maxlength="6" placeholder="6 digits" autocomplete="off">
+      <button id="joinControl">Open the control</button>
+    </section>
+  </div>
+  <section class="made" id="made">
+    <div>Event code</div><div class="codebig" id="mcode"></div>
+    <div>Operator PIN <span class="pin" id="mpin"></span> · keep it with the operators. The code expires in 72 hours.</div>
+    <div class="row"><input id="mstage" readonly><button class="alt" data-copy="mstage">Copy stage link</button><a class="btn alt" id="ostage" target="_blank">Open stage</a></div>
+    <div class="row"><input id="mctl" readonly><button class="alt" data-copy="mctl">Copy control link</button><a class="btn" id="octl" target="_blank">Open control</a></div>
+    <div class="err" id="merr"></div>
+  </section>
+  <p class="note">Everything on one laptop, with no event code: <a href="control.html">open the laptop control</a> and use its "Open stage window" button.
+    The guide is <code>guides/SHOW.md</code> in the AIDE-AGENCY-2026-DESIGN repo.</p>
+  <footer id="foot"></footer>
+</main>
+<script>
+const $ = (s) => document.querySelector(s);
+const norm = (c) => { const x = String(c || '').toUpperCase().replace(/[^A-Z0-9]/g, ''); return x.length === 6 ? x.slice(0, 3) + '-' + x.slice(3) : null; };
+for (const id of ['scode', 'ccode']) $('#' + id).addEventListener('input', (e) => { const x = e.target.value.toUpperCase().replace(/[^A-Z0-9]/g, '').slice(0, 6); e.target.value = x.length > 3 ? x.slice(0, 3) + '-' + x.slice(3) : x; });
+fetch('/api/agendas').then((r) => r.json()).then((j) => {
+  for (const a of j.agendas) { const o = document.createElement('option'); o.value = a.path; o.textContent = `${a.title} · ${a.days.length} day${a.days.length > 1 ? 's' : ''} (${a.path.split('/').pop()})`; if (a.path === j.default) o.selected = true; $('#agenda').append(o); }
+  $('#foot').textContent = `Shows are kept ${j.store === 'postgres' ? 'in the app database' : 'in this server\'s memory (one machine)'} for 72 hours.`;
+});
+$('#create').onclick = async () => {
+  $('#cerr').textContent = '';
+  try {
+    let body = { agendaPath: $('#agenda').value };
+    if ($('#file').files[0]) body = { agenda: JSON.parse(await $('#file').files[0].text()) };
+    const r = await fetch('/api/shows', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(body) });
+    const j = await r.json(); if (!r.ok) throw new Error(j.error || r.status);
+    $('#mcode').textContent = j.code; $('#mpin').textContent = j.pin; $('#mstage').value = j.stage; $('#mctl').value = j.control;
+    $('#ostage').href = j.stage; $('#octl').href = j.control; $('#made').style.display = 'block'; $('#made').scrollIntoView({ behavior: 'smooth' });
+    if ($('#zip').files[0]) {
+      const z = await fetch(`/api/shows/${j.code}/assets`, { method: 'POST', headers: { 'Content-Type': 'application/zip', 'X-Show-Pin': j.pin }, body: $('#zip').files[0] });
+      const zj = await z.json(); $('#merr').textContent = z.ok ? `${zj.files} media files uploaded. ${zj.note}` : `Media upload failed: ${zj.error}`;
+    }
+  } catch (e) { $('#cerr').textContent = 'Could not make the show: ' + e.message; }
+};
+$('#joinStage').onclick = () => { const c = norm($('#scode').value); if (c) location.href = `/stage?code=${c}`; else $('#scode').focus(); };
+$('#joinControl').onclick = () => { const c = norm($('#ccode').value), p = $('#cpin').value.trim(); if (c && p) location.href = `/control?code=${c}&pin=${encodeURIComponent(p)}`; };
+document.querySelectorAll('[data-copy]').forEach((b) => (b.onclick = () => navigator.clipboard?.writeText($('#' + b.dataset.copy).value)));
+</script>
+</body>
+</html>

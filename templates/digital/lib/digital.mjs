@@ -31,7 +31,8 @@ const LOGO = fs.readFileSync(path.join(ROOT, 'brand/logos/alberta-logo.svg'), 'u
 export const logo = (dark, style) => `<div class="dg-logo" style="${style}">${dark ? LOGO.replace(/#5f6a72/gi, '#FFFFFF') : LOGO}</div>`;
 
 // the chip sits in a small clearing of ground colour so traces never run under it (the invite keeps a gap around it)
-export const chip = (size, style, lead = true) => `<div class="chip-art" style="z-index:1;${style}"><div class="chip-halo" style="width:${Math.round(size * 1.3)}px;height:${Math.round(size * 1.3)}px;left:${-Math.round(size * 0.15)}px;top:${-Math.round(size * 0.15)}px"></div><div style="position:relative">${svgDoc(size, Math.round(size * 2.05), chipSvg({ size, lead: lead ? undefined : false }))}</div></div>`;
+export const chip = () => '';   // retired 2026-11-11 (owner: no chip icon)
+export const chipRetired = (size, style, lead = true) => `<div class="chip-art" style="z-index:1;${style}"><div class="chip-halo" style="width:${Math.round(size * 1.3)}px;height:${Math.round(size * 1.3)}px;left:${-Math.round(size * 0.15)}px;top:${-Math.round(size * 0.15)}px"></div><div style="position:relative">${svgDoc(size, Math.round(size * 2.05), chipSvg({ size, lead: lead ? undefined : false }))}</div></div>`;
 
 // FIT: shrinks every [data-fit] element (2 px steps) until it fits its box width and its data-lines limit, measured with the real font.
 // It runs on document.fonts.ready, before make.mjs measures and screenshots, so the audit sees the final size.

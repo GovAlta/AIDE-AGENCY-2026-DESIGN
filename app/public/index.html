@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agency Studio</title>
+<link rel="stylesheet" href="/styles/agency.css">
+<link rel="stylesheet" href="/app.css">
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="topbar">
+  <div class="topbar-in">
+    <a class="brandlink" href="#/" aria-label="Agency Studio home"><span class="mark">Agency<b>2026</b></span><span class="studio">Studio</span></a>
+    <span class="who" id="who"></span>
+    <img class="sig" src="/brand/logos/goa-signature.png" alt="Government of Alberta">
+  </div>
+</header>
+
+<main id="main" tabindex="-1">
+  <!-- gallery -->
+  <section id="gallery" class="view" aria-labelledby="g-title">
+    <div class="hero">
+      <div class="kicker">Agency 2026 · Design system</div>
+      <h1 id="g-title">Make an Agency piece</h1>
+      <div class="bus"><i style="--c:var(--purple)"></i><i style="--c:var(--yellow)"></i><i style="--c:var(--cyan)"></i></div>
+      <p class="lead">Pick a template, start from a sample, replace its words with your own, and download a print-ready PDF, a PNG or a PowerPoint.
+        The design is fixed: colours, type and layout come from the Agency 2026 tokens.</p>
+      <div class="rule-note" role="note"><b>Only facts you can source.</b> Every name, number and date must come from you or your sources. Placeholder text
+        (“Sample”, “Example”, “TBC”) must be replaced before anything is shared. Nothing you type leaves this service.</div>
+    </div>
+    <div class="filters" role="toolbar" aria-label="Filter templates">
+      <div class="chips" id="fam"></div>
+      <label class="search"><span class="sr">Search templates</span><input id="q" type="search" placeholder="Search: poster, badge, Teams…" autocomplete="off"></label>
+    </div>
+    <div id="cards" class="cards" aria-live="polite"></div>
+  </section>
+
+  <!-- editor -->
+  <section id="editor" class="view" hidden aria-labelledby="e-title">
+    <div class="ed-head">
+      <a href="#/" class="back">← All templates</a>
+      <div>
+        <div class="kicker" id="e-fam"></div>
+        <h1 id="e-title" class="h1"></h1>
+        <p class="about" id="e-about"></p>
+      </div>
+    </div>
+    <div class="ed">
+      <div class="pane form-pane">
+        <div class="tools">
+          <label>Start from <select id="sample"></select></label>
+          <label>Classification <select id="cls"></select></label>
+        </div>
+        <div id="cls-warn" class="warn" role="alert" hidden></div>
+        <div class="tabs" role="tablist">
+          <button role="tab" id="tab-form" aria-selected="true" aria-controls="form">Form</button>
+          <button role="tab" id="tab-raw" aria-selected="false" aria-controls="raw-wrap">JSON</button>
+          <button role="tab" id="tab-doc" aria-selected="false" aria-controls="doc">Field guide</button>
+        </div>
+        <form id="form" class="form" novalidate></form>
+        <div id="raw-wrap" hidden>
+          <label for="raw" class="sr">Content JSON</label>
+          <textarea id="raw" spellcheck="false" rows="28"></textarea>
+          <div class="row-btns"><button type="button" id="raw-apply" class="btn">Apply JSON</button><span id="raw-err" class="err"></span></div>
+        </div>
+        <pre id="doc" class="doc" hidden></pre>
+      </div>
+      <div class="pane preview-pane">
+        <div class="actions">
+          <button id="go" class="btn primary" type="button">Preview <kbd>Ctrl</kbd>+<kbd>Enter</kbd></button>
+          <label class="auto"><input type="checkbox" id="auto" checked> Update as I type</label>
+          <span id="status" class="status" role="status" aria-live="polite"></span>
+        </div>
+        <div id="downloads" class="downloads"></div>
+        <div id="findings" class="findings" aria-live="polite"></div>
+        <figure class="stage" id="stage"><figcaption class="sr">Preview</figcaption><div class="empty">Your preview appears here.</div></figure>
+        <div id="strip" class="strip" role="list" aria-label="Pages"></div>
+      </div>
+    </div>
+  </section>
+</main>
+<footer class="foot"><span>Agency Studio · AIDE-AGENCY-2026-DESIGN</span><span class="pill" style="--c:#8aa3ba;color:#fff;border-color:#8aa3ba">Renders on this server only</span></footer>
+<script src="/app.js" type="module"></script>
+</body>
+</html>

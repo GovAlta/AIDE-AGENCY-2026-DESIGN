@@ -17,13 +17,17 @@ film made from this repo use the same colours, fonts, marks and footer band.
 | `brand/tokens/` | `tokens.json`, the one source of colour, type, sizes and event facts |
 | `brand/fonts/` | Inter and Geist Mono (SIL Open Font License) |
 | `brand/logos/` | The Alberta signature (colour and white), the Alberta logo, the Agency 2026 wordmark |
-| `brand/art/` | The official invite vectors, the handout corner art, generated trace sets, the chip |
+| `brand/art/` | The official invite vectors, the handout corner art, generated trace sets (thin lines; the chip icon is retired) |
 | `styles/` | `tokens.css` (generated) and `agency.css`, the shared components |
 | `templates/` | Print, digital, slide and video-still templates (JavaScript modules that render content JSON to HTML) |
 | `scripts/` | `make.mjs` (content to PDF/PNG), `vectors.mjs`, `qr.mjs`, `qr-verify.mjs`, `build-tokens.mjs`, `pptx/build_deck.py`, `lint/lint.py`, `mvai/mvai.py` |
 | `samples/` | A working content file for every template, the Contact Alberta handout reproduction, and video specs with MVAI frames |
 | `motion/` | The stage and social motion library (MG-01 to MG-05, AN-01, AN-02), rendered by `scripts/motion-render.mjs` |
 | `brand/pptx/` | The event team's compliant PowerPoint template |
+| `show/` | The run-of-show player: one agenda JSON runs the event day; stage and control on one laptop or on two machines joined by an event code (`guides/SHOW.md`) |
+| `displays/` | Parametric stand panels and monitor kiosks: real-size SVG, PDF, `.ai`, print-ready CMYK, layout drawings, 3D renders (`displays/README.md`) |
+| `app/` | Agency Studio, a web form for staff: pick a template, fill it in, preview, download (`guides/FORM-APP.md`) |
+| `brand/voice/`, `brand/audio/`, `brand/imagery/`, `brand/icons/`, `brand/email/`, `brand/pptx/` | Approved voices and introduction formulas; music cues and Suno prompts; image prompts and samples; Lucide icons; Outlook signature and email; the PowerPoint template |
 | `contact-sheets/` | Every template, video screen and motion piece at a glance (`index.html`) |
 | `examples/` | Finished outputs to look at without building: handout PDF, sample deck PDF and PPTX, motion MP4s |
 
@@ -42,6 +46,15 @@ Narrated videos: see `guides/VIDEO.md`. MVAI renders them; `scripts/mvai/mvai.py
 Motion graphics: `node scripts/motion-render.mjs --list`, then `node scripts/motion-render.mjs MG-01` (see `motion/README.md`).
 Slides: `python3 scripts/pptx/build_deck.py samples/slides/agency-sample-deck.json out/slides/deck.pptx`.
 Rebuild everything and the contact sheets: `npm run build`.
+
+## For Claude Code users
+
+The `agency-design` skill is installed for every session under `/mnt/data/projects` (source: `.claude/skills/agency-design/`). Asking for any
+Agency 2026 piece ("a poster for day 2", "a deck for our demo", "kiosk graphics", "run the show") loads the rules and commands.
+
+## Look
+
+Traces are thin lines of even weight; there are no thick ribbons and no chip icon (owner direction, 2026-11-11).
 
 ## Open decision
 

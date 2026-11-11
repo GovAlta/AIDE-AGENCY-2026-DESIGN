@@ -5,7 +5,9 @@
 //   node scripts/make.mjs --all [--check]                       # every samples/**/*.json that names a "template"
 //   node scripts/make.mjs --list                                # every template with its size and purpose
 // A content file is JSON with "template": "<family>/<name>" (a module in templates/) and the fields that template documents.
-// --check exits 1 if a page overflows, text does not fit its box, or a bundled font failed to load.
+// --check exits 1 if a page overflows, text does not fit its box, a bundled font failed to load, an image has no alt text, or the
+// page has no lang or title. Text contrast below WCAG AA (4.5:1, 3:1 for large text) is a warning; --strict makes it a fault too.
+// Content files may waive a checked false positive: "a11y": {"ignore": ["start of the element's text"]}.
 import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL } from 'node:url';
@@ -42,11 +44,12 @@ export async function make(file, o = {}) {
   const htmlFile = path.join(dir, name + '.html');
   fs.writeFileSync(htmlFile, html);
   const rep = meta.kind === 'pdf'
-    ? await htmlToPdf(htmlFile, path.join(dir, name + '.pdf'), { vw: meta.vw, vh: meta.vh, scale: meta.scale ?? 2 })
-    : await htmlToPng(htmlFile, path.join(dir, name + '.png'), { width: meta.width, height: meta.height, scale: meta.scale ?? 1, pdf: meta.pdf, transparent: meta.transparent });
+    ? await htmlToPdf(htmlFile, path.join(dir, name + '.pdf'), { vw: meta.vw, vh: meta.vh, scale: meta.scale ?? 2, a11y: data.a11y, strict: flag('strict') })
+    : await htmlToPng(htmlFile, path.join(dir, name + '.png'), { width: meta.width, height: meta.height, scale: meta.scale ?? 1, pdf: meta.pdf, transparent: meta.transparent, a11y: data.a11y, strict: flag('strict') });
   const outs = [rep.pdf, ...rep.pngs].filter(Boolean).map((f) => path.relative(process.cwd(), f));
   console.log(`${rep.faults.length ? 'FAULT' : 'ok   '} ${path.relative(ROOT, path.resolve(file))} -> ${outs.join(', ')}`);
   for (const f of rep.faults) console.log('      - ' + f);
+  for (const w of rep.warnings ?? []) console.log('      warn ' + w);
   return rep;
 }
 
@@ -58,7 +61,7 @@ async function list() {
   }
 }
 
-if (import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
   (async () => {
     if (flag('list')) return list();
     const files = flag('all') ? walk(path.join(ROOT, 'samples')).filter((f) => f.endsWith('.json') && JSON.parse(fs.readFileSync(f, 'utf8')).template).sort()

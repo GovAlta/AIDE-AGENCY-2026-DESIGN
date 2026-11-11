@@ -1,0 +1,2 @@
+{ "template": "onsite/wayfinding", "name": "wayfinding-landscape-night", "$note": "Fictional sample: placeholder rooms.", "size": "36x24", "ground": "night", "day": "day3", "sample": "Sample",
+  "rows": [ { "label": "Main stage", "arrow": "up-left", "accent": "orange" }, { "label": "Industry hall", "sub": "Vendor demos", "arrow": "right", "accent": "yellow" }, { "label": "Exit", "arrow": "down", "accent": "cyan" } ] }

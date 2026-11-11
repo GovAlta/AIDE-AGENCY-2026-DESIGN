@@ -1,0 +1,3 @@
+{ "template": "onsite/room-sign", "name": "room-sign-tabloid", "$note": "Fictional sample: placeholders.", "size": "tabloid", "day": "day2", "sample": "Sample",
+  "qr": { "url": "https://www.alberta.ca", "label": "Full agenda" },
+  "rooms": [ { "room": "Roundtable Room", "now": { "time": "13:00–15:00", "title": "Closed policy roundtable session", "who": "By invitation" }, "next": { "time": "15:30", "title": "Session title" } } ] }

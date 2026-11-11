@@ -11,7 +11,17 @@
     "sheets": "node scripts/contact-sheets.mjs",
     "build": "npm run tokens && npm run vectors && npm run samples && node scripts/motion-render.mjs --all && npm run sheets",
     "check": "node scripts/make.mjs --all --check",
-    "motion": "node scripts/motion-render.mjs --all"
+    "motion": "node scripts/motion-render.mjs --all",
+    "show": "node show/server.mjs",
+    "show:test": "node show/test/run.mjs && node show/test/remote.mjs && node show/test/voice.mjs",
+    "a11y": "node scripts/a11y/contrast.mjs",
+    "print-ready": "node scripts/print-export.mjs",
+    "ci": "node scripts/make.mjs --all --check && node scripts/ci/qr-samples.mjs",
+    "voice:check": "python3 scripts/voice/say.py --agenda show/samples/agency-2026.json --check",
+    "studio": "node app/server.mjs",
+    "show:pack": "node show/pack.mjs",
+    "displays": "bash displays/make-examples.sh",
+    "display": "node displays/build.mjs"
   },
   "dependencies": {
     "jsqr": "^1.4.0",

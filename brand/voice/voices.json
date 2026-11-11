@@ -1,0 +1,66 @@
+{
+  "$comment": "Agency 2026 voice registry: the only voices used for narration, announcements and voice-over. guides/NARRATION.md explains the rules. Change only on the owner's written decision; record it in 'decisions'. Voice ids are ElevenLabs ids as listed by MVAI GET /api/v1/voices on 2026-11-11.",
+  "version": "1.0.0",
+  "engine": {
+    "provider": "elevenlabs",
+    "model": "eleven_v4",
+    "route": "Ent Tools: $ENT_TOOLS_URL/v1/proxy/elevenlabs/v1/text-to-speech/{voice_id} (header X-API-Key), or MVAI, which always uses eleven_v4",
+    "output": "mp3_44100_128",
+    "loudness": "-16 LUFS integrated, -1.5 dBTP (guides/SOUND.md)",
+    "rule": "Every ElevenLabs voice uses eleven_v4. No other ElevenLabs model, and no other TTS engine for Unclassified work."
+  },
+  "roles": {
+    "narrator": {
+      "use": "Every narrated film, explainer, walkthrough, sizzle voice-over and recorded briefing (MVAI specs: voice.name).",
+      "name": "Matilda",
+      "voice_id": "XrExE9yKIg1WjnnlVkGX",
+      "listing": "Matilda - Knowledgable, Professional (premade, female, American, informative_educational)",
+      "settings": { "stability": 0.5, "similarity_boost": 0.75, "style": 0.2, "use_speaker_boost": true, "speed": 1.0 },
+      "mvai": { "voice": { "name": "Matilda" } },
+      "status": "approved",
+      "decided_by": "Janak Alford",
+      "source": "arlo companions/_shared/narrator-voices.json (2026-10-11: 'You can use the same ElevenLabs voice that the Hillary prototype lab is using'); the same id and settings in servicenow/bill-26 video/project.json and video/tools/tts.mjs (Prototype Lab and IOA explainers)",
+      "note": "MVAI lists two voices named Matilda. Use the premade id XrExE9yKIg1WjnnlVkGX, never the professional clone vXdn3dxpDdZHARskOYfz."
+    },
+    "announcer": {
+      "use": "Pre-recorded stage announcements on the day: speaker walk-ups, session and day openers, break and return calls (scripts/voice/say.py, show/).",
+      "name": "Simon",
+      "voice_id": "FyYFoP6qNryBV7G8rnI9",
+      "listing": "Simon - Clear, Engaging Narrative Voice (professional, male, Canadian, narrative_story)",
+      "settings": { "stability": 0.55, "similarity_boost": 0.75, "style": 0.15, "use_speaker_boost": true, "speed": 1.0 },
+      "status": "proposed",
+      "decided_by": null,
+      "source": "Chosen 2026-11-11 for a Canadian accent and a measured delivery that contrasts with the narrator. Owner to approve or replace before any public use."
+    },
+    "alternate": {
+      "use": "A second voice only where a film needs two speakers (an interviewer and a narrator), or when the owner asks for a Canadian female voice.",
+      "name": "Jenna",
+      "voice_id": "TgnhEILA8UwUqIMi20rp",
+      "listing": "Jenna - Warm and Articulate (professional, female, Canadian, conversational)",
+      "settings": { "stability": 0.5, "similarity_boost": 0.75, "style": 0.2, "use_speaker_boost": true, "speed": 1.0 },
+      "status": "proposed",
+      "decided_by": null,
+      "source": "Chosen 2026-11-11. Owner to approve or replace."
+    }
+  },
+  "protected": {
+    "$comment": "Protected A or B content is voiced in Canada by Google (MVAI provider google-ca, Montreal). ElevenLabs processes outside Canada. Protected C and above may not be voiced with these services.",
+    "provider": "google-ca",
+    "narrator": { "name": "Kore", "replaces": "narrator", "mvai": { "voice": { "provider": "google-ca", "name": "Kore" } } },
+    "announcer": { "name": "Charon", "replaces": "announcer", "mvai": { "voice": { "provider": "google-ca", "name": "Charon" } } },
+    "rule": "A series made for Protected material uses Kore for every part, so the voice does not change between parts."
+  },
+  "not_allowed": [
+    "Any cloned voice (category 'cloned', for example 'Zedbot') unless the speaker's documented consent and the owner's approval are recorded in 'decisions'.",
+    "Character, novelty or sales voices (use_case characters_animation, advertisement, social_media).",
+    "Mixing narrators inside one film or one series.",
+    "Another ElevenLabs model than eleven_v4."
+  ],
+  "cloning": {
+    "rule": "A real person's voice is cloned only with that person's documented consent and the owner's written approval. The consent record is stored outside this repo and referenced here by date and approver. A cloned voice is never used to say words the person did not approve.",
+    "classification": "A clone sends the sample to ElevenLabs (outside Canada): never with Protected material."
+  },
+  "decisions": [
+    { "date": "2026-10-11", "by": "Janak Alford", "what": "Matilda (XrExE9yKIg1WjnnlVkGX, eleven_v4, 0.5/0.75/0.2, speaker boost) is the narration voice for story briefings and videos." }
+  ]
+}

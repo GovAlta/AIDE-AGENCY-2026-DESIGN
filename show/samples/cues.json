@@ -1,0 +1,98 @@
+{
+ "$note": "Sample sound cues for the show, cut from the two Suno clips supplied on 2026-11-11 (brand/audio/source). In and out points are first choices from a loudness scan; tune them by ear in rehearsal. The sample agenda loads this file first and brand/audio/cues.json second: a cue there with a file replaces the one here with the same id; a planned cue with no file leaves this one in use. Format: show/agenda.schema.json $defs/cue.",
+ "version": 1,
+ "cues": [
+  {
+   "id": "bed-walkin",
+   "label": "Walk-in bed",
+   "kind": "bed",
+   "file": "brand/audio/source/percussive-hook.mp3",
+   "in": 10,
+   "out": 98,
+   "loop": true,
+   "gain_db": -9,
+   "lufs": -15.8,
+   "fade_in": 3,
+   "fade_out": 3
+  },
+  {
+   "id": "bed-break",
+   "label": "Break bed",
+   "kind": "bed",
+   "file": "brand/audio/source/tech-sizzle-cue.mp3",
+   "in": 20,
+   "out": 90,
+   "loop": true,
+   "gain_db": -11,
+   "lufs": -15.4,
+   "fade_in": 3,
+   "fade_out": 3
+  },
+  {
+   "id": "sting-open",
+   "label": "Opening sting",
+   "kind": "sting",
+   "file": "brand/audio/source/tech-sizzle-cue.mp3",
+   "in": 0,
+   "out": 9,
+   "gain_db": -1,
+   "lufs": -15.4,
+   "fade_out": 1.5
+  },
+  {
+   "id": "sting-short",
+   "label": "Transition sting",
+   "kind": "sting",
+   "file": "brand/audio/source/percussive-hook.mp3",
+   "in": 10,
+   "out": 14,
+   "gain_db": -3,
+   "lufs": -15.8,
+   "fade_out": 0.8
+  },
+  {
+   "id": "walkup",
+   "label": "Speaker walk-up",
+   "kind": "walkup",
+   "file": "brand/audio/source/percussive-hook.mp3",
+   "in": 106,
+   "out": 118,
+   "gain_db": -3,
+   "lufs": -15.8,
+   "fade_out": 2
+  },
+  {
+   "id": "walkup-alt",
+   "label": "Walk-up (alt)",
+   "kind": "walkup",
+   "file": "brand/audio/source/tech-sizzle-cue.mp3",
+   "in": 60,
+   "out": 72,
+   "gain_db": -3,
+   "lufs": -15.4,
+   "fade_out": 2
+  },
+  {
+   "id": "sizzle-full",
+   "label": "Sizzle (full cue)",
+   "kind": "sizzle",
+   "file": "brand/audio/source/tech-sizzle-cue.mp3",
+   "in": 0,
+   "out": 99.5,
+   "gain_db": 0,
+   "lufs": -15.4,
+   "fade_out": 1.5
+  },
+  {
+   "id": "outro",
+   "label": "Closing outro",
+   "kind": "sting",
+   "file": "brand/audio/source/percussive-hook.mp3",
+   "in": 116,
+   "out": 130.9,
+   "gain_db": -1,
+   "lufs": -15.8,
+   "fade_out": 1
+  }
+ ]
+}

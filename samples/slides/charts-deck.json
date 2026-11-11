@@ -1,0 +1,30 @@
+{
+  "template": "slides/deck",
+  "name": "charts-deck",
+  "title": "Agency 2026 chart slides (sample)",
+  "$note": "Fictional sample: every number is an example value that shows the chart slide. Replace with sourced figures.",
+  "footer": "Agency 2026 · Chart slide sample · Example values",
+  "classification": "UNCLASSIFIED",
+  "numbers": true,
+  "slides": [
+    { "type": "chart", "label": "Sample · Example values", "title": "Requests per month", "accent": "blue",
+      "chart": { "type": "line", "title": "Requests per month, example values", "showTitle": false, "x": ["Jan", "Feb", "Mar", "Apr", "May", "Jun"],
+        "series": [ { "name": "Online", "values": [120, 160, 210, 260, 330, 410] }, { "name": "Phone", "values": [300, 290, 270, 240, 220, 190], "accent": "neutral" } ], "y": { "min": 0 } },
+      "source": "Example values." },
+    { "type": "chart", "label": "Sample · Example values", "title": "Channel and first-contact answers", "accent": "green",
+      "charts": [
+        { "type": "donut", "title": "Requests by channel, example values", "width": 780, "parts": [ { "label": "Online", "value": 52 }, { "label": "Phone", "value": 31 }, { "label": "In person", "value": 17 } ], "center": { "value": "52%", "label": "online" } },
+        { "type": "waffle", "title": "Answered on first contact, example value", "width": 780, "value": 72, "label": "answered on first contact", "accent": "green" } ],
+      "source": "Example values." },
+    { "type": "chart", "label": "Sample · Example values", "title": "Outcome by request type", "accent": "purple", "ground": "paper",
+      "chart": { "type": "stacked", "title": "Outcome by request type, example values", "showTitle": false, "labelWidth": 240,
+        "parts": [ { "label": "Resolved" }, { "label": "Referred" }, { "label": "Follow-up" } ],
+        "rows": [ { "label": "Licences", "values": [62, 23, 15] }, { "label": "Benefits", "values": [48, 34, 18] }, { "label": "Permits", "values": [71, 17, 12] } ] },
+      "source": "Example values." },
+    { "type": "chart", "label": "Sample · Example values", "title": "Tests passing, and the plan", "accent": "orange", "ground": "night",
+      "charts": [
+        { "type": "gauge", "title": "Tests passing, example value", "value": 96.5, "decimals": 1, "unit": "%", "label": "tests passing, target 100%", "accent": "green" },
+        { "type": "timeline", "title": "Sample milestones", "items": [ { "when": "Week 1", "title": "Brief" }, { "when": "Week 3", "title": "Prototype", "now": true }, { "when": "Week 6", "title": "Pilot" }, { "when": "Week 9", "title": "Review" } ] } ],
+      "source": "Example values." }
+  ]
+}

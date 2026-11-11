@@ -91,8 +91,8 @@ and the screen bench use it.
   Cue each item at the start of the sentence that introduces it. Add `"hold": 1.5` when the last item needs time on screen.
 - Scene fields shared by every type: `ground` (board, paper, night, navy, spectrum), `accent` (a spectrum name), `transition`
   (sweep, rise, iris, cut), `label` (the small mono tag top-left), `traces` (true or false).
-- Circuit art belongs to the splash, title cards, chapter cards, the end card and transitions. Content screens are a clean board. The chip
-  appears on the splash only. Use `night` or `navy` grounds on a few scenes for contrast, and `spectrum` once, for the line people should
+- Circuit art belongs to the splash, title cards, chapter cards, the end card and transitions. Content screens are a clean board. The MVAI splash
+  still draws the chip; the owner has retired it (2026-11-11), so prefer a title card over the splash until MVAI offers a splash without it. Use `night` or `navy` grounds on a few scenes for contrast, and `spectrum` once, for the line people should
   remember.
 - Write numbers in narration as they should be said ("two point seven million"); digits in narration are flagged.
 - `"captions": true` burns captions in. VTT and SRT files are always made.

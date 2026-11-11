@@ -1,0 +1,29 @@
+/* On-site large format (templates/onsite). Every size is in design units (px of the design canvas); .os-canvas is zoomed to trim size. */
+.os { position: relative; overflow: hidden; padding: 0; background: var(--g-bg, #fff); --u: 1px; }
+.os-canvas { position: relative; overflow: hidden; color: var(--g-ink, var(--navy)); font-family: var(--font-display); }
+.os-canvas > * { position: absolute; }
+.os-canvas > .traces-layer { inset: 0; }
+.os .os-logo svg, .os .os-word svg { width: 100%; height: auto; display: block; }
+.os-chip { z-index: 1; }
+.os-chip svg { position: relative; display: block; }
+.os-halo { position: absolute; inset: -14% -14% 40% -14%; background: var(--g-bg, #fff); border-radius: 50%; filter: blur(6px); }
+.os-bus { display: grid; gap: 0.3em; }
+.os-bus i { display: block; height: 0.3em; border-radius: 99px; background: var(--c); }
+.os-bus i:nth-child(2) { width: 85%; } .os-bus i:nth-child(3) { width: 70%; }
+.os-qr { display: flex; align-items: center; gap: 0.7em; }
+.os-qr-c { background: #fff; border-radius: 0.3em; padding: 0.15em; flex: none; }
+.os-qr-c svg { width: 100%; height: 100%; display: block; }
+.os-qr-l { font-weight: 700; line-height: 1.2; }
+.os-sample { font-family: var(--font-mono); font-weight: 600; text-transform: uppercase; letter-spacing: .14em; color: var(--text-pink); border: 2px solid var(--pink); border-radius: 99px; padding: 0.15em 0.8em; }
+.dark .os-sample { color: var(--text-dark-pink); }
+.os-cls { font-family: var(--font-mono); letter-spacing: .14em; text-transform: uppercase; border: 1px solid currentColor; border-radius: 99px; padding: 0.15em 0.9em; opacity: 0.8; }
+.os-arrow { display: inline-flex; flex: none; }
+.os-arrow .ico { width: 100%; height: 100%; }
+.os-kicker { font-family: var(--font-mono); font-weight: 600; letter-spacing: .18em; text-transform: uppercase; color: var(--ct, var(--text-purple)); }
+.dark .os-kicker { color: var(--text-dark-cyan); }
+.os-title { text-wrap: balance; font-weight: 800; letter-spacing: -0.025em; line-height: 0.98; color: var(--g-ink, var(--navy)); }
+.os-date { font-weight: 700; color: var(--maroon); }
+.dark .os-date { color: var(--text-dark-maroon); }
+.os-place { font-weight: 700; color: var(--g-ink, var(--navy)); }
+.os-sub { font-weight: 600; color: var(--g-soft, var(--mute)); }
+.os-center { display: flex; flex-direction: column; align-items: center; text-align: center; }

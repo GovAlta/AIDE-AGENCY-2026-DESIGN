@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<script>window.OM_SCENES = '[{"name": "Converge", "dur": 0.85, "desc": "Circuit traces run in from all four edges onto the chip"}, {"name": "Chip", "dur": 0.9, "desc": "The chip pops, glows and rises"}, {"name": "Lockup", "dur": 2.25, "desc": "Agency 2026 lands under the chip and the spectrum rule draws"}]';</script>
+<script>window.OM_PLAYBACK = '{"mode":"loop"}';</script>
+<script src="./agency-pieces.js"></script>
+<style>body{margin:0;background:#0E2238}</style>
+</helmet>
+<div style="width:100%;height:100vh">
+  <x-import component-from-global-scope="AgencyExport" from="./animations-v3.jsx ./agency-export.jsx" piece="AN-03" hint-size="100%,100%"></x-import>
+</div>
+</x-dc>
+</body>
+</html>

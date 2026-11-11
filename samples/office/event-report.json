@@ -1,0 +1,15 @@
+{
+  "$note": "Fictional sample. Event facts are real (tokens.json); all results are example values.",
+  "doc": "report",
+  "classification": "UNCLASSIFIED",
+  "title": "Sample: Agency 2026 demo report",
+  "subtitle": "Example values only. Replace every figure with a sourced one.",
+  "meta": [["Prepared by", "Example Team"], ["Date", "December 2026"]],
+  "sections": [
+    { "heading": "Summary", "blocks": [ { "p": "The sample team showed one service at Agency 2026. This report lists example results." },
+      { "figures": [ { "value": "120", "label": "Example: visitors to the booth" }, { "value": "45", "label": "Example: QR scans" }, { "value": "8", "label": "Example: follow-up meetings" } ] } ] },
+    { "heading": "Findings", "blocks": [ { "h3": "What visitors asked" }, { "bullets": ["Example question one.", "Example question two."] },
+      { "table": { "head": ["Measure", "Day 1", "Day 3"], "rows": [["Visitors", "70", "50"], ["QR scans", "25", "20"]], "caption": "Table 1. Example values." } } ] },
+    { "heading": "Next steps", "blocks": [ { "numbers": ["Example step one.", "Example step two."] } ] }
+  ]
+}

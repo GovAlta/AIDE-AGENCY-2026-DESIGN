@@ -1,0 +1,3 @@
+{ "template": "onsite/booth-backdrop", "name": "booth-night", "$note": "Fictional sample: placeholders only.",
+  "title": "Sample Demo: Permit Helper", "sub": "A fictional AI agent that books inspections", "team": "Example Team, Example Ministry",
+  "qr": { "url": "https://www.alberta.ca", "label": "Try the demo" }, "accent": "green", "ground": "night", "sample": "Sample" }

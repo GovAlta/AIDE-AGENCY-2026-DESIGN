@@ -1,0 +1,77 @@
+# Agency 2026 design system checks: every sample renders with no fit, font, alt-text or page-metadata fault, every content file passes the
+# writing lint, every QR code on a rendered sample decodes to its own URL, and the contact sheets are rebuilt for review.
+# The same commands run locally (see guides/ACCESSIBILITY.md and AGENTS.md).
+name: check
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: check-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install
+        run: |
+          npm ci
+          npx playwright install --with-deps chromium
+
+      - name: Tokens are up to date
+        run: |
+          node scripts/build-tokens.mjs
+          git diff --exit-code -- styles/tokens.css brand/tokens/tokens.js || { echo "::error::tokens.css or tokens.js is stale: run node scripts/build-tokens.mjs and commit"; exit 1; }
+
+      - name: Render every sample (--check)
+        run: node scripts/make.mjs --all --check
+
+      - name: Writing lint
+        # MVAI's own example specs (screen bench, sizzle) are kept verbatim as references and are not linted
+        run: find samples -name '*.json' ! -path '*/screen-bench/*' ! -name sizzle.json -print0 | sort -z | xargs -0 python3 scripts/lint/lint.py
+
+      - name: QR codes decode
+        run: node scripts/ci/qr-samples.mjs
+
+      - name: Contact sheets
+        if: always()
+        run: node scripts/contact-sheets.mjs
+
+      - name: Upload contact sheets
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: contact-sheets
+          path: |
+            contact-sheets/*.jpg
+            contact-sheets/index.html
+          retention-days: 14
+
+      - name: Upload rendered samples
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: rendered-samples
+          path: |
+            out/**/*.pdf
+            out/**/*.png
+          retention-days: 7

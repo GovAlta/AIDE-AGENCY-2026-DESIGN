@@ -25,7 +25,9 @@
 //   agenda     title, items: [{when, title, sub, place, accent}] (3-6)
 //   timeline   title, items: [{when, title, text, now: true}] (3-6)
 //   end        title, date, place, cta, url (draws a QR code), host
-import { top, band, kicker, md, esc, asset, tracesLayer, nth, T } from '../lib/components.mjs';
+//   chart      title, chart: {type: line|column|stacked|donut|waffle|gauge|timeline, ...the block fields, guides/CHARTS.md}, source;
+//              or charts: [chart, chart] for two side by side. PowerPoint draws the chart as a picture of this slide's chart.
+import { top, band, kicker, md, esc, asset, tracesLayer, nth, T, CHARTS, inkOn } from '../lib/components.mjs';
 import { traces as tracesSvg, svgDoc } from '../../scripts/lib/vectors.mjs';
 import { qrSvg } from '../../scripts/lib/qr.mjs';
 
@@ -55,7 +57,7 @@ function stage(s, i, ctx) {
     case 'bars': return `<div class="stage">${head()}${s.axis ? `<div class="s-axis">${esc(s.axis)}</div>` : ''}<div class="s-bars">${(s.rows ?? []).map((r) =>
       `<div class="s-bar" style="--c:var(--${r.accent ?? s.accent ?? 'blue'})"><span>${md(r.label)}</span><div class="t"><i class="${r.neutral ? 'neutral' : ''}" style="width:${Math.max(0, Math.min(100, r.value))}%"></i></div><b>${md(r.display ?? r.value + '%')}</b></div>`).join('')}</div>${src}</div>`;
     case 'flow': return `<div class="stage">${head()}<div class="s-flow" style="--n:${(s.steps ?? []).length}">${(s.steps ?? []).map((st, j) =>
-      `<div class="s-step" style="--c:var(--${st.accent ?? nth(j)})"><div class="n">${j + 1}</div><div class="h">${md(st.title)}</div><div class="d">${md(st.text ?? '')}</div></div>`).join('')}</div>${src}</div>`;
+      `<div class="s-step" style="--c:var(--${st.accent ?? nth(j)})"><div class="n" style="color:${inkOn(st.accent ?? nth(j))}">${j + 1}</div><div class="h">${md(st.title)}</div><div class="d">${md(st.text ?? '')}</div></div>`).join('')}</div>${src}</div>`;
     case 'quote': return `<div class="stage"><div class="q-mark">“</div><div class="q-text">${md(s.text)}</div>${s.who ? `<div class="q-who">${md(s.who)}</div>` : ''}${s.role ? `<div class="q-role">${esc(s.role)}</div>` : ''}</div>`;
     case 'compare': { const col = (c, a) => `<div class="s-col" style="--c:var(--${c.accent ?? a})"><h3>${md(c.title)}</h3>${(c.items ?? []).map((x) => `<div class="it">${md(x)}</div>`).join('')}</div>`;
       return `<div class="stage">${head()}<div class="s-compare">${col(s.left ?? {}, 'neutral-bar')}<div class="vs">vs</div>${col(s.right ?? {}, s.accent ?? 'green')}</div>${src}</div>`; }
@@ -64,6 +66,8 @@ function stage(s, i, ctx) {
       `<div class="r ${cls(it.accent ?? nth(j))}"><div class="w">${md(it.when)}</div><div class="h">${md(it.title)}${it.sub ? `<small>${md(it.sub)}</small>` : ''}</div><div class="p">${md(it.place ?? '')}</div></div>`).join('')}</div>${src}</div>`;
     case 'timeline': return `<div class="stage">${head()}<div class="s-tl" style="--n:${(s.items ?? []).length}">${(s.items ?? []).map((it, j) =>
       `<div class="e ${it.now ? 'now' : ''} ${cls(it.accent ?? nth(j))}"><div class="pin"></div><div class="when">${md(it.when)}</div><div class="h">${md(it.title)}</div>${it.text ? `<div class="d">${md(it.text)}</div>` : ''}</div>`).join('')}</div>${src}</div>`;
+    case 'chart': { const list = s.charts ?? [s.chart], n = list.length, W = n > 1 ? 780 : 1560, H = 560;
+      return `<div class="stage">${head()}<div class="s-chart" style="display:grid;grid-template-columns:repeat(${n},1fr);gap:60px;margin-top:40px;align-items:start">${list.map((c) => CHARTS[c.type]({ font: 24, width: W, height: c.type === 'gauge' ? undefined : H, size: c.type === 'donut' ? 420 : c.type === 'gauge' ? 520 : undefined, cell: c.type === 'waffle' ? 40 : undefined, ...c })).join('')}</div>${src}</div>`; }
     case 'end': return `${s.host ? `<div class="host"><small>Hosted by</small>${md(s.host)}</div>` : ''}<div class="stage">${k}<div class="s-title">${md(s.title)}</div>` +
       `${s.date || s.place ? `<div class="end-date">${s.date ? `<span class="date">${md(s.date)}</span>` : ''}${md(s.place ?? '')}</div>` : ''}${s.cta ? `<div class="cta">${md(s.cta)}</div>` : ''}` +
       `${s.url ? `<div class="end-qr">${qrSvg(s.url, { style: 'rounded', accent: s.accent ?? 'blue' })}<span>${esc(s.url.replace(/^https?:\/\//, ''))}</span></div>` : ''}</div>`;

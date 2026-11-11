@@ -31,7 +31,7 @@ function build(c, o) {
   if (c === 'chip') { const s = num('size', 120); return svgDoc(s, Math.round(s * 2.05), chip({ size: s, lead: o['no-lead'] ? false : undefined })); }
   if (c === 'bus') { const w = num('w', 320), colors = (o.colors ?? 'purple,yellow,cyan').split(','); return svgDoc(w, colors.length * 6, bus({ w, colors })); }
   if (c === 'sweep') { const w = num('w', 1920), h = num('h', 60); return svgDoc(w, h, sweep({ w, h, seed: o.seed })); }
-  if (c === 'wordmark') { const s = num('size', 96); return svgDoc(Math.round(s * 6.5), Math.round(s * 1.25), wordmark({ size: s, dark: !!o.dark })); }
+  if (c === 'wordmark') { const s = num('size', 96); return svgDoc(Math.round(s * 6.5), Math.round(s * 1.45), wordmark({ size: s, dark: !!o.dark })); }
   throw new Error('unknown: ' + c);
 }
 
@@ -46,7 +46,6 @@ async function all() {
     ['traces-banner-left-right.svg', 'traces', { w: 1920, h: 600, edges: 'lr', seed: 'banner', depth: 'l=0.22,r=0.22' }],
     ['corner-tr.svg', 'corner', { w: 300, h: 270, at: 'tr', seed: 'corner-tr' }],
     ['corner-bl.svg', 'corner', { w: 300, h: 270, at: 'bl', seed: 'corner-bl' }],
-    ['chip.svg', 'chip', { size: 120 }],
     ['bus-3.svg', 'bus', { w: 320, colors: 'purple,yellow,cyan' }],
     ['sweep.svg', 'sweep', { w: 1920, h: 60 }],
   ];

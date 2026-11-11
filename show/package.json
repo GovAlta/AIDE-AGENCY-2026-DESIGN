@@ -1,0 +1,10 @@
+{
+  "name": "agency-show",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Agency 2026 show player: run-of-show server, stage and control (event codes over Server-Sent Events).",
+  "type": "module",
+  "scripts": { "start": "node server.mjs", "test": "node test/run.mjs" },
+  "engines": { "node": ">=20" },
+  "dependencies": { "pg": "8.13.1" }
+}

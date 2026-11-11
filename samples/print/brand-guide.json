@@ -1,0 +1,928 @@
+{
+ "template": "print/report",
+ "name": "brand-guide",
+ "title": "Agency 2026 Brand Guide",
+ "$note": "The one-file brand guide for comms staff and vendors. Built from guides/*.md and brand/tokens/tokens.json. Rebuild after any token or guide change: node scripts/make.mjs samples/print/brand-guide.json",
+ "seed": "brand-guide",
+ "cover": {
+  "kicker": "Agency 2026 · Brand guide",
+  "headline": "Agency 2026 Brand Guide",
+  "subtitle": "Colour, type, marks, circuit art, media, writing, motion and sound for every Agency 2026 piece.",
+  "date": "November 2026",
+  "by": "AIDE-AGENCY-2026-DESIGN · Technology and Innovation"
+ },
+ "footer": "Agency 2026 Brand Guide · AIDE-AGENCY-2026-DESIGN",
+ "classification": "UNCLASSIFIED",
+ "pages": [
+  {
+   "kicker": "Start here",
+   "title": "How to Use This Guide",
+   "lead": "Agency 2026 runs **December 7 to 9, 2026, in Edmonton and Calgary**. Every handout, slide, banner, film and stage graphic for the event uses one look: the circuit-board art of the invite, navy type, a red date line and a spectrum of accent colours.",
+   "bus": [
+    "purple",
+    "blue",
+    "cyan"
+   ],
+   "blocks": [
+    {
+     "type": "section",
+     "title": "Where Things Live",
+     "accent": "blue",
+     "blocks": [
+      {
+       "type": "table",
+       "numeric": false,
+       "head": [
+        "You need",
+        "Look in"
+       ],
+       "rows": [
+        [
+         "Colours, type sizes, event facts",
+         "brand/tokens/tokens.json, the only source"
+        ],
+        [
+         "Fonts",
+         "brand/fonts (Inter, Geist Mono) and Arial for Office files"
+        ],
+        [
+         "Logos and the wordmark",
+         "brand/logos"
+        ],
+        [
+         "The official invite art",
+         "brand/art/invites"
+        ],
+        [
+         "Templates for print, slides, digital and Office",
+         "templates/ and brand/pptx, templates/office"
+        ],
+        [
+         "Stage motion graphics",
+         "motion/library"
+        ],
+        [
+         "Music cues",
+         "brand/audio and guides/SOUND.md"
+        ],
+        [
+         "Rules for each medium",
+         "guides/"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Three Rules",
+     "accent": "green",
+     "blocks": [
+      {
+       "type": "dots",
+       "accent": "green",
+       "items": [
+        "Use only the facts you were given. Label every example value as an example.",
+        "Take every colour, font and size from the tokens. Never pick a colour by eye.",
+        "Check every piece before it ships: the fit check, the writing lint, the QR check, and a look at the output."
+       ]
+      }
+     ]
+    },
+    {
+     "type": "callout",
+     "accent": "orange",
+     "title": "Open decision: two palettes",
+     "text": "The MVAI video kit uses **Inter** and navy #022C4C. The event team's slide template, motion library and invites use **Arial or Liberation Sans** and navy #002C4E. The owner decides which set is canonical. Until then, keep each piece in one set."
+    }
+   ]
+  },
+  {
+   "kicker": "Colour",
+   "title": "Colour",
+   "lead": "Navy carries the type. Red marks the date. The spectrum colours mark sections, charts and art. Each section of a piece takes one accent.",
+   "bus": [
+    "purple",
+    "yellow",
+    "cyan"
+   ],
+   "blocks": [
+    {
+     "type": "section",
+     "title": "Core and Accent Colours (MVAI Set)",
+     "accent": "purple",
+     "blocks": [
+      {
+       "type": "tiles",
+       "columns": 4,
+       "items": [
+        {
+         "value": "Navy",
+         "size": 13,
+         "label": "#022C4C · all type",
+         "accent": "navy",
+         "dark": true
+        },
+        {
+         "value": "Maroon",
+         "size": 13,
+         "label": "#882831 · the date line only",
+         "accent": "maroon"
+        },
+        {
+         "value": "Purple",
+         "size": 13,
+         "label": "#6F2C83 · text #6F2C83",
+         "accent": "purple"
+        },
+        {
+         "value": "Blue",
+         "size": 13,
+         "label": "#0177CD · text #015FA8",
+         "accent": "blue"
+        },
+        {
+         "value": "Pink",
+         "size": 13,
+         "label": "#E86BA5 · text #B0306E",
+         "accent": "pink"
+        },
+        {
+         "value": "Orange",
+         "size": 13,
+         "label": "#EE9A2E · text #A85A00",
+         "accent": "orange"
+        },
+        {
+         "value": "Yellow",
+         "size": 13,
+         "label": "#F2C230 · text #8A6A00",
+         "accent": "yellow"
+        },
+        {
+         "value": "Green",
+         "size": 13,
+         "label": "#8DC63F · text #4E7A12",
+         "accent": "green"
+        }
+       ]
+      },
+      {
+       "type": "note",
+       "text": "The first value is the fill colour, for bars, rules, tiles and traces. The text value is the darker shade that reaches 4.5 to 1 contrast on white. Use it for words."
+      }
+     ]
+    },
+    {
+     "type": "section",
+     "title": "The Two Palettes Side by Side",
+     "accent": "blue",
+     "blocks": [
+      {
+       "type": "table",
+       "head": [
+        "Role",
+        "MVAI kit",
+        "Event team"
+       ],
+       "rows": [
+        [
+         "Type",
+         "Inter, Geist Mono",
+         "Arial, Liberation Sans"
+        ],
+        [
+         "Navy",
+         "#022C4C",
+         "#002C4E"
+        ],
+        [
+         "Date red",
+         "#882831",
+         "#9E2B33"
+        ],
+        [
+         "Blue",
+         "#0177CD",
+         "#0077CD"
+        ],
+        [
+         "Day 1, Day 2, Day 3",
+         "blue, purple, orange",
+         "#0077CD, #730067, #ED8C00"
+        ],
+        [
+         "Used by",
+         "MVAI videos, HTML templates",
+         "slide template, motion library, invites, Office files"
+        ]
+       ]
+      }
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Grounds",
+     "accent": "cyan",
+     "blocks": [
+      {
+       "type": "dots",
+       "accent": "cyan",
+       "items": [
+        "**Board** (white) is the default for every medium.",
+        "**Night** and **navy** give contrast on a few slides or scenes per piece.",
+        "**Spectrum** is for the one line people should remember, once per piece."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kicker": "Type and marks",
+   "title": "Type and Marks",
+   "lead": "Inter carries every headline and paragraph in HTML, PDF and video. Geist Mono sets kickers, labels and the classification pill. Office files use Arial.",
+   "bus": [
+    "blue",
+    "pink"
+   ],
+   "blocks": [
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "section",
+        "title": "Print Sizes",
+        "accent": "blue",
+        "blocks": [
+         {
+          "type": "table",
+          "head": [
+           "Use",
+           "Size",
+           "Weight"
+          ],
+          "rows": [
+           [
+            "Cover display",
+            "34 pt",
+            "800"
+           ],
+           [
+            "Page title",
+            "26 pt",
+            "800"
+           ],
+           [
+            "Section heading",
+            "13 pt",
+            "800"
+           ],
+           [
+            "Lead",
+            "11.6 pt",
+            "500"
+           ],
+           [
+            "Body",
+            "9.4 pt",
+            "400"
+           ],
+           [
+            "Note",
+            "7.8 pt",
+            "400"
+           ],
+           [
+            "Kicker",
+            "8.4 pt mono",
+            "600"
+           ]
+          ]
+         }
+        ]
+       }
+      ],
+      [
+       {
+        "type": "section",
+        "title": "Slide Sizes (1920 x 1080)",
+        "accent": "pink",
+        "blocks": [
+         {
+          "type": "table",
+          "head": [
+           "Use",
+           "Size",
+           "Weight"
+          ],
+          "rows": [
+           [
+            "Display",
+            "132 px",
+            "800"
+           ],
+           [
+            "Title",
+            "88 px",
+            "800"
+           ],
+           [
+            "Heading",
+            "56 px",
+            "800"
+           ],
+           [
+            "Lead",
+            "40 px",
+            "500"
+           ],
+           [
+            "Body",
+            "32 px",
+            "400"
+           ],
+           [
+            "Small",
+            "24 px",
+            "400"
+           ],
+           [
+            "Kicker",
+            "22 px mono",
+            "600"
+           ]
+          ]
+         }
+        ]
+       }
+      ]
+     ]
+    },
+    {
+     "type": "section",
+     "title": "The Marks",
+     "accent": "purple",
+     "blocks": [
+      {
+       "type": "dots",
+       "accent": "purple",
+       "items": [
+        "**Agency 2026 wordmark:** Agency in navy, 2026 in red, over the trace underline: one thin blue trace that steps down and ends in a ring pad. It sits top-left on every page, slide and frame. Use the outlined SVG where the font may be missing.",
+        "**Alberta signature:** top-right on content pages, bottom-right on covers and end cards. Use the supplied files only. Keep clear space of at least the height of its blue square on every side.",
+        "**Never** recolour, stretch, outline, crop or redraw the signature.",
+        "**Bird mark:** a stock vector with no confirmed licence. Do not use it until the licence is recorded."
+       ]
+      }
+     ]
+    },
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "image",
+        "src": "brand/logos/agency-2026-wordmark.png",
+        "alt": "Agency 2026 wordmark"
+       },
+       {
+        "type": "note",
+        "text": "Agency 2026 wordmark (brand/logos)"
+       }
+      ],
+      [
+       {
+        "type": "image",
+        "src": "brand/logos/goa-signature.png",
+        "alt": "Alberta signature"
+       },
+       {
+        "type": "note",
+        "text": "Alberta signature (brand/logos)"
+       }
+      ],
+      [
+       {
+        "type": "note",
+        "text": "Clear space: keep the height of the blue square free on every side of the signature."
+       }
+      ]
+     ]
+    }
+   ]
+  },
+  {
+   "kicker": "Circuit art",
+   "title": "Circuit Art and Layout",
+   "lead": "The trace art is the signature of the event. It belongs on covers, title cards, section cards, end cards and one-message pieces. Content pages stay a clean board.",
+   "bus": [
+    "green",
+    "orange"
+   ],
+   "blocks": [
+    {
+     "type": "section",
+     "title": "Trace Rules",
+     "accent": "green",
+     "blocks": [
+      {
+       "type": "dots",
+       "accent": "green",
+       "items": [
+        "Traces run in from the edges, bend only at 45 degrees and end in white ring pads.",
+        "Left edge purple, blue and cyan. Top lilac, pink and orange. Right yellow, lime and green.",
+        "Corners stay clear. Art never sits behind text, charts or tables.",
+        "Make new arrangements with scripts/vectors.mjs and a seed. Record the seed with the piece.",
+        "The pink microchip appears once per piece, on the splash, cover or title card."
+       ]
+      }
+     ]
+    },
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "image",
+        "src": "brand/art/invites/agency-2026-edmonton-calgary.png",
+        "alt": "The Agency 2026 invite: circuit traces around the event title",
+        "height": "2.3in"
+       },
+       {
+        "type": "note",
+        "text": "The official invite (brand/art/invites): the reference"
+       }
+      ],
+      [
+       {
+        "type": "image",
+        "src": "brand/art/generated/traces-frame-16x9-board.png",
+        "alt": "Generated circuit trace frame",
+        "height": "2.3in"
+       },
+       {
+        "type": "note",
+        "text": "Generated frame: node scripts/vectors.mjs traces --seed frame-16x9"
+       }
+      ]
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Page Furniture",
+     "accent": "orange",
+     "blocks": [
+      {
+       "type": "flow",
+       "steps": [
+        {
+         "title": "Mark",
+         "text": "Agency 2026 top-left",
+         "accent": "blue"
+        },
+        {
+         "title": "Kicker",
+         "text": "Mono caps over the title",
+         "accent": "purple"
+        },
+        {
+         "title": "Title",
+         "text": "Plain label, navy",
+         "accent": "pink"
+        },
+        {
+         "title": "Bus rule",
+         "text": "Two to four stacked rules",
+         "accent": "orange"
+        },
+        {
+         "title": "Content",
+         "text": "One accent per section",
+         "accent": "green"
+        },
+        {
+         "title": "Band",
+         "text": "Navy footer and classification",
+         "accent": "cyan"
+        }
+       ]
+      }
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Classification",
+     "accent": "blue",
+     "blocks": [
+      {
+       "type": "text",
+       "text": "Every page, slide and frame ends in a navy band with the classification on the right. The default is UNCLASSIFIED. The content owner sets the level; nobody infers it from the material."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kicker": "Media",
+   "title": "Which Template for Which Piece",
+   "lead": "Pick the template, copy its sample content file, and replace the content. The template owns the design.",
+   "bus": [
+    "cyan",
+    "purple"
+   ],
+   "blocks": [
+    {
+     "type": "table",
+     "numeric": false,
+     "head": [
+      "Piece",
+      "Template or tool",
+      "Output"
+     ],
+     "rows": [
+      [
+       "Handout, fact sheet, report",
+       "print/handout, print/factsheet, print/report",
+       "PDF, PNG"
+      ],
+      [
+       "Poster, agenda, certificate, badge, table tent, demo card, postcard",
+       "print/*",
+       "PDF, PNG"
+      ],
+      [
+       "Signs, backdrops, booth walls, stickers",
+       "onsite templates (guides/ONSITE.md)",
+       "print-ready PDF"
+      ],
+      [
+       "Slide deck",
+       "slides/deck, or brand/pptx/Agency2026.potx in PowerPoint",
+       "PDF, PNG, PPTX"
+      ],
+      [
+       "Briefing note, memo, speaker brief, event report",
+       "templates/office/*.dotx or scripts/docx/build_docx.py",
+       "DOCX, PDF"
+      ],
+      [
+       "Email signature and announcement",
+       "brand/email",
+       "HTML"
+      ],
+      [
+       "Social post, story, web banner, Teams background, signage",
+       "digital/*",
+       "PNG"
+      ],
+      [
+       "Narrated explainer or sizzle film",
+       "MVAI, video type agency-explainer",
+       "MP4, captions"
+      ],
+      [
+       "Stage openers, bumpers, lower thirds, countdowns",
+       "motion/library, scripts/motion-render.mjs",
+       "MP4, ProRes with alpha"
+      ],
+      [
+       "The full event day on one laptop",
+       "show/ (guides/SHOW.md)",
+       "live show"
+      ],
+      [
+       "QR code",
+       "scripts/qr.mjs, then scripts/qr-verify.mjs",
+       "SVG, PNG"
+      ]
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Office Files",
+     "accent": "blue",
+     "blocks": [
+      {
+       "type": "dots",
+       "accent": "blue",
+       "items": [
+        "Office files use Arial, so they look the same on every government computer.",
+        "Word templates have styles for Title, Heading 1 to 3, Kicker, Callout, Note and tables. Use the styles; do not format by hand.",
+        "The PowerPoint template has 13 layouts, from the title and day sections to two columns, four stats and the agenda."
+       ]
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kicker": "QR and accessibility",
+   "title": "QR Codes and Accessibility",
+   "lead": "Every piece must work for every reader. Every QR code must scan on the first try.",
+   "bus": [
+    "orange",
+    "blue"
+   ],
+   "blocks": [
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "section",
+        "title": "QR Codes",
+        "accent": "orange",
+        "blocks": [
+         {
+          "type": "dots",
+          "accent": "orange",
+          "items": [
+           "Dark modules on a light ground, with a quiet zone of four modules.",
+           "At least 2 cm wide when printed, larger for signs read from a distance.",
+           "Use short official https addresses. Show the address in text beside the code.",
+           "A centre badge forces the highest error correction.",
+           "Run scripts/qr-verify.mjs, then scan the printed proof with a phone."
+          ]
+         }
+        ]
+       }
+      ],
+      [
+       {
+        "type": "section",
+        "title": "Accessibility",
+        "accent": "blue",
+        "blocks": [
+         {
+          "type": "dots",
+          "accent": "blue",
+          "items": [
+           "Text reaches 4.5 to 1 contrast, or 3 to 1 for large type. Use the text-safe accent shades.",
+           "Never carry meaning by colour alone. Label every bar, line and tile.",
+           "Every picture has alt text. Decorative art is marked as decorative.",
+           "Use real headings in order. Tables have a header row.",
+           "Videos have captions. Narration describes what the screen shows."
+          ]
+         }
+        ]
+       }
+      ]
+     ]
+    },
+    {
+     "type": "quote",
+     "text": "A passing check does not prove a page looks right. Look at every page before it ships.",
+     "small": "From the Agency 2026 agent instructions (AGENTS.md)."
+    }
+   ]
+  },
+  {
+   "kicker": "Writing",
+   "title": "Writing",
+   "lead": "Write in plain declarative language. Make a claim, give its source, and move on.",
+   "bus": [
+    "pink",
+    "green"
+   ],
+   "blocks": [
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "section",
+        "title": "Write This Way",
+        "accent": "green",
+        "blocks": [
+         {
+          "type": "dots",
+          "accent": "green",
+          "items": [
+           "One idea per sentence, mostly under 20 words.",
+           "Lead with the plain point, then explain it.",
+           "Explain each technical term the first time it appears.",
+           "Name who does what.",
+           "Headings are plain labels with no end punctuation.",
+           "Say **AI agent** for the AI. Staff are also called agents.",
+           "Every figure has a source in a NOTES file."
+          ]
+         }
+        ]
+       }
+      ],
+      [
+       {
+        "type": "section",
+        "title": "Avoid",
+        "accent": "pink",
+        "blocks": [
+         {
+          "type": "dots",
+          "accent": "pink",
+          "items": [
+           "The contrast shape that denies one thing to assert another",
+           "Slogans, taglines and closing flourishes nobody supplied",
+           "Lists of more than three items inside a sentence",
+           "Announcing what a page or film will do",
+           "Softeners such as simply, just and really",
+           "Invented names, numbers, dates or quotes"
+          ]
+         }
+        ]
+       }
+      ]
+     ]
+    },
+    {
+     "type": "section",
+     "title": "Check It",
+     "accent": "purple",
+     "blocks": [
+      {
+       "type": "text",
+       "text": "Run python3 scripts/lint/lint.py on every content file. Fix every error. A person decides on each warning. Conclusions, lessons, asks and closing lines come from the content owner."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kicker": "Motion and sound",
+   "title": "Motion and Sound",
+   "lead": "Motion and music make the day feel like one show. The same motion grammar and one sonic palette run from the walk-in to the close.",
+   "bus": [
+    "blue",
+    "orange"
+   ],
+   "blocks": [
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "section",
+        "title": "Motion",
+        "accent": "blue",
+        "blocks": [
+         {
+          "type": "dots",
+          "accent": "blue",
+          "items": [
+           "Traces draw themselves on; signals pulse along them.",
+           "Type rises into place on the spoken word. Text never scales while it moves.",
+           "Scenes change with a fast bus sweep of coloured traces, about half a second.",
+           "Stage pieces: opening titles, day bumpers, speaker lower third, session countdown, stat reveal, logo sting.",
+           "Render with scripts/motion-render.mjs and look at the stills."
+          ]
+         }
+        ]
+       }
+      ],
+      [
+       {
+        "type": "section",
+        "title": "Sound",
+        "accent": "orange",
+        "blocks": [
+         {
+          "type": "dots",
+          "accent": "orange",
+          "items": [
+           "One palette: cinematic electronic with organic percussion, bright plucks, warm bass.",
+           "Tempo 92 to 104 bpm. D major for openers and triumph.",
+           "A rising three-note pluck opens every sting and bumper.",
+           "Every cue is mastered to -16 LUFS and fades cleanly.",
+           "The cue list and Suno prompts are in guides/SOUND.md."
+          ]
+         }
+        ]
+       }
+      ]
+     ]
+    },
+    {
+     "type": "cols",
+     "cols": [
+      [
+       {
+        "type": "image",
+        "src": "samples/video/screen-bench/frames/agency-light-01-splash.jpg",
+        "alt": "Video splash frame",
+        "height": "1.25in"
+       },
+       {
+        "type": "note",
+        "text": "Splash"
+       }
+      ],
+      [
+       {
+        "type": "image",
+        "src": "samples/video/screen-bench/frames/agency-light-03-chapter.jpg",
+        "alt": "Video chapter card on night",
+        "height": "1.25in"
+       },
+       {
+        "type": "note",
+        "text": "Chapter card"
+       }
+      ],
+      [
+       {
+        "type": "image",
+        "src": "samples/video/screen-bench/frames/agency-light-04-bullets.jpg",
+        "alt": "Video content screen",
+        "height": "1.25in"
+       },
+       {
+        "type": "note",
+        "text": "Content screen"
+       }
+      ]
+     ]
+    },
+    {
+     "type": "section",
+     "title": "The Show",
+     "accent": "green",
+     "blocks": [
+      {
+       "type": "text",
+       "text": "The show player runs the whole event day from one laptop: countdowns to the next session, speaker welcomes, slides, videos with sound and music between transitions. The control booth steps forward and back through the agenda. See guides/SHOW.md."
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "kicker": "Do and do not",
+   "title": "Do and Do Not",
+   "lead": "Most problems come from a colour picked by eye, art behind text or a number nobody supplied.",
+   "bus": [
+    "purple",
+    "yellow"
+   ],
+   "blocks": [
+    {
+     "type": "table",
+     "numeric": false,
+     "head": [
+      "Do",
+      "Do not"
+     ],
+     "rows": [
+      [
+       "Take every colour from tokens.json",
+       "Pick colours by eye or from a screenshot"
+      ],
+      [
+       "Use the text-safe shade for words",
+       "Set yellow, lime or cyan text on white"
+      ],
+      [
+       "Keep content pages and slides clean",
+       "Put traces behind charts, tables or paragraphs"
+      ],
+      [
+       "Give each section one accent",
+       "Use every spectrum colour on one slide"
+      ],
+      [
+       "Use the spectrum ground once per piece",
+       "Make a spectrum slide for every point"
+      ],
+      [
+       "Use the bundled fonts, or Arial in Office",
+       "Substitute another typeface"
+      ],
+      [
+       "Use the supplied Alberta signature files",
+       "Recolour, crop or redraw the signature"
+      ],
+      [
+       "Keep the date in red",
+       "Use red as a general accent"
+      ],
+      [
+       "Show the classification on every page",
+       "Remove the band to gain space"
+      ],
+      [
+       "Label example values as examples",
+       "Present invented numbers as results"
+      ],
+      [
+       "Test every QR code with a phone",
+       "Print a code nobody has scanned"
+      ]
+     ]
+    },
+    {
+     "type": "note",
+     "text": "Questions about this guide: the AIDE-AGENCY-2026-DESIGN repository on GitHub (GovAlta-EMU). Rebuild this PDF after any change to the tokens or the guides."
+    }
+   ]
+  }
+ ]
+}

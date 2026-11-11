@@ -2,16 +2,19 @@
 // Render the Agency 2026 motion pieces (motion/library) to video and stills, frame-exact and headless.
 //   node scripts/motion-render.mjs --list                       # the pieces, with size, length and intended delivery
 //   node scripts/motion-render.mjs MG-01 [MG-02 ...]            # -> out/motion/<code>.mp4 (H.264, 30 fps) + <code>-stills.png
-//   node scripts/motion-render.mjs --all                        # every piece (MG-04 is cut to --max 20 s unless --max 0)
+//   node scripts/motion-render.mjs --all                        # every piece (pieces over 2 min are cut to 20 s unless --max 0)
 //   options: --fps 30  --max 20 (seconds, for long loops)  --scale 1 (2 = 4K for 16:9)  --alpha (also ProRes 4444 .mov with transparency)
 //            --stills-only (key frames only, no video)
+//            --audio file.mp3 --audio-start 34.5 (seconds into the file)  --no-audio
+//   Pieces with "audio" and "audioStart" in CLIPS (VD-01, VD-04) get their music by default. Audio is trimmed to the piece, faded out over
+//   the last 1.5 s, and mastered with a two-pass ffmpeg loudnorm to -16 LUFS integrated, -1.5 dBTP (guides/SOUND.md).
 // How: each piece's page is served over a local HTTP server (the runtime fetches its modules), and every frame is seeked with the
 // runtime's own transport event (data-om-seek-to-time-frame) before it is captured, so output does not depend on playback speed.
 // To change a piece, edit motion/library/agency-pieces.js (look, timing) and keep the CLIPS table in step; see motion/README.md.
 import fs from 'node:fs';
 import path from 'node:path';
 import http from 'node:http';
-import { execFileSync, spawn } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { chromium } from 'playwright';
 import { ROOT } from './lib/browser.mjs';
 
@@ -24,7 +27,9 @@ const SIZE = { '16:9': [1920, 1080], '1:1': [1080, 1080], '9:16': [1080, 1920] }
 function clips() {
   const src = fs.readFileSync(path.join(LIB, 'agency-pieces.js'), 'utf8');
   return [...src.matchAll(/\{ code: '([A-Z]{2}-\d\d)'.*?dur: ([\d.]+), aspect: '([\d:]+)', title: '([^']+)'.*?format: '([^']+)', use: '([^']+)', keys: \[([^\]]+)\]/g)]
-    .map((m) => ({ code: m[1], dur: +m[2], aspect: m[3], title: m[4], format: m[5], use: m[6], keys: m[7].split(',').map(Number) }));
+    .map((m) => { const line = src.slice(m.index, src.indexOf('\n', m.index)); const au = line.match(/audio: '([^']+)'/), as = line.match(/audioStart: ([\d.]+)/);
+      return { code: m[1], dur: +m[2], aspect: m[3], title: m[4], format: m[5], use: m[6], keys: m[7].split(',').map(Number),
+        alpha: /alpha: true/.test(line), audio: au ? au[1] : null, audioStart: as ? +as[1] : 0 }; });
 }
 const pageFor = (code) => fs.readdirSync(LIB).find((f) => f.startsWith('video-' + code.toLowerCase()) && f.endsWith('.dc.html'));
 
@@ -58,6 +63,21 @@ async function shot(p, file, alpha) {
   return el.screenshot({ path: file, omitBackground: !!alpha, animations: 'disabled' });
 }
 
+// two-pass loudnorm: measure, then apply with the measured values (linear), so the master lands on -16 LUFS / -1.5 dBTP exactly
+function loudFilter(input, start, dur) {
+  const fade = `afade=t=out:st=${Math.max(0, dur - 1.5).toFixed(2)}:d=1.5`;
+  const r = spawnSyncText('ffmpeg', ['-hide_banner', '-ss', String(start), '-t', String(dur), '-i', input, '-af', `${fade},loudnorm=I=-16:TP=-1.5:LRA=11:print_format=json`, '-f', 'null', '-']);
+  const j = JSON.parse(r.slice(r.lastIndexOf('{'), r.lastIndexOf('}') + 1));
+  return `${fade},loudnorm=I=-16:TP=-1.5:LRA=11:measured_I=${j.input_i}:measured_TP=${j.input_tp}:measured_LRA=${j.input_lra}:measured_thresh=${j.input_thresh}:offset=${j.target_offset}:linear=true,aresample=48000`;
+}
+function spawnSyncText(cmd, args) { const r = spawnSync(cmd, args, { encoding: 'utf8' }); return (r.stderr || '') + (r.stdout || ''); }
+function muxAudio(mp4, audio, start, dur) {
+  const tmp = mp4.replace(/\.mp4$/, '.noaudio.mp4'); fs.renameSync(mp4, tmp);
+  execFileSync('ffmpeg', ['-loglevel', 'error', '-y', '-i', tmp, '-ss', String(start), '-t', String(dur), '-i', audio, '-map', '0:v', '-map', '1:a', '-c:v', 'copy',
+    '-af', loudFilter(audio, start, dur), '-c:a', 'aac', '-b:a', '192k', '-shortest', '-movflags', '+faststart', mp4]);
+  fs.unlinkSync(tmp);
+}
+
 async function render(b, port, c) {
   fs.mkdirSync(OUT, { recursive: true });
   const p = await open(b, port, c);
@@ -68,8 +88,10 @@ async function render(b, port, c) {
   execFileSync('montage', [...ks, '-tile', `${ks.length}x1`, '-geometry', c.aspect === '9:16' ? '360x640+6+6' : c.aspect === '1:1' ? '480x480+6+6' : '640x360+6+6', '-background', '#0E2238', path.join(OUT, `${c.code}-stills.png`)]);
   console.log(`  ${c.code} stills -> ${path.relative(process.cwd(), path.join(OUT, c.code + '-stills.png'))}`);
   if (has('stills-only')) { await p.close(); fs.rmSync(tmp, { recursive: true }); return; }
-  const dur = MAX > 0 ? Math.min(c.dur, MAX) : c.dur, n = Math.round(dur * FPS);
-  const alpha = has('alpha') || /alpha/i.test(c.format);
+  // --max cuts long pieces (the 5-minute countdown, the recap templates); pieces under 2 min render in full unless --max is given
+  const cap = a.includes('--max') ? MAX : (c.dur > 120 ? 20 : 0);
+  const dur = cap > 0 ? Math.min(c.dur, cap) : c.dur, n = Math.round(dur * FPS);
+  const alpha = has('alpha') || c.alpha || /alpha/i.test(c.format);
   for (let i = 0; i < n; i++) {
     await seek(p, i / FPS);
     await shot(p, path.join(tmp, `f${String(i).padStart(5, '0')}.png`), false);
@@ -79,6 +101,8 @@ async function render(b, port, c) {
   await p.close();
   const mp4 = path.join(OUT, `${c.code}.mp4`);
   execFileSync('ffmpeg', ['-loglevel', 'error', '-y', '-framerate', String(FPS), '-i', path.join(tmp, 'f%05d.png'), '-vf', `scale=${SIZE[c.aspect][0] * SCALE}:${SIZE[c.aspect][1] * SCALE}:flags=lanczos,format=yuv420p`, '-c:v', 'libx264', '-crf', '18', '-preset', 'medium', '-movflags', '+faststart', mp4]);
+  const audio = has('no-audio') ? null : val('audio', c.audio), aStart = +val('audio-start', c.audioStart || 0);
+  if (audio) { muxAudio(mp4, path.resolve(ROOT, audio), aStart, dur); console.log(`  ${c.code} audio: ${audio} from ${aStart}s, mastered to -16 LUFS / -1.5 dBTP`); }
   console.log(`  ${c.code} -> ${path.relative(process.cwd(), mp4)} (${dur}s${dur < c.dur ? ` of ${c.dur}s, --max 0 for all` : ''})`);
   if (alpha) {
     // second pass with the piece's alpha mode on: transparent ground, no preview checker

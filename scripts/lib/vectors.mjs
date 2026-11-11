@@ -5,7 +5,7 @@
 //   svgDoc(1920, 1080, traces({ w: 1920, h: 1080, edges: 'ltrb', seed: 'my-banner' }))
 //
 // Look (from the invite vectors, brand/art/invites): buses of thin parallel traces run in from the edges, bend at 45 degrees, and end in
-// white ring pads; a few thick gradient ribbons ride with them; left edge purple/blue/cyan, top lilac/pink/orange, right yellow/lime/green,
+// white ring pads; every trace is a thin line (owner 2026-11-11: no thick ribbons, no chip); left edge purple/blue/cyan, top lilac/pink/orange, right yellow/lime/green,
 // bottom pink/orange/yellow/green. Traces stop outside the safe box so text never sits on art.
 import fs from 'node:fs';
 import path from 'node:path';
@@ -43,7 +43,7 @@ function edgeBuses(len, depth, scale, rand, palette, o) {
     const reach = depth * (0.45 + rand() * 0.55);                                 // how far inward the bus goes
     const b0 = reach * (0.25 + rand() * 0.35);                                    // where it bends
     const D = Math.min(reach * 0.35, (20 + rand() * 40) * scale);                // diagonal run (in u)
-    const thickAt = rand() < (o.ribbons ?? 0.35) ? Math.floor(rand() * n) : -1;   // one ribbon in some buses
+    const thickAt = rand() < (o.ribbons ?? 0) ? Math.floor(rand() * n) : -1;   // one ribbon in some buses
     const color = palette[k % palette.length], color2 = palette[(k + 1) % palette.length];
     for (let i = 0; i < n; i++) {
       const ui = u + i * s;
@@ -108,7 +108,7 @@ export function corner(o = {}) {
   // two-edge corners keep the edges apart: side traces in the upper part, bottom traces in the right part and shallow
   const span = at === 'bl' ? { l: [0.08, 0.5], b: [0.58, 0.96] } : at === 'br' ? { r: [0.08, 0.5], b: [0.04, 0.42] } : undefined;
   return traces({ w, h, edges: o.edges ?? edges, seed, depth: { l: 0.75, r: 0.75, t: 0.7, b: 0.4 }, scale: o.scale ?? 1.2, span,
-    spanAll: at[0] === 't' ? [0.05, 0.75] : [0.25, 0.95], density: o.density ?? 1.1, pads: 0.9, ribbons: 0.5, ground: o.ground });
+    spanAll: at[0] === 't' ? [0.05, 0.75] : [0.25, 0.95], density: o.density ?? 1.1, pads: 0.9, ribbons: 0, ground: o.ground });
 }
 
 // bus rule: the stacked coloured rules under a headline (handout .bus). colors = token names
@@ -140,13 +140,28 @@ export function chip(o = {}) {
     `<rect x="${r2(s * 0.33)}" y="${r2(s * 0.33)}" width="${r2(s * 0.34)}" height="${r2(s * 0.34)}" fill="none" stroke="${edge}" stroke-width="${r2(pw * 1.6)}"/>${lead}</g>`;
 }
 
-// "Agency 2026" wordmark: navy Agency, maroon 2026, spectrum rule beneath. Live text (Inter ExtraBold): render through a browser that
-// has the fonts (scripts/render.mjs) or use brand/logos/agency-2026-wordmark*.svg|png, which are exported from this.
+// The trace underline (owner 2026-11-11: replaces the rainbow rule under "Agency"). One thin circuit trace in a single colour: it runs
+// under the word, steps down at 45 degrees near the end and stops in a hollow ring pad. Geometry is in units of the word's font size s,
+// so every medium draws the same shape: the CSS mark (styles/agency.css), the outlined logos (scripts/outline-wordmark.py), displays,
+// Office and the show all follow these numbers.
+export const UNDERLINE = { y: 0.06, stroke: 0.045, jog: 0.16, tail: 0.16, pad: 0.07, padStroke: 0.04 };   // all x font size
+export const underlineColor = (dark) => (dark ? T.textOnDark.blue : C.blue);
+export function traceUnderline(o = {}) {
+  const s = o.size ?? 64, w = o.w ?? s * 4, U = UNDERLINE, c = o.color ?? underlineColor(o.dark);
+  const sw = r2(U.stroke * s), y0 = r2(U.y * s), jx = r2(w - (U.jog + U.tail + U.pad * 2) * s), y1 = r2(y0 + U.jog * s), x2 = r2(w - U.pad * 2 * s);
+  return `<g class="agency-underline" fill="none" stroke="${c}" stroke-linecap="round" stroke-linejoin="round">` +
+    `<path d="M0 ${y0} H${jx} L${r2(jx + U.jog * s)} ${y1} H${x2}" stroke-width="${sw}"/>` +
+    `<circle cx="${r2(w - U.pad * s)}" cy="${y1}" r="${r2(U.pad * s - U.padStroke * s / 2)}" stroke-width="${r2(U.padStroke * s)}" fill="${o.padFill ?? 'none'}"/></g>`;
+}
+
+// "Agency 2026" wordmark: navy Agency, maroon 2026, the trace underline beneath. Live text (Inter ExtraBold): render through a browser
+// that has the fonts or use brand/logos/agency-2026-wordmark*.svg|png (exported from this) or the outlined versions.
+// o.year === '' gives "Agency" alone (displays, where the date and year are left off).
 export function wordmark(o = {}) {
   const size = o.size ?? 64, dark = !!o.dark, ink = dark ? '#FFFFFF' : C.navy, yr = dark ? T.textOnDark.maroon : C.maroon;
-  const w = size * 6.47, rule = size * 0.075;   // measured: Inter 800 'Agency 2026' with this tracking is 6.47 x size wide
-  return `<g class="agency-wordmark"><text x="0" y="${r2(size * 0.86)}" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="${size}" letter-spacing="${r2(-0.01 * size)}" fill="${ink}">Agency<tspan dx="${r2(size * 0.12)}" fill="${yr}">${o.year ?? '2026'}</tspan></text>` +
-    `<g transform="translate(0 ${r2(size * 1.14)})">${spectrumBar({ w: r2(w), height: r2(rule), id: 'wm' + Math.round(size) + (dark ? 'd' : '') })}</g></g>`;
+  const year = o.year ?? '2026', w = year ? size * 6.47 : size * 3.6;   // measured: Inter 800 'Agency 2026' is 6.47 x size wide, 'Agency' 3.6
+  return `<g class="agency-wordmark"><text x="0" y="${r2(size * 0.86)}" font-family="Inter, Arial, sans-serif" font-weight="800" font-size="${size}" letter-spacing="${r2(-0.01 * size)}" fill="${ink}">Agency${year ? `<tspan dx="${r2(size * 0.12)}" fill="${yr}">${year}</tspan>` : ''}</text>` +
+    `<g transform="translate(0 ${r2(size * 1.1)})">${traceUnderline({ size, w: r2(w), dark })}</g></g>`;
 }
 
 // bus sweep band: a band of horizontal coloured traces across the full width (dividers, banner footers, the MVAI transition as a still)

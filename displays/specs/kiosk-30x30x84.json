@@ -1,0 +1,9 @@
+{
+  "$comment": "Taller demo kiosk: 30 x 30 in, 84 in tall (7 ft). The monitor and ledge keep their heights from the floor; the extra height goes to the header and art.",
+  "name": "kiosk-30x30x84",
+  "kind": "kiosk", "unit": "in", "width": 30, "depth": 30, "height": 84,
+  "variant": "wrap", "ground": "board", "seed": "kiosk-b", "bleed": 0.125, "margin": 1.5,
+  "wordmark": "Agency", "font": "inter",
+  "monitor": { "bottom": 46 },
+  "ledge": { "height": 38, "depth": 12, "thickness": 1.5 }
+}

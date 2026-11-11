@@ -1,0 +1,26 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Agency 2026 · Stage</title>
+<!-- The audience output. Open on the projector or stage screen, press F11 (or start Chrome in kiosk mode, guides/SHOW.md).
+     Modes: ?mode=program (default: the real output, with sound), ?mode=monitor (a silent mirror for the control window),
+     ?mode=preview (shows the step the operator has selected next). ?code=ABC-123 joins an event-code show (any machine, over SSE);
+     without a code it follows a control window in this browser (BroadcastChannel). -->
+<link rel="stylesheet" href="stage.css">
+</head>
+<body>
+<div id="viewport"><div id="stage">
+  <div id="scenes"></div>
+  <div id="lower" hidden></div>
+  <div id="trans"></div>
+  <div id="black"></div>
+  <div id="wait" hidden><div class="w-kick">Agency 2026 · Stage screen</div><div class="w-big">Waiting for control</div>
+    <div class="w-lab">Event code</div><div class="w-code" id="waitCode"></div><div class="w-note">The control joins with this code and its PIN. This screen changes as soon as the operator presses GO.</div></div>
+</div></div>
+<div id="unlock">Sound is off on this screen. Click here once to enable it.</div>
+<div id="hud"></div>
+<script type="module" src="stage.js"></script>
+</body>
+</html>

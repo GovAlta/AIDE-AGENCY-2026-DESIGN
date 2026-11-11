@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/GovAlta-EMU/AIDE-AGENCY-2026-DESIGN/displays/display.schema.json",
+  "title": "Agency 2026 display spec",
+  "description": "A stand panel or a demo kiosk, rendered by displays/build.mjs. Sizes are in `unit`. See displays/README.md.",
+  "type": "object",
+  "properties": {
+    "$comment": { "type": "string" },
+    "name": { "type": "string", "pattern": "^[a-z0-9][a-z0-9-]*$", "description": "output folder name; defaults to the file name" },
+    "preset": { "enum": ["panel-24x60", "panel-30x72", "panel-30x84", "kiosk-30x30x72", "kiosk-30x30x84"] },
+    "kind": { "enum": ["panel", "kiosk"], "default": "panel" },
+    "unit": { "enum": ["in", "ft", "cm", "mm"], "default": "in" },
+    "width": { "type": "number", "exclusiveMinimum": 0, "description": "panel width, or the kiosk's front and back faces" },
+    "height": { "type": "number", "exclusiveMinimum": 0 },
+    "depth": { "type": "number", "exclusiveMinimum": 0, "description": "kiosk side faces (right, left)" },
+    "variant": { "enum": ["rise", "rails", "wrap", "spectrum", "night", "converge"], "default": "rise" },
+    "ground": { "enum": ["board", "night", "navy"], "default": "board" },
+    "seed": { "type": "string", "description": "the same seed gives the same art" },
+    "wordmark": { "enum": ["Agency", "Agency 2026"], "default": "Agency", "description": "never a date" },
+    "font": { "enum": ["inter", "liberation"], "default": "inter", "description": "inter = MVAI kit type; liberation = Arial metrics (compliant set). Owner decision pending" },
+    "bleed": { "type": "number", "minimum": 0, "default": 0.125 },
+    "margin": { "type": "number", "minimum": 0, "default": 1.5 },
+    "subCapHeight": { "type": "number", "exclusiveMinimum": 0, "default": 0.75, "description": "cap height of 'Technology and Innovation'" },
+    "agencyWidth": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.8 },
+    "logoWidth": { "type": "number", "exclusiveMinimum": 0, "maximum": 0.6 },
+    "monitor": {
+      "oneOf": [
+        { "const": false },
+        { "type": "object", "properties": {
+          "w": { "type": "number", "exclusiveMinimum": 0, "default": 37.5 }, "h": { "type": "number", "exclusiveMinimum": 0 },
+          "bottom": { "type": "number", "minimum": 0, "default": 46 }, "centerX": { "type": "number" }, "clear": { "type": "number", "minimum": 0, "default": 0.75 } },
+          "additionalProperties": false }
+      ]
+    },
+    "ledge": {
+      "oneOf": [
+        { "const": false },
+        { "type": "object", "properties": { "height": { "type": "number", "default": 38 }, "depth": { "type": "number", "default": 12 }, "thickness": { "type": "number", "default": 1.5 } }, "additionalProperties": false }
+      ]
+    },
+    "title": { "type": "object", "required": ["text"], "properties": { "kicker": { "type": "string" }, "text": { "type": "string", "maxLength": 60 }, "face": { "enum": ["front", "right", "back", "left"] }, "size": { "type": "number" } }, "additionalProperties": false },
+    "qr": { "type": "object", "required": ["url"], "properties": { "url": { "type": "string", "pattern": "^https://" }, "label": { "type": "string" }, "face": { "enum": ["front", "right", "back", "left"] }, "size": { "type": "number" }, "bottom": { "type": "number" } }, "additionalProperties": false },
+    "faces": { "type": "object", "propertyNames": { "enum": ["front", "right", "back", "left"] }, "additionalProperties": { "type": "object", "properties": { "lockup": { "type": "boolean" } } } }
+  },
+  "additionalProperties": false
+}

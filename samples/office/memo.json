@@ -1,0 +1,12 @@
+{
+  "$note": "Fictional sample. Event facts are real (tokens.json); names and dates are examples.",
+  "doc": "memo",
+  "classification": "UNCLASSIFIED",
+  "title": "Sample: Agency 2026 room bookings",
+  "meta": [["To", "Example Team"], ["From", "Sample Name"], ["Date", "Month day, 2026"], ["Re", "Rooms for Day 3 at Platform Calgary"]],
+  "sections": [ { "blocks": [
+    { "p": "Day 3, **Alberta Velocity: Full Speed Ahead**, is an open industry day at Platform Calgary on Wednesday, December 9." },
+    { "p": "Please confirm the rooms you need by the example date. List each session, its length and its AV needs." },
+    { "numbers": ["Send your list to the sample address.", "The events team confirms each room in writing.", "Bring your slides on the day in the Agency 2026 template."] } ] } ],
+  "contact": "Sample Name, Events Coordinator, sample.name@example.ca"
+}

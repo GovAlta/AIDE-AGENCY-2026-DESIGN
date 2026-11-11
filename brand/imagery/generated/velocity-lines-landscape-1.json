@@ -1,0 +1,28 @@
+{
+ "file": "velocity-lines-landscape-1.jpg",
+ "ai_generated": true,
+ "model": "gpt-image-2.5-sunburst-nexus",
+ "provider": "Ent Tools azure-openai-images (processed in the US)",
+ "size": "1536x1024",
+ "quality": "low",
+ "subject": "velocity-lines",
+ "ground": "board",
+ "composition": "left-clear",
+ "prompt": "Flat vector illustration in the style of a printed-circuit-board poster. Thin, evenly weighted circuit traces that run in parallel bundles, bend only at 45-degree angles and end in small hollow ring solder pads. Every trace is a thin line of the same weight: no wide ribbons, no bold bands, no microchip. Strict palette: deep navy #022C4C, purple #6F2C83, blue #0177CD, lilac #9C90C5, pink #E86BA5, coral #EE7A63, orange #EE9A2E, yellow #F2C230, green #8DC63F, cyan #00AAD2. Colours move in spectrum order around the image: purples and blues on the left, pinks and oranges along the top, yellows and greens on the right. Clean geometric shapes, crisp edges, no texture, no noise, no grain, no 3D rendering, no perspective, no photorealism. Generous empty space. Pure white background. Subject: Fast parallel speed-line traces sweeping diagonally across the image in oranges, yellows and greens; all thin traces, in front, thin lines behind. All artwork sits in the right third of the image; the left two thirds are open plain background of the same colour, with no shapes, for text. No text, no letters, no numbers, no words, no logos, no flags, no maps with borders or labels, no people's faces, no human figures with faces, no hands, no robots, no humanoid AI, no glowing brains, no handshakes, no light bulbs, no padlocks, no binary code, no cliche futuristic city, no lens flare, no photographic elements.",
+ "library_version": "1.2.0",
+ "created": "2026-11-11T01:54:43+00:00",
+ "usage": {
+  "input_tokens": 364,
+  "input_tokens_details": {
+   "image_tokens": 0,
+   "text_tokens": 364
+  },
+  "output_tokens": 158,
+  "output_tokens_details": {
+   "image_tokens": 158,
+   "text_tokens": 0
+  },
+  "total_tokens": 522
+ },
+ "alt": "Abstract circuit-trace illustration: Fast parallel speed-line traces sweeping diagonally across the image in oranges, yellows and greens; all thin traces, in front, thin lines behind."
+}

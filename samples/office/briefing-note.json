@@ -1,0 +1,19 @@
+{
+  "$note": "Fictional sample. The event facts (dates, cities, day titles) are real, from brand/tokens/tokens.json. Every other name and figure is an example.",
+  "doc": "briefing-note",
+  "classification": "UNCLASSIFIED",
+  "title": "Sample: Demo booth for Agency 2026",
+  "meta": [["To", "Sample Name, Assistant Deputy Minister"], ["From", "Sample Name, Director, Example Branch"], ["Date", "Month day, 2026"], ["Decision", "Information only"]],
+  "sections": [
+    { "heading": "Purpose", "blocks": [ { "p": "This note describes the sample team’s demo booth at Agency 2026, on **Monday, December 7** at the Edmonton Convention Centre." } ] },
+    { "heading": "Background", "blocks": [
+      { "p": "Agency 2026 runs December 7 to 9, 2026, in Edmonton and Calgary. Day 1, The Art of the Possible, is a showcase for government." },
+      { "figures": [ { "value": "3", "label": "days of programming" }, { "value": "2", "label": "cities: Edmonton and Calgary" }, { "value": "12", "label": "Example value: visitors an hour" } ] } ] },
+    { "heading": "Analysis", "blocks": [
+      { "p": "The booth shows one service from start to finish. Example values are used below." },
+      { "table": { "head": ["Item", "Plan", "Owner"], "rows": [["Demo station", "One laptop, one screen", "Example Team"], ["Handout", "Two-page Letter handout with a QR code", "Example Team"], ["Staffing", "Two people per shift", "Sample Name"]], "widths": [1.6, 3.4, 1.8], "caption": "Table 1. Example booth plan." } },
+      { "bullets": ["The demo uses synthetic data only.", "Every figure on the handout has a source in its NOTES file."] } ] },
+    { "heading": "Recommendation", "blocks": [ { "callout": "Approve the booth plan in Table 1 by the example date." } ] }
+  ],
+  "contact": "Sample Name, Director, Example Branch, 780-000-0000"
+}

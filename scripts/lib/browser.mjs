@@ -5,6 +5,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { pathToFileURL, fileURLToPath } from 'node:url';
 import { chromium } from 'playwright';
+import { pageAudit } from '../a11y/contrast.mjs';
 
 export const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 let BROWSER = null;
@@ -23,8 +24,9 @@ async function open(file, viewport, scale = 1) {
 }
 
 // Checks every element with class "page" (or the body) for overflow, and lists fonts that did not load (a fallback font is a fault).
-async function audit(p) {
-  return p.evaluate(() => {
+async function audit(p, o = {}) {
+  const a11y = o.a11y === false ? { faults: [], unmeasured: 0 } : await p.evaluate(pageAudit, (o.a11y && o.a11y.ignore) || []);
+  const base = await p.evaluate(() => {
     const pages = [...document.querySelectorAll('.page')];
     const boxes = pages.length ? pages : [document.body];
     const faults = [];
@@ -49,14 +51,20 @@ async function audit(p) {
     for (const f of used) if (['Inter', 'Geist Mono'].includes(f) && !loaded.has(f)) faults.push(`font not loaded: ${f}`);
     return { pages: boxes.length, faults };
   });
+  // contrast findings are warnings unless o.strict (make.mjs --strict); missing alt text, lang or title are always faults
+  const isContrast = (f) => f.startsWith('contrast ');
+  const strict = !!o.strict;
+  return { pages: base.pages, faults: [...base.faults, ...a11y.faults.filter((f) => strict || !isContrast(f)).map((f) => 'a11y: ' + f)],
+    warnings: strict ? [] : a11y.faults.filter(isContrast).map((f) => 'a11y: ' + f), unmeasured: a11y.unmeasured };
 }
 
 // htmlToPdf(file, out, {width, height}) - page size comes from the template's CSS @page (preferCSSPageSize). PNG of each .page beside it.
 export async function htmlToPdf(file, out, o = {}) {
   const p = await open(file, { width: o.vw ?? 816, height: o.vh ?? 1056 }, o.scale ?? 2);
-  const rep = await audit(p);
+  const rep = await audit(p, o);
   fs.mkdirSync(path.dirname(out), { recursive: true });
-  await p.pdf({ path: out, preferCSSPageSize: true, printBackground: true });
+  // tagged: a structure tree (headings, paragraphs, lists, tables) for screen readers; outline: bookmarks from the headings
+  await p.pdf({ path: out, preferCSSPageSize: true, printBackground: true, tagged: true, outline: true });
   const pngs = [];
   if (o.png !== false) {
     const pages = await p.$$('.page');
@@ -69,13 +77,13 @@ export async function htmlToPdf(file, out, o = {}) {
 // htmlToPng(file, out, {width, height, scale}) - one image of the viewport (banners, social, slides). Each .page becomes its own PNG if several.
 export async function htmlToPng(file, out, o = {}) {
   const p = await open(file, { width: o.width, height: o.height }, o.scale ?? 1);
-  const rep = await audit(p);
+  const rep = await audit(p, o);
   fs.mkdirSync(path.dirname(out), { recursive: true });
   const pages = await p.$$('.page');
   const pngs = [];
   if (pages.length > 1) for (let i = 0; i < pages.length; i++) { const f = out.replace(/\.png$/, `-${String(i + 1).padStart(2, '0')}.png`); await pages[i].screenshot({ path: f }); pngs.push(f); }
   else { await p.screenshot({ path: out, omitBackground: !!o.transparent, clip: { x: 0, y: 0, width: o.width, height: o.height } }); pngs.push(out); }
-  if (o.pdf) await p.pdf({ path: out.replace(/\.png$/, '.pdf'), preferCSSPageSize: true, printBackground: true });
+  if (o.pdf) await p.pdf({ path: out.replace(/\.png$/, '.pdf'), preferCSSPageSize: true, printBackground: true, tagged: true, outline: true });
   await p.close();
   return { ...rep, pngs };
 }

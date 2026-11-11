@@ -1,0 +1,5 @@
+{ "template": "onsite/room-sign", "name": "room-signs", "title": "Agency 2026 room signs (sample)",
+  "$note": "Fictional sample: rooms, times, sessions and names are placeholders. Use the confirmed agenda only.",
+  "day": "day1", "sample": "Sample", "qr": { "url": "https://www.alberta.ca", "label": "Full agenda" },
+  "rooms": [ { "room": "Hall A", "now": { "time": "9:00–10:00", "title": "Session title goes here", "who": "Speaker Name, Role" }, "next": { "time": "10:30", "title": "Next session title" } },
+             { "room": "Demo Room 2", "now": { "time": "11:00–12:00", "title": "Hands-on session title", "who": "Host Name" } } ] }

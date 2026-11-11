@@ -1,0 +1,13 @@
+{
+ "agenda": "show/test/fixtures/agenda-voice.json",
+ "made": "test fixture",
+ "clips": [
+  {
+   "id": "d1-key-speaker-walkup",
+   "segment": "d1-key",
+   "intro": "speaker-walkup",
+   "text": "Please welcome Speaker Name, Role or title, Organization.",
+   "file": "brand/audio/cues/sting-logo.m4a"
+  }
+ ]
+}

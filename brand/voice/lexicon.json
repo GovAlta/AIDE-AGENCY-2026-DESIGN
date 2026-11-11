@@ -1,0 +1,156 @@
+{
+  "$comment": "Pronunciation and spoken-form lexicon for Agency 2026 narration and announcements. 'write' is the form to put in a narration field; 'say' is how it should sound. 'status: verify' means nobody has listened to it in the approved voices yet: render a short clip, listen, then set 'checked' with the date. Add every new product name, acronym, place and person's name here before voicing (guides/NARRATION.md, Pronunciation). Never guess a person's name: ask the person how it is said.",
+  "version": "1.0.0",
+  "entries": [
+    {
+      "term": "Agency 2026",
+      "write": "Agency twenty twenty six",
+      "say": "AY-jen-see twenty twenty six",
+      "kind": "event",
+      "status": "checked",
+      "checked": "2026-11-11, Matilda (narrator), eleven_v4: transcribed back as \"Agency 2026\" (scripts/voice/say.py test clip)"
+    },
+    {
+      "term": "Dec. 7–9, 2026",
+      "write": "December seventh to ninth, twenty twenty six",
+      "say": "",
+      "kind": "date",
+      "status": "rule"
+    },
+    {
+      "term": "Technology and Innovation",
+      "write": "Technology and Innovation",
+      "say": "",
+      "kind": "ministry",
+      "status": "rule",
+      "note": "Full name on first mention: the Ministry of Technology and Innovation. Never 'T and I' or 'TI' in speech."
+    },
+    {
+      "term": "Government of Alberta",
+      "write": "the Government of Alberta",
+      "say": "",
+      "kind": "organization",
+      "status": "rule",
+      "note": "Never 'GoA' in speech or on screen for the public."
+    },
+    {
+      "term": "Velocity White Papers",
+      "write": "the Velocity White Papers",
+      "say": "",
+      "kind": "publication",
+      "status": "rule"
+    },
+    {
+      "term": "Platform Calgary",
+      "write": "Platform Calgary",
+      "say": "",
+      "kind": "venue",
+      "status": "verify"
+    },
+    {
+      "term": "Edmonton Convention Centre",
+      "write": "the Edmonton Convention Centre",
+      "say": "",
+      "kind": "venue",
+      "status": "verify"
+    },
+    {
+      "term": "Montréal",
+      "write": "Montréal",
+      "say": "mun-tree-AWL",
+      "kind": "place",
+      "status": "verify",
+      "note": "Spelled with the accent on screen and in narration; the voice says the English form."
+    },
+    {
+      "term": "Wetaskiwin",
+      "write": "Wetaskiwin",
+      "say": "weh-TASS-kih-win",
+      "kind": "place",
+      "status": "verify"
+    },
+    {
+      "term": "Lac La Biche",
+      "write": "Lac La Biche",
+      "say": "lack luh BEESH",
+      "kind": "place",
+      "status": "verify"
+    },
+    {
+      "term": "Athabasca",
+      "write": "Athabasca",
+      "say": "ath-uh-BASS-kuh",
+      "kind": "place",
+      "status": "verify"
+    },
+    {
+      "term": "Kananaskis",
+      "write": "Kananaskis",
+      "say": "kan-uh-NASS-kiss",
+      "kind": "place",
+      "status": "verify"
+    },
+    {
+      "term": "Grande Prairie",
+      "write": "Grande Prairie",
+      "say": "grand PRAIR-ee",
+      "kind": "place",
+      "status": "verify"
+    },
+    {
+      "term": "Treaty 6",
+      "write": "Treaty Six",
+      "say": "",
+      "kind": "acknowledgement",
+      "status": "rule",
+      "note": "Acknowledgement wording is supplied by the event owner and read word for word. Never write or edit it."
+    },
+    {
+      "term": "AI",
+      "write": "AI",
+      "say": "A I",
+      "kind": "acronym",
+      "status": "verify",
+      "note": "On first spoken use in a film: 'artificial intelligence, or AI'. Event names keep 'AI' as written."
+    },
+    {
+      "term": "AI agent",
+      "write": "AI agent",
+      "say": "A I agent",
+      "kind": "term",
+      "status": "rule",
+      "note": "Use 'AI agent' wherever people in the story are also called agents (guides/WRITING.md, AI terms)."
+    },
+    {
+      "term": "alberta.ca",
+      "write": "alberta dot c a",
+      "say": "",
+      "kind": "url",
+      "status": "rule",
+      "note": "Narration spells out every web address; the screen shows alberta.ca."
+    },
+    {
+      "term": "Q&A",
+      "write": "questions",
+      "say": "",
+      "kind": "phrase",
+      "status": "rule",
+      "note": "Say 'questions from the audience', not 'Q and A'."
+    },
+    {
+      "term": "%",
+      "write": "percent",
+      "say": "",
+      "kind": "symbol",
+      "status": "rule"
+    },
+    {
+      "term": "$",
+      "write": "dollars",
+      "say": "",
+      "kind": "symbol",
+      "status": "rule",
+      "note": "'four point two million dollars'."
+    }
+  ]
+}

@@ -1,0 +1,546 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/GovAlta-EMU/AIDE-AGENCY-2026-DESIGN/show/agenda.schema.json",
+  "title": "Agency 2026 show agenda",
+  "description": "The whole run of show as data: days, segments, the scenes each segment shows, slides, video, sound cues and operator notes. Read by show/control.html and show/stage.html. Times are local wall-clock times in event.timezone.",
+  "type": "object",
+  "required": [
+    "event",
+    "days"
+  ],
+  "properties": {
+    "event": {
+      "type": "object",
+      "description": "Event facts. Copy them from brand/tokens/tokens.json (event); do not invent others.",
+      "properties": {
+        "name": {
+          "type": "string",
+          "examples": [
+            "Agency 2026"
+          ]
+        },
+        "dates": {
+          "type": "string"
+        },
+        "cities": {
+          "type": "string"
+        },
+        "anchor": {
+          "type": "string"
+        },
+        "hostLine": {
+          "type": "string"
+        },
+        "tagline": {
+          "type": "string"
+        },
+        "timezone": {
+          "type": "string",
+          "default": "America/Edmonton"
+        }
+      },
+      "required": [
+        "name"
+      ]
+    },
+    "theme": {
+      "enum": [
+        "compliant",
+        "mvai"
+      ],
+      "default": "compliant",
+      "description": "compliant: the event team's template look (Arial / Liberation Sans). mvai: the MVAI kit (Inter). The operator can switch it live."
+    },
+    "sample": {
+      "type": "boolean",
+      "description": "true tags every content screen 'Sample content' (for demo agendas)."
+    },
+    "audio": {
+      "type": "object",
+      "properties": {
+        "cueFiles": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "Cue lists (paths from the repo root), merged in order; later files win on the same id."
+        },
+        "cues": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/cue"
+          },
+          "description": "Cues defined in the agenda itself (win over cueFiles)."
+        },
+        "pads": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "maxItems": 9,
+          "description": "Cue ids on the control's sound pads 1-9."
+        },
+        "voiceManifest": {
+          "type": "string",
+          "description": "Voiced announcements from scripts/voice/say.py (default out/voice/manifest.json). Each clip becomes a cue the operator fires from the control's Announce box."
+        }
+      }
+    },
+    "days": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/day"
+      }
+    }
+  },
+  "$defs": {
+    "accent": {
+      "enum": [
+        "blue",
+        "purple",
+        "plum",
+        "pink",
+        "orange",
+        "yellow",
+        "green",
+        "cyan",
+        "lilac",
+        "red",
+        "maroon",
+        "navy"
+      ]
+    },
+    "time": {
+      "type": "string",
+      "pattern": "^([01]\\d|2[0-3]):[0-5]\\d$",
+      "description": "24-hour local time, e.g. 09:30"
+    },
+    "person": {
+      "type": "object",
+      "required": [
+        "name"
+      ],
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "role": {
+          "type": "string"
+        },
+        "org": {
+          "type": "string"
+        },
+        "moderator": {
+          "type": "boolean",
+          "description": "Panel moderator: introduced last with the panel-moderator formula and flagged on the panel card."
+        },
+        "accent": {
+          "$ref": "#/$defs/accent"
+        },
+        "fact": {
+          "type": "string",
+          "description": "At most one extra fact, supplied or approved by the person, as a predicate that completes '{name} {fact}.' (speaker-fact). Spoken only; never praise."
+        }
+      },
+      "description": "Names, roles and organisations come from the person, in writing (guides/NARRATION.md). On screen the lower third is the name on line 1 and 'role · organization' on line 2. Pronunciation goes in brand/voice/lexicon.json."
+    },
+    "day": {
+      "type": "object",
+      "required": [
+        "date",
+        "segments"
+      ],
+      "properties": {
+        "date": {
+          "type": "string",
+          "format": "date"
+        },
+        "label": {
+          "type": "string",
+          "examples": [
+            "Day 1"
+          ]
+        },
+        "name": {
+          "type": "string",
+          "examples": [
+            "Monday, December 7"
+          ]
+        },
+        "title": {
+          "type": "string"
+        },
+        "sub": {
+          "type": "string"
+        },
+        "place": {
+          "type": "string"
+        },
+        "accent": {
+          "$ref": "#/$defs/accent"
+        },
+        "segments": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/segment"
+          }
+        }
+      }
+    },
+    "segment": {
+      "type": "object",
+      "required": [
+        "type",
+        "start"
+      ],
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "type": {
+          "enum": [
+            "holding",
+            "welcome",
+            "countdown",
+            "session",
+            "speaker-intro",
+            "panel",
+            "break",
+            "lunch",
+            "demo",
+            "video",
+            "slides",
+            "thanks",
+            "sponsor",
+            "closing",
+            "bumper",
+            "stat"
+          ],
+          "description": "Sets the default scenes: holding->holding, welcome->opening, countdown->countdown, session/demo->title (+slides, +video), speaker-intro->intro (+slides, +video), panel->panel (+slides), break/lunch->break, video->video, slides->slides, thanks/sponsor->thanks, closing->closing, bumper->bumper, stat->stat."
+        },
+        "start": {
+          "$ref": "#/$defs/time"
+        },
+        "end": {
+          "$ref": "#/$defs/time"
+        },
+        "title": {
+          "type": "string"
+        },
+        "subtitle": {
+          "type": "string"
+        },
+        "kicker": {
+          "type": "string"
+        },
+        "room": {
+          "type": "string"
+        },
+        "speakers": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/person"
+          }
+        },
+        "slides": {
+          "$ref": "#/$defs/slides"
+        },
+        "video": {
+          "$ref": "#/$defs/video"
+        },
+        "music": {
+          "$ref": "#/$defs/music"
+        },
+        "transition": {
+          "$ref": "#/$defs/transition"
+        },
+        "accent": {
+          "$ref": "#/$defs/accent"
+        },
+        "resume": {
+          "$ref": "#/$defs/time",
+          "description": "break/lunch: the return time (default: end)"
+        },
+        "notes": {
+          "type": "string",
+          "description": "Operator notes, shown in the control only."
+        },
+        "sample": {
+          "type": "boolean"
+        },
+        "scenes": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/scene"
+          },
+          "description": "The screens this segment steps through. Omit to use the type's defaults. GO moves to the next scene, then the next segment."
+        },
+        "what": {
+          "type": "string",
+          "description": "demo: what the demo is, as a phrase that completes '{title} is {what}, built by {team}.' (brand/voice/intros.json demo-intro). From the demo team, in writing."
+        },
+        "team": {
+          "type": "string",
+          "description": "demo: the team that built it, full name ('the Example Branch'). Shown on the demo title card as 'Built by {team}'."
+        },
+        "subject": {
+          "type": "string",
+          "description": "video: what the video is about, completing '{title} is a video about {subject}.' (video-intro)."
+        }
+      }
+    },
+    "scene": {
+      "type": "object",
+      "required": [
+        "type"
+      ],
+      "description": "Any segment field may be repeated here to override it for this scene.",
+      "properties": {
+        "type": {
+          "enum": [
+            "holding",
+            "opening",
+            "countdown",
+            "title",
+            "intro",
+            "panel",
+            "slides",
+            "video",
+            "break",
+            "bumper",
+            "stat",
+            "thanks",
+            "closing"
+          ]
+        },
+        "transition": {
+          "$ref": "#/$defs/transition"
+        },
+        "music": {
+          "$ref": "#/$defs/music"
+        },
+        "speaker": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "intro: which speaker of the list (default 0)"
+        },
+        "lowerThird": {
+          "type": [
+            "boolean",
+            "integer"
+          ],
+          "description": "Fire the lower third for speaker 0 (true) or speaker n, lowerDelay s after the scene starts, for lowerSeconds s"
+        },
+        "lowerSeconds": {
+          "type": "number",
+          "default": 8
+        },
+        "lowerDelay": {
+          "type": "number",
+          "default": 1.2
+        },
+        "target": {
+          "$ref": "#/$defs/time",
+          "description": "countdown: count to this time instead of the next segment's start"
+        },
+        "minutes": {
+          "type": "number",
+          "description": "countdown: count this many minutes from when it goes on air (when no target and no next segment)"
+        },
+        "next": {
+          "type": "integer",
+          "description": "countdown: index of the segment it counts to"
+        },
+        "label": {
+          "type": "string",
+          "description": "countdown: the line above the clock (default 'Next session begins in'); stat: the line under the number"
+        },
+        "value": {
+          "type": [
+            "number",
+            "string"
+          ],
+          "description": "stat: the number (label: the line under it; sub: the line under that)"
+        },
+        "names": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "description": "thanks: the names to list"
+        },
+        "notes": {
+          "type": "string"
+        }
+      }
+    },
+    "slides": {
+      "description": "A list of image paths, {images: [...]}, or {dir, pattern, count, start}: pattern 'slide-{nn}.jpg' numbers from start (default 1). Render decks with scripts/make.mjs; convert a PDF with: pdftoppm -r 144 -jpeg deck.pdf dir/slide",
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "object",
+          "properties": {
+            "images": {
+              "type": "array",
+              "items": {
+                "type": "string"
+              }
+            }
+          },
+          "required": [
+            "images"
+          ]
+        },
+        {
+          "type": "object",
+          "properties": {
+            "dir": {
+              "type": "string"
+            },
+            "pattern": {
+              "type": "string"
+            },
+            "count": {
+              "type": "integer"
+            },
+            "start": {
+              "type": "integer"
+            }
+          },
+          "required": [
+            "dir",
+            "pattern",
+            "count"
+          ]
+        }
+      ]
+    },
+    "video": {
+      "description": "An MP4 path, or {src, autoplay (default true), autoAdvance (default true: GO when it ends), loop, muted}. Sound plays through the show mixer and ducks the music bed.",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "object",
+          "required": [
+            "src"
+          ],
+          "properties": {
+            "src": {
+              "type": "string"
+            },
+            "autoplay": {
+              "type": "boolean"
+            },
+            "autoAdvance": {
+              "type": "boolean"
+            },
+            "loop": {
+              "type": "boolean"
+            },
+            "muted": {
+              "type": "boolean"
+            }
+          }
+        }
+      ]
+    },
+    "music": {
+      "type": "object",
+      "description": "Cue ids. bed: start this bed (null fades the bed out; leave it out to keep the current bed). sting and walkup fire once when the scene goes on air with GO or TAKE (not with BACK).",
+      "properties": {
+        "bed": {
+          "type": [
+            "string",
+            "null"
+          ]
+        },
+        "sting": {
+          "type": "string"
+        },
+        "walkup": {
+          "type": "string"
+        }
+      }
+    },
+    "transition": {
+      "enum": [
+        "sweep",
+        "wipe",
+        "fade",
+        "cut"
+      ],
+      "description": "Into this scene. Default: sweep between segments, fade within a segment."
+    },
+    "cue": {
+      "type": "object",
+      "required": [
+        "id",
+        "file",
+        "kind"
+      ],
+      "description": "A sound cue. One file can give several cues with different in and out points.",
+      "properties": {
+        "id": {
+          "type": "string"
+        },
+        "label": {
+          "type": "string"
+        },
+        "kind": {
+          "enum": [
+            "bed",
+            "sting",
+            "walkup",
+            "sizzle",
+            "loop"
+          ],
+          "description": "bed: loops under the show, one at a time. The rest play once, over the bed."
+        },
+        "file": {
+          "type": "string",
+          "description": "Path from the repo root (mp3, wav, m4a)"
+        },
+        "in": {
+          "type": "number",
+          "default": 0
+        },
+        "out": {
+          "type": "number"
+        },
+        "duration": {
+          "type": "number"
+        },
+        "loop": {
+          "type": "boolean"
+        },
+        "gain_db": {
+          "type": "number",
+          "default": 0
+        },
+        "lufs": {
+          "type": "number",
+          "description": "Measured integrated loudness of the file; the mixer adds (-16 - lufs) dB so every cue sits at one level"
+        },
+        "fade_in": {
+          "type": "number"
+        },
+        "fade_out": {
+          "type": "number"
+        },
+        "duck_bed": {
+          "type": "boolean",
+          "default": true
+        }
+      }
+    }
+  }
+}

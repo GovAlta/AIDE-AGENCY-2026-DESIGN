@@ -9,10 +9,17 @@ Read these before your first piece:
 | File | Read it for |
 |---|---|
 | `guides/BRAND.md` | Colours and their roles, grounds, type, the marks, where circuit art may go |
-| `guides/WRITING.md` | Every rule for words on a page, a slide, a banner or in narration |
+| `guides/WRITING.md` | Every rule for words on a page, a slide, a banner, a sign or an email |
+| `guides/SLIDE-TEXT.md` | Limits for text on screens: headlines, bullets, labels, lower thirds, captions |
+| `guides/NARRATION.md` | Everything spoken: voiceover, announcements, speaker introductions; the approved voices (`brand/voice/voices.json`) and the introduction formulas (`brand/voice/intros.json`) |
+| `guides/ACCESSIBILITY.md` | Contrast, alt text, reading order, captions; what `--check` enforces |
 | `guides/VIDEO.md` | Making a narrated video with MVAI |
 | `motion/README.md` | The stage and social motion pieces (title sequence, day bumpers, lower third, countdown, stat reveal, social loops) and how to render or change them |
-| `guides/PRINT.md`, `guides/SLIDES.md`, `guides/DIGITAL.md`, `guides/QR.md` | The templates and rules for each medium |
+| `guides/PRINT.md`, `guides/SLIDES.md`, `guides/DIGITAL.md`, `guides/ONSITE.md`, `guides/OFFICE.md`, `guides/QR.md` | The templates and rules for each medium |
+| `guides/CHARTS.md`, `guides/ICONS.md`, `guides/IMAGERY.md` | Charts, the Lucide icon set, illustration style and image-generation prompts |
+| `guides/DISPLAYS.md` | Stand panels and monitor kiosks: lockup, clear zones, viewing distance, print files |
+| `guides/SHOW.md`, `guides/SOUND.md` | Running the event day on screen; the sound identity, music cues and Suno prompts |
+| `guides/PRINT-PRODUCTION.md`, `guides/FORM-APP.md` | Print-shop files (bleed, crop marks, CMYK); the Agency Studio web form |
 
 ## The rules
 
@@ -29,10 +36,12 @@ Read these before your first piece:
    new component in `templates/lib/components.mjs`, not markup in JSON.
 7. **Check before you deliver.** All of these must pass:
    ```bash
-   node scripts/make.mjs <content.json> --check        # no overflow, no text cut off, bundled fonts loaded
+   node scripts/make.mjs <content.json> --check        # no overflow or cut-off text, fonts loaded, alt text, lang, title, contrast
+                                                       # (contrast is a warning; --strict makes it a fault)
    python3 scripts/lint/lint.py <content.json>          # 0 writing errors (add --ai-agent for AI services where staff are "agents")
    node scripts/qr-verify.mjs out/**/*qr*.png           # every QR code decodes (when the piece has one)
    python3 scripts/mvai/mvai.py check <spec.json>       # videos: ok true, 0 errors
+   python3 scripts/voice/say.py --agenda <agenda.json> --check   # every spoken announcement fills its formula and passes the lint
    ```
 8. **Look at the output.** Open every PNG (one per page or slide) and check it by eye: balance, crowding, art clear of text, the right
    classification. A passing check does not show that a page looks right.
@@ -52,8 +61,21 @@ Read these before your first piece:
 | A stage motion piece: opening titles, day bumpers, speaker lower third (alpha), session countdown, stat reveal | the motion library, `MG-01`…`MG-05` | `node scripts/motion-render.mjs MG-03` (`--list` for all) |
 | A short social animation (square loop, vertical cutdown) | the motion library, `AN-01`, `AN-02` | `node scripts/motion-render.mjs AN-01` |
 | A deck on the event team's own PowerPoint template | `brand/pptx/Agency2026_Slide_Template_compliant.pptx` | open it and use its layouts: TITLE, SECTION_DAY1–3, CONTENT, TITLE_ONLY, STATEMENT |
+| A stage announcement or speaker introduction (spoken or on screen) | a formula in `brand/voice/intros.json` | `python3 scripts/voice/say.py <formula> ... --out x.mp3` |
+| Run the event day on screen: agenda, countdowns, speaker banners, slides, videos, sound; one laptop, or stage and control on separate machines joined by an event code | `show/` | `node show/server.mjs --agenda <agenda.json>`, or the published app (`guides/SHOW.md`) |
+| A Word briefing note, memo, speaker brief or event report | `scripts/docx/build_docx.py` or the `.dotx` in `templates/office/` | `python3 scripts/docx/build_docx.py content.json out.docx` |
+| A PowerPoint built by hand | `brand/pptx/Agency2026.potx` (13 layouts) | open in PowerPoint |
+| An email signature or announcement email | `brand/email/` | `python3 scripts/docx/build_email.py` |
+| Stand panel or demo kiosk graphics (2–2.5 ft × 5–7 ft panels; 2.5 × 2.5 ft kiosks with a monitor and ledge) | `displays/` | `node displays/build.mjs displays/specs/<spec>.json --variant all`; send `<face>-production.pdf` (`displays/README.md`, `guides/DISPLAYS.md`) |
+| A stage backdrop, booth backdrop or media wall | `onsite/stage-backdrop`, `onsite/booth-backdrop`, `onsite/step-repeat` | `node scripts/make.mjs content.json` then the print-shop export |
+| A directional sign, room door sign, stickers or a lanyard | `onsite/wayfinding`, `onsite/room-sign`, `onsite/stickers`, `onsite/lanyard` | `node scripts/make.mjs content.json` |
+| A print-ready file for a print shop | the print export | `node scripts/print-export.mjs content.json` (`guides/PRINT-PRODUCTION.md`) |
+| A chart in a document or slide | blocks `line`, `column`, `stacked`, `donut`, `waffle`, `gauge`, `timeline`; slide type `chart` | in any blocks list or deck |
+| An icon on a tile, step or list item | `"icon": "<lucide-name>"` (`guides/ICONS.md`) | any content file |
+| An illustration or key art | the prompt library | `python3 scripts/imagegen.py --subject <id>` (`guides/IMAGERY.md`) |
+| A music cue (bed, sting, walk-up, reel) | `brand/audio/cues.json` | `node scripts/audio-prep.mjs <cue-id> <suno-file>` (`guides/SOUND.md`) |
 | A QR code | the QR script, or a `qr` block inside any template | `node scripts/qr.mjs URL --out x.svg --png` |
-| Circuit traces, a corner cluster, the chip, the bus rule, the wordmark | the vector script | `node scripts/vectors.mjs traces --w 1920 --h 1080 --seed my-piece --out art.svg --png` |
+| Circuit traces (thin lines only), a corner cluster, the bus rule, the wordmark | the vector script | `node scripts/vectors.mjs traces --w 1920 --h 1080 --seed my-piece --out art.svg --png` |
 | The official invite artwork | `brand/art/invites/` | use unchanged |
 
 `node scripts/make.mjs --list` prints every template with its size and purpose. Each template's header comment documents its content
@@ -66,8 +88,7 @@ fields, and `samples/<family>/` has a working content file for every template: c
 - **Motion graphics** (stage openers, bumpers, lower thirds, countdowns, stat reveals, social loops) live in `motion/library` and render
   here, frame-exact, with `scripts/motion-render.mjs`. Change their words and timing in `motion/library/agency-pieces.js`, keep the `CLIPS`
   table in step, re-render, and look at `out/motion/<code>-stills.png`. `motion/README.md` lists every piece with its size, length,
-  delivery format and placement. Planned pieces on the video contact sheet that are not built yet (AN-03, AN-04, VD-01 to VD-04) have
-  placeholder thumbnails only: do not present them as finished.
+  delivery format and placement. VD-02 and VD-03 are recap templates with labelled footage slots: the event footage does not exist yet, so do not present them as finished films.
 
 ## Workflow
 

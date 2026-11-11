@@ -10,6 +10,8 @@ The key rules, repeated:
 - Never hand-edit generated files (`styles/tokens.css`, `brand/tokens/tokens.js`, `out/`).
 - Before delivering: `node scripts/make.mjs <file> --check`, `python3 scripts/lint/lint.py <file>`, `node scripts/qr-verify.mjs` for QR
   codes, `python3 scripts/mvai/mvai.py check` for videos. Then look at every PNG.
-- Narrated videos are made by MVAI (`guides/VIDEO.md`). Motion graphics pieces (`motion/library`, MG-01 to MG-05, AN-01, AN-02) render here
-  with `node scripts/motion-render.mjs <code>`; see `motion/README.md`.
-- Writing follows `guides/WRITING.md`; narration follows `guides/reference/VIDEO-STYLE-GUIDE.md`.
+- Narrated videos are made by MVAI (`guides/VIDEO.md`). Motion graphics pieces (`motion/library`, 13 pieces) render here with
+  `node scripts/motion-render.mjs <code>`; see `motion/README.md`. The event day runs from `show/` (`guides/SHOW.md`).
+- Writing follows `guides/WRITING.md` and `guides/SLIDE-TEXT.md`. Everything spoken follows `guides/NARRATION.md` (which includes
+  `guides/reference/VIDEO-STYLE-GUIDE.md`). Voices come only from `brand/voice/voices.json` (ElevenLabs eleven_v4); people are introduced
+  only with the formulas in `brand/voice/intros.json`. Never use `/deslop` on Agency text: its style is the opposite of this standard.

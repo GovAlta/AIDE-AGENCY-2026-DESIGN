@@ -1,0 +1,9 @@
+{
+  "$comment": "Stand panel 30 x 72 in (2.5 x 6 ft), for a banner stand or a rigid board on feet.",
+  "name": "panel-30x72",
+  "kind": "panel", "unit": "in", "width": 30, "height": 72,
+  "variant": "rails", "ground": "board", "seed": "panel-a", "bleed": 0.125, "margin": 1.5,
+  "wordmark": "Agency", "font": "inter",
+  "title": { "kicker": "Monday, December 7", "text": "The Art of the Possible" },
+  "qr": { "url": "https://www.alberta.ca", "label": "alberta.ca", "face": "front", "bottom": 14 }
+}

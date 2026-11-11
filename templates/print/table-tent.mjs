@@ -17,7 +17,7 @@ export const meta = { kind: 'pdf', size: 'Letter, folded to 8.5x5.5 in', about: 
   .panel .bt { margin-top: auto; display: flex; justify-content: space-between; align-items: flex-end; }
   .panel .qr svg { width: 1.1in; height: 1.1in; }
   .fold { position: absolute; top: 5.5in; left: 0; right: 0; border-top: 1px dashed #b9c2cc; z-index: 3; }
-  .fold span { position: absolute; right: 0.2in; top: -12pt; font-family: var(--font-mono); font-size: 6pt; color: #9aa6b2; letter-spacing: .12em; }` };
+  .fold span { position: absolute; right: 0.2in; top: -12pt; font-family: var(--font-mono); font-size: 6pt; color: var(--mute); letter-spacing: .12em; }` };
 export function render(d, ctx) {
   const face = (cls) => `<div class="panel ${cls}">${tracesLayer({ w: 816, h: 528, edges: 'r', seed: d.seed ?? `tent-${d.name}`, depth: { r: 0.2 }, scale: 1.2, span: { r: [0.3, 0.8] } })}
     <div class="in"><div class="row"><div class="mark">Agency<b>2026</b></div>${d.number ? `<span class="pill a-${d.accent ?? 'blue'}" style="margin-left:10pt;font-size:8pt">${esc(d.number)}</span>` : ''}</div>

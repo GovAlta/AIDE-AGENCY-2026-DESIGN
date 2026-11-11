@@ -1,0 +1,293 @@
+{
+  "$comment": "Agency 2026 image prompt library. scripts/imagegen.py joins style.preamble + ground + subject.prompt + composition + style.avoid. Edit the preamble here, never per image, so every picture stays in one style. Rules: guides/IMAGERY.md.",
+  "version": "1.2.0",
+  "model": "gpt-image-2.5-sunburst-nexus",
+  "sizes": {
+    "square": "1024x1024",
+    "landscape": "1536x1024",
+    "portrait": "1024x1536"
+  },
+  "style": {
+    "preamble": "Flat vector illustration in the style of a printed-circuit-board poster. Thin, evenly weighted circuit traces that run in parallel bundles, bend only at 45-degree angles and end in small hollow ring solder pads. Every trace is a thin line of the same weight: no wide ribbons, no bold bands, no microchip. Strict palette: deep navy #022C4C, purple #6F2C83, blue #0177CD, lilac #9C90C5, pink #E86BA5, coral #EE7A63, orange #EE9A2E, yellow #F2C230, green #8DC63F, cyan #00AAD2. Colours move in spectrum order around the image: purples and blues on the left, pinks and oranges along the top, yellows and greens on the right. Clean geometric shapes, crisp edges, no texture, no noise, no grain, no 3D rendering, no perspective, no photorealism. Generous empty space.",
+    "grounds": {
+      "board": "Pure white background.",
+      "night": "Solid deep night-navy background #041B30; traces glow softly but stay flat.",
+      "navy": "Solid navy background #022C4C."
+    },
+    "compositions": {
+      "frame": "The traces enter from the edges and stop well short of the centre. The middle of the image (about 60 percent of the width and height) is open, plain background of the same colour as the rest of the ground, never a box, panel, card or frame shape, so a headline can be added later.",
+      "left-clear": "All artwork sits in the right third of the image; the left two thirds are open plain background of the same colour, with no shapes, for text.",
+      "top-clear": "All artwork sits in the lower half; the top half is open plain background of the same colour, with no shapes, for text.",
+      "centre-subject": "One simple central motif, small, with wide empty margins on all sides.",
+      "full-bleed": "The pattern fills the whole image evenly, suitable as a background behind a dark overlay."
+    },
+    "avoid": "No text, no letters, no numbers, no words, no logos, no flags, no maps with borders or labels, no people's faces, no human figures with faces, no hands, no robots, no humanoid AI, no glowing brains, no handshakes, no light bulbs, no padlocks, no binary code, no cliche futuristic city, no lens flare, no photographic elements."
+  },
+  "subjects": [
+    {
+      "id": "circuit-frame",
+      "prompt": "A symmetrical frame of circuit-trace bundles running in from all four edges, like the event invite.",
+      "ground": "board",
+      "composition": "frame",
+      "aspects": [
+        "square",
+        "landscape"
+      ],
+      "uses": [
+        "social card background",
+        "poster background",
+        "title slide"
+      ]
+    },
+    {
+      "id": "circuit-landscape",
+      "prompt": "An abstract wide landscape drawn only with horizontal circuit traces that rise and fall at 45 degrees like rolling hills.",
+      "ground": "board",
+      "composition": "top-clear",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "web hero",
+        "report cover band",
+        "email header"
+      ]
+    },
+    {
+      "id": "rockies-traces",
+      "prompt": "The silhouette of a mountain range suggested by circuit traces that climb at 45 degrees and meet in sharp peaks, with a few ring pads like stars above.",
+      "ground": "night",
+      "composition": "top-clear",
+      "aspects": [
+        "landscape",
+        "square"
+      ],
+      "uses": [
+        "Edmonton and Calgary pieces",
+        "chapter slide",
+        "video background"
+      ]
+    },
+    {
+      "id": "prairie-traces",
+      "prompt": "Long flat horizontal circuit traces in yellows and greens stretching to a low horizon, evoking open prairie fields.",
+      "ground": "board",
+      "composition": "top-clear",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "day 3 pieces",
+        "web hero"
+      ]
+    },
+    {
+      "id": "river-traces",
+      "prompt": "A bundle of blue and cyan circuit traces that meanders across the image at 45-degree bends like a river seen from above.",
+      "ground": "board",
+      "composition": "left-clear",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "slides",
+        "report interior"
+      ]
+    },
+    {
+      "id": "service-nodes",
+      "prompt": "Government services shown as simple rounded-square nodes, each a different spectrum colour, connected by circuit traces into one network.",
+      "ground": "board",
+      "composition": "left-clear",
+      "aspects": [
+        "landscape",
+        "square"
+      ],
+      "uses": [
+        "explainer slide",
+        "fact sheet",
+        "handout"
+      ]
+    },
+    {
+      "id": "three-day-journey",
+      "prompt": "Three trace bundles in blue, purple and orange that run side by side left to right, each ending in a larger ring node, suggesting three stops on one journey.",
+      "ground": "board",
+      "composition": "top-clear",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "agenda",
+        "programme slide",
+        "signage"
+      ]
+    },
+    {
+      "id": "demo-booth",
+      "prompt": "An abstract showcase booth: a simple open rectangle of traces with a small screen shape in the middle and traces fanning out to the floor.",
+      "ground": "board",
+      "composition": "centre-subject",
+      "aspects": [
+        "square",
+        "portrait"
+      ],
+      "uses": [
+        "call for demos",
+        "demo card"
+      ]
+    },
+    {
+      "id": "research-economy",
+      "prompt": "Concentric rings of circuit traces in purples and lilacs radiating from a quiet empty centre, suggesting research rippling outward into an economy.",
+      "ground": "night",
+      "composition": "frame",
+      "aspects": [
+        "square",
+        "landscape"
+      ],
+      "uses": [
+        "day 2 pieces",
+        "roundtable materials"
+      ]
+    },
+    {
+      "id": "velocity-lines",
+      "prompt": "Fast parallel speed-line traces sweeping diagonally across the image in oranges, yellows and greens; all thin traces, in front, thin lines behind.",
+      "ground": "board",
+      "composition": "left-clear",
+      "aspects": [
+        "landscape",
+        "portrait"
+      ],
+      "uses": [
+        "Alberta Velocity day",
+        "sizzle stills",
+        "banner"
+      ]
+    },
+    {
+      "id": "toolbox",
+      "prompt": "An open toolbox outline made of circuit traces, with small simple tool shapes (wrench, gear, screwdriver) each drawn as a single coloured line.",
+      "ground": "board",
+      "composition": "centre-subject",
+      "aspects": [
+        "square"
+      ],
+      "uses": [
+        "Build your own toolbox",
+        "QR save-a-demo"
+      ]
+    },
+    {
+      "id": "collaboration-nodes",
+      "prompt": "Several separate trace bundles in different colours that meet and braid together in the centre, suggesting people working together, with no human figures.",
+      "ground": "board",
+      "composition": "centre-subject",
+      "aspects": [
+        "landscape",
+        "square"
+      ],
+      "uses": [
+        "partnership slide",
+        "industry and government"
+      ]
+    },
+    {
+      "id": "question-to-answer",
+      "prompt": "A single thin trace that starts tangled on the left and straightens into a clean bus of parallel lines on the right, ending in a bright ring pad.",
+      "ground": "board",
+      "composition": "top-clear",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "problem to solution slide",
+        "explainer"
+      ]
+    },
+    {
+      "id": "layers-stack",
+      "prompt": "Four flat stacked horizontal bands like layers of a system, each a different spectrum colour, joined by short vertical traces.",
+      "ground": "board",
+      "composition": "left-clear",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "architecture slide",
+        "report"
+      ]
+    },
+    {
+      "id": "night-board",
+      "prompt": "A calm dark circuit board with sparse glowing traces along the edges and an empty centre.",
+      "ground": "night",
+      "composition": "frame",
+      "aspects": [
+        "landscape",
+        "square",
+        "portrait"
+      ],
+      "uses": [
+        "countdown screen",
+        "holding slide",
+        "Teams background"
+      ]
+    },
+    {
+      "id": "spectrum-sweep",
+      "prompt": "A wide band of many parallel horizontal traces in full spectrum order, top to bottom, sweeping across the middle of the image.",
+      "ground": "board",
+      "composition": "full-bleed",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "transition still",
+        "divider",
+        "lanyard"
+      ]
+    },
+    {
+      "id": "signal-pulse",
+      "prompt": "A single bright pulse travelling along one trace through a quiet bundle of grey-navy traces, the pulse in cyan with a short gradient tail.",
+      "ground": "night",
+      "composition": "top-clear",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "video background",
+        "lower third background"
+      ]
+    },
+    {
+      "id": "growth-steps",
+      "prompt": "Circuit traces that climb in five rising steps from left to right, each step a ring pad a little higher than the last, in green and yellow.",
+      "ground": "board",
+      "composition": "top-clear",
+      "aspects": [
+        "landscape"
+      ],
+      "uses": [
+        "results slide",
+        "hill-climbing story"
+      ]
+    },
+    {
+      "id": "portrait-tower",
+      "prompt": "Tall vertical trace bundles rising from the bottom edge in spectrum colours, like a skyline made only of circuit lines.",
+      "ground": "board",
+      "composition": "top-clear",
+      "aspects": [
+        "portrait"
+      ],
+      "uses": [
+        "story",
+        "roll-up banner",
+        "signage portrait"
+      ]
+    }
+  ]
+}

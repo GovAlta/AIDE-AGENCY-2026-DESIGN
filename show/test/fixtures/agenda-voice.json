@@ -1,0 +1,640 @@
+{
+ "$note": "Sample run of show. Event, day and place facts come from brand/tokens/tokens.json (event). Every time, session, speaker and name below is a placeholder: replace them with the confirmed programme. Schema: show/agenda.schema.json.",
+ "event": {
+  "name": "Agency 2026",
+  "dates": "Dec. 7–9, 2026",
+  "cities": "Edmonton · Calgary",
+  "anchor": "Anchored by the Velocity White Papers",
+  "hostLine": "Hosted by Technology and Innovation",
+  "tagline": "Alberta is moving. Come and see how fast.",
+  "timezone": "America/Edmonton"
+ },
+ "theme": "compliant",
+ "sample": true,
+ "audio": {
+  "cueFiles": [
+   "show/samples/cues.json",
+   "brand/audio/cues.json"
+  ],
+  "pads": [
+   "open-show",
+   "sting-logo",
+   "walkup-a",
+   "walkup-b",
+   "swell-transition",
+   "sting-short",
+   "walkup",
+   "outro",
+   "reel-30"
+  ],
+  "voiceManifest": "show/test/fixtures/voice-manifest.json"
+ },
+ "days": [
+  {
+   "date": "2026-12-07",
+   "label": "Day 1",
+   "name": "Monday, December 7",
+   "title": "The Art of the Possible",
+   "sub": "A Showcase for Government",
+   "place": "Edmonton Convention Centre",
+   "accent": "blue",
+   "segments": [
+    {
+     "id": "d1-doors",
+     "type": "holding",
+     "start": "07:30",
+     "end": "08:55",
+     "title": "Doors open",
+     "music": {
+      "bed": "bed-walkin"
+     },
+     "notes": "Walk-in loop. Bed music low. Confirm the stage window shows sound: on."
+    },
+    {
+     "id": "d1-count",
+     "type": "countdown",
+     "start": "08:55",
+     "end": "09:00",
+     "title": "Opening countdown",
+     "scenes": [
+      {
+       "type": "countdown",
+       "label": "Agency 2026 begins in"
+      }
+     ],
+     "notes": "Counts to the opening at 09:00. Use the countdown override if the start moves.",
+     "music": {
+      "bed": "bed-countdown"
+     }
+    },
+    {
+     "id": "d1-open",
+     "type": "welcome",
+     "start": "09:00",
+     "end": "09:10",
+     "title": "Welcome and opening",
+     "music": {
+      "bed": null,
+      "sting": "open-show"
+     },
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Host and master of ceremonies",
+       "org": "Technology and Innovation"
+      }
+     ],
+     "scenes": [
+      {
+       "type": "opening",
+       "transition": "wipe"
+      },
+      {
+       "type": "bumper"
+      },
+      {
+       "type": "intro",
+       "kicker": "Your host",
+       "music": {
+        "walkup": "walkup-a"
+       }
+      }
+     ],
+     "notes": "GO 1: opening sequence with the sting. GO 2: day bumper. GO 3: host intro with walk-up. Press L for the host's lower third once they speak."
+    },
+    {
+     "id": "d1-key",
+     "type": "speaker-intro",
+     "start": "09:10",
+     "end": "09:45",
+     "title": "Sample keynote title",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization",
+       "fact": "leads the sample program"
+      }
+     ],
+     "slides": {
+      "dir": "show/samples/slides",
+      "pattern": "slide-{nn}.jpg",
+      "count": 15
+     },
+     "music": {
+      "walkup": "walkup-a"
+     },
+     "scenes": [
+      {
+       "type": "intro"
+      },
+      {
+       "type": "title",
+       "transition": "fade"
+      },
+      {
+       "type": "slides",
+       "lowerThird": true,
+       "lowerSeconds": 8
+      }
+     ],
+     "notes": "Intro with walk-up, title card, then the speaker's slides. The lower third fires on the first slide."
+    },
+    {
+     "id": "d1-sizzle",
+     "type": "video",
+     "start": "09:45",
+     "end": "09:47",
+     "title": "Sample sizzle reel",
+     "video": {
+      "src": "show/samples/media/sample-video-with-sound.mp4",
+      "autoAdvance": true
+     },
+     "music": {
+      "bed": null
+     },
+     "notes": "Plays with sound and moves on by itself when it ends.",
+     "subject": "a sample subject"
+    },
+    {
+     "id": "d1-stat",
+     "type": "stat",
+     "start": "09:47",
+     "end": "09:50",
+     "title": "40 working demos",
+     "scenes": [
+      {
+       "type": "stat",
+       "value": 40,
+       "label": "working demos",
+       "sub": "built by Technology and Innovation",
+       "music": {
+        "sting": "sting-short"
+       }
+      }
+     ],
+     "notes": "Figure from the event materials (tokens.json event.figures)."
+    },
+    {
+     "id": "d1-demo1",
+     "type": "demo",
+     "start": "09:50",
+     "end": "10:30",
+     "title": "Sample demo title",
+     "subtitle": "One line on what the demo shows",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      },
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "slides": {
+      "dir": "show/samples/slides",
+      "pattern": "slide-{nn}.jpg",
+      "count": 4,
+      "start": 4
+     },
+     "room": "Main stage",
+     "music": {
+      "sting": "sting-short"
+     },
+     "what": "a sample tool shown with fictional data",
+     "team": "the Sample Team"
+    },
+    {
+     "id": "d1-break1",
+     "type": "break",
+     "start": "10:30",
+     "end": "10:45",
+     "title": "Break",
+     "music": {
+      "bed": "bed-break"
+     }
+    },
+    {
+     "id": "d1-panel",
+     "type": "panel",
+     "start": "10:45",
+     "end": "11:45",
+     "title": "Sample panel title",
+     "kicker": "Panel",
+     "music": {
+      "bed": null,
+      "sting": "sting-short"
+     },
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization",
+       "moderator": true
+      },
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      },
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      },
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "notes": "Use the speaker buttons on the right for each panellist's lower third."
+    },
+    {
+     "id": "d1-s2",
+     "type": "session",
+     "start": "11:45",
+     "end": "12:00",
+     "title": "Sample session title",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "slides": {
+      "dir": "show/samples/slides",
+      "pattern": "slide-{nn}.jpg",
+      "count": 4,
+      "start": 4
+     }
+    },
+    {
+     "id": "d1-lunch",
+     "type": "lunch",
+     "start": "12:00",
+     "end": "13:00",
+     "title": "Lunch",
+     "music": {
+      "bed": "bed-break"
+     }
+    },
+    {
+     "id": "d1-count2",
+     "type": "countdown",
+     "start": "12:55",
+     "end": "13:00",
+     "title": "Afternoon countdown",
+     "music": {
+      "bed": "bed-walkin"
+     }
+    },
+    {
+     "id": "d1-s3",
+     "type": "session",
+     "start": "13:00",
+     "end": "14:30",
+     "title": "Sample session title",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "video": {
+      "src": "show/samples/media/sample-video-with-sound.mp4",
+      "autoAdvance": true
+     },
+     "slides": {
+      "dir": "show/samples/slides",
+      "pattern": "slide-{nn}.jpg",
+      "count": 4,
+      "start": 4
+     },
+     "music": {
+      "bed": null,
+      "walkup": "walkup-b"
+     }
+    },
+    {
+     "id": "d1-break2",
+     "type": "break",
+     "start": "14:30",
+     "end": "14:45",
+     "title": "Break",
+     "music": {
+      "bed": "bed-break"
+     }
+    },
+    {
+     "id": "d1-s4",
+     "type": "demo",
+     "start": "14:45",
+     "end": "15:45",
+     "title": "Sample demo title",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "slides": {
+      "dir": "show/samples/slides",
+      "pattern": "slide-{nn}.jpg",
+      "count": 4,
+      "start": 4
+     },
+     "music": {
+      "bed": null,
+      "sting": "sting-short"
+     },
+     "what": "a sample tool shown with fictional data",
+     "team": "the Sample Team"
+    },
+    {
+     "id": "d1-thanks",
+     "type": "thanks",
+     "start": "15:45",
+     "end": "15:55",
+     "title": "Thank you",
+     "names": [
+      "Sample Team A",
+      "Sample Team B",
+      "Sample Team C",
+      "Sample Partner D",
+      "Sample Partner E",
+      "Sample Partner F"
+     ],
+     "music": {
+      "bed": "bed-walkin"
+     }
+    },
+    {
+     "id": "d1-close",
+     "type": "closing",
+     "start": "15:55",
+     "end": "16:00",
+     "title": "Thank you",
+     "music": {
+      "bed": null,
+      "sting": "outro"
+     }
+    }
+   ]
+  },
+  {
+   "date": "2026-12-08",
+   "label": "Day 2",
+   "name": "Tuesday, December 8",
+   "title": "Research & the Future AI Economy",
+   "sub": "A Closed Policy Roundtable",
+   "place": "Edmonton · By invitation",
+   "accent": "purple",
+   "segments": [
+    {
+     "id": "d2-doors",
+     "type": "holding",
+     "start": "08:00",
+     "end": "08:55",
+     "title": "Doors open",
+     "music": {
+      "bed": "bed-walkin"
+     }
+    },
+    {
+     "id": "d2-count",
+     "type": "countdown",
+     "start": "08:55",
+     "end": "09:00",
+     "title": "Countdown",
+     "music": {
+      "bed": "bed-countdown"
+     }
+    },
+    {
+     "id": "d2-open",
+     "type": "bumper",
+     "start": "09:00",
+     "end": "09:05",
+     "title": "Day opening",
+     "music": {
+      "bed": null,
+      "sting": "open-show"
+     },
+     "transition": "wipe"
+    },
+    {
+     "id": "d2-key",
+     "type": "speaker-intro",
+     "start": "09:05",
+     "end": "10:00",
+     "title": "Sample session title",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "slides": {
+      "dir": "show/samples/slides",
+      "pattern": "slide-{nn}.jpg",
+      "count": 4,
+      "start": 4
+     },
+     "music": {
+      "walkup": "walkup-a"
+     },
+     "scenes": [
+      {
+       "type": "intro"
+      },
+      {
+       "type": "slides",
+       "lowerThird": true
+      }
+     ]
+    },
+    {
+     "id": "d2-break",
+     "type": "break",
+     "start": "10:00",
+     "end": "10:15",
+     "title": "Break",
+     "music": {
+      "bed": "bed-break"
+     }
+    },
+    {
+     "id": "d2-panel",
+     "type": "panel",
+     "start": "10:15",
+     "end": "11:30",
+     "title": "Sample panel title",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization",
+       "moderator": true
+      },
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      },
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "music": {
+      "bed": null,
+      "sting": "sting-short"
+     }
+    },
+    {
+     "id": "d2-close",
+     "type": "closing",
+     "start": "11:30",
+     "end": "12:00",
+     "title": "Thank you",
+     "music": {
+      "sting": "outro"
+     }
+    }
+   ]
+  },
+  {
+   "date": "2026-12-09",
+   "label": "Day 3",
+   "name": "Wednesday, December 9",
+   "title": "Alberta Velocity: Full Speed Ahead",
+   "sub": "An Open Industry Day",
+   "place": "Platform Calgary",
+   "accent": "orange",
+   "segments": [
+    {
+     "id": "d3-doors",
+     "type": "holding",
+     "start": "08:00",
+     "end": "08:55",
+     "title": "Doors open",
+     "music": {
+      "bed": "bed-walkin"
+     }
+    },
+    {
+     "id": "d3-count",
+     "type": "countdown",
+     "start": "08:55",
+     "end": "09:00",
+     "title": "Countdown",
+     "music": {
+      "bed": "bed-countdown"
+     }
+    },
+    {
+     "id": "d3-open",
+     "type": "bumper",
+     "start": "09:00",
+     "end": "09:05",
+     "title": "Day opening",
+     "music": {
+      "bed": null,
+      "sting": "open-show"
+     },
+     "transition": "wipe"
+    },
+    {
+     "id": "d3-key",
+     "type": "speaker-intro",
+     "start": "09:05",
+     "end": "10:00",
+     "title": "Sample session title",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "slides": {
+      "dir": "show/samples/slides",
+      "pattern": "slide-{nn}.jpg",
+      "count": 4,
+      "start": 4
+     },
+     "music": {
+      "walkup": "walkup-a"
+     },
+     "scenes": [
+      {
+       "type": "intro"
+      },
+      {
+       "type": "slides",
+       "lowerThird": true
+      }
+     ]
+    },
+    {
+     "id": "d3-break",
+     "type": "break",
+     "start": "10:00",
+     "end": "10:15",
+     "title": "Break",
+     "music": {
+      "bed": "bed-break"
+     }
+    },
+    {
+     "id": "d3-panel",
+     "type": "panel",
+     "start": "10:15",
+     "end": "11:30",
+     "title": "Sample panel title",
+     "speakers": [
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization",
+       "moderator": true
+      },
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      },
+      {
+       "name": "Speaker Name",
+       "role": "Role or title",
+       "org": "Organization"
+      }
+     ],
+     "music": {
+      "bed": null,
+      "sting": "sting-short"
+     }
+    },
+    {
+     "id": "d3-close",
+     "type": "closing",
+     "start": "11:30",
+     "end": "12:00",
+     "title": "Thank you",
+     "music": {
+      "sting": "outro"
+     }
+    }
+   ]
+  }
+ ]
+}

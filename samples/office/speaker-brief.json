@@ -1,0 +1,17 @@
+{
+  "$note": "Fictional sample. Event facts are real (tokens.json); the speaker, times and talking points are examples.",
+  "doc": "speaker-brief",
+  "classification": "UNCLASSIFIED",
+  "title": "Sample session: Building with AI agents",
+  "meta": [["Speaker", "Sample Name, Example Title"], ["Day", "Monday, December 7 · The Art of the Possible"], ["Time", "10:00 to 10:30 (example)"], ["Room", "Example Hall, Edmonton Convention Centre"], ["Host", "Sample Host"]],
+  "sections": [
+    { "heading": "Run of show", "blocks": [ { "table": { "head": ["Time", "What happens", "Who"], "rows": [
+      ["09:55", "Countdown on screen (MG-04), walk-on music", "Control booth"],
+      ["10:00", "Host welcome, speaker lower third (MG-03)", "Sample Host"],
+      ["10:02", "Talk with slides", "Sample Name"],
+      ["10:22", "Questions from the room", "Sample Host"],
+      ["10:30", "Day bumper (MG-02), next session countdown", "Control booth"] ], "widths": [0.9, 4.2, 1.7] } } ] },
+    { "heading": "Talking points", "blocks": [ { "bullets": ["Example point one.", "Example point two.", "Example point three."] } ] },
+    { "heading": "AV needs", "blocks": [ { "bullets": ["Lapel microphone", "Slides in 16:9, sent the day before", "Clicker"] }, { "note": "Slides use the Agency 2026 PowerPoint template (brand/pptx/Agency2026.potx)." } ] }
+  ]
+}

@@ -1,0 +1,29 @@
+{
+  "$comment": "Demo kiosk: a 30 x 30 in column, 72 in tall, monitor on the front above a desk ledge. Sizes are parameters; see displays/README.md.",
+  "name": "kiosk-30x30x72",
+  "kind": "kiosk",
+  "unit": "in",
+  "width": 30,
+  "depth": 30,
+  "height": 72,
+  "variant": "rise",
+  "ground": "board",
+  "seed": "kiosk-a",
+  "bleed": 0.125,
+  "margin": 1.5,
+  "wordmark": "Agency",
+  "font": "inter",
+  "monitor": {
+    "bottom": 46
+  },
+  "ledge": {
+    "height": 38,
+    "depth": 12,
+    "thickness": 1.5
+  },
+  "qr": {
+    "url": "https://www.alberta.ca",
+    "label": "alberta.ca",
+    "face": "right"
+  }
+}

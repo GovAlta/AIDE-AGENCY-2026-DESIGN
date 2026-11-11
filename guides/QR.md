@@ -5,7 +5,7 @@ before it ships.
 
 ```bash
 node scripts/qr.mjs "https://www.alberta.ca/technology-and-innovation" --out out/qr/ti.svg --png
-node scripts/qr.mjs "https://www.alberta.ca/technology-and-innovation" --out out/qr/ti-dots.svg --png --style dots --badge chip
+node scripts/qr.mjs "https://www.alberta.ca/technology-and-innovation" --out out/qr/ti-dots.svg --png --style dots --badge a
 node scripts/qr-verify.mjs out/qr/*.png --expect "https://www.alberta.ca/technology-and-innovation"
 ```
 
@@ -17,7 +17,7 @@ In a template, a `{ "type": "qr", "url": "…", "title": "…" }` block draws th
 |---|---|---|
 | `--style` | `rounded` (default), `dots`, `square` | `square` is the most robust; use it for small prints and screens seen from far away |
 | `--accent` | any spectrum name (default `blue`) | Colours the centre of the three finder eyes. The modules are always navy |
-| `--badge` | `chip`, `a`, or up to 4 characters | A centre badge clears the middle of the code, so it forces error correction H |
+| `--badge` | `a` (navy A) or up to 4 characters (the chip badge is retired; `chip` now gives `a`) | A centre badge clears the middle of the code, so it forces error correction H |
 | `--size` | pixels for the PNG (default 1200) | The SVG scales to any size |
 
 ## Rules

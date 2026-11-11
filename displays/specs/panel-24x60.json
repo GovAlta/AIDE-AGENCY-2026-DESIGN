@@ -1,0 +1,7 @@
+{
+  "$comment": "Stand panel 24 x 60 in (2 x 5 ft), the smallest size the brief names.",
+  "name": "panel-24x60",
+  "kind": "panel", "unit": "in", "width": 24, "height": 60,
+  "variant": "spectrum", "ground": "board", "seed": "panel-b", "bleed": 0.125, "margin": 1.5,
+  "wordmark": "Agency", "font": "inter"
+}

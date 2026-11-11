@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en"><head><meta charset="utf-8"><title>Agency display render</title>
+<style>html,body{margin:0;background:#e9ecef;overflow:hidden}canvas{display:block}</style></head>
+<body>
+<script type="module">
+// Mock-up renderer for Agency displays (displays/render.mjs drives it). Units are inches; y is up; the floor is y = 0.
+// window.renderScene({ width, height, camera: {pos, target, fov}, objects: [{ kind: 'kiosk'|'panel', x, z, rotY, W, D, H,
+//   faces: {front, right, back, left: svg string}, monitor: {x, y, w, h} (face coords, y down from the top), ledge: {height, depth, thickness},
+//   screen: url }], floor, background })  -> resolves when the frame is drawn.
+import * as THREE from '../vendor/three/three.module.min.js';
+
+const PPI = 40;
+function svgTexture(svg, wIn, hIn, ppi = PPI) {
+  return new Promise((res, rej) => {
+    const img = new Image();
+    img.onload = () => {
+      const c = document.createElement('canvas'); c.width = Math.round(wIn * ppi); c.height = Math.round(hIn * ppi);
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      const t = new THREE.CanvasTexture(c); t.colorSpace = THREE.SRGBColorSpace; t.anisotropy = 8; res(t);
+    };
+    img.onerror = rej;
+    img.src = 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+  });
+}
+const loadTex = (url) => new Promise((res) => new THREE.TextureLoader().load(url, (t) => { t.colorSpace = THREE.SRGBColorSpace; res(t); }));
+function shadowBlob(w, d) {
+  const c = document.createElement('canvas'); c.width = c.height = 256; const g = c.getContext('2d');
+  const gr = g.createRadialGradient(128, 128, 20, 128, 128, 128); gr.addColorStop(0, 'rgba(0,0,0,0.42)'); gr.addColorStop(1, 'rgba(0,0,0,0)');
+  g.fillStyle = gr; g.fillRect(0, 0, 256, 256);
+  const m = new THREE.Mesh(new THREE.PlaneGeometry(w * 1.7, d * 1.7), new THREE.MeshBasicMaterial({ map: new THREE.CanvasTexture(c), transparent: true, depthWrite: false }));
+  m.rotation.x = -Math.PI / 2; m.position.y = 0.05; return m;
+}
+const mat = (o) => new THREE.MeshStandardMaterial({ roughness: 0.78, metalness: 0, ...o });
+
+async function kiosk(o) {
+  const g = new THREE.Group(), { W, D, H } = o, b = o.bleed || 0;
+  // a printed face: the art without its bleed, on the box side
+  const tex = {};
+  for (const k of ['front', 'right', 'back', 'left']) {
+    const t = await svgTexture(o.faces[k], (k === 'front' || k === 'back' ? W : D) + 2 * b, H + 2 * b);
+    if (b) { const fw = (k === 'front' || k === 'back' ? W : D); t.repeat.set(fw / (fw + 2 * b), H / (H + 2 * b)); t.offset.set(b / (fw + 2 * b), b / (H + 2 * b)); }
+    tex[k] = t;
+  }
+  const top = mat({ color: 0xf4f5f7 });
+  const box = new THREE.Mesh(new THREE.BoxGeometry(W, H, D), [mat({ map: tex.right }), mat({ map: tex.left }), top, top, mat({ map: tex.front }), mat({ map: tex.back })]);
+  box.position.y = H / 2; box.castShadow = box.receiveShadow = true; g.add(box);
+  // monitor on the front window
+  if (o.monitor) {
+    const m = o.monitor, cy = H - (m.y + m.h / 2), cx = m.x + m.w / 2 - W / 2;
+    const frame = new THREE.Mesh(new THREE.BoxGeometry(m.w + 0.9, m.h + 0.9, 1.4), mat({ color: 0x0b0e12, roughness: 0.35 }));
+    frame.position.set(cx, cy, D / 2 + 0.7); frame.castShadow = true; g.add(frame);
+    const scr = new THREE.Mesh(new THREE.PlaneGeometry(m.w, m.h), new THREE.MeshBasicMaterial({ map: await loadTex(o.screen), toneMapped: false }));
+    scr.position.set(cx, cy, D / 2 + 1.42); g.add(scr);
+    const gloss = new THREE.Mesh(new THREE.PlaneGeometry(m.w, m.h), new THREE.MeshStandardMaterial({ color: 0xffffff, transparent: true, opacity: 0.06, roughness: 0.05, metalness: 0.6 }));
+    gloss.position.set(cx, cy, D / 2 + 1.44); g.add(gloss);
+  }
+  // desk ledge, brackets and a laptop
+  if (o.ledge) {
+    const L = o.ledge, y = L.height - L.thickness / 2;
+    const ledge = new THREE.Mesh(new THREE.BoxGeometry(W, L.thickness, L.depth), mat({ color: 0xf7f7f5, roughness: 0.45 }));
+    ledge.position.set(0, y, D / 2 + L.depth / 2); ledge.castShadow = ledge.receiveShadow = true; g.add(ledge);
+    for (const sx of [-1, 1]) {
+      const br = new THREE.Mesh(new THREE.BoxGeometry(0.35, 3.2, L.depth * 0.45), mat({ color: 0xe9ebee, metalness: 0.2, roughness: 0.4 }));
+      br.position.set(sx * (W / 2 - 2.5), y - 2.3, D / 2 + L.depth * 0.22); br.castShadow = true; g.add(br);
+    }
+    if (o.laptop !== false) {
+      const lg = new THREE.Group(), base = new THREE.Mesh(new THREE.BoxGeometry(11.5, 0.5, 8), mat({ color: 0xb4b9bf, metalness: 0.55, roughness: 0.3 }));
+      base.position.y = 0.3; base.castShadow = true; lg.add(base);
+      const lid = new THREE.Group(), shell = new THREE.Mesh(new THREE.BoxGeometry(11.5, 7.4, 0.25), mat({ color: 0xb4b9bf, metalness: 0.55, roughness: 0.3 }));
+      shell.position.y = 3.7; lid.add(shell);
+      const disp = new THREE.Mesh(new THREE.PlaneGeometry(10.8, 6.6), new THREE.MeshBasicMaterial({ map: o.laptopScreen ? await loadTex(o.laptopScreen) : null, color: o.laptopScreen ? 0xffffff : 0x1b2733, toneMapped: false }));
+      disp.position.set(0, 3.75, 0.14); lid.add(disp);
+      lid.position.set(0, 0.5, -3.9); lid.rotation.x = -0.5; lg.add(lid);
+      lg.position.set(-W * 0.18, L.height, D / 2 + L.depth * 0.55); lg.rotation.y = 0.22; g.add(lg);
+    }
+  }
+  g.add(shadowBlob(W, D + (o.ledge ? o.ledge.depth : 0)));
+  return g;
+}
+
+async function panel(o) {
+  const g = new THREE.Group(), { W, H } = o, b = o.bleed || 0, T = 0.5, lift = 3;
+  const t = await svgTexture(o.faces.front, W + 2 * b, H + 2 * b);
+  if (b) { t.repeat.set(W / (W + 2 * b), H / (H + 2 * b)); t.offset.set(b / (W + 2 * b), b / (H + 2 * b)); }
+  const edge = mat({ color: 0xe8eaed });
+  const p = new THREE.Mesh(new THREE.BoxGeometry(W, H, T), [edge, edge, edge, edge, mat({ map: t }), mat({ color: 0xd9dde2 })]);
+  p.position.y = H / 2 + lift; p.castShadow = p.receiveShadow = true; g.add(p);
+  const foot = new THREE.Mesh(new THREE.BoxGeometry(W + 1, lift, 12), mat({ color: 0xbfc4ca, metalness: 0.55, roughness: 0.32 }));
+  foot.position.set(0, lift / 2, 0); foot.castShadow = true; g.add(foot);
+  g.add(shadowBlob(W, 14));
+  return g;
+}
+
+window.renderScene = async (cfg) => {
+  const renderer = new THREE.WebGLRenderer({ antialias: true, preserveDrawingBuffer: true });
+  renderer.setPixelRatio(1); renderer.setSize(cfg.width, cfg.height);
+  renderer.shadowMap.enabled = true; renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+  renderer.toneMapping = THREE.LinearToneMapping; renderer.toneMappingExposure = cfg.exposure ?? 1.0;   // linear keeps the brand colours true renderer.outputColorSpace = THREE.SRGBColorSpace;
+  document.body.appendChild(renderer.domElement);
+  const scene = new THREE.Scene();
+  scene.background = new THREE.Color(cfg.background ?? 0xe6e9ed); scene.fog = new THREE.Fog(cfg.background ?? 0xe6e9ed, 500, 1400);
+  scene.add(new THREE.HemisphereLight(0xffffff, 0xa9b0b7, 2.1));
+  const sun = new THREE.DirectionalLight(0xffffff, 2.3); sun.position.set(-160, 320, 260); sun.castShadow = true;
+  Object.assign(sun.shadow.camera, { left: -300, right: 300, top: 300, bottom: -300, near: 10, far: 1200 }); sun.shadow.mapSize.set(4096, 4096); sun.shadow.radius = 6; sun.shadow.bias = -0.0004;
+  scene.add(sun);
+  const fill = new THREE.DirectionalLight(0xdfe8ff, 0.5); fill.position.set(220, 140, 120); scene.add(fill);
+  const floor = new THREE.Mesh(new THREE.PlaneGeometry(4000, 4000), mat({ color: cfg.floor ?? 0xc6cacf, roughness: 0.9 }));
+  floor.rotation.x = -Math.PI / 2; floor.receiveShadow = true; scene.add(floor);
+  // a soft back wall far behind, for a show-floor feel
+  const wall = new THREE.Mesh(new THREE.PlaneGeometry(4000, 900), mat({ color: cfg.wall ?? 0xdde1e6, roughness: 1 })); wall.position.set(0, 450, -(cfg.wallZ ?? 420)); scene.add(wall);
+  for (const o of cfg.objects) {
+    const g = o.kind === 'kiosk' ? await kiosk(o) : await panel(o);
+    g.position.set(o.x || 0, 0, o.z || 0); g.rotation.y = o.rotY || 0; scene.add(g);
+  }
+  const cam = new THREE.PerspectiveCamera(cfg.camera.fov ?? 32, cfg.width / cfg.height, 1, 5000);
+  cam.position.set(...cfg.camera.pos); cam.lookAt(new THREE.Vector3(...cfg.camera.target));
+  renderer.render(scene, cam);
+  return true;
+};
+window.ready = true;
+</script>
+</body></html>
