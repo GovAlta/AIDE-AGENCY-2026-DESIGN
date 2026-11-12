@@ -79,7 +79,10 @@ export async function createStage(el, { config, helpers: H }) {
   const fwd = c => { const cy = Math.cos(c.yaw * RAD), sy = Math.sin(c.yaw * RAD), cp = Math.cos(c.pitch * RAD), sp = Math.sin(c.pitch * RAD); return [sy * cp, sp, -cy * cp]; };   // where the camera looks, in the world
 
   // ---------- windows ----------
-  const modelOf = w => mul(tr(w.x ?? CX, w.y ?? CY, w.z ?? 0), mul(rotY(w.ry || 0), mul(rotX(w.rx || 0), mul(sc(w.scale ?? 1), tr(-(w.w || 0) / 2, -(w.h || 0) / 2, 0)))));
+  // + 0.03 degrees of tilt, always (0.4 px over a wide window: invisible). A window whose matrix becomes axis-aligned in one direction (its
+  // arrival tilt reaching exactly 0, a camera yaw passing a window's own turn) is rastered by another path from that frame on, and its
+  // fill and sharpness step (film #1: each of the nine tiles as it settled). With the constant tilt no window is ever axis-aligned.
+  const modelOf = w => mul(tr(w.x ?? CX, w.y ?? CY, w.z ?? 0), mul(rotY(w.ry || 0), mul(rotX((w.rx || 0) + 0.03), mul(sc(w.scale ?? 1), tr(-(w.w || 0) / 2, -(w.h || 0) / 2, 0)))));
   const cornersOf = w => { const m = modelOf(w); return [[0, 0], [w.w, 0], [w.w, w.h], [0, w.h]].map(([x, y]) => xf(m, x, y, 0).slice(0, 3)); };
   const pool = new Map();   // id -> { el, body, html, used }
   const winEl = id => { let p = pool.get(id); if (!p) { const e = document.createElement('div'); e.className = 'sp-win'; e.dataset.win = id;
