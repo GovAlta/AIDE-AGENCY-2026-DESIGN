@@ -11,6 +11,7 @@ This folder holds only what is needed to make a film. Films are project outputs 
 | `kit/` | The production kit: the frame-exact HTML stage (plates, map stage, Agency chrome, callouts, panels, captions, cards), capture, narration, music analysis, storyboard, dry run, stills, camera check, cloud render farm, mix, encode and QA tools. `START-HERE.md`, `README.md`, `RECIPE.md` |
 | `kit/templates/` | Starters for the three kinds: `timeline-app.js`, `timeline-map.js`, `timeline-data.js`, plus the brief, notes, log and storyboard files every film gets |
 | `kit/example/` | The inputs of the kit's 8 s smoke film (a real screenshot plate with tilt, push-in, spotlight, cursor, callout and caption); its rendered output is not kept here |
+| `kit/docs/LESSONS.md` | What films #1 and #2 taught: the order that works, what makes a script land, what makes a frame market quality, production numbers. Read before starting a film |
 | `kit/docs/RENDER-FARM.md` | How films are rendered: the Cloud Run job farm #11 proved, its sizing, time, cost and rules |
 | `kit/docs/WORKED-EXAMPLE-11.md` | How the reference film #11 was built, scene by scene, with the kit feature behind each; the film itself stays local |
 | `EVALUATION.md` | What the kit is, how it was evaluated and what changed when it moved into this repo |
