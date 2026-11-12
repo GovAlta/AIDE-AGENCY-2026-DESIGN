@@ -15,7 +15,8 @@
 //   windows: [{ id, x, y, z (the window's CENTRE), ry, rx (degrees, as CSS rotateY / rotateX: ry > 0 turns the right edge away),
 //               w, h (its own pixels), scale, html, a (opacity), glow (accent name: a soft light behind it), hero (true: the film's main
 //               window: strongest glass and shadow), radius, cls (extra class), glass (true | false: force real or frosted),
-//               glowA, glowR (strength and reach of its light; defaults 0.34 and 0.62), snap (true: whole-pixel placement when facing) }],
+//               glowA, glowR (strength and reach of its light; defaults 0.34 and 0.62), snap (true: whole-pixel placement when facing),
+//               soft (px of blur on screen, in place of the camera's depth of field for this window) }],
 //   lines: [{ id, from, to ('win', 'win#data-k', each with an optional side '@l' '@r' '@t' '@b', or a world point [x, y, z]),
 //             p (0..1 draw-on), pulses: [u, ...] (travelling dots, 0..1 along), ring (0..1: a soft ring opening where the line lands),
 //             accent, a, label, front (true: over every window) }],
@@ -107,7 +108,8 @@ export async function createStage(el, { config, helpers: H }) {
     if (typeof fo === 'string') df = items.find(i => i.w.id === fo)?.depth; else if (Array.isArray(fo)) df = scr(fo)?.d;
     else { const d = fwd(cam); df = Math.abs(d[2]) > 0.05 ? ((fo ?? 0) - cam.z) / d[2] : f; }
     if (!(df > 1)) df = f;
-    for (const it of items) { const b = (cam.aperture ?? 1) * 13 * f * Math.abs(it.depth - df) / (it.depth * df); it.blur = b < 0.004 ? 0 : Math.min(OPT.maxBlur, b); }   /* the cut-off is far below what shows: at 0.06 px a window passing it changed sharpness in one frame (film #2, flicker check) */   // continuous: a blur that moved in quarter-pixel steps showed as a flicker on a text-heavy window during a focus rack
+    // soft: px on screen, set by the film, replaces the depth-of-field value for that window (see the README: small blurs step)
+    for (const it of items) { const b = it.w.soft !== undefined ? it.w.soft : (cam.aperture ?? 1) * 13 * f * Math.abs(it.depth - df) / (it.depth * df); it.blur = b < 0.004 ? 0 : Math.min(OPT.maxBlur, b); }   /* the cut-off is far below what shows: at 0.06 px a window passing it changed sharpness in one frame (film #2, flicker check) */   // continuous: a blur that moved in quarter-pixel steps showed as a flicker on a text-heavy window during a focus rack
     // MATERIAL NEVER CHANGES WHILE A WINDOW IS VISIBLE. It is a pure function of the window's own properties (glass: true | false; default: its
     // hero flag), never of its blur, its angle or its rank among the others: a window that switched between real backdrop blur and the
     // frosted fill as the focus moved flickered (film #1). maxGlass caps the cost; the order is stable (explicit glass first, then by id),

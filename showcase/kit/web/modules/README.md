@@ -134,6 +134,11 @@ How it is built, and why:
   filter on every window at all times (0.02 px when sharp) and keeps opacity at 0.999 or below, because a window drawn with a filter (or
   inside an opacity group) takes another raster path than one without, and the change shows as a one-frame step in sharpness or fill.
   Screens follow the same rule for their own elements (`rise()` always writes an opacity below 1 and a transform).
+- **Small blurs step.** The browser draws a Gaussian blur of about 0.3 to 2.5 px on screen with a few whole-number kernels, so a window
+  whose depth-of-field blur drifts through that range (any focus rack, any camera move past a nearly sharp window) changes sharpness in
+  single-frame steps: the same frames on every render, found only by the flicker check. For a film that must pass it, set the camera's
+  `aperture: 0` and give softness by hand with the window's `soft` (px): 0 for everything meant to be read, a fixed 5 to 10 for
+  background shapes, and let it change only while the window is also moving, fading or far below full opacity.
 - **A film without WebGL renders on the farm with `"gpu": false`** (film.config.json): the page is composited on the CPU. With the
   software GPU, film #1's windows took a different fill for a frame or more at random frames (different frames on every render).
 - **Real backdrop glass is not stable on the render farm.** With `backdrop-filter` windows, film #1's rendered frames had one-frame
