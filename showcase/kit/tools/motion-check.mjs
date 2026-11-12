@@ -69,7 +69,15 @@ if (fdir) { const W = 640, H = 360, k = W / 1920, t0 = +arg('from', 0), t1 = +ar
     const val = (px, [x0, x1, y0, y1], key) => { let v = 0, n = 0; for (let y = y0; y < y1; y++) { const r = y * W; for (let x = x0; x < x1 - 1; x++) { v += key === 'L' ? px[r + x] : Math.abs(px[r + x + 1] - px[r + x]); n++; } } return v / Math.max(1, n); };
     for (let i = flags.length - 1; i >= 0; i--) { const fl = flags[i], key = fl.metric === 'luminance' ? 'L' : 'E', b0 = boxOf(fl.frame - 1, fl.id), b1 = boxOf(fl.frame, fl.id); if (!b0 || !b1) continue;
       const p0 = grab(fl.frame - 1), p1 = grab(fl.frame), same = Math.min(Math.abs(val(p1, b0, key) - val(p0, b0, key)), Math.abs(val(p1, b1, key) - val(p0, b1, key)));
-      if (same < (key === 'L' ? 0.6 : 0.2)) flags.splice(i, 1); else fl.sameBox = +same.toFixed(2); } }
+      if (same < (key === 'L' ? 0.6 : 0.2)) { flags.splice(i, 1); continue; } fl.sameBox = +same.toFixed(2);
+      // ... and at full size. The 640 x 360 copy aliases fine text as a window starts to slide (the mean edge wobbles with the sub-pixel
+      // phase). In the frames themselves a real flicker is still one step among small ones: at least 3 times the median step of the four
+      // frame pairs around it, inside the same box.
+      const full = fr => execFileSync('ffmpeg', ['-loglevel', 'error', '-i', path.join(path.resolve(fdir), `f${String(fr).padStart(6, '0')}.jpg`), '-f', 'rawvideo', '-pix_fmt', 'gray', '-'], { maxBuffer: 1920 * 1080 * 2 });
+      const [x0, x1, y0, y1] = b1.map(v => Math.round(v / k)), FW = 1920, vf = px => { let v = 0, n = 0; for (let y = y0; y < y1; y++) { const r = y * FW; for (let x = x0; x < x1 - 1; x++) { v += key === 'L' ? px[r + x] : Math.abs(px[r + x + 1] - px[r + x]); n++; } } return v / Math.max(1, n); };
+      const fr = [-3, -2, -1, 0, 1, 2].map(q => fl.frame + q).filter(q => q >= 0 && q < N && fs.existsSync(path.join(path.resolve(fdir), `f${String(q).padStart(6, '0')}.jpg`)));
+      if (fr.length === 6) { const v = fr.map(q => vf(full(q))), d = v.slice(1).map((x, j) => Math.abs(x - v[j])), here = d[2], near = [d[0], d[1], d[3], d[4]].sort((p, q) => p - q), m2 = (near[1] + near[2]) / 2;
+        if (here < 3 * m2) { flags.splice(i, 1); continue; } fl.fullSize = +(here / Math.max(m2, 1e-6)).toFixed(1); } } }
   flags.sort((x, y) => x.frame - y.frame);
   const groups = []; for (const fl of flags) { const g = groups[groups.length - 1]; if (g && g.id === fl.id && fl.frame - g.last <= 30) { g.last = fl.frame; g.n++; g.max = Math.max(g.max, Math.abs(fl.jump)); } else groups.push({ id: fl.id, from: fl.t, first: fl.frame, last: fl.frame, n: 1, max: Math.abs(fl.jump), metric: fl.metric }); }
   console.log(`flicker check: ${b - a} frames, ${series.size} windows measured, ${flags.length} flags in ${groups.length} stretches`);
