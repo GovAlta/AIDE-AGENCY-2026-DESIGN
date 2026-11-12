@@ -18,7 +18,7 @@
 //     a, z }],
 //   tags: [{ plate, at: [sx, sy], label, sub, dx, dy, accent, a }],      // at = a source pixel; the stage maps it through crop and grow
 //   cards: [{ html, x, y, w, h, a, cls }],               // glass cards: the film writes their HTML with the .md-* helpers
-//   band: { chap, place, stat: { num, label }, solid, a }, credit: 'Imagery: ...', letterbox: 0..1 }
+//   band: { chap, place, stat: { num, label }, solid, a, bottom }, credit: 'Imagery: ...', letterbox: 0..1 }
 //
 // Tags track the footage when the timeline gives `at` per frame (from the source film's camera log, or keyed by hand and joined
 // with helpers.track). Read `stage.toFrame(plateId, [sx, sy])` for the cursor or kit labels. Every image is awaited before a
@@ -28,10 +28,15 @@ const lerp = (a, b, u) => a + (b - a) * u;
 const GRADES = { agency: { sat: .86, con: .92, bri: 1.06, lift: .10, cool: .05 }, none: { sat: 1, con: 1, bri: 1, lift: 0, cool: 0 } };
 
 export async function createStage(el) {
+  // the stage brings its own stylesheet, so a film only names the stage in film.config.json
+  if (!document.querySelector('link[data-md-css]')) { const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = '/kit/modules/media.css'; l.dataset.mdCss = '1';
+    await new Promise(r => { l.onload = l.onerror = r; document.head.appendChild(l); }); }
   const root = document.createElement('div'); root.className = 'md-space'; el.appendChild(root);
   const imgs = new Map(); let errors = 0; let geo = new Map();
   const load = src => {
-    if (imgs.has(src)) return imgs.get(src);
+    if (imgs.has(src)) { const r = imgs.get(src); imgs.delete(src); imgs.set(src, r); return r; }   // most recent last
+    while (imgs.size > 40) imgs.delete(imgs.keys().next().value);                                     // a sequence frame is used once: keep memory flat
+
     const im = new Image(); im.decoding = 'sync';
     const p = new Promise(res => { im.onload = () => res(im); im.onerror = () => { errors++; res(im); }; });
     im.src = src; const rec = { im, p }; imgs.set(src, rec); return rec;
@@ -88,7 +93,7 @@ export async function createStage(el) {
       }
       for (const c of m.cards || []) html.push(`<div class="md-glass md-card ${c.cls || ''}" style="left:${c.x}px;top:${c.y}px;width:${c.w}px;${c.h ? `height:${c.h}px;` : ''}opacity:${c.a ?? 1};z-index:${c.z ?? 70}">${c.html}</div>`);
       if (m.letterbox) { const h = 110 * ease(m.letterbox); html.push(`<div class="md-letter" style="top:0;height:${h}px;z-index:80"></div><div class="md-letter" style="bottom:0;height:${h}px;z-index:80"></div>`); }
-      if (m.band) { const b = m.band; html.push(`<div class="md-glass md-band${b.solid ? ' md-solid' : ''}" style="opacity:${b.a ?? 1};z-index:90">`
+      if (m.band) { const b = m.band; html.push(`<div class="md-glass md-band${b.solid ? ' md-solid' : ''}" style="opacity:${b.a ?? 1};z-index:90;${b.bottom != null ? `bottom:${b.bottom}px;` : ''}">`
           + `<div class="md-chap">${b.chap || ''}</div>${b.place ? `<div class="md-sep"></div><div class="md-place">${b.place}</div>` : ''}`
           + (b.stat ? `<div class="md-stat"><span>${b.stat.label}</span><div class="md-num">${b.stat.num}</div></div>` : '') + `</div>`); }
       if (m.credit) html.push(`<div class="md-credit${m.creditDark ? ' md-on-dark' : ''}" style="z-index:95">${m.credit}</div>`);
