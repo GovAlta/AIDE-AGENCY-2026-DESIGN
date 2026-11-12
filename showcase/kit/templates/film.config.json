@@ -1,0 +1,11 @@
+{
+ "title": "Showcase film kit: smoke test",
+ "slug": "kit-smoke",
+ "dur": 8,
+ "fps": 60,
+ "music": "assets/music-sample.mp3",
+ "musicGain": 0.62,
+ "bandTitle": "#11 \u00b7 Pan-Canadian Fibre Optics Planner",
+ "mounts": {},
+ "theme": "light"
+}

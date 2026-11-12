@@ -21,7 +21,10 @@
     "studio": "node app/server.mjs",
     "show:pack": "node show/pack.mjs",
     "displays": "bash displays/make-examples.sh",
-    "display": "node displays/build.mjs"
+    "display": "node displays/build.mjs",
+    "film:new": "node showcase/kit/tools/new-film.mjs",
+    "film:check": "node showcase/kit/tools/contrast.mjs && node showcase/kit/tools/sync-tokens.mjs",
+    "film:install": "npm --prefix showcase/kit ci"
   },
   "dependencies": {
     "jsqr": "^1.4.0",

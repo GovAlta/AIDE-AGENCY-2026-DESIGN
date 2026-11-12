@@ -24,6 +24,7 @@ film made from this repo use the same colours, fonts, marks and footer band.
 | `samples/` | A working content file for every template, the Contact Alberta handout reproduction, and video specs with MVAI frames |
 | `motion/` | The stage and social motion library (MG-01 to MG-05, AN-01, AN-02), rendered by `scripts/motion-render.mjs` |
 | `brand/pptx/` | The event team's compliant PowerPoint template |
+| `showcase/` | High-quality narrated films: the production kit (`showcase/kit`), the reference film #11 Pan-Canadian Fibre Optics Planner, the evaluation (`guides/SHOWCASE-FILM.md`) |
 | `show/` | The run-of-show player: one agenda JSON runs the event day; stage and control on one laptop or on two machines joined by an event code (`guides/SHOW.md`) |
 | `displays/` | Parametric stand panels and monitor kiosks: real-size SVG, PDF, `.ai`, print-ready CMYK, layout drawings, 3D renders (`displays/README.md`) |
 | `app/` | Agency Studio, a web form for staff: pick a template, fill it in, preview, download (`guides/FORM-APP.md`) |

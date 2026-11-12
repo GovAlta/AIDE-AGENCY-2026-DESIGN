@@ -17,6 +17,7 @@ Read these before your first piece:
 | `motion/README.md` | The stage and social motion pieces (title sequence, day bumpers, lower third, countdown, stat reveal, social loops) and how to render or change them |
 | `guides/PRINT.md`, `guides/SLIDES.md`, `guides/DIGITAL.md`, `guides/ONSITE.md`, `guides/OFFICE.md`, `guides/QR.md` | The templates and rules for each medium |
 | `guides/CHARTS.md`, `guides/ICONS.md`, `guides/IMAGERY.md` | Charts, the Lucide icon set, illustration style and image-generation prompts |
+| `guides/SHOWCASE-FILM.md` | Flagship films (app, map or geospatial, data story): when to use one instead of MVAI or a motion piece, and how |
 | `guides/DISPLAYS.md` | Stand panels and monitor kiosks: lockup, clear zones, viewing distance, print files |
 | `guides/SHOW.md`, `guides/SOUND.md` | Running the event day on screen; the sound identity, music cues and Suno prompts |
 | `guides/PRINT-PRODUCTION.md`, `guides/FORM-APP.md` | Print-shop files (bleed, crop marks, CMYK); the Agency Studio web form |
@@ -56,7 +57,8 @@ Read these before your first piece:
 | A poster, agenda, certificate, badge or table card | a `print/*` template | `node scripts/make.mjs content.json` |
 | A slide deck to present or edit | a `slides/*` outline, then the PowerPoint builder | `node scripts/make.mjs deck.json` and `python3 scripts/pptx/build_deck.py deck.json out.pptx` |
 | A social card, web banner, email header, Teams background or screen slide | a `digital/*` template | `node scripts/make.mjs content.json` |
-| A narrated explainer, sizzle or showcase film | MVAI, video type `agency-explainer` | `python3 scripts/mvai/mvai.py check` then `create` (`guides/VIDEO.md`) |
+| A flagship film of one project (app, map or geospatial, data story; 2–5 min, 1080p60, real captures and data) | `showcase/kit`, reference film `showcase/reference/11-pan-canadian-fibre` | `npm run film:install`, then `node showcase/kit/tools/new-film.mjs --name <slug> --title "…" --kind app\|map\|data` (`guides/SHOWCASE-FILM.md`) |
+| A narrated explainer or sizzle from slides and screens | MVAI, video type `agency-explainer` | `python3 scripts/mvai/mvai.py check` then `create` (`guides/VIDEO.md`) |
 | A video thumbnail, lower-third still or title still | a `digital/*` template | `node scripts/make.mjs content.json` |
 | A stage motion piece: opening titles, day bumpers, speaker lower third (alpha), session countdown, stat reveal | the motion library, `MG-01`…`MG-05` | `node scripts/motion-render.mjs MG-03` (`--list` for all) |
 | A short social animation (square loop, vertical cutdown) | the motion library, `AN-01`, `AN-02` | `node scripts/motion-render.mjs AN-01` |

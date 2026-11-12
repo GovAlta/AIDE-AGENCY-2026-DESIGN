@@ -1,6 +1,6 @@
 ---
 name: agency-design
-description: Make any Agency 2026 media (the Government of Alberta showcase, Dec. 7–9, 2026, Edmonton and Calgary) in the event's look from the AIDE-AGENCY-2026-DESIGN repo - handouts, fact sheets, posters, agendas, badges, table tents, certificates, reports, postcards, slide decks and PowerPoint, social posts, stories, banners, email headers, Teams backgrounds, signage, roll-up and stage backdrops, wayfinding, stickers, QR codes, Word briefing notes and memos, motion graphics (title sequence, day bumpers, lower thirds, countdowns, sizzle), the day-long run-of-show player, sound cues, and narrated MVAI agency-explainer videos. Use whenever someone asks for anything "for Agency 2026", "in the Agency look", "with the circuit traces", or names one of these pieces for the event.
+description: Make any Agency 2026 media (the Government of Alberta showcase, Dec. 7–9, 2026, Edmonton and Calgary) in the event's look from the AIDE-AGENCY-2026-DESIGN repo - handouts, fact sheets, posters, agendas, badges, table tents, certificates, reports, postcards, slide decks and PowerPoint, social posts, stories, banners, email headers, Teams backgrounds, signage, roll-up and stage backdrops, wayfinding, stickers, QR codes, Word briefing notes and memos, motion graphics (title sequence, day bumpers, lower thirds, countdowns, sizzle), the day-long run-of-show player, sound cues, narrated MVAI agency-explainer videos, stand panels and monitor kiosks, and flagship showcase films (app, map or geospatial, data story) through the showcase kit. Use whenever someone asks for anything "for Agency 2026", "in the Agency look", "with the circuit traces", or names one of these pieces for the event.
 ---
 
 # Agency 2026 design system
@@ -45,7 +45,8 @@ summary.
 | Sound cues for transitions, walk-ons, sizzles | cue sheet | `node scripts/audio-prep.mjs --list` (`guides/SOUND.md`) |
 | On-brand illustration | prompt library | `python3 scripts/imagegen.py --list` (`guides/IMAGERY.md`; every image is disclosed as AI-generated) |
 | The whole day on screen: countdowns, speaker welcomes, slides, video, music | run-of-show player | `node show/server.mjs --agenda show/samples/agency-2026.json` (`show/`) |
-| Narrated explainer, sizzle or briefing film | MVAI, video type `agency-explainer` | `python3 scripts/mvai/mvai.py check spec.json`, then `create` (`guides/VIDEO.md`) |
+| Flagship film of one project: real app captures or geospatial data on a cinematic camera, 2–5 min, 1080p60 | showcase kit (also the `showcase-film` skill) | `npm run film:install`, `node showcase/kit/tools/new-film.mjs --name <slug> --title "…" --kind app\|map\|data` (`guides/SHOWCASE-FILM.md`; reference: `showcase/reference/11-pan-canadian-fibre`) |
+| Narrated explainer, sizzle or briefing film from slides and screens | MVAI, video type `agency-explainer` | `python3 scripts/mvai/mvai.py check spec.json`, then `create` (`guides/VIDEO.md`) |
 | A non-technical person making their own piece | Agency Studio form app | `node app/server.mjs` (`guides/FORM-APP.md`) |
 
 `node scripts/make.mjs --list` prints every template with its size and purpose. Each template's header comment documents its fields, and

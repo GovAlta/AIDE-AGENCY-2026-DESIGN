@@ -1,0 +1,16 @@
+{
+  "name": "showcase-film-kit",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Agency 2026 showcase films: frame-exact HTML stage, real app plates, narration, cloud rendering, QA.",
+  "scripts": {
+    "serve": "node server.mjs --project",
+    "check": "node tools/dryrun.mjs"
+  },
+  "dependencies": {
+    "maplibre-gl": "6.17.0",
+    "playwright": "1.65.0",
+    "sharp": "^0.34.5"
+  }
+}

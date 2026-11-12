@@ -1,0 +1,11 @@
+{
+  "url": "http://localhost:3000/",
+  "viewport": [1920, 1080],
+  "scale": 2,
+  "webgl": true,
+  "settle": 4000,
+  "states": [
+    { "name": "home", "steps": [{ "wait": 1500 }], "marks": { "nav": "nav", "primary": "role=button >> nth=0" } },
+    { "name": "detail", "steps": [{ "click": "text=Details" }, { "wait": 1200 }], "marks": { "table": "table" } }
+  ]
+}
