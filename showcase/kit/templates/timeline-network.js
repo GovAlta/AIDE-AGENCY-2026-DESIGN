@@ -102,7 +102,7 @@ export async function createTimeline({ config, timing, stage, helpers: H }) {
     const kc = H.win(t, 22.4, 27.0, 0.5, 0.5);
     if (kc > 0) ui.callouts.push({ x: 96, y: 380, kicker: 'EXAMPLE VALUE · workers running', big: Math.round(cnt).toLocaleString('en-CA'), size: 150, sub: 'each in its own sealed container', accent: 'green', a: kc, panel: true });
     if (t > 26.6) { theme = 'dark'; bg = { kind: 'night' }; net.packets.push(...stage.swarm(t, { per: 3, speed: 260 }).map(p => ({ ...p, a: p.a * H.ramp(t, 26.8, 27.6) }))); }
-    const k5 = H.win(t, 27.6, 29.9, 0.5, 0.5), words = 'One plain sentence the owner wants people to remember.'.split(' ');   // OWNER: owner_lines.txt, word for word
+    const k5 = H.win(t, 27.6, 29.9, 0.5, 0.5), words = '[[ OWNER LINE ]]'.split(' ');   // OWNER: owner_lines.txt, word for word
     if (k5 > 0) ui.statement = { a: k5, words: words.map((w, i) => ({ w, a: H.ramp(t, 27.8 + i * 0.07, 28.1 + i * 0.07) })) };
     const k6 = H.ramp(t, 30.0, 30.5);
     if (k6 > 0) { ui.card = { kind: 'end', a: k6, traces: 1, dates: `${EV.dates} · ${EV.cities}`, kicker: `${EV.name} · Showcase`, title: NAME, sources: ['Sources: every name, scope and figure is listed in NOTES.md'] }; net.hide = k6 >= 1; }

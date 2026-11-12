@@ -15,7 +15,7 @@ export async function createTimeline({ config, timing, helpers: H }) {
   const BIG = { n: 1234, kicker: 'Example value · source in NOTES.md', sub: 'what the number counts, in plain words' };
   const BARS = [{ label: 'Example A', v: 85 }, { label: 'Example B', v: 55 }, { label: 'Example C', v: 45 }, { label: 'Alberta (example)', v: 7, hl: true }];   // ranked: largest first
   const ROWS = [['Measure', 'Before', 'After'], ['Example measure 1', '12 days', '3 days'], ['Example measure 2', '40%', '85%']];
-  const STATEMENT = 'One plain sentence the owner wants people to remember.';   // OWNER: use owner_lines.txt word for word
+  const STATEMENT = '[[ OWNER LINE ]]';   // OWNER: use owner_lines.txt word for word
 
   function stateAt(t) {
     const ui = { chrome: H.ramp(t, 0.4, 1.4), bandTitle: config.bandTitle, credits: 'Example values: replace before review', caption: H.captionAt(CAPS, t),

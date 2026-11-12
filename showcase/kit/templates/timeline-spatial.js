@@ -98,7 +98,7 @@ export async function createTimeline({ config, timing, stage, helpers: H }) {
     if (t > 22.5) space.wall = { ...WALL, blocks: { ...WALL.blocks, lit }, time: t, a: H.ramp(t, 22.8, 24.6) * (1 - 0.8 * k5) };
     const kc = H.win(t, 25.4, 29.2, 0.5, 0.5);
     if (kc > 0) ui.callouts.push({ x: 96, y: 210, kicker: 'EXAMPLE VALUE · workers running', big: Math.round(lit * PER).toLocaleString('en-CA'), size: 150, sub: `${Math.floor(lit)} of 30 blocks of ${PER}`, accent: 'blue', a: kc, panel: true });
-    const words = 'One plain sentence the owner wants people to remember.'.split(' ');   // OWNER: owner_lines.txt, word for word
+    const words = '[[ OWNER LINE ]]'.split(' ');   // OWNER: owner_lines.txt, word for word
     if (k5 > 0) ui.statement = { a: k5, words: words.map((w, i) => ({ w, a: H.ramp(t, 29.4 + i * 0.07, 29.7 + i * 0.07) })) };
     return { theme: 'light', bg: { kind: 'none' }, world: { space }, ui };
   }
