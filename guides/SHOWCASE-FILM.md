@@ -3,7 +3,7 @@
 A showcase film is the highest-quality video this repo makes: 2 to 5 minutes, 1080p60, narrated, cut to music, built from the real
 project. That means real screenshots and recordings on a cinematic virtual camera, the project's own maps and data, and its real
 figures. The film is rendered frame by frame in a temporary Cloud Run job. Film #11, the Pan-Canadian Fibre Optics Planner
-(`showcase/reference/11-pan-canadian-fibre`), is the bar: the owner called it "excellent".
+(local, outside the repo: `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/`; summary in `showcase/kit/docs/WORKED-EXAMPLE-11.md`), is the bar: the owner called it "excellent".
 
 The kit is `showcase/kit`. The rules agents follow are the `showcase-film` skill (`.claude/skills/showcase-film/SKILL.md`, installed
 for SHELL sessions). The kit's `START-HERE.md`, `README.md` and `RECIPE.md` cover every API and command.
@@ -94,7 +94,7 @@ proxy, optional terrain, a frozen clock, and fatal load errors.
 7. **Cost.** A globe with terrain is the heaviest material: about 25 s a frame on one task; a 3-minute film about 45–60 minutes on 100
    tasks, $25–35.
 
-`showcase/reference/11-pan-canadian-fibre/README.md` maps every scene of #11 to the kit feature that reproduces it.
+`showcase/kit/docs/WORKED-EXAMPLE-11.md` maps every scene of #11 to the kit feature that reproduces it. The film itself stays local, outside the repo.
 
 ## Path C: data films
 
@@ -137,3 +137,27 @@ image build, and about 5 minutes for the encode.
 - Delete the job and stop the receiver when the film is done (`cloud/farm.sh cleanup`).
 - Masters (hundreds of MB) stay out of git: keep them in the film's `deliver/`, a GitHub Release or a bucket. The phone preview
   (under 30 MB) is the copy to share in chat.
+
+## Where films live
+
+The repo holds only what is needed to make a film: the kit, its templates, its docs and a small example's inputs. Every film is a project
+output and lives outside the repo (owner, 2026-11-12). `new-film.mjs` makes film folders in `FILMS_DIR`, by default the `showcase/` folder
+beside the repo clone (`/mnt/data/projects/agency-2026/showcase/` on SHELL). Frames, masters and previews stay there.
+
+## Standard operating procedure: the code travels with the film
+
+Every film must be regenerable by someone else, months later. So, for every showcase film:
+
+1. **The film folder is its own git repository.** `new-film.mjs` runs `git init` and writes a `.gitignore` that keeps frames,
+   masters and audio renders out. Commit the timeline, narration script, captures, `prep/` API answers, figure scripts, `NOTES.md`,
+   `owner_lines.txt` and `PROCESS-LOG.md` as you go. Push it to its own private repository if the film matters beyond this VM.
+2. **Every custom script lives in the film folder**: figure derivations (#11's `cable-countries.py`, `trace-solve.mjs`), data prep,
+   one-off renders. A script that would help the next film goes into the kit instead, and the film's log says so.
+3. **`REPRODUCE.md`** (from the kit template) lists every dependency with its pin: the kit commit, the app or data commit (#11: the
+   planner at 2610761), the music and its licence, the voice. It ends with the exact commands to regenerate.
+4. **`deliver/BUILD.json`** is written by `encode.sh` on every encode: the kit's git commit (and whether it had uncommitted changes),
+   the film folder's commit, the full `film.config.json`, the frame count, the voice settings and the encoder.
+5. **Masters are not in git.** Keep them in `deliver/` and publish them as a release asset or in a bucket; `REPRODUCE.md` says where.
+6. **Films live outside the design repo**, in `FILMS_DIR` (default the `showcase/` folder beside the repo clone).
+
+The render method itself (why a Cloud Run job, sizing, time, cost, rules) is in `showcase/kit/docs/RENDER-FARM.md`.

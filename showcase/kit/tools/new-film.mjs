@@ -63,6 +63,10 @@ for (const f of ['NOTES.md', 'owner_lines.txt', 'PROCESS-LOG.md', 'storyboard.js
 fs.copyFileSync(path.join(T, `timeline-${KIND}.js`), path.join(dir, 'web/timeline.js'));
 fs.writeFileSync(path.join(dir, 'narration/script.json'), JSON.stringify({ voice: JSON.parse(fs.readFileSync(path.join(T, 'script.json'))).voice, lines: [] }, null, 2));
 fs.writeFileSync(path.join(dir, 'intake.json'), JSON.stringify(row, null, 1));
+// SOP (owner 2026-11-12): the film folder is its own git repository, so the code that makes the film travels with its outputs.
+// Frames and masters stay out of git (deliver/BUILD.json records the kit commit and settings; REPRODUCE.md says how to regenerate).
+fs.copyFileSync(path.join(T, 'REPRODUCE.md'), path.join(dir, 'REPRODUCE.md'));
+fs.writeFileSync(path.join(dir, '.gitignore'), ['node_modules/', 'out/frames/', 'out/*.wav', 'out/.farm-token', '**/.farm-token', 'cache/', 'deliver/*.mp4', '!deliver/preview-720p-phone.mp4', 'deliver/*.wav', '*.mov', ''].join('\n'));
 // this film's own circuit-trace art for the title and end cards (Agency rule: same seed = same art; record the seed)
 { const AG = REPO; if (!repoOk()) throw new Error('design repo not found');
   // the title card's text starts 200 px from the left (web/film.css .titlewrap), so its left-edge art stops short of it
@@ -121,3 +125,7 @@ console.log(`film folder: ${dir}
   sensitivity: ${row.sensitivity || '(not stated)'}${high ? '  -> HIGH: synthetic or redacted data only' : ''}
   ports: film server ${ports.server}, receiver ${ports.receiver}; cloud job ${config.cloud.job}
 next: read brief.md and SENSITIVITY.md, then follow the showcase-film skill from phase 2 (kind ${KIND}, theme ${THEME}; START-HERE.md in the kit).\nkit: ${KIT}`);
+
+// make the film folder a git repository (no commit: the author commits once the brief and sensitivity are filled in)
+try { (await import('node:child_process')).execSync('git init -q -b main', { cwd: dir, stdio: 'ignore' }); console.log(`git repository: ${dir} (commit as you go; see REPRODUCE.md)`); }
+catch { console.log('git not available: keep this folder under version control by hand (REPRODUCE.md)'); }

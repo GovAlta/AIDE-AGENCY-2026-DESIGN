@@ -85,7 +85,7 @@ share of about 100 tasks in all (`FARM_TOTAL_TASKS`).
 ## Smoke test (2026-11-11)
 
 `example/`: 8 s, 480 frames. Dry run clean; cloud render on 10 tasks in about 90 s (about 9 frames a second); encode: 480 of 480
-frames, -16.1 LUFS, -2.0 dBFS peak; job deleted afterward. Output: `example/deliver/kit-smoke-1080p60.mp4`.
+frames, -16.1 LUFS, -2.0 dBFS peak; job deleted afterward. Output: `/mnt/data/projects/agency-2026/showcase/kit-smoke-example/deliver/ (local)`.
 
 The example music is an excerpt of the owner's track for film #11; use each film's own music.
 
@@ -102,4 +102,4 @@ The example music is an excerpt of the owner's track for film #11; use each film
 
 The kit lives in `AIDE-AGENCY-2026-DESIGN/showcase/kit` and finds everything relative to itself (`tools/lib/paths.mjs`): brand files in
 `<repo>/brand`, films in `$FILMS_DIR` (default `<repo>/../films`), the inventory in `$AGENCY_INVENTORY` (optional). The reference film is
-`showcase/reference/11-pan-canadian-fibre`. The rules for when to make a showcase film, and how, are in `guides/SHOWCASE-FILM.md`.
+`/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/.` The rules for when to make a showcase film, and how, are in `guides/SHOWCASE-FILM.md`.

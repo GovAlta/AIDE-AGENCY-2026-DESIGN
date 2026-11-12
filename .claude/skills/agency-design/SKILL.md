@@ -45,7 +45,7 @@ summary.
 | Sound cues for transitions, walk-ons, sizzles | cue sheet | `node scripts/audio-prep.mjs --list` (`guides/SOUND.md`) |
 | On-brand illustration | prompt library | `python3 scripts/imagegen.py --list` (`guides/IMAGERY.md`; every image is disclosed as AI-generated) |
 | The whole day on screen: countdowns, speaker welcomes, slides, video, music | run-of-show player | `node show/server.mjs --agenda show/samples/agency-2026.json` (`show/`) |
-| Flagship film of one project: real app captures or geospatial data on a cinematic camera, 2–5 min, 1080p60 | showcase kit (also the `showcase-film` skill) | `npm run film:install`, `node showcase/kit/tools/new-film.mjs --name <slug> --title "…" --kind app\|map\|data` (`guides/SHOWCASE-FILM.md`; reference: `showcase/reference/11-pan-canadian-fibre`) |
+| Flagship film of one project: real app captures or geospatial data on a cinematic camera, 2–5 min, 1080p60 | showcase kit (also the `showcase-film` skill) | `npm run film:install`, `node showcase/kit/tools/new-film.mjs --name <slug> --title "…" --kind app\|map\|data` (`guides/SHOWCASE-FILM.md`; reference: `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/` (local, outside the repo)) |
 | Narrated explainer, sizzle or briefing film from slides and screens | MVAI, video type `agency-explainer` | `python3 scripts/mvai/mvai.py check spec.json`, then `create` (`guides/VIDEO.md`) |
 | A non-technical person making their own piece | Agency Studio form app | `node app/server.mjs` (`guides/FORM-APP.md`) |
 
