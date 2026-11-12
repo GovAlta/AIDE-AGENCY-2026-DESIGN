@@ -107,7 +107,7 @@ export async function createStage(el, { config, helpers: H }) {
     if (typeof fo === 'string') df = items.find(i => i.w.id === fo)?.depth; else if (Array.isArray(fo)) df = scr(fo)?.d;
     else { const d = fwd(cam); df = Math.abs(d[2]) > 0.05 ? ((fo ?? 0) - cam.z) / d[2] : f; }
     if (!(df > 1)) df = f;
-    for (const it of items) { const b = (cam.aperture ?? 1) * 13 * f * Math.abs(it.depth - df) / (it.depth * df); it.blur = b < 0.06 ? 0 : Math.min(OPT.maxBlur, b); }   // continuous: a blur that moved in quarter-pixel steps showed as a flicker on a text-heavy window during a focus rack
+    for (const it of items) { const b = (cam.aperture ?? 1) * 13 * f * Math.abs(it.depth - df) / (it.depth * df); it.blur = b < 0.004 ? 0 : Math.min(OPT.maxBlur, b); }   /* the cut-off is far below what shows: at 0.06 px a window passing it changed sharpness in one frame (film #2, flicker check) */   // continuous: a blur that moved in quarter-pixel steps showed as a flicker on a text-heavy window during a focus rack
     // MATERIAL NEVER CHANGES WHILE A WINDOW IS VISIBLE. It is a pure function of the window's own properties (glass: true | false; default: its
     // hero flag), never of its blur, its angle or its rank among the others: a window that switched between real backdrop blur and the
     // frosted fill as the focus moved flickered (film #1). maxGlass caps the cost; the order is stable (explicit glass first, then by id),

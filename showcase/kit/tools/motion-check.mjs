@@ -59,6 +59,17 @@ if (fdir) { const W = 640, H = 360, k = W / 1920, t0 = +arg('from', 0), t1 = +ar
       const undone = [1, 2, 3].some(q => Math.sign(S[i + q][key] - S[i][key]) === -Math.sign(d) && Math.abs(S[i + q][key] - S[i][key]) > Math.abs(d) * 0.6);
       if (Math.abs(d) > Math.max(floor, m * 6) && (undone || Math.abs(drift) < Math.abs(d) * 0.4 || Math.abs(d) > big))
         flags.push({ id, metric: key === 'L' ? 'luminance' : 'sharpness', frame: S[i].f, t: +(S[i].f / FPS).toFixed(2), jump: +d.toFixed(2), local: +m.toFixed(3) }); } }
+  // Confirm each flag with ONE box for both frames. A window's box moves, and its rounded edge can take in or drop a row of pixels
+  // between two frames: that changes the mean with no change in the picture. The jump must also be there when the frame before and the
+  // flagged frame are measured inside the same box (the smaller of the two same-box jumps, against the metric's floor).
+  if (flags.length) { const { execFileSync } = await import('node:child_process');
+    const grab = fr => execFileSync('ffmpeg', ['-loglevel', 'error', '-i', path.join(path.resolve(fdir), `f${String(fr).padStart(6, '0')}.jpg`), '-vf', `scale=${W}:${H}:flags=area`, '-f', 'rawvideo', '-pix_fmt', 'gray', '-'], { maxBuffer: sz * 2 });
+    const boxOf = (fr, id) => { const q = boxes[fr].find(o => o[0] === id); if (!q) return null; const [, , X0, Y0, X1, Y1] = q, w = X1 - X0, h = Y1 - Y0;
+      return [Math.max(0, Math.ceil((X0 + w * 0.06) * k)), Math.min(W, Math.floor((X1 - w * 0.06) * k)), Math.max(Math.ceil(150 * k), Math.ceil((Y0 + h * 0.06) * k)), Math.min(Math.floor(930 * k), Math.floor((Y1 - h * 0.06) * k))]; };
+    const val = (px, [x0, x1, y0, y1], key) => { let v = 0, n = 0; for (let y = y0; y < y1; y++) { const r = y * W; for (let x = x0; x < x1 - 1; x++) { v += key === 'L' ? px[r + x] : Math.abs(px[r + x + 1] - px[r + x]); n++; } } return v / Math.max(1, n); };
+    for (let i = flags.length - 1; i >= 0; i--) { const fl = flags[i], key = fl.metric === 'luminance' ? 'L' : 'E', b0 = boxOf(fl.frame - 1, fl.id), b1 = boxOf(fl.frame, fl.id); if (!b0 || !b1) continue;
+      const p0 = grab(fl.frame - 1), p1 = grab(fl.frame), same = Math.min(Math.abs(val(p1, b0, key) - val(p0, b0, key)), Math.abs(val(p1, b1, key) - val(p0, b1, key)));
+      if (same < (key === 'L' ? 0.6 : 0.2)) flags.splice(i, 1); else fl.sameBox = +same.toFixed(2); } }
   flags.sort((x, y) => x.frame - y.frame);
   const groups = []; for (const fl of flags) { const g = groups[groups.length - 1]; if (g && g.id === fl.id && fl.frame - g.last <= 30) { g.last = fl.frame; g.n++; g.max = Math.max(g.max, Math.abs(fl.jump)); } else groups.push({ id: fl.id, from: fl.t, first: fl.frame, last: fl.frame, n: 1, max: Math.abs(fl.jump), metric: fl.metric }); }
   console.log(`flicker check: ${b - a} frames, ${series.size} windows measured, ${flags.length} flags in ${groups.length} stretches`);
