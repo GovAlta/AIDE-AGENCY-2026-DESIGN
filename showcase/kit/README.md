@@ -68,7 +68,9 @@ Examples: `example/web/timeline.js` (8 s: a real screenshot plate with tilt, pus
 | `tools/storyboard.mjs` | key frames rendered from the timeline + `storyboard.json` → `storyboard/index.html` to publish for sign-off |
 | `tools/narrate.mjs` | the approved narrator from `brand/voice/voices.json` (Matilda, eleven_v4), word timestamps, voices changed lines only, runs the repo lint (`scripts/lint/lint.py`) on every line, reports overlaps |
 | `tools/dryrun.mjs`, `tools/still-at.mjs`, `tools/camcheck.mjs` | every frame evaluates; chosen seconds as JPEGs; camera speed and shake |
-| `tools/mix-audio.mjs` | voice at cues, music ducked, -16 LUFS / -2.0 dBTP, SRT + VTT; `"music": "cue:<id>"` takes a cue from `brand/audio/cues.json` |
+| `tools/mix-audio.mjs` | voice at cues, music ducked, sound effects from `out/sfx-events.json` (`--no-sfx` skips; stem `out/sfx.wav`), -16 LUFS / -2.3 dBTP (`peakTP`), SRT + VTT; `"music": "cue:<id>"` takes a cue from `brand/audio/cues.json` |
+| `tools/sfx-events.mjs` | reads the film's `SFX` events (`web/timeline.js`), checks the ids against the palette, warns on crowding, writes `out/sfx-events.json` |
+| `tools/sfx.mjs` | the sound-effect palette (`brand/audio/sfx`): `list`, `generate`, `check`; see `guides/SOUND.md` "Sound effects" |
 | `tools/encode.sh <film>` | master (CRF 15), share copy, phone preview under 30 MB |
 | `tools/find-pops.py`, `tools/layer-present.py` | frame QA: short flickers; an element missing over a range |
 | `cloud/farm.sh deploy\|render\|status\|wait\|missing\|cleanup <film>` | the Cloud Run job farm |
