@@ -1,0 +1,6 @@
+# Owner lines: dictated or approved by the content owner, used word for word.
+# Allowed changes only: split at a natural joint to meet the 25-word limit; write numbers as words; fix capitals; an obvious typo
+# (record it below and ask the owner to confirm).
+
+1. Closing:
+   ""

@@ -1,0 +1,11 @@
+{
+  "kicker": "Agency 2026 · Demo NN · Storyboard, first pass",
+  "title": "<Project name>",
+  "lede": "A <m:ss> film cut to the owner's music. Every number on screen comes from the app's own data.",
+  "facts": ["<b>1920 × 1080</b> at 60 frames a second", "<b>14</b> key frames, rendered from the real material", "Narrator: <b>Matilda</b>", "Classification: <b>Unclassified</b>"],
+  "boards": [
+    { "t": 2.0, "time": "0:00 – 0:10", "music": "Quiet intro", "title": "Cold open", "camera": "What the camera does.", "data": "What real data or screens are on screen.", "ui": "Interface on screen.", "narration": "Draft narration." }
+  ],
+  "real": ["What is real in these frames, and the one or two substitutions made for the look."],
+  "asks": ["The closing line (owner only).", "Classification and captions."]
+}

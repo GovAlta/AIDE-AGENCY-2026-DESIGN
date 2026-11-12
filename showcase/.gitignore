@@ -1,0 +1,13 @@
+# showcase films: engines and reference source are tracked; dependencies, caches, frames and masters are not
+node_modules/
+**/out/
+**/cache/
+**/frames/
+**/.farm-token
+**/.receiver.pid
+**/.farm-exec
+**/*-1080p60.mp4
+**/*-1080p60-share.mp4
+**/audio-mix.wav
+# the small phone previews are the watchable record of each film (the repo root ignores *.mp4)
+!**/deliver/preview-720p-phone.mp4

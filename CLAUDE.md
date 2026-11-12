@@ -11,7 +11,8 @@ The key rules, repeated:
 - Before delivering: `node scripts/make.mjs <file> --check`, `python3 scripts/lint/lint.py <file>`, `node scripts/qr-verify.mjs` for QR
   codes, `python3 scripts/mvai/mvai.py check` for videos. Then look at every PNG.
 - Narrated videos are made by MVAI (`guides/VIDEO.md`). Motion graphics pieces (`motion/library`, 13 pieces) render here with
-  `node scripts/motion-render.mjs <code>`; see `motion/README.md`. The event day runs from `show/` (`guides/SHOW.md`).
+  `node scripts/motion-render.mjs <code>`; see `motion/README.md`. The event day runs from `show/` (`guides/SHOW.md`). Flagship
+  films use `showcase/kit` (`guides/SHOWCASE-FILM.md`, reference film `showcase/reference/11-pan-canadian-fibre/`).
 - Writing follows `guides/WRITING.md` and `guides/SLIDE-TEXT.md`. Everything spoken follows `guides/NARRATION.md` (which includes
   `guides/reference/VIDEO-STYLE-GUIDE.md`). Voices come only from `brand/voice/voices.json` (ElevenLabs eleven_v4); people are introduced
   only with the formulas in `brand/voice/intros.json`. Never use `/deslop` on Agency text: its style is the opposite of this standard.

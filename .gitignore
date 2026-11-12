@@ -3,6 +3,10 @@ out/
 *.tmp.html
 __pycache__/
 .env
-*.mp4
 *.mov
 app/thumbs/
+
+films/
+**/frames/
+# large masters stay out of git (GitHub limit 100 MB; publish as a Release or in a bucket)
+*-master.mp4

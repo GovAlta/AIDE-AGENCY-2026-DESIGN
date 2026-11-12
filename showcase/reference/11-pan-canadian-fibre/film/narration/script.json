@@ -1,0 +1,87 @@
+{
+  "voice": {
+    "name": "Matilda",
+    "voice_id": "XrExE9yKIg1WjnnlVkGX",
+    "model_id": "eleven_v4",
+    "settings": {
+      "stability": 0.5,
+      "similarity_boost": 0.75,
+      "style": 0.2,
+      "use_speaker_boost": true
+    }
+  },
+  "lines": [
+    {
+      "id": "n01",
+      "text": "Every answer from an artificial intelligence travels as light, through glass fibre."
+    },
+    {
+      "id": "n02",
+      "text": "Seven hundred and thirteen subsea cable systems carry that light between continents."
+    },
+    {
+      "id": "n03",
+      "text": "Only seven international cables land in Canada. The United States has eighty five, the United Kingdom fifty five, Singapore forty five, and Japan twenty eight."
+    },
+    {
+      "id": "n04",
+      "text": "Alberta has the power lines, the pipelines and the plants. Alberta has no coast, and no subsea cable lands here."
+    },
+    {
+      "id": "n05",
+      "text": "So how does intelligence made in Alberta reach the world? The route has to be planned across the whole country."
+    },
+    {
+      "id": "n06",
+      "text": "The Pan-Canadian Fibre Optics Planner is a map and route solver for planning that network."
+    },
+    {
+      "id": "n07",
+      "text": "The planner draws twenty three layers of public data on one globe. First come the corridors, the highways and the rail lines."
+    },
+    {
+      "id": "n08",
+      "text": "Next come the people and the land. The planner shows First Nations and Inuit communities, reserves, land claim areas and Métis Settlements."
+    },
+    {
+      "id": "n09",
+      "text": "In the North, the planner maps permafrost, and two hundred and seventy six remote communities that are off the main power grid."
+    },
+    {
+      "id": "n10",
+      "text": "Finally, the planner shows where providers report fibre today, and which communities have no fibre backbone nearby."
+    },
+    {
+      "id": "n11",
+      "text": "On that ground, the planner models fifteen routes. The southern route follows the Trans-Canada Highway from Victoria to St. John's, for seven thousand two hundred and sixty four kilometres."
+    },
+    {
+      "id": "n12",
+      "text": "The northern route runs from Prince Rupert to Churchill, with indicative subsea legs to Japan and Ireland."
+    },
+    {
+      "id": "n13",
+      "text": "A planner sets the waypoints and the weights. The solver searches the road and rail network, and returns the least cost path."
+    },
+    {
+      "id": "n14",
+      "text": "The planner compares three ways from Alberta to the Pacific, by length, by crossings and by the land each route passes."
+    },
+    {
+      "id": "n15",
+      "text": "Where no road or rail exists, a planner draws a line. The estimate gives an indicative cost range."
+    },
+    {
+      "id": "n16",
+      "text": "The plan is for an integrated Canada, where our natural resources and capabilities serve communities coast to coast."
+    },
+    {
+      "id": "n17",
+      "text": "Alberta can be the world's source for intelligence."
+    },
+    {
+      "id": "n18",
+      "text": "Connecting to our partners across Canada and globally provides a promising future for Alberta innovation to power the world."
+    }
+  ]
+}
