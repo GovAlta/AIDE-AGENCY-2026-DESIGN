@@ -1,7 +1,8 @@
 // The film's sound: narration lines placed at their `at` times (narration/script.json), the music ducked under the voice
 // (sidechain), mastered with two-pass loudnorm to -16 LUFS and -2.0 dBTP (headroom for AAC, which adds about 0.7 dB of peak).
 // Also writes captions (SRT, VTT) from the voice's own word times.
-//   node tools/mix-audio.mjs --project <film dir>        music: film.config.json "music" (path relative to the project)
+//   node tools/mix-audio.mjs --project <film dir>        music: film.config.json "music" (path relative to the project);
+//                                                        "musicFit": "stretch" fits the track to the film's length (see below)
 import fs from 'node:fs';
 import path from 'node:path';
 import { BRAND } from './lib/paths.mjs';
@@ -27,7 +28,14 @@ if (music) inputs.push('-i', music); else inputs.push('-f', 'lavfi', '-t', Strin
 lines.forEach(l => inputs.push('-i', path.join(ROOT, `narration/${l.id}.mp3`)));
 graph.push(lines.map((l, i) => `[${i + 1}:a]aresample=48000,aformat=channel_layouts=stereo,adelay=${Math.round(l.at * 1000)}:all=1[v${i}]`).join(';'));
 graph.push(`${lines.map((_, i) => `[v${i}]`).join('')}amix=inputs=${lines.length}:normalize=0:dropout_transition=0,apad=whole_dur=${DUR},volume=1.5,asplit=2[vo][key]`);
-graph.push(`[0:a]aresample=48000,atrim=0:${DUR},volume=${cfg.musicGain ?? 0.62}[mus]`, `[mus][key]sidechaincompress=threshold=0.02:ratio=7:attack=120:release=650:makeup=1[duck]`,
+// "musicFit": "stretch" in film.config.json: when the film is a little longer or shorter than the track (within 6 %), the track is
+// time-stretched to the film's length at the same pitch, so its own ending lands on the film's last frame (no silence under an end card,
+// no cut). Without it the track plays at its own speed and is trimmed or left to end.
+let fit = '';
+if (music && cfg.musicFit === 'stretch') { const len = +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', music], { encoding: 'utf8' }), k = len / DUR;
+  if (Math.abs(k - 1) > 0.06) console.error(`musicFit: the track is ${len.toFixed(2)} s and the film ${DUR} s (more than 6 % apart): not stretched`);
+  else if (Math.abs(k - 1) > 0.0005) { fit = `rubberband=tempo=${k.toFixed(6)}:pitchq=quality,`; console.log(`musicFit: track ${len.toFixed(2)} s stretched to ${DUR} s (tempo x${k.toFixed(4)}, same pitch)`); } }
+graph.push(`[0:a]aresample=48000,${fit}atrim=0:${DUR},apad=whole_dur=${DUR},volume=${cfg.musicGain ?? 0.62}[mus]`, `[mus][key]sidechaincompress=threshold=0.02:ratio=7:attack=120:release=650:makeup=1[duck]`,
   `[duck][vo]amix=inputs=2:normalize=0:dropout_transition=0,afade=t=out:st=${DUR - 2.2}:d=2.2[mix]`);
 const pre = path.join(ROOT, 'out/mix-pre.wav');
 execFileSync('nice', ['ffmpeg', '-y', '-loglevel', 'error', ...inputs, '-filter_complex', graph.join(';'), '-map', '[mix]', '-t', String(DUR), pre]);

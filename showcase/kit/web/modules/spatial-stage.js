@@ -58,7 +58,7 @@ export async function createStage(el, { config, helpers: H }) {
   const root = document.createElement('div'); root.className = 'sp-space'; el.appendChild(root);
   const mkCanvas = (cls, z) => { const c = document.createElement('canvas'); c.width = W; c.height = HH; c.className = cls; c.style.zIndex = z; root.appendChild(c); return c; };
   const groundCv = mkCanvas('sp-ground', 0), gg = groundCv.getContext('2d');
-  const wallCv = mkCanvas('sp-wall', 1), wg = wallCv.getContext('2d');
+  const wallCv = mkCanvas('sp-wall', 1), wg = wallCv.getContext('2d', { willReadFrequently: true });
   const hexA = (hex, a) => { if (!hex || hex[0] !== '#') return hex; const n = parseInt(hex.slice(1), 16); return `rgba(${n >> 16 & 255},${n >> 8 & 255},${n & 255},${+a.toFixed(3)})`; };
   const fill = a => C[a] || (a && a[0] === '#' ? a : C.blue);
   const stageEl = document.getElementById('stage') || document.body;
