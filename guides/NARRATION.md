@@ -142,6 +142,21 @@ tags or SSML. Mix and loudness follow `guides/SOUND.md` (−16 LUFS, music ducke
 7. **Turn each piece of owner feedback into a rule**: quote it with the date in this guide or the owner's standard, fix every other place
    it occurs, and add a lint rule when the fault is mechanical.
 
+### Owner rules from the review of film #1 (Atlas), 2026-11-12
+
+These came from the owner's review of a script that had passed the lint. The lint checks words and shapes; these check meaning.
+
+| Rule | The owner's words | Before | After |
+|---|---|---|---|
+| **A line must say what it means in words people use.** If you cannot say what a phrase means in one plain sentence, cut the phrase and use that sentence | "What does 'one conversation' mean?" · "'The cost follows the work' is not at all what people say." | "In one conversation, Atlas reaches nine systems." | "Today, Atlas reads nine systems: calendar, mail, …" |
+| **Define inside the sentence.** Use an appositive or a clause. Do not add a second short sentence that defines the term, repeats the noun or leans on a pronoun | "ending dual sentences on pronouns instead of defining things in one sentence is also an anti-pattern" | "Atlas also starts coding agents. A coding agent is an AI program that writes code…" · "…read the code and build on it." | "Atlas also starts coding agents, AI programs that write code, run the code and check the result." |
+| **Cut a line that repeats a point already made** | "…is redundant a bit." | A line on models after the owner's line already named the models | Cut |
+| **Say what exists today, and how it grows** | "The 9 systems is also what is currently available today and needs to clearly identify new integrations take minutes to add" | "Atlas reaches nine systems." | "Today, Atlas reads nine systems… A new system takes minutes to add through MCP, an open standard…" |
+| **Match the register of the reference film.** On-screen lines name what is shown; pitch lines are the owner's own words | "The #11 video was very clear." | "One conversation. One set of permissions. One record." | "Chat, your systems and coding agents, in one place" |
+| **No template or instruction text in a frame, ever**, and no slide written about itself | "A slide written like this is awful and deeply inappropriate for this kind of showcase event" | a starter's placeholder sentence | the owner's line, or nothing |
+
+Before voicing, read the whole script aloud once and ask of every line: would the owner say this sentence to a minister?
+
 ### Voicing an announcement
 
 ```bash
