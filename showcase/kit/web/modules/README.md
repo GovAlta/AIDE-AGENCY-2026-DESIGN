@@ -177,6 +177,9 @@ How it is built, and why:
   Bake the softness into the image (blur it and lift it toward the ground colour before the film), and show it at full opacity with
   `soft: 0`. Footage that must step back leaves (`stage.leave`) instead of dimming. `motion-check.mjs --flicker` now measures windows
   from opacity 0.3 up and skips frames where a window's own opacity is changing (it used to skip everything under 0.98).
+- **Windows that overlap need a clear gap in depth.** The stage draws windows far to near by their centre's depth from the camera. Two
+  overlapping windows at the same z (film #3's title cards) swapped order on alternate frames as the camera moved, a luminance jump of 10
+  in the overlap. Give overlapping windows a few hundred pixels of z between them, or keep them apart on screen.
 - **Inside a window, values change in fine steps.** A screen that rounds an opacity to tenths shows ten visible steps on a slow fade
   (film #1's Vector Studio window). Round to three decimals.
 - **The same inner padding on all four sides.** A screen's root pads once (do not pad a wrapper inside it as well); anything anchored to
