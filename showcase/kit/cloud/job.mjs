@@ -17,7 +17,11 @@ const server = spawn('node', ['/app/kit/server.mjs', '--project', '/app/project'
 await new Promise(r => server.stdout.on('data', d => { if (String(d).includes('film server')) r(); }));
 let browser, page, cdp;
 const open = async () => { if (browser) await browser.close().catch(() => {});
-  browser = await chromium.launch({ args: ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage', '--no-sandbox'] });
+  // film.config.json "gpu": false -> no GPU process at all: the page is rastered and composited on the CPU, one deterministic path. For
+  // films without WebGL (the spatial stage: DOM and 2D canvas). With the software GPU (SwiftShader), film #1's windows now and then
+  // took a different fill for a frame or more, at frames where nothing in the state changed.
+  let gpu = true; try { gpu = JSON.parse((await import('node:fs')).readFileSync('/app/project/film.config.json', 'utf8')).gpu !== false; } catch {}
+  browser = await chromium.launch({ args: gpu ? ['--use-angle=swiftshader', '--enable-unsafe-swiftshader', '--ignore-gpu-blocklist', '--enable-webgl', '--disable-dev-shm-usage', '--no-sandbox'] : ['--disable-gpu', '--disable-gpu-compositing', '--disable-dev-shm-usage', '--no-sandbox'] });
   page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
   page.on('pageerror', e => console.log('PAGEERROR', e.message.slice(0, 300)));
   await page.goto('http://127.0.0.1:3222/', { waitUntil: 'load' }); await page.waitForFunction('window.filmReady === true', null, { timeout: 900000 });
