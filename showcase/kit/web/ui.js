@@ -69,11 +69,11 @@ export function createUI(root, labelsRoot) {
           <div class="gbody" style="top:${(p.title ? 52 : 0) + (p.tabs ? 44 : 0)}px"><div class="gscroll" style="transform:translateY(${-(p.scroll || 0)}px)">${p.html || ''}</div></div></div>`).join(''));
       // ---- callouts
       set('callouts', $('callouts'), (u.callouts || []).filter(c => (c.a ?? 1) > 0.001).map(c =>
-        `<div class="callout ${c.align || 'left'}${c.panel ? ' panel' : ''}" style="${c.align === 'right' ? `right:${1920 - c.x}px` : `left:${c.x}px`};top:${c.y}px;opacity:${c.a ?? 1};transform:translateY(${c.dy || 0}px)${c.scale ? ` scale(${c.scale})` : ''};transform-origin:${c.align === 'right' ? 'top right' : c.align === 'center' ? 'top center' : 'top left'};${accVars(c.accent)}">${c.kicker ? `<span class="k">${esc(c.kicker)}</span>` : ''}${c.big ? `<b style="font-size:${c.size || 120}px">${esc(c.big)}</b>` : ''}${c.sub ? `<span class="s">${esc(c.sub)}</span>` : ''}${c.bars ? barsHtml(c) : ''}${c.note ? `<em>${esc(c.note)}</em>` : ''}</div>`).join(''));
+        `<div class="callout ${c.align || 'left'}${c.panel ? ' panel' : ''}" style="${c.align === 'right' ? `right:${1920 - c.x}px` : `left:${c.x}px`};top:${c.y}px;opacity:${c.a ?? 1};transform:translateY(${c.dy || 0}px)${c.scale ? ` scale(${c.scale})` : ''};transform-origin:${c.align === 'right' ? 'top right' : c.align === 'center' ? 'top center' : 'top left'};${accVars(c.accent)}">${c.kicker ? `<span class="k">${esc(c.kicker)}</span>` : ''}${c.words ? `<b style="font-size:${c.size || 120}px">${c.words.map(w => w.w === '\n' ? '<br>' : `<span style="opacity:${w.a ?? 1}">${esc(w.w)}</span>`).join(' ')}</b>` : c.big ? `<b style="font-size:${c.size || 120}px">${esc(c.big)}</b>` : ''}${c.sub ? `<span class="s">${esc(c.sub)}</span>` : ''}${c.bars ? barsHtml(c) : ''}${c.note ? `<em>${esc(c.note)}</em>` : ''}</div>`).join(''));
       // ---- caption, statement
       const cap = u.caption; $('caption').style.opacity = cap ? (cap.a ?? 1) : 0; if (cap) set('caption', $('caption'), `<span>${esc(cap.text)}</span>`);
       const st = u.statement, ste = $('statement'); ste.style.opacity = st ? (st.a ?? 1) : 0;
-      if (st) { set('statement', ste, st.words.map(w => `<span style="opacity:${w.a}">${esc(w.w)}</span>`).join(' ')); ste.style.transform = `translateY(${st.dy || 0}px)`; }
+      if (st) { set('statement', ste, st.words.map(w => w.w === '\n' ? '<br>' : `<span style="opacity:${w.a}">${esc(w.w)}</span>`).join(' ')); ste.style.transform = `translateY(${st.dy || 0}px)`; }
       // ---- title / end card (traces art per theme: art/traces-*.svg on night, art/traces-*-light.svg on board)
       const c = u.card, ce = $('card'); ce.style.opacity = c ? (c.a ?? 1) : 0;
       if (c) set('card', ce, c.kind === 'end'

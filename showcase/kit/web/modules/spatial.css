@@ -2,7 +2,7 @@
    The stage reads the --sp-* values below for its canvases, so another theme only needs another set of values.
    What goes INSIDE a window (screens, neumorphic controls) belongs to the film (its screens.css / neu.css), not here; the few .sp-*
    text helpers at the end exist only so the starter timeline has something to show. */
-.sp-space { position: absolute; inset: 0; overflow: hidden;
+.sp-space { position: absolute; inset: 0; overflow: hidden; isolation: isolate;   /* its z-indexed windows and canvases never rise over the kit's ui (captions, cards) */
   /* ground: one soft, luminous surface */
   --sp-g0: #EDF1F6; --sp-g1: #E3E9F0; --sp-g2: #DCE3EC; --sp-hi: #FAFCFF; --sp-lo: #D7E0EB; --sp-glow-k: 1;
   --sp-ink: #022C4C; --sp-body: #22384C; --sp-soft: #4F6274;

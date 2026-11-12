@@ -14,11 +14,12 @@
 //          focus (what is sharp: a world z, a window id, or [x, y, z]), aperture (0 = everything sharp; 1 = default depth of field) },
 //   windows: [{ id, x, y, z (the window's CENTRE), ry, rx (degrees, as CSS rotateY / rotateX: ry > 0 turns the right edge away),
 //               w, h (its own pixels), scale, html, a (opacity), glow (accent name: a soft light behind it), hero (true: the film's main
-//               window: strongest glass and shadow), radius, cls (extra class), glass (true | false: force real or frosted) }],
+//               window: strongest glass and shadow), radius, cls (extra class), glass (true | false: force real or frosted),
+//               glowA, glowR (strength and reach of its light; defaults 0.34 and 0.62) }],
 //   lines: [{ id, from, to ('win', 'win#data-k', each with an optional side '@l' '@r' '@t' '@b', or a world point [x, y, z]),
 //             p (0..1 draw-on), pulses: [u, ...] (travelling dots, 0..1 along), ring (0..1: a soft ring opening where the line lands),
 //             accent, a, label, front (true: over every window) }],
-//   wall: { x, y, z (centre), ry, rx, card: [w, h], gap, cols, rows  — or —  blocks: { cols, rows, size: [cardCols, cardRows], gap, lit, labels },
+//   wall: { x, y, z (centre), ry, rx, card: [w, h], gap, cols, rows  — or —  blocks: { cols, rows, size: [cardCols, cardRows], gap, lit, labels, reverse (true: block 1 is the last cell, for a floor seen from its near edge) },
 //           count (cards running; fractional), accents: [names], labels: [short names for the nearest cards], time, a, haze: [near, far], front },
 //   ground: { tint (accent), glows: [{ x, y, z, accent, r, a }] }
 // }
@@ -33,6 +34,9 @@
 //   stage.project([x, y, z])           -> screen { x, y } with the camera of the frame last drawn (for ui.labels)
 //   stage.anchor('win#data-k@r')       -> screen { x, y } of that element in the frame last drawn (for the cursor and labels)
 //   stage.wallFrame(wall, share, pad, { yaw, pitch }) -> a camera that fits the first `share` (0..1) of the wall
+//   stage.inFrame(cam, win, sx, sy, depth, turn) -> the window placed in that camera's own frame: its centre at screen (sx, sy), `depth` px
+//                                         behind the one-to-one plane (negative: nearer), turned `turn` degrees to the viewer; win.scale is the scale
+//                                         as seen on screen. For compositions designed in screen pixels (camera pitch 0).
 const RAD = Math.PI / 180, EPS = 1e-3;
 // ---- 4 x 4 matrices, column-major (the order CSS matrix3d takes) ----
 const mul = (a, b) => { const o = new Array(16); for (let c = 0; c < 4; c++) for (let r = 0; r < 4; r++) o[c * 4 + r] = a[r] * b[c * 4] + a[4 + r] * b[c * 4 + 1] + a[8 + r] * b[c * 4 + 2] + a[12 + r] * b[c * 4 + 3]; return o; };
@@ -116,7 +120,7 @@ export async function createStage(el, { config, helpers: H }) {
       const s = p.el.style; s.display = ''; s.width = w.w + 'px'; s.height = w.h + 'px'; s.transform = `matrix3d(${m.map(v => +v.toFixed(7)).join(',')})`;
       s.opacity = +(w.a ?? 1).toFixed(3); s.zIndex = 10 + rank * 2; s.borderRadius = (w.radius ?? 38) + 'px';
       s.filter = it.blur ? `blur(${+(it.blur / it.k).toFixed(2)}px)` : '';
-      p.el.className = `sp-win ${glass.has(w.id) ? 'sp-glass' : 'sp-frost'}${w.hero ? ' sp-hero' : ''}${it.blur ? ' sp-soft' : ''}${w.cls ? ' ' + w.cls : ''}`;
+      p.el.className = `sp-win ${glass.has(w.id) ? 'sp-glass' : 'sp-frost'}${w.hero ? ' sp-hero' : ''}${it.blur >= 2.5 ? ' sp-soft' : ''}${w.cls ? ' ' + w.cls : ''}`;
       wins.set(w.id, { M, w, depth: it.depth, rank, k: it.k }); });
     for (const [id, p] of pool) if (!seen.has(id)) p.el.style.display = 'none';
     LAST = { wins, order: items.map(i => i.w.id) };
@@ -135,7 +139,7 @@ export async function createStage(el, { config, helpers: H }) {
     for (const gl of G.glows || []) { const q = scr([gl.x, gl.y, gl.z ?? -600]); if (q) blob(q.x, q.y, (gl.r ?? 420) * f / q.d, fill(gl.accent), (gl.a ?? 0.3) * v.glowK); }
     // each window can carry a light of its own colour behind it: this is what the glass refracts
     for (const it of items) { const w = it.w; if (!w.glow) continue; const q = scr([w.x ?? CX, w.y ?? CY, (w.z ?? 0) - 160]); if (!q) continue;
-      blob(q.x, q.y, Math.max(w.w, w.h) * 0.62 * f / q.d * (w.scale ?? 1), fill(w.glow), 0.34 * (w.a ?? 1) * v.glowK); }
+      blob(q.x, q.y, Math.max(w.w, w.h) * (w.glowR ?? 0.62) * f / q.d * (w.scale ?? 1), fill(w.glow), (w.glowA ?? 0.34) * (w.a ?? 1) * v.glowK); }
     const fl = g.createLinearGradient(0, HH - 270, 0, HH); fl.addColorStop(0, hexA('#FFFFFF', 0)); fl.addColorStop(1, hexA('#FFFFFF', 0.5)); g.fillStyle = fl; g.fillRect(0, HH - 270, W, 270);
   }
 
@@ -173,8 +177,8 @@ export async function createStage(el, { config, helpers: H }) {
   // the grid: returns { n, total size, cell(i) -> [u, v] top-left on the plane, block(i) }
   const wallGrid = w => { const [cw, ch] = w.card || [150, 86], gap = w.gap ?? 14, B = w.blocks;
     if (B) { const [bc, br] = B.size, bw = bc * (cw + gap) - gap, bh = br * (ch + gap) - gap, bg = B.gap ?? gap * 5, per = bc * br, n = B.cols * B.rows * per, TW = B.cols * (bw + bg) - bg, TH = B.rows * (bh + bg) - bg;
-      return { n, per, TW, TH, cw, ch, bw, bh, blocks: B.cols * B.rows, blockAt: b => [(b % B.cols) * (bw + bg) - TW / 2, Math.floor(b / B.cols) * (bh + bg) - TH / 2],
-        cell: i => { const b = Math.floor(i / per), j = i % per, o = [(b % B.cols) * (bw + bg), Math.floor(b / B.cols) * (bh + bg)]; return [o[0] + (j % bc) * (cw + gap) - TW / 2, o[1] + Math.floor(j / bc) * (ch + gap) - TH / 2]; } }; }
+      return { n, per, TW, TH, cw, ch, bw, bh, blocks: B.cols * B.rows, blockAt: b => { const q = B.reverse ? B.cols * B.rows - 1 - b : b; return [(q % B.cols) * (bw + bg) - TW / 2, Math.floor(q / B.cols) * (bh + bg) - TH / 2]; },
+        cell: i => { const b0 = Math.floor(i / per), b = B.reverse ? B.cols * B.rows - 1 - b0 : b0, j = i % per, o = [(b % B.cols) * (bw + bg), Math.floor(b / B.cols) * (bh + bg)]; return [o[0] + (j % bc) * (cw + gap) - TW / 2, o[1] + Math.floor(j / bc) * (ch + gap) - TH / 2]; } }; }
     const cols = w.cols || 20, rows = w.rows || 5, TW = cols * (cw + gap) - gap, TH = rows * (ch + gap) - gap;
     return { n: cols * rows, per: cols * rows, TW, TH, cw, ch, blocks: 0, cell: i => [Math.floor(i / rows) * (cw + gap) - TW / 2, (i % rows) * (ch + gap) - TH / 2] };   // column by column, so the first cards are one end of the wall
   };
@@ -207,7 +211,7 @@ export async function createStage(el, { config, helpers: H }) {
       if (pw < 15) { if (!quad(u, vv, G.cw, G.ch)) continue; g.fillStyle = hexA('#FFFFFF', al * (on > 0 ? 0.95 : 0.5)); g.fill();   // far cards: a white card with its bar, no detail
         if (on > 0 && quad(u + G.cw * 0.1, vv + G.ch * 0.64, G.cw * 0.8 * (0.2 + 0.8 * hash(i * 7.7)), G.ch * 0.2)) { g.fillStyle = hexA(col, al * 0.75); g.fill(); } continue; }
       if (!(pw >= 26 ? rquad(u, vv, G.cw, G.ch, Math.min(pw, ph) * 0.17) : quad(u, vv, G.cw, G.ch))) continue;
-      g.globalAlpha = al * (on > 0 ? 1 : 0.5); g.fillStyle = v.card; g.shadowColor = 'rgba(18,44,80,0.20)'; g.shadowBlur = Math.min(26, pw * 0.14) * on; g.shadowOffsetY = Math.min(14, pw * 0.07) * on; g.fill(); g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
+      g.globalAlpha = al * (on > 0 ? 1 : 0.5); g.fillStyle = v.card; if (pw >= 44) { g.shadowColor = 'rgba(18,44,80,0.20)'; g.shadowBlur = Math.min(26, pw * 0.14) * on; g.shadowOffsetY = Math.min(14, pw * 0.07) * on; }   /* a canvas shadow is the costly part: only where it shows */ g.fill(); g.shadowColor = 'transparent'; g.shadowBlur = 0; g.shadowOffsetY = 0;
       g.strokeStyle = v.cardRim; g.lineWidth = 1; g.stroke();
       if (on <= 0) { g.globalAlpha = 1; continue; }
       // the activity bar: a track along the bottom, the bar's length moves with time
@@ -256,8 +260,10 @@ export async function createStage(el, { config, helpers: H }) {
     const n = { ...base, yaw: base.yaw + yaw, pitch: base.pitch + pitch }, d = fwd(n); return { ...n, x: ctr[0] - d[0] * dist, y: ctr[1] - d[1] * dist, z: ctr[2] - d[2] * dist }; };
   const enter = (w, u, o = {}) => { const e = ss(clamp(u)), k = 1 - e; return { ...w, a: (w.a ?? 1) * clamp(u * 1.6), y: (w.y ?? CY) + k * (o.dy ?? 90), z: (w.z ?? 0) - k * (o.dz ?? 160), rx: (w.rx || 0) + k * (o.rx ?? 7), ry: (w.ry || 0) + k * (o.ry ?? 0) }; };
   const leave = (w, u, o = {}) => { const e = ss(clamp(u)); return { ...w, a: (w.a ?? 1) * clamp((1 - u) * 1.6), y: (w.y ?? CY) - e * (o.dy ?? 70), z: (w.z ?? 0) - e * (o.dz ?? 220), rx: (w.rx || 0) - e * (o.rx ?? 5) }; };
+  const inFrame = (c, w, sx = CX, sy = CY, depth = 0, turn = 0) => { const ff = F(c.fov), d = ff + depth, k = d / ff, yr = (c.yaw || 0) * RAD, fo = [Math.sin(yr), 0, -Math.cos(yr)], ri = [Math.cos(yr), 0, Math.sin(yr)];
+    return { ...w, x: c.x + fo[0] * d + ri[0] * (sx - CX) * k, y: c.y + (sy - CY) * k, z: (c.z ?? ff) + fo[2] * d + ri[2] * (sx - CX) * k, ry: turn - (c.yaw || 0), rx: 0, scale: (w.scale ?? 1) * k }; };
   const xy = q => (q ? { x: q.x, y: q.y } : null);
   return { apply, takeErrors: () => { const n = errors; errors = 0; return n; },
     project: p => xy(scr(Array.isArray(p) ? p : [p.x, p.y, p.z || 0])), anchor: s => xy(resolve(s)),
-    F, frame, wallFrame, mix, orbit, enter, leave, cornersOf, home: () => ({ ...DEF, fov: OPT.fov, z: F() }) };
+    F, frame, wallFrame, inFrame, mix, orbit, enter, leave, cornersOf, home: () => ({ ...DEF, fov: OPT.fov, z: F() }) };
 }
