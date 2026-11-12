@@ -40,7 +40,7 @@ if (fdir) { const W = 640, H = 360, k = W / 1920, t0 = +arg('from', 0), t1 = +ar
   const ff = spawn('nice', ['ffmpeg', '-loglevel', 'error', '-threads', '4', '-start_number', String(a), '-framerate', String(FPS), '-i', path.join(path.resolve(fdir), 'f%06d.jpg'), '-frames:v', String(b - a), '-vf', `scale=${W}:${H}:flags=area`, '-f', 'rawvideo', '-pix_fmt', 'gray', '-'], { stdio: ['ignore', 'pipe', 'inherit'] });
   let buf = Buffer.alloc(0), f = a; const sz = W * H;
   const measure = (px, fr) => { const bs = boxes[fr];
-    for (const [id, al, X0, Y0, X1, Y1, depth] of bs) { if (al < 0.3) continue;   // translucent windows too (film #3: a 0.6-opacity card dropped a tile for one frame); fades are skipped below const w = X1 - X0, h = Y1 - Y0;
+    for (const [id, al, X0, Y0, X1, Y1, depth] of bs) { if (al < 0.3) continue;   /* translucent windows too (film #3: a 0.6-opacity card dropped a tile for one frame); fades are skipped below */ const w = X1 - X0, h = Y1 - Y0;
       // the part of the window nothing nearer covers is not known here; windows in front are skipped by taking only boxes no nearer box overlaps
       if (bs.some(o => o[0] !== id && o[6] < depth && o[2] < X1 && o[4] > X0 && o[3] < Y1 && o[5] > Y0)) continue;
       const x0 = Math.max(0, Math.ceil((X0 + w * 0.06) * k)), x1 = Math.min(W, Math.floor((X1 - w * 0.06) * k)), y0 = Math.max(Math.ceil(150 * k), Math.ceil((Y0 + h * 0.06) * k)), y1 = Math.min(Math.floor(930 * k), Math.floor((Y1 - h * 0.06) * k));
