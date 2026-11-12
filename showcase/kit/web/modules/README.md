@@ -125,6 +125,17 @@ How it is built, and why:
 - **Lines** are drawn on canvas layers slotted between the windows: behind the two windows a line joins, in front of everything farther.
 - **The wall is one canvas**: a homography per frame, then level of detail by a card's size on screen (rounded card with a label and an
   activity bar; card and bar; a dot). Blocks light one at a time (`blocks.lit`, fractional). 30,000 cards draw in about 40 ms.
+- **A window's material never changes while it is visible.** Real backdrop glass or the frosted fill is decided by the window's own
+  properties only (`glass: true | false`; default: its `hero` flag), never by its blur, angle or rank. Blur is continuous (no quarter-pixel
+  steps) and the shadow is the same sharp or soft. Film #1 flickered on all three before this rule. Keep `hero` (and `glass`) constant for a
+  window's whole life; raise `space.maxGlass` if a film marks more windows than the default 3. `snap: true` (whole-pixel placement) is for
+  a still camera only. Prove it on rendered frames: `node tools/motion-check.mjs --project <film> --flicker out/frames` must print 0 flags.
+- **Inside a window, values change in fine steps.** A screen that rounds an opacity to tenths shows ten visible steps on a slow fade
+  (film #1's Vector Studio window). Round to three decimals.
+- **The same inner padding on all four sides.** A screen's root pads once (do not pad a wrapper inside it as well); anything anchored to
+  the bottom sits at `bottom:` equal to the top padding; a screen's height in `SIZE` is its content plus the two paddings; text that
+  streams in keeps its final place from the first frame (render the words still to come invisible) so a growing list never pushes the last
+  row to the edge. Check every screen at u = 0.3, 0.7 and 1: `node tools/padding-check.mjs --project <film>` (bottom gap = top gap within 2 px).
 - **The look is CSS variables** on `.sp-space` (`spatial.css`); `#stage.theme-dark` has a first set of dark values.
 
 Legibility rules are the network stage's, plus: the sharp window is the one the narration is about; never more than one hero; keep text

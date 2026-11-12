@@ -67,3 +67,21 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
 - Cuts on the music, and a signature transition between shots.
 - Real third-party product screens are not available; name tiles stand in. A library of richer generic tiles would help openings.
 - `camcheck` for the spatial camera is `tools/motion-check.mjs`; run it on rendered frames as well as locally.
+
+## From film #1's owner review (2026-11-13): flicker and padding
+
+- **Flicker the owner saw, causes found on the rendered frames.** (1) A window's blur moved in quarter-pixel steps during a focus rack, and
+  the window swapped between real backdrop glass and the frosted fill, and between two shadows, as its blur crossed a threshold: a
+  text-heavy window (the team board) visibly jumped several times. (2) A screen rounded opacity to one decimal: a three-second fade showed
+  as ten jumps (Vector Studio). Fixes are in the kit (`spatial-stage.js`: continuous blur, material from the window's own properties only,
+  one shadow, snap opt-in) and the rule is in `web/modules/README.md`. **A contact sheet cannot show flicker; neither can a global
+  frame-difference test when the camera is moving.** Measure each window's own box on the rendered frames:
+  `tools/motion-check.mjs --flicker out/frames` (luminance and sharpness per window; zero flags passes).
+- **Never decide how a thing is drawn from a threshold on a value that moves** (blur, angle, rank, distance). Either make the drawing
+  continuous in that value or fix the choice for the thing's whole visible life. Frames render independently in the cloud, so "remember
+  the last choice" is not available: the choice must be a pure function of the state.
+- **Padding.** Content that sat lower than its top gap, or was clipped at the bottom, came from three faults: a padded wrapper inside a
+  padded root; bottom-anchored rows placed 30 or 34 px from the edge under a 36 px top; and rows whose text grew as it streamed in.
+  `tools/padding-check.mjs` measures all four gaps for every screen at three moments and fails on a 2 px difference.
+- **The centrepiece must look like the real thing.** A raw capture of a toy page read as "simplistic". A re-drawn, believable application
+  in the organisation's own web look (header, breadcrumb, filters, a real-looking map, a legend, a popup, "Invented demo data") reads as a product.

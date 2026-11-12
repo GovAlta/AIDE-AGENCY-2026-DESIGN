@@ -15,7 +15,7 @@
 //   windows: [{ id, x, y, z (the window's CENTRE), ry, rx (degrees, as CSS rotateY / rotateX: ry > 0 turns the right edge away),
 //               w, h (its own pixels), scale, html, a (opacity), glow (accent name: a soft light behind it), hero (true: the film's main
 //               window: strongest glass and shadow), radius, cls (extra class), glass (true | false: force real or frosted),
-//               glowA, glowR (strength and reach of its light; defaults 0.34 and 0.62) }],
+//               glowA, glowR (strength and reach of its light; defaults 0.34 and 0.62), snap (true: whole-pixel placement when facing) }],
 //   lines: [{ id, from, to ('win', 'win#data-k', each with an optional side '@l' '@r' '@t' '@b', or a world point [x, y, z]),
 //             p (0..1 draw-on), pulses: [u, ...] (travelling dots, 0..1 along), ring (0..1: a soft ring opening where the line lands),
 //             accent, a, label, front (true: over every window) }],
@@ -107,20 +107,24 @@ export async function createStage(el, { config, helpers: H }) {
     if (typeof fo === 'string') df = items.find(i => i.w.id === fo)?.depth; else if (Array.isArray(fo)) df = scr(fo)?.d;
     else { const d = fwd(cam); df = Math.abs(d[2]) > 0.05 ? ((fo ?? 0) - cam.z) / d[2] : f; }
     if (!(df > 1)) df = f;
-    for (const it of items) { const b = (cam.aperture ?? 1) * 13 * f * Math.abs(it.depth - df) / (it.depth * df); it.blur = b < 0.4 ? 0 : Math.min(OPT.maxBlur, Math.round(b * 4) / 4); }
-    // real backdrop blur only where it shows and where the browser can afford it: sharp, near-flat windows, the hero first, a few at most
-    const cand = items.filter(i => i.w.glass !== false && (i.w.glass === true || (i.blur === 0 && i.tilt < 30))).sort((a, b) => (b.w.hero ? 1 : 0) - (a.w.hero ? 1 : 0) || b.w.w * b.w.h * b.k * b.k - a.w.w * a.w.h * a.k * a.k);
+    for (const it of items) { const b = (cam.aperture ?? 1) * 13 * f * Math.abs(it.depth - df) / (it.depth * df); it.blur = b < 0.06 ? 0 : Math.min(OPT.maxBlur, b); }   // continuous: a blur that moved in quarter-pixel steps showed as a flicker on a text-heavy window during a focus rack
+    // MATERIAL NEVER CHANGES WHILE A WINDOW IS VISIBLE. It is a pure function of the window's own properties (glass: true | false; default: its
+    // hero flag), never of its blur, its angle or its rank among the others: a window that switched between real backdrop blur and the
+    // frosted fill as the focus moved flickered (film #1). maxGlass caps the cost; the order is stable (explicit glass first, then by id),
+    // so the cap only matters when a film marks more windows as glass than it allows: keep heroes few, or raise space.maxGlass.
+    const cand = items.filter(i => i.w.glass === true || (i.w.glass !== false && i.w.hero)).sort((a, b) => (b.w.glass === true ? 1 : 0) - (a.w.glass === true ? 1 : 0) || (a.w.id < b.w.id ? -1 : 1));
     const glass = new Set(cand.slice(0, OPT.maxGlass).map(i => i.w.id));
     const wins = new Map();
     items.forEach((it, rank) => { const { w, M } = it, p = winEl(w.id); seen.add(w.id);
       if (p.html !== w.html) { p.body.innerHTML = w.html || ''; p.html = w.html; }
       const m = M.slice();
-      // a window that faces the camera squarely moves in whole pixels, so its text never shimmers between frames
-      if (Math.abs(m[1]) < 1e-7 && Math.abs(m[4]) < 1e-7 && Math.abs(m[3]) < 1e-9 && Math.abs(m[7]) < 1e-9) { m[12] = Math.round(m[12] / m[15]) * m[15]; m[13] = Math.round(m[13] / m[15]) * m[15]; }
+      // snap: true -> a window that faces the camera squarely moves in whole pixels (for a still camera only: on a moving one the snap
+      // switching on and off as the angle passes zero is itself a half-pixel jump)
+      if (w.snap && Math.abs(m[1]) < 1e-7 && Math.abs(m[4]) < 1e-7 && Math.abs(m[3]) < 1e-9 && Math.abs(m[7]) < 1e-9) { m[12] = Math.round(m[12] / m[15]) * m[15]; m[13] = Math.round(m[13] / m[15]) * m[15]; }
       const s = p.el.style; s.display = ''; s.width = w.w + 'px'; s.height = w.h + 'px'; s.transform = `matrix3d(${m.map(v => +v.toFixed(7)).join(',')})`;
       s.opacity = +(w.a ?? 1).toFixed(3); s.zIndex = 10 + rank * 2; s.borderRadius = (w.radius ?? 38) + 'px';
-      s.filter = it.blur ? `blur(${+(it.blur / it.k).toFixed(2)}px)` : '';
-      p.el.className = `sp-win ${glass.has(w.id) ? 'sp-glass' : 'sp-frost'}${w.hero ? ' sp-hero' : ''}${it.blur >= 2.5 ? ' sp-soft' : ''}${w.cls ? ' ' + w.cls : ''}`;
+      s.filter = it.blur ? `blur(${+(it.blur / it.k).toFixed(3)}px)` : '';
+      p.el.className = `sp-win ${glass.has(w.id) ? 'sp-glass' : 'sp-frost'}${w.hero ? ' sp-hero' : ''}${w.cls ? ' ' + w.cls : ''}`;
       wins.set(w.id, { M, w, depth: it.depth, rank, k: it.k }); });
     for (const [id, p] of pool) if (!seen.has(id)) p.el.style.display = 'none';
     LAST = { wins, order: items.map(i => i.w.id) };
@@ -262,8 +266,13 @@ export async function createStage(el, { config, helpers: H }) {
   const leave = (w, u, o = {}) => { const e = ss(clamp(u)); return { ...w, a: (w.a ?? 1) * clamp((1 - u) * 1.6), y: (w.y ?? CY) - e * (o.dy ?? 70), z: (w.z ?? 0) - e * (o.dz ?? 220), rx: (w.rx || 0) - e * (o.rx ?? 5) }; };
   const inFrame = (c, w, sx = CX, sy = CY, depth = 0, turn = 0) => { const ff = F(c.fov), d = ff + depth, k = d / ff, yr = (c.yaw || 0) * RAD, fo = [Math.sin(yr), 0, -Math.cos(yr)], ri = [Math.cos(yr), 0, Math.sin(yr)];
     return { ...w, x: c.x + fo[0] * d + ri[0] * (sx - CX) * k, y: c.y + (sy - CY) * k, z: (c.z ?? ff) + fo[2] * d + ri[2] * (sx - CX) * k, ry: turn - (c.yaw || 0), rx: 0, scale: (w.scale ?? 1) * k }; };
+  // every visible window's box on screen for a given space state, without drawing (tools/motion-check.mjs --flicker reads rendered frames with it)
+  const screenBoxes = sp => { const c = { ...DEF, fov: OPT.fov, ...(sp.cam || {}) }, ff = F(c.fov); if (c.z === undefined) c.z = ff; const pv = mul(projOf(ff), viewOf(c)), out = [];
+    for (const w of sp.windows || []) { if (!w || !w.id || (w.a ?? 1) <= 0.004) continue; const m = mul(pv, modelOf(w)), q = [[0, 0], [w.w, 0], [w.w, w.h], [0, w.h]].map(([x, y]) => xf(m, x, y, 0)); if (q.some(p => p[3] < 60)) continue;
+      const xs = q.map(p => p[0] / p[3]), ys = q.map(p => p[1] / p[3]); out.push({ id: w.id, a: w.a ?? 1, depth: xf(m, w.w / 2, w.h / 2, 0)[3], x0: Math.min(...xs), y0: Math.min(...ys), x1: Math.max(...xs), y1: Math.max(...ys) }); }
+    return out; };
   const xy = q => (q ? { x: q.x, y: q.y } : null);
   return { apply, takeErrors: () => { const n = errors; errors = 0; return n; },
     project: p => xy(scr(Array.isArray(p) ? p : [p.x, p.y, p.z || 0])), anchor: s => xy(resolve(s)),
-    F, frame, wallFrame, inFrame, mix, orbit, enter, leave, cornersOf, home: () => ({ ...DEF, fov: OPT.fov, z: F() }) };
+    F, frame, wallFrame, inFrame, screenBoxes, mix, orbit, enter, leave, cornersOf, home: () => ({ ...DEF, fov: OPT.fov, z: F() }) };
 }
