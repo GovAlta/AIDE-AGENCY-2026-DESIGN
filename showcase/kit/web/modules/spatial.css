@@ -1,0 +1,48 @@
+/* Spatial stage (web/modules/spatial-stage.js): the window material, the ground and the lines of the light neumorphic-glass look.
+   The stage reads the --sp-* values below for its canvases, so another theme only needs another set of values.
+   What goes INSIDE a window (screens, neumorphic controls) belongs to the film (its screens.css / neu.css), not here; the few .sp-*
+   text helpers at the end exist only so the starter timeline has something to show. */
+.sp-space { position: absolute; inset: 0; overflow: hidden;
+  /* ground: one soft, luminous surface */
+  --sp-g0: #EDF1F6; --sp-g1: #E3E9F0; --sp-g2: #DCE3EC; --sp-hi: #FAFCFF; --sp-lo: #D7E0EB; --sp-glow-k: 1;
+  --sp-ink: #022C4C; --sp-body: #22384C; --sp-soft: #4F6274;
+  /* glass: real backdrop blur, a bright rim, a soft drop shadow */
+  --sp-glass-a: rgba(255,255,255,.76); --sp-glass-b: rgba(255,255,255,.42); --sp-glass-c: rgba(255,255,255,.54);
+  --sp-frost-a: rgba(255,255,255,.80); --sp-frost-b: rgba(244,248,253,.52); --sp-frost-c: rgba(255,255,255,.64);
+  --sp-rim: rgba(255,255,255,.96); --sp-shadow: rgba(18,44,80,.22); --sp-shadow-2: rgba(18,44,80,.08);
+  /* lines and the wall */
+  --sp-halo: rgba(255,255,255,.82); --sp-card: #FFFFFF; --sp-card-rim: rgba(2,44,76,.10); --sp-ghost: rgba(255,255,255,.34); --sp-track: #E3E9F1; --sp-haze: #E6EBF2;
+}
+#stage.theme-dark .sp-space {
+  --sp-g0: #06213A; --sp-g1: #041B30; --sp-g2: #03162A; --sp-hi: #0E3B63; --sp-lo: #020F1E; --sp-glow-k: 1.5;
+  --sp-ink: #FFFFFF; --sp-body: #E6EEF5; --sp-soft: #A9C1D6;
+  --sp-glass-a: rgba(255,255,255,.16); --sp-glass-b: rgba(255,255,255,.07); --sp-glass-c: rgba(255,255,255,.10);
+  --sp-frost-a: rgba(18,48,78,.92); --sp-frost-b: rgba(10,36,62,.88); --sp-frost-c: rgba(14,42,70,.9);
+  --sp-rim: rgba(255,255,255,.28); --sp-shadow: rgba(0,0,0,.5); --sp-shadow-2: rgba(0,0,0,.3);
+  --sp-halo: rgba(4,27,48,.85); --sp-card: #0E3557; --sp-card-rim: rgba(255,255,255,.16); --sp-ghost: rgba(255,255,255,.05); --sp-track: #0A2A47; --sp-haze: #041B30;
+}
+.sp-space canvas { position: absolute; left: 0; top: 0; width: 1920px; height: 1080px; pointer-events: none; }
+
+/* a window: placed by its own matrix3d (the stage computes camera x model for each one), so each can keep real backdrop blur */
+.sp-win { position: absolute; left: 0; top: 0; transform-origin: 0 0; border-radius: 38px; border: 1.5px solid var(--sp-rim); color: var(--sp-ink);
+  box-shadow: 0 46px 90px var(--sp-shadow), 0 10px 24px var(--sp-shadow-2), inset 0 2px 0 var(--sp-rim), inset 2px 0 0 rgba(255,255,255,.5), inset 0 -1px 0 rgba(255,255,255,.4); }
+.sp-win.sp-glass { background: linear-gradient(142deg, var(--sp-glass-a), var(--sp-glass-b) 58%, var(--sp-glass-c)); backdrop-filter: blur(34px) saturate(1.6); -webkit-backdrop-filter: blur(34px) saturate(1.6); }
+/* turned or out-of-focus windows: the same glass without the backdrop pass (it would not show, and it is the expensive part) */
+.sp-win.sp-frost { background: linear-gradient(142deg, var(--sp-frost-a), var(--sp-frost-b) 58%, var(--sp-frost-c)); }
+.sp-win.sp-hero { box-shadow: 0 70px 130px var(--sp-shadow), 0 16px 34px var(--sp-shadow-2), inset 0 2px 0 var(--sp-rim), inset 2px 0 0 rgba(255,255,255,.55), inset 0 -1px 0 rgba(255,255,255,.45); }
+.sp-win.sp-soft { box-shadow: 0 30px 60px var(--sp-shadow-2); }
+.sp-win > .sp-body { position: absolute; inset: 0; border-radius: inherit; overflow: hidden; }
+.sp-win > .sp-sheen { position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  background: linear-gradient(118deg, rgba(255,255,255,.5) 0%, rgba(255,255,255,0) 26%, rgba(255,255,255,0) 74%, rgba(255,255,255,.2) 100%); }
+#stage.theme-dark .sp-win > .sp-sheen { background: linear-gradient(118deg, rgba(255,255,255,.12) 0%, rgba(255,255,255,0) 30%); }
+
+/* starter text helpers (templates/timeline-spatial.js): replace with the film's own screens */
+.sp-pad { position: absolute; inset: 0; padding: 38px 44px; display: flex; flex-direction: column; gap: 18px; }
+.sp-kick { font-family: "Geist Mono", monospace; font-weight: 600; font-size: 20px; letter-spacing: .18em; text-transform: uppercase; color: var(--sp-soft); }
+.sp-title { font-size: 40px; font-weight: 800; letter-spacing: -.025em; line-height: 1.08; color: var(--sp-ink); }
+.sp-text { font-size: 28px; line-height: 1.4; color: var(--sp-body); }
+.sp-row { display: flex; align-items: center; gap: 14px; flex-wrap: wrap; }
+.sp-chip { font-size: 24px; font-weight: 700; color: var(--sp-ink); border-radius: 99px; padding: 10px 22px; background: rgba(255,255,255,.7); border: 1.5px solid rgba(255,255,255,.95); box-shadow: 0 6px 14px rgba(18,44,80,.10); }
+.sp-chip.on { background: var(--sp-ink); color: #fff; border-color: transparent; }
+.sp-bar { height: 22px; border-radius: 11px; background: rgba(2,44,76,.10); }
+.sp-dot { width: 16px; height: 16px; border-radius: 50%; background: var(--c, #0177CD); flex: none; }

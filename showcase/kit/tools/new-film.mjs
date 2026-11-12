@@ -1,11 +1,12 @@
 // Starts a showcase film. Two ways in:
 //   from an Agency 2026 inventory slot (the inventory is read, never written):
-//     node tools/new-film.mjs 23 [--kind app|map|data|network] [--theme light|dark] [--slug short-name]
+//     node tools/new-film.mjs 23 [--kind app|map|data|network|spatial] [--theme light|dark] [--slug short-name]
 //   from scratch, for any project (no inventory needed):
 //     node tools/new-film.mjs --name water-quality --title "North Saskatchewan Water Quality" --kind map [--brief brief.json]
 //   options: --root <films dir> (default $FILMS_DIR, else <design repo>/../films), --inventory <path> (default $AGENCY_INVENTORY)
 //   --kind app (default): real screenshots and recordings as plates.  map: the app's geographic data on the map stage.
 //   network: an architecture explainer for laypersons on the network stage (what it is, architecture, flows, opportunities).
+//   spatial: the same four-act explainer in the light neumorphic-glass look: the product's screens as glass windows in 3D space.
 //          data: no app and no map; a kinetic data story (big numbers, ranked bars, re-drawn panels, a statement).
 //   --theme light (default, the Agency default ground) or dark.
 //   --brief <file.json>: in scratch mode, fields for brief.md and SENSITIVITY.md: { program, nature, folders: [{path, role}], repos,
@@ -25,7 +26,7 @@ import { KIT, REPO, FILMS, INVENTORY, repoOk } from './lib/paths.mjs';
 const argv = process.argv.slice(2), arg = (k, d) => { const i = argv.indexOf('--' + k); return i < 0 ? d : argv[i + 1]; };
 const want = String(argv.find((a, i) => !a.startsWith('--') && !argv[i - 1]?.startsWith('--')) || '').replace('#', '');
 const KIND = arg('kind', 'app'), THEME = arg('theme', 'light');
-if (!['app', 'map', 'data', 'network'].includes(KIND) || !['light', 'dark'].includes(THEME)) { console.error('--kind is app, map, data or network; --theme is light or dark'); process.exit(2); }
+if (!['app', 'map', 'data', 'network', 'spatial'].includes(KIND) || !['light', 'dark'].includes(THEME)) { console.error('--kind is app, map, data, network or spatial; --theme is light or dark'); process.exit(2); }
 const NAME = arg('name');
 if (!/^\d+$/.test(want) && !NAME) { console.error('usage: node tools/new-film.mjs <slot number>  |  node tools/new-film.mjs --name <slug> --title "<title>" [--brief brief.json]'); process.exit(2); }
 const ROOT = path.resolve(arg('root', FILMS));
@@ -79,7 +80,7 @@ fs.writeFileSync(path.join(dir, '.gitignore'), ['node_modules/', 'out/frames/', 
     console.log(`traces: seeds film-${tag}, film-${tag}-end`); }
   catch { fs.rmSync(path.join(dir, 'web/art'), { recursive: true, force: true }); console.log('traces: Agency design repo not usable here, the kit default art is used'); } }
 const label = slotN ? `#${slotN} ${row.title}` : row.title;
-const config = { title: label, slot: slotN ? slot : '', slug, kind: KIND, theme: THEME, dur: KIND === 'map' ? 16 : KIND === 'data' ? 14 : KIND === 'network' ? 30 : 12, fps: 60, music: 'assets/<owner music>.mp3', musicGain: 0.62,
+const config = { title: label, slot: slotN ? slot : '', slug, kind: KIND, theme: THEME, dur: KIND === 'map' ? 16 : KIND === 'data' ? 14 : KIND === 'network' ? 30 : KIND === 'spatial' ? 32 : 12, fps: 60, music: 'assets/<owner music>.mp3', musicGain: 0.62,
   bandTitle: slotN ? `#${slotN} · ${row.title}` : row.title, sensitivity: row.sensitivity || 'not stated: ask the owner', mounts: {},
   ports, cloud: { job: `shell-${dev}-film-${tag}`, image: `shell-app-${dev}-film-${tag}:job` } };
 if (KIND === 'map') Object.assign(config, { stage: '/kit/modules/map-stage.js',
@@ -88,6 +89,9 @@ if (KIND === 'map') Object.assign(config, { stage: '/kit/modules/map-stage.js',
 // network: an architecture explainer on the network stage (zones, nodes, traces, packets, permission gates, audit ledger, container spawn)
 if (KIND === 'network') { const net = JSON.parse(fs.readFileSync(path.join(T, 'network.example.json'), 'utf8')); delete net.$comment;
   Object.assign(config, { stage: '/kit/modules/network-stage.js', network: net, '$network': 'EXAMPLE architecture: replace zones, nodes and edges with the real one, in plain words (kit web/modules/network-stage.js, web/modules/README.md)' }); }
+// spatial: the product's screens as frosted-glass windows in 3D space (camera, depth of field, light lines, the wall of cards)
+if (KIND === 'spatial') { const sp = JSON.parse(fs.readFileSync(path.join(T, 'spatial.example.json'), 'utf8')); delete sp.$comment;
+  Object.assign(config, { stage: '/kit/modules/spatial-stage.js', space: sp, '$space': 'the windows, lines and wall are written in web/timeline.js (kit web/modules/spatial-stage.js, web/modules/README.md); the film supplies each window\'s HTML' }); }
 fs.writeFileSync(path.join(dir, 'film.config.json'), JSON.stringify(config, null, 1));
 const main = (row.folders || [])[0];
 const L = (k, v) => `| ${k} | ${v ? String(v).replace(/\n/g, ' ').replace(/\|/g, '/') : ''} |`;

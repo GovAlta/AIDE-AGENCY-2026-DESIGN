@@ -1,0 +1,6 @@
+{
+ "$comment": "Starter settings for the spatial stage (kit web/modules/spatial-stage.js). The windows, lines and wall themselves are written in web/timeline.js, because they move; these are the stage's fixed settings.",
+ "fov": 44,
+ "maxGlass": 3,
+ "maxBlur": 12
+}

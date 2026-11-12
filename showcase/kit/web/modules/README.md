@@ -81,3 +81,51 @@ What it teaches, and what any WebGL stage needs:
 - Zoom-dependent widths must keep `['zoom']` as the top-level interpolate input (`zf()` helper).
 - A camera that follows something irregular (a route head) must be time-smoothed (`helpers.smoothPath`), never pointed at it.
 - Software WebGL costs about 2–7 s a frame for a globe and 10–13 s with 3D terrain on 8 vCPU. Render it in the cloud job.
+
+## The spatial stage (`spatial-stage.js`, `spatial.css`): glass windows in 3D space
+
+The light neumorphic-glass look (owner's choice for film #1, 2026-11-12): the product's own screens are frosted-glass **windows** at
+different depths and angles on one soft, luminous ground; a camera travels through the space with depth of field; thin light **lines**
+carry work from one window to the next; a **wall** of thousands of small cards recedes to a horizon for scale. Start a film with
+`node tools/new-film.mjs --name <slug> --title "…" --kind spatial` (starter: `templates/timeline-spatial.js`, four acts).
+
+Who owns what: the stage owns the space (camera, glass, focus, lines, wall, ground). The film owns what is inside each window: it
+passes HTML as the window's `html` (its own screens and neumorphic controls, in the film's `web/screens.js` and CSS). The kit's `ui`
+still draws headlines, big numbers, captions, the chrome and the cursor.
+
+```js
+// film.config.json: "stage": "/kit/modules/spatial-stage.js", "space": { "fov": 44, "maxGlass": 3, "maxBlur": 12, "bandH": 44 }
+world: { space: {
+  cam: { x, y, z, yaw, pitch, fov, focus, aperture },      // focus: a world z, a window id or [x, y, z]; aperture 0 = all sharp
+  windows: [{ id, x, y, z, ry, rx, w, h, scale, html, a, glow: 'blue', hero: true, radius, cls, glass }],   // x, y, z = the centre
+  lines: [{ id, from: 'ask#send@r', to: 'record#new@l', p, pulses: [u], ring, accent, a, label, front }],
+  wall: { x, y, z, ry, rx, card: [w, h], gap, cols, rows, count }   // or blocks: { cols, rows, size: [c, r], gap, lit, labels }
+          // + accents, labels, time, a, haze, front
+  ground: { tint, glows: [{ x, y, z, accent, r, a }] } } }
+```
+
+World units are pixels: x right, y down, z toward the viewer. With the default camera the plane z = 0 maps one to one onto the frame.
+Angles follow CSS (`ry` > 0 turns a window's right edge away); a camera with yaw = -ry faces that window squarely.
+
+Helpers: `stage.frame([windows], pad, { yaw, pitch, fov, aperture, shift })` (a camera that fits those windows; pass the same objects you
+give to `windows`), `stage.wallFrame(wall, share, pad, o)`, `stage.mix(a, b, u)`, `stage.orbit(cam, yaw, pitch)`,
+`stage.enter(win, u)` / `stage.leave(win, u)`, `stage.F(fov)`, and, from the frame last drawn, `stage.project([x, y, z])` and
+`stage.anchor('win#data-k@r')` (for `ui.labels` and the cursor; any `[data-k]` inside a window is also a cursor target by name).
+Join camera keys with `H.track` so the camera travels instead of cutting (see the starter).
+
+How it is built, and why:
+
+- **Each window carries its own `matrix3d`** (projection x view x model, computed in JS). CSS `preserve-3d` groups cannot keep
+  `backdrop-filter`, so there is no 3D group: windows are siblings, sorted by depth with `z-index`, and the stage decides which get real
+  backdrop blur: sharp, near-flat windows (turned less than 30 degrees), the hero first, `maxGlass` at most. Turned or out-of-focus
+  windows get the same glass as a translucent fill without the backdrop pass (it would not show, and it is the expensive part).
+- **Depth of field** is a per-window blur from the thin-lens circle of confusion (distance from the sharp plane), capped at `maxBlur`
+  and stepped in quarter pixels. A focus rack is `cam.focus` moving from one window's centre to the next.
+- **A window that faces the camera squarely moves in whole pixels**, so its text does not shimmer between frames.
+- **Lines** are drawn on canvas layers slotted between the windows: behind the two windows a line joins, in front of everything farther.
+- **The wall is one canvas**: a homography per frame, then level of detail by a card's size on screen (rounded card with a label and an
+  activity bar; card and bar; a dot). Blocks light one at a time (`blocks.lit`, fractional). 30,000 cards draw in about 40 ms.
+- **The look is CSS variables** on `.sp-space` (`spatial.css`); `#stage.theme-dark` has a first set of dark values.
+
+Legibility rules are the network stage's, plus: the sharp window is the one the narration is about; never more than one hero; keep text
+that must be read on a window turned less than about 12 degrees; let the previous act's windows leave before the camera crosses them.
