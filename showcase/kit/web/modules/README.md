@@ -130,6 +130,11 @@ How it is built, and why:
   steps) and the shadow is the same sharp or soft. Film #1 flickered on all three before this rule. Keep `hero` (and `glass`) constant for a
   window's whole life; raise `space.maxGlass` if a film marks more windows than the default 3. `snap: true` (whole-pixel placement) is for
   a still camera only. Prove it on rendered frames: `node tools/motion-check.mjs --project <film> --flicker out/frames` must print 0 flags.
+- **Real backdrop glass is not stable on the render farm.** With `backdrop-filter` windows, film #1's rendered frames had one-frame
+  flashes of a window's fill (whole, or in a band the size of a raster tile) at frames where nothing in the state changed; one local
+  browser never showed them. Waiting two animation frames and capturing until two screenshots agree (both now in the kit) removed most,
+  not all. For a film that must pass the flicker check, set `"space": { "maxGlass": 0 }`: every window takes the frosted fill, which
+  is drawn the same way every time.
 - **Inside a window, values change in fine steps.** A screen that rounds an opacity to tenths shows ten visible steps on a slow fade
   (film #1's Vector Studio window). Round to three decimals.
 - **The same inner padding on all four sides.** A screen's root pads once (do not pad a wrapper inside it as well); anything anchored to
