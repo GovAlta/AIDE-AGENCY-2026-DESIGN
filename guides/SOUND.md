@@ -177,10 +177,19 @@ Take each `at` from the same cue table as the picture, so a re-time moves sound 
 node tools/sfx-events.mjs --project $F     # checks the ids, prints counts and warnings, writes out/sfx-events.json
 node tools/mix-audio.mjs --project $F      # places the events, writes out/sfx.wav (the effects alone) and out/mix.wav
 node tools/mix-audio.mjs --project $F --no-sfx   # the same mix without effects
+node tools/mix-audio.mjs --project $F --sfx-check 30   # also out/sfx-check.wav: 30 s from that second, effects and music only
+python3 tools/sfx-audible.py $F            # every onset at least 6 dB over the bed (1 to 8 kHz); exit 1 if one is not
 ```
 
 Each event starts at its own sample in the mix; the sound is heard within 6 ms of `at`. `film.config.json` may set `"sfxGain"` (dB for
-the whole effects track, default -14) and `"peakTP"` (the master's peak target, default -2.3 dBTP). A film with no events mixes as before.
+the whole effects track, default -2) and `"peakTP"` (the master's peak target, default -2.3 dBTP). A film with no events mixes as before.
+
+**Effects must be audible: verify onset contrast.** The first default (-14 dB, ducked under the voice) left the effects 35 dB under the
+mix: the owner heard none (film #2). Now a single effect peaks about -10 dBFS in the stem (6 to 8 dB under the voice's peaks) and a
+loop about -16; effects are not ducked under the voice; the music gives way about 3 dB under each one. Nobody listens to every mix, so
+measure it: `tools/sfx-audible.py` compares the loudest 30 ms of each onset with the 200 ms before it in the finished mix, 1 to 8 kHz,
+and fails any event under 6 dB. An event that lands on a spoken word fails: move it up to about 0.25 s into the gap beside the word, or
+lift it a few dB, and never above the voice. Run the check again after every narration change.
 
 ### Changing or adding a sound
 

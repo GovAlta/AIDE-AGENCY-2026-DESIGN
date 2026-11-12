@@ -5,9 +5,11 @@
 //   node tools/mix-audio.mjs --project <film dir>        music: film.config.json "music" (path relative to the project);
 //                                                        "musicFit": "stretch" fits the track to the film's length (see below)
 //   node tools/mix-audio.mjs --project <film dir> --no-sfx   the same mix without the sound effects
+//   node tools/mix-audio.mjs --project <film dir> --sfx-check 30   also 30 s from that second, effects and music only -> out/sfx-check.wav
 // Sound effects: when out/sfx-events.json exists (tools/sfx-events.mjs), each event is placed at its time to the sample, at its gain
-// and pan; loops are repeated to their dur with 20 ms fades. The effects track is set by "sfxGain" (dB, default -14: under the voice),
-// ducked a little under the voice, and written alone as out/sfx.wav. Sounds: brand/audio/sfx/palette.json (guides/SOUND.md).
+// and pan; loops are repeated to their dur with 20 ms fades. The effects track is set by "sfxGain" (dB, default -2: single effects peak about -10 dBFS in the stem, 6 to 8 dB under the voice's peaks),
+// not ducked under the voice (the music gives way about 3 dB under each effect), and written alone as out/sfx.wav. Effects must be
+// heard: after a mix run tools/sfx-audible.py <film dir> (each onset at least 6 dB over the bed, 1 to 8 kHz). Sounds: brand/audio/sfx/palette.json (guides/SOUND.md).
 import fs from 'node:fs';
 import path from 'node:path';
 import { BRAND } from './lib/paths.mjs';
@@ -33,7 +35,7 @@ const TP = cfg.peakTP ?? -2.3;
 function sfxStem() {
   const evFile = path.join(ROOT, 'out/sfx-events.json'); if (process.argv.includes('--no-sfx') || !fs.existsSync(evFile)) return null;
   const { events } = JSON.parse(fs.readFileSync(evFile, 'utf8')); if (!events.length) return null;
-  const SR = 48000, N = Math.round(DUR * SR), L = new Float32Array(N), R = new Float32Array(N), cache = {}, master = 10 ** ((cfg.sfxGain ?? -14) / 20);
+  const SR = 48000, N = Math.round(DUR * SR), L = new Float32Array(N), R = new Float32Array(N), cache = {}, master = 10 ** ((cfg.sfxGain ?? -2) / 20);
   const load = (id) => cache[id] ||= (() => { const b = execFileSync('ffmpeg', ['-loglevel', 'error', '-i', path.join(BRAND, `audio/sfx/${id}.wav`), '-ac', '2', '-ar', String(SR), '-f', 'f32le', '-'], { maxBuffer: 1 << 28 }); return new Float32Array(b.buffer.slice(b.byteOffset, b.byteOffset + b.byteLength)); })();
   for (const e of events) { const a = load(e.id), len = a.length / 2, n = e.dur ? Math.round(e.dur * SR) : len, at = Math.round(e.at * SR), g = master * 10 ** (e.gain_db / 20), f = Math.min(Math.round(0.02 * SR), n >> 1);
     const gl = g * (e.pan > 0 ? 1 - e.pan : 1), gr = g * (e.pan < 0 ? 1 + e.pan : 1);
@@ -42,7 +44,7 @@ function sfxStem() {
   out.writeUInt32LE(SR, 24); out.writeUInt32LE(SR * 4, 28); out.writeUInt16LE(4, 32); out.writeUInt16LE(16, 34); out.write('data', 36); out.writeUInt32LE(N * 4, 40);
   const q = (v) => Math.max(-32768, Math.min(32767, Math.round(v * 32767)));
   for (let i = 0; i < N; i++) { out.writeInt16LE(q(L[i]), 44 + i * 4); out.writeInt16LE(q(R[i]), 46 + i * 4); }
-  const f = path.join(ROOT, 'out/sfx.wav'); fs.writeFileSync(f, out); console.log(`sfx: ${events.length} events at ${cfg.sfxGain ?? -14} dB -> out/sfx.wav`); return f;
+  const f = path.join(ROOT, 'out/sfx.wav'); fs.writeFileSync(f, out); console.log(`sfx: ${events.length} events at ${cfg.sfxGain ?? -2} dB -> out/sfx.wav`); return f;
 }
 const sfx = sfxStem();
 const inputs = [], graph = [];
@@ -50,7 +52,7 @@ if (music) inputs.push('-i', music); else inputs.push('-f', 'lavfi', '-t', Strin
 lines.forEach(l => inputs.push('-i', path.join(ROOT, `narration/${l.id}.mp3`)));
 if (sfx) inputs.push('-i', sfx);
 graph.push(lines.map((l, i) => `[${i + 1}:a]aresample=48000,aformat=channel_layouts=stereo,adelay=${Math.round(l.at * 1000)}:all=1[v${i}]`).join(';'));
-graph.push(`${lines.map((_, i) => `[v${i}]`).join('')}amix=inputs=${lines.length}:normalize=0:dropout_transition=0,apad=whole_dur=${DUR},volume=1.5,${sfx ? 'asplit=3[vo][key][key2]' : 'asplit=2[vo][key]'}`);
+graph.push(`${lines.map((_, i) => `[v${i}]`).join('')}amix=inputs=${lines.length}:normalize=0:dropout_transition=0,apad=whole_dur=${DUR},volume=1.5,asplit=2[vo][key]`);
 // "musicFit": "stretch" in film.config.json: when the film is a little longer or shorter than the track (within 6 %), the track is
 // time-stretched to the film's length at the same pitch, so its own ending lands on the film's last frame (no silence under an end card,
 // no cut). Without it the track plays at its own speed and is trimmed or left to end.
@@ -59,14 +61,21 @@ if (music && cfg.musicFit === 'stretch') { const len = +execFileSync('ffprobe', 
   if (Math.abs(k - 1) > 0.06) console.error(`musicFit: the track is ${len.toFixed(2)} s and the film ${DUR} s (more than 6 % apart): not stretched`);
   else if (Math.abs(k - 1) > 0.0005) { fit = `rubberband=tempo=${k.toFixed(6)}:pitchq=quality,`; console.log(`musicFit: track ${len.toFixed(2)} s stretched to ${DUR} s (tempo x${k.toFixed(4)}, same pitch)`); } }
 graph.push(`[0:a]aresample=48000,${fit}atrim=0:${DUR},apad=whole_dur=${DUR},volume=${cfg.musicGain ?? 0.62}[mus]`, `[mus][key]sidechaincompress=threshold=0.02:ratio=7:attack=120:release=650:makeup=1[duck]`,
-  // the effects go down about 3 dB while the voice speaks, and come back fast (they are short)
-  ...(sfx ? [`[${lines.length + 1}:a][key2]sidechaincompress=threshold=0.03:ratio=2:attack=15:release=250:makeup=1[fx]`] : []),
-  `[duck][vo]${sfx ? '[fx]' : ''}amix=inputs=${sfx ? 3 : 2}:normalize=0:dropout_transition=0,afade=t=out:st=${DUR - 2.2}:d=2.2[mix]`);
+  // the effects are NOT ducked under the voice (they are short, and ducked they were not heard at all: owner, film #2). The music
+  // gives way to each effect instead: about 3 dB, fast, for the length of the effect
+  ...(sfx ? [`[${lines.length + 1}:a]asplit=2[fx][fxkey]`, `[duck][fxkey]sidechaincompress=threshold=0.02:ratio=2.5:attack=4:release=180:makeup=1[bed]`] : []),
+  `${sfx ? '[bed]' : '[duck]'}[vo]${sfx ? '[fx]' : ''}amix=inputs=${sfx ? 3 : 2}:normalize=0:dropout_transition=0,afade=t=out:st=${DUR - 2.2}:d=2.2[mix]`);
 const pre = path.join(ROOT, 'out/mix-pre.wav');
 execFileSync('nice', ['ffmpeg', '-y', '-loglevel', 'error', ...inputs, '-filter_complex', graph.join(';'), '-map', '[mix]', '-t', String(DUR), pre]);
 const j = JSON.parse(execFileSync('bash', ['-c', `ffmpeg -hide_banner -i "${pre}" -af loudnorm=I=-16:TP=${TP}:LRA=11:print_format=json -f null - 2>&1 | sed -n '/^{/,/^}/p'`], { encoding: 'utf8' }));
 execFileSync('nice', ['ffmpeg', '-y', '-loglevel', 'error', '-i', pre, '-af', `loudnorm=I=-16:TP=${TP}:LRA=11:measured_I=${j.input_i}:measured_TP=${j.input_tp}:measured_LRA=${j.input_lra}:measured_thresh=${j.input_thresh}:offset=${j.target_offset}:linear=true`, '-ar', '48000', path.join(ROOT, 'out/mix.wav')]);
 console.log('mix: in', j.input_i, `LUFS -> out/mix.wav (-16 LUFS, ${TP} dBTP)`);
+// --sfx-check <start seconds>: 30 s of the effects and the music only (no voice), at the level they have in the mix -> out/sfx-check.wav
+if (sfx && process.argv.includes('--sfx-check')) { const from = +arg('sfx-check', 0) || 0, gdb = -16 - (+j.input_i);
+  const g2 = [`[0:a]aresample=48000,${fit}atrim=0:${DUR},apad=whole_dur=${DUR},volume=${cfg.musicGain ?? 0.62}[mus]`, `[1:a]asplit=2[fx][fxkey]`,
+    `[mus][fxkey]sidechaincompress=threshold=0.02:ratio=2.5:attack=4:release=180:makeup=1[bed]`, `[bed][fx]amix=inputs=2:normalize=0:dropout_transition=0,volume=${gdb.toFixed(2)}dB[o]`];
+  execFileSync('nice', ['ffmpeg', '-y', '-loglevel', 'error', ...(music ? ['-i', music] : ['-f', 'lavfi', '-t', String(DUR), '-i', 'anullsrc=r=48000:cl=stereo']), '-i', sfx, '-filter_complex', g2.join(';'), '-map', '[o]', '-ss', String(from), '-t', '30', path.join(ROOT, 'out/sfx-check.wav')]);
+  console.log(`sfx check: ${from} to ${from + 30} s, effects and music only -> out/sfx-check.wav`); }
 const ts = (s, sep) => { const h = Math.floor(s / 3600), mi = Math.floor(s % 3600 / 60), se = s % 60; return `${String(h).padStart(2, '0')}:${String(mi).padStart(2, '0')}:${se.toFixed(3).padStart(6, '0').replace('.', sep)}`; };
 const caps = [];
 for (const l of lines) { let cur = []; const flush = () => { if (cur.length) { caps.push({ s: l.at + cur[0].s, e: l.at + cur[cur.length - 1].e + 0.25, text: cur.map(w => w.w).join(' ') }); cur = []; } };
