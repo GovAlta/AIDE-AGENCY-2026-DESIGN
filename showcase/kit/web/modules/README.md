@@ -53,6 +53,29 @@ node tools/new-film.mjs --name my-platform --title "My Platform" --kind network 
 Measured 2026-11-12 (one niced software browser, load about 11): 1.6 ms a frame flat, 5 ms tilted with a flow, 9 ms with 1,200
 containers, 10 ms for the dark many-packets shot. A network film renders in the cloud at plate-film speed.
 
+## media-stage.js (`media.css`): existing 3D and 2D simulation footage in the Agency look
+
+For films built on footage the product already made: construction films, flood replays, rooftop or splat renders, interface
+recordings (first used for film #5, the Highway and Bridge Simulator; meant for #6 flood, #7 rooftop, the bridge splat and VSAI).
+Enable with `"stage": "/kit/modules/media-stage.js"` and link `/kit/modules/media.css`. Drive it from `stateAt(t).world.media`; the
+file header lists every field.
+
+- **Plates.** An image or an image sequence (`seq: { pattern, fps, start, t }`, so frames stay a pure function of time in the cloud).
+  `crop` (source px) leaves out a HUD the source burned in; `mode: 'window'` puts the footage in a glass window with a bezel and an
+  optional title bar; `grow` 0..1 eases the window to full bleed (the signature move from an interface to its own render);
+  `zoom` and `pan` give a slow push.
+- **Grade.** `'agency'` (default) lifts shadows, cools the light and drops saturation a little so footage and the light glass sit
+  together; `'none'` for real interface recordings; or `{ sat, con, bri, lift, cool }`. `wash` (one or a list) raises light from an
+  edge so type can sit on footage.
+- **Overlays.** `tags` pin a glass label to a source pixel (`at`), mapped through crop and grow, so a tag tracks the footage when the
+  timeline keys `at` over time; `stage.toFrame(id, [sx, sy])` gives the frame point. `cards` take HTML built with `md.ledger`,
+  `md.checks`, `md.range`, `md.chips` (export `md`). `band` is the Agency strip (glass or `solid` navy) with chapter, place and one
+  number; `letterbox` uses the ground colour, not black; `credit` carries the imagery attribution.
+- **Rules.** Every value in a card is the product's own, recorded in the film's `NOTES.md`. Prefer clean re-renders of the footage to
+  cropping (a crop to clear a HUD enlarges about 1.5 times); re-set the source's own HUD values in glass rather than inventing new ones.
+- Mockups of the three variants (full bleed + glass, glass windows that grow, cinema band):
+  `/mnt/data/projects/agency-2026/showcase/05-highway-bridge/storyboard/mockups-sheet.jpg` (`web/mockups.js` there is a worked example).
+
 ## map-stage.js (generic, geographic films)
 
 The first-class map stage. Declare layers in `film.config.json` and drive them from `stateAt(t).world.map`; the full field list is

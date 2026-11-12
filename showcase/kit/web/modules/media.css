@@ -1,0 +1,94 @@
+/* Media stage (web/modules/media-stage.js): existing 3D and 2D simulation footage merged with the Agency light look.
+   A plate is footage (an image or a frame of an image sequence) shown full bleed or inside a glass window that can grow to full
+   frame. The grade lifts the footage toward the light ground so it and the glass sit together. Tags, cards and the band are
+   frosted glass placed over the footage; their glass is dense enough to hide any HUD the source burned in beneath it.
+   Every value a card shows is the film's (from its NOTES.md); nothing here writes text. */
+.md-space { position: absolute; inset: 0; overflow: hidden; isolation: isolate; font-family: Inter, system-ui, sans-serif;
+  --md-ground: #EEF2F7; --md-ground-2: #E2E9F1; --md-ink: #022C4C; --md-body: #22384C; --md-soft: #4F6274;
+  --md-glass-a: rgba(255,255,255,.80); --md-glass-b: rgba(246,249,253,.62); --md-rim: rgba(255,255,255,.95);
+  --md-shadow: rgba(18,44,80,.26); --md-shadow-2: rgba(18,44,80,.10); --md-line: rgba(2,44,76,.12);
+  --md-accent: #0177CD; --md-good: #2E7D32; --md-warn: #B26A00; --md-bad: #B3261E;
+  background: radial-gradient(1200px 700px at 18% 12%, #FFFFFF 0%, var(--md-ground) 55%, var(--md-ground-2) 100%); }
+.md-space.md-dark { --md-ground: #06213A; --md-ground-2: #03162A; --md-ink: #FFFFFF; --md-body: #E6EEF5; --md-soft: #A9C1D6;
+  --md-glass-a: rgba(12,40,68,.80); --md-glass-b: rgba(6,28,50,.70); --md-rim: rgba(255,255,255,.24); --md-shadow: rgba(0,0,0,.5); --md-line: rgba(255,255,255,.14);
+  --md-accent: #4FC3F7; --md-good: #8DC63F; --md-warn: #F2C230; --md-bad: #FF8A80; }
+/* soft luminous blooms on the ground (behind windowed plates) */
+.md-bloom { position: absolute; border-radius: 50%; filter: blur(80px); opacity: .55; pointer-events: none; }
+
+/* a plate: the clip box is placed in frame pixels; the image inside is placed so the crop rectangle fills the box (cover) */
+.md-plate { position: absolute; overflow: hidden; }
+.md-plate > img { position: absolute; left: 0; top: 0; transform-origin: 0 0; max-width: none; }
+.md-plate.md-win { border-radius: var(--md-r, 34px); border: 1.5px solid var(--md-rim);
+  box-shadow: 0 60px 120px var(--md-shadow), 0 14px 30px var(--md-shadow-2), inset 0 2px 0 var(--md-rim); }
+.md-plate > .md-tint { position: absolute; inset: 0; pointer-events: none; }
+.md-plate > .md-sheen { position: absolute; inset: 0; pointer-events: none; border-radius: inherit;
+  background: linear-gradient(118deg, rgba(255,255,255,.28) 0%, rgba(255,255,255,0) 22%, rgba(255,255,255,0) 80%, rgba(255,255,255,.10) 100%); }
+/* the window's glass frame: a frosted bezel around the footage (window mode only) */
+.md-bezel { position: absolute; border-radius: calc(var(--md-r, 34px) + 14px); pointer-events: none;
+  background: linear-gradient(142deg, var(--md-glass-a), var(--md-glass-b)); border: 1.5px solid var(--md-rim);
+  backdrop-filter: blur(30px) saturate(1.5); -webkit-backdrop-filter: blur(30px) saturate(1.5);
+  box-shadow: 0 60px 120px var(--md-shadow), 0 14px 30px var(--md-shadow-2), inset 0 2px 0 var(--md-rim); }
+.md-bezel > .md-cap { position: absolute; left: 28px; right: 28px; top: 0; height: var(--md-cap, 0px); display: flex; align-items: center; gap: 14px;
+  font-size: 22px; font-weight: 700; color: var(--md-ink); letter-spacing: -.01em; }
+.md-bezel > .md-cap .md-dots { display: flex; gap: 8px; } .md-bezel > .md-cap .md-dots i { width: 12px; height: 12px; border-radius: 50%; background: rgba(2,44,76,.16); }
+.md-bezel > .md-cap .md-meta { margin-left: auto; font: 600 16px "Geist Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--md-soft); }
+
+/* washes: white (or night) light that lets type sit on footage */
+.md-wash { position: absolute; inset: 0; pointer-events: none; }
+
+/* glass: the one material for tags, cards and the band */
+.md-glass { position: absolute; color: var(--md-ink); border-radius: 26px; border: 1.5px solid var(--md-rim);
+  background: linear-gradient(142deg, var(--md-glass-a), var(--md-glass-b));
+  backdrop-filter: blur(36px) saturate(1.6); -webkit-backdrop-filter: blur(36px) saturate(1.6);
+  box-shadow: 0 34px 70px var(--md-shadow), 0 8px 18px var(--md-shadow-2), inset 0 2px 0 var(--md-rim); }
+.md-kick { font: 600 17px "Geist Mono", monospace; letter-spacing: .16em; text-transform: uppercase; color: var(--md-soft); }
+.md-h { font-weight: 800; letter-spacing: -.025em; line-height: 1.05; color: var(--md-ink); }
+.md-t { font-size: 24px; line-height: 1.35; color: var(--md-body); }
+.md-num { font-weight: 800; letter-spacing: -.035em; font-variant-numeric: tabular-nums; color: var(--md-ink); line-height: 1; }
+
+/* a tag: a pin on the footage, a leader, a glass label */
+.md-tag { position: absolute; left: 0; top: 0; pointer-events: none; }
+.md-tag .md-pin { position: absolute; width: 22px; height: 22px; margin: -11px 0 0 -11px; border-radius: 50%; background: #fff;
+  box-shadow: 0 0 0 6px rgba(255,255,255,.35), 0 4px 12px rgba(2,44,76,.35); }
+.md-tag .md-pin::after { content: ""; position: absolute; inset: 6px; border-radius: 50%; background: var(--md-c, var(--md-accent)); }
+.md-tag svg { position: absolute; left: 0; top: 0; overflow: visible; }
+.md-tag .md-glass { padding: 16px 24px 18px; border-radius: 22px; white-space: nowrap; }
+.md-tag .md-glass b { display: block; font-size: 28px; font-weight: 800; letter-spacing: -.02em; }
+.md-tag .md-glass span { display: block; font-size: 20px; color: var(--md-body); margin-top: 4px; }
+
+/* cards */
+.md-card { padding: 30px 36px; display: flex; flex-direction: column; gap: 14px; }
+.md-rows { display: grid; grid-template-columns: auto 1fr auto; gap: 12px 18px; align-items: center; font-size: 22px; color: var(--md-body); }
+.md-bar { height: 12px; border-radius: 6px; background: var(--md-line); position: relative; overflow: hidden; }
+.md-bar > i { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 6px; background: var(--md-c, var(--md-accent)); }
+.md-checks { display: flex; gap: 14px; }
+.md-check { flex: 1; border-radius: 18px; padding: 16px 18px; background: rgba(255,255,255,.55); border: 1.5px solid rgba(255,255,255,.9); }
+.md-dark .md-check { background: rgba(255,255,255,.06); border-color: rgba(255,255,255,.14); }
+.md-check .md-num { font-size: 54px; color: var(--md-c); } .md-check div:last-child { font-size: 19px; color: var(--md-body); margin-top: 6px; }
+.md-range { position: relative; height: 64px; margin-top: 6px; }
+.md-range .md-track { position: absolute; left: 0; right: 0; top: 28px; height: 8px; border-radius: 4px; background: var(--md-line); }
+.md-range .md-span { position: absolute; top: 22px; height: 20px; border-radius: 10px; background: linear-gradient(90deg, rgba(1,119,205,.35), rgba(1,119,205,.85), rgba(1,119,205,.35)); }
+.md-range .md-mark { position: absolute; top: 12px; width: 4px; height: 40px; margin-left: -2px; border-radius: 2px; background: var(--md-ink); }
+.md-range .md-lab { position: absolute; top: 50px; transform: translateX(-50%); font: 600 16px "Geist Mono", monospace; color: var(--md-soft); white-space: nowrap; }
+.md-chips { display: flex; flex-wrap: wrap; gap: 12px; }
+.md-chip { font-size: 21px; font-weight: 700; padding: 10px 20px; border-radius: 99px; background: rgba(255,255,255,.62); border: 1.5px solid rgba(255,255,255,.95);
+  color: var(--md-ink); display: inline-flex; align-items: center; gap: 10px; box-shadow: 0 6px 14px rgba(18,44,80,.10); }
+.md-chip i { width: 14px; height: 14px; border-radius: 4px; background: var(--md-c, var(--md-accent)); }
+.md-chip.on { background: var(--md-ink); color: #fff; border-color: transparent; }
+
+/* the band: the Agency strip that carries the chapter, the place and the credit over footage */
+.md-band { position: absolute; left: 56px; right: 56px; bottom: 44px; height: 92px; border-radius: 26px; display: flex; align-items: center; gap: 28px; padding: 0 34px; }
+.md-band .md-chap { font-size: 30px; font-weight: 800; letter-spacing: -.02em; }
+.md-band .md-sep { width: 2px; height: 40px; background: var(--md-line); }
+.md-band .md-place { font-size: 24px; color: var(--md-body); }
+.md-band .md-stat { margin-left: auto; display: flex; align-items: baseline; gap: 12px; }
+.md-band .md-stat .md-num { font-size: 44px; }
+.md-band .md-stat span { font: 600 16px "Geist Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--md-soft); }
+.md-band.md-solid { background: rgba(2,44,76,.90); border-color: rgba(255,255,255,.18); color: #fff; backdrop-filter: blur(24px); }
+.md-band.md-solid .md-chap, .md-band.md-solid .md-num { color: #fff; } .md-band.md-solid .md-place { color: #D6E3EF; } .md-band.md-solid .md-stat span { color: #A9C1D6; }
+.md-band.md-solid .md-sep { background: rgba(255,255,255,.22); }
+.md-credit { position: absolute; right: 60px; bottom: 12px; font-size: 14px; color: var(--md-soft); text-shadow: 0 0 6px rgba(255,255,255,.9); white-space: nowrap; }
+.md-dark .md-credit, .md-credit.md-on-dark { color: #C9D8E6; text-shadow: 0 0 6px rgba(0,0,0,.6); }
+
+/* letterbox bars for the cinema variant (ground-coloured, not black) */
+.md-letter { position: absolute; left: 0; right: 0; background: var(--md-ground); }
