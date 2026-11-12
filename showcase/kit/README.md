@@ -85,7 +85,7 @@ share of about 100 tasks in all (`FARM_TOTAL_TASKS`).
 ## Smoke test (2026-11-11)
 
 `example/`: 8 s, 480 frames. Dry run clean; cloud render on 10 tasks in about 90 s (about 9 frames a second); encode: 480 of 480
-frames, -16.1 LUFS, -2.0 dBFS peak; job deleted afterward. Output: `/mnt/data/projects/agency-2026/showcase/kit-smoke-example/deliver/ (local)`.
+frames, -16.1 LUFS, -2.0 dBFS peak; job deleted afterward. The output is not kept: render the example again to see it.
 
 The example music is an excerpt of the owner's track for film #11; use each film's own music.
 

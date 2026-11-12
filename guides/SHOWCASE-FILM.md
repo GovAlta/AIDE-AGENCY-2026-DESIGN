@@ -159,5 +159,7 @@ Every film must be regenerable by someone else, months later. So, for every show
    the film folder's commit, the full `film.config.json`, the frame count, the voice settings and the encoder.
 5. **Masters are not in git.** Keep them in `deliver/` and publish them as a release asset or in a bucket; `REPRODUCE.md` says where.
 6. **Films live outside the design repo**, in `FILMS_DIR` (default the `showcase/` folder beside the repo clone).
+7. **Apps are referenced, not copied**: the app a film shows is checked out beside the films (on SHELL, `agency-2026/apps/<app>`)
+   and pinned by commit in `REPRODUCE.md`. The layout of `agency-2026/` is described in its own `README.md`.
 
 The render method itself (why a Cloud Run job, sizing, time, cost, rules) is in `showcase/kit/docs/RENDER-FARM.md`.

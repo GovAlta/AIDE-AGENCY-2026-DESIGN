@@ -5,8 +5,8 @@ terrain, a chase camera along a route, the planner's real panels re-drawn in the
 from the planner's own data or API.
 
 The film itself is a project output, so it is **not in this repo** (owner, 2026-11-12). It lives locally at
-`/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/` (source, `NOTES.md`, `PROCESS-LOG.md`, storyboard, phone preview), and the
-full production folder with masters and frames at `/mnt/data/projects/agency-2026/#11 pan-canadian-fibre-optics-simulation/`. The planner
+`/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/`: its source and notes (in git), the masters in `deliver/`, the frames in
+`film/out/frames`, and `REPRODUCE.md`. The planner it films is checked out in `/mnt/data/projects/agency-2026/apps/fibre-network`. The planner
 it films is `GovAlta-Lab/AIDE-PAN-CANADIAN-FIBRE-NETWORK` at commit 2610761.
 
 ## Which kit feature made each scene

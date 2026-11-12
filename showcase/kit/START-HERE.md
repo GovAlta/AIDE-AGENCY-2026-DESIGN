@@ -16,7 +16,7 @@ was learned making it.
 | Every figure and its source | `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/NOTES.md` |
 | A full timeline (globe, chase camera, panel, cursor, charts) | `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/film/web/timeline.js` |
 | The owner's words | `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/owner_lines.txt` |
-| This kit's 8 s smoke film | inputs in `example/`; its rendered preview is local: `/mnt/data/projects/agency-2026/showcase/kit-smoke-example/deliver/` |
+| This kit's 8 s smoke film | inputs in `example/`; render it yourself to see it (about 1 minute on 10 cloud tasks) |
 
 ## One command to start
 
