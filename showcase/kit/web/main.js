@@ -50,5 +50,8 @@ const takeErrors = () => (stage?.takeErrors ? stage.takeErrors() : 0) + plates.t
 await apply(TL.stateAt(0));
 window.filmInitErrors = takeErrors();
 window.film = { TL, DUR, FPS, config, theme: THEME, stage, plates, UI, apply, seek: t => apply(TL.stateAt(t)),
-  frame: async n => { await apply(TL.stateAt(n / FPS)); const e = takeErrors(); if (e) throw new Error(`${e} load error(s) on frame ${n}`); return true; } };
+  // after the state is applied, let the compositor produce two frames before the capture: a screenshot taken at once can catch a
+  // backdrop-filter (the spatial stage's glass) that has not been re-drawn yet, which showed as one-frame flashes of a window's fill on
+  // the render farm (film #1; never on a single local browser). The timeout covers a page whose animation frames are throttled.
+  frame: async n => { await apply(TL.stateAt(n / FPS)); await new Promise(r => { let done = false; const fin = () => { if (!done) { done = true; r(); } }; requestAnimationFrame(() => requestAnimationFrame(fin)); setTimeout(fin, 120); }); const e = takeErrors(); if (e) throw new Error(`${e} load error(s) on frame ${n}`); return true; } };
 window.filmReady = true;

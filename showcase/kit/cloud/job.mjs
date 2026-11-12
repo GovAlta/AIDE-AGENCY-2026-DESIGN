@@ -25,12 +25,17 @@ const open = async () => { if (browser) await browser.close().catch(() => {});
   const initErrors = await page.evaluate(() => window.filmInitErrors); if (initErrors) throw new Error(`page started with ${initErrors} load error(s)`);
   cdp = await page.context().newCDPSession(page); };
 for (let tries = 1; !cdp; tries++) { try { await open(); } catch (e) { console.log(`open attempt ${tries}: ${e.message}`); cdp = null; if (tries >= 5) process.exit(1); } }
-let failed = 0; const t0 = Date.now();
+let failed = 0, unstable = 0; const t0 = Date.now();
 for (const [i, f] of mine.entries()) {
   let ok = false;
   for (let attempt = 0; attempt < 3 && !ok; attempt++) {
     try { if (!cdp) await open(); await page.evaluate(n => window.film.frame(n), f);
-      const shot = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: +QUALITY }); const body = Buffer.from(shot.data, 'base64');
+      // A STABLE capture: the page is still, so two screenshots of it must be the same picture. If they are not, the compositor had not
+      // finished (a layer or a backdrop filter drawn one frame late: film #1 had one-frame flashes of a window's fill on the farm, never
+      // on one local browser); capture again until two in a row agree (at most 5), and send the last.
+      let shot = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: +QUALITY });
+      for (let k = 0; k < 4; k++) { const again = await cdp.send('Page.captureScreenshot', { format: 'jpeg', quality: +QUALITY }); const same = again.data === shot.data; shot = again; if (same) break; if (k === 0) unstable++; }
+      const body = Buffer.from(shot.data, 'base64');
       for (let s = 0; s < 5 && !ok; s++) { const r = await fetch(`${SINK}/frame/${f}?token=${FARM_TOKEN}`, { method: 'PUT', body, signal: AbortSignal.timeout(60000) }).catch(() => null); ok = !!r && r.ok; if (!ok) await new Promise(r2 => setTimeout(r2, 2000 * (s + 1))); }
       if (!ok) throw new Error('receiver refused the frame');
     } catch (e) { console.log(`frame ${f} attempt ${attempt + 1}: ${String(e.message).slice(0, 200)}`); cdp = null; }
@@ -39,4 +44,4 @@ for (const [i, f] of mine.entries()) {
   if ((i + 1) % 20 === 0) console.log(`task ${idx}: ${i + 1}/${mine.length}, ${((Date.now() - t0) / (i + 1) / 1000).toFixed(1)} s/frame`);
 }
 await browser?.close().catch(() => {}); server.kill('SIGTERM');
-console.log(`task ${idx} done, failed ${failed}`); process.exit(failed ? 1 : 0);
+console.log(`task ${idx} done, failed ${failed}, frames that needed a second look ${unstable}`); process.exit(failed ? 1 : 0);

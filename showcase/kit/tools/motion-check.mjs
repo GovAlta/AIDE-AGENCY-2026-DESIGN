@@ -49,12 +49,15 @@ if (fdir) { const W = 640, H = 360, k = W / 1920, t0 = +arg('from', 0), t1 = +ar
       if (!series.has(id)) series.set(id, []); series.get(id).push({ f: fr, L: L / n, E: E / n }); } };
   await new Promise(res => { ff.stdout.on('data', d => { buf = buf.length ? Buffer.concat([buf, d]) : d; while (buf.length >= sz) { measure(buf.subarray(0, sz), f++); buf = buf.subarray(sz); } }); ff.on('close', res); });
   const flags = [], med = v => { const s = [...v].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
-  for (const [id, S] of series) for (const key of ['L', 'E']) { const floor = key === 'L' ? 0.5 : 0.1;
+  for (const [id, S] of series) for (const key of ['L', 'E']) { const floor = key === 'L' ? 0.6 : 0.2, big = key === 'L' ? 4 : 1.5;
     for (let i = 8; i < S.length - 8; i++) { if (S[i].f - S[i - 8].f !== 8 || S[i + 8].f - S[i].f !== 8) continue;   // a continuous run only
       const d = S[i][key] - S[i - 1][key], around = []; for (let j = i - 7; j <= i + 7; j++) if (j !== i && j !== i + 1) around.push(Math.abs(S[j][key] - S[j - 1][key]));
-      const m = med(around), back = S[i + 1][key] - S[i][key], drift = S[i + 6][key] - S[i - 6][key];
+      const m = med(around), drift = S[i + 6][key] - S[i - 6][key];
       // a jump: far above the local change; and not the start of a move that continues (the value 6 frames on is nearer the old value than the new, or the jump is reversed at once)
-      if (Math.abs(d) > Math.max(floor, m * 6) && (Math.sign(back) === -Math.sign(d) && Math.abs(back) > Math.abs(d) * 0.5 || Math.abs(drift) < Math.abs(d) * 0.5 || m < Math.abs(d) / 20))
+      // flagged: a jump far above the local change that is undone within three frames (a flash), or that leaves the value where it was six
+      // frames on (a blip), or a lasting step so large that no row, press or typed word explains it (a change of material or a dropped layer)
+      const undone = [1, 2, 3].some(q => Math.sign(S[i + q][key] - S[i][key]) === -Math.sign(d) && Math.abs(S[i + q][key] - S[i][key]) > Math.abs(d) * 0.6);
+      if (Math.abs(d) > Math.max(floor, m * 6) && (undone || Math.abs(drift) < Math.abs(d) * 0.4 || Math.abs(d) > big))
         flags.push({ id, metric: key === 'L' ? 'luminance' : 'sharpness', frame: S[i].f, t: +(S[i].f / FPS).toFixed(2), jump: +d.toFixed(2), local: +m.toFixed(3) }); } }
   flags.sort((x, y) => x.frame - y.frame);
   const groups = []; for (const fl of flags) { const g = groups[groups.length - 1]; if (g && g.id === fl.id && fl.frame - g.last <= 30) { g.last = fl.frame; g.n++; g.max = Math.max(g.max, Math.abs(fl.jump)); } else groups.push({ id: fl.id, from: fl.t, first: fl.frame, last: fl.frame, n: 1, max: Math.abs(fl.jump), metric: fl.metric }); }
