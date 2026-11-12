@@ -13,6 +13,46 @@ export async function createStage(el, { config, helpers }) {
 }
 ```
 
+## network-stage.js (architecture explainers, any product)
+
+The diagram equivalent of the map stage: a circuit-board world of **zones**, **nodes** and thin **traces** seen through a perspective
+camera, with **packets** (requests, agents, people, results) riding the traces, **permission gates** (allow, deny, ask a person), an
+**audit ledger**, and **container spawn** (one tile to thousands, with level of detail). It is product-neutral: the architecture is data
+in `film.config.json` `"network"`, and the timeline drives it through `stateAt(t).world.net`. Canvas 2D with its own projection, so a
+frame costs 2 to 10 ms and renders anywhere (no WebGL). Both themes. The header of the file lists every field.
+
+```bash
+node tools/new-film.mjs --name my-platform --title "My Platform" --kind network   # starter: templates/timeline-network.js + an example network
+```
+
+- **Layout.** World units are pixels at zoom 1, so lay the board out inside x 80–1840, y 180–910. Nodes take a `pos` or fall into a grid
+  in their zone. Traces are routed as horizontal and vertical runs with 45-degree bends and ring pads; edges that leave a node on the
+  same side run as a bus. `via` adds waypoints; `route: "h" | "v" | "hv"` forces a shape.
+- **Camera.** `stage.frame(ids, pad, tilt, rot)` returns the camera that fits those nodes or zones in the safe area *as seen at that
+  tilt* (a tilted board looms at the bottom of the frame; the fit is measured on the projected corners). Join keys with `H.track`.
+  Tilt 0 is a flat diagram; 45–58 is the cinematic view. Billboards (node tiles, packets, gates) shrink less than the board when far,
+  so labels stay readable.
+- **Flows.** A packet is `{ edge | path: ['a', 'b:rev'], u }`; the timeline moves `u`. To stop at a gate, run `u` to
+  `stage.gateU(edge)`, set `gates[edge] = { open, result }`, then go on (allow), turn back (deny) or wait for a person (`ask: { to, p }`).
+  Write the ledger line at the moment the gate decides. `stage.swarm(t, …)` makes many packets at once for the pull-back.
+- **Scale-out.** `spawn: { zone, of, count }` fills a fixed grid from the centre outwards, so nothing jumps as the count grows;
+  `stage.spawnFrame(zone, of, n, …)` frames the first n. Start close on a dozen, then pull back to the whole zone.
+- **For laypersons.** `focus` ("you are here": the rest dims), `steps` (numbered pins on the flow), `notes` (plain-language captions
+  with a leader line, kept inside the frame), `legend` (what a trace, a packet, a gate and a ledger line mean; show it once).
+  Labels and the kit cursor attach with `ui.labels[].lonLat = stage.world('nodeId')` and `stage.along(edge, u)`.
+
+**Legibility rules for an explainer** (the starter follows them):
+
+1. One new idea per shot. A shot ends when the narration moves on.
+2. Name every part before it moves: a zone appears, is named in plain words, and only then carries a packet.
+3. Never more than about seven labelled things on screen. Gate labels show only while a gate decides; dim the rest with `focus`.
+4. Point the camera at what the narration is about; let everything else step back (alpha), not vanish.
+5. Four acts, in order: what it is, architecture, one request end to end, what it makes possible.
+6. Every name, scope and ledger line is real and recorded in `NOTES.md`; label anything else as an example.
+
+Measured 2026-11-12 (one niced software browser, load about 11): 1.6 ms a frame flat, 5 ms tilted with a flow, 9 ms with 1,200
+containers, 10 ms for the dark many-packets shot. A network film renders in the cloud at plate-film speed.
+
 ## map-stage.js (generic, geographic films)
 
 The first-class map stage. Declare layers in `film.config.json` and drive them from `stateAt(t).world.map`; the full field list is

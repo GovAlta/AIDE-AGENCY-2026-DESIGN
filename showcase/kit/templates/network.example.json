@@ -1,0 +1,33 @@
+{
+ "$comment": "EXAMPLE network for the starter (templates/timeline-network.js). Replace every zone, node and edge with the real architecture, in the product's own plain words. World units are pixels at zoom 1 (keep the layout inside x 80-1840, y 180-910). Icons are Lucide names (brand/icons/lucide).",
+ "zones": [
+  { "id": "people", "title": "People", "kind": "people", "box": [80, 190, 270, 330], "accent": "blue", "cols": 1 },
+  { "id": "core", "title": "The assistant", "kind": "core", "box": [470, 190, 400, 330], "accent": "purple", "cols": 1 },
+  { "id": "systems", "title": "Systems it connects to", "kind": "systems", "box": [1000, 190, 840, 330], "accent": "cyan", "cols": 2 },
+  { "id": "audit", "title": "Audit record", "kind": "core", "box": [470, 590, 400, 320], "accent": "orange" },
+  { "id": "cloud", "title": "Workers in containers", "kind": "cloud", "box": [1000, 590, 840, 320], "accent": "green", "spawnBox": [1250, 630, 570, 262] }
+ ],
+ "nodes": [
+  { "id": "analyst", "zone": "people", "kind": "person", "label": "Analyst", "sub": "asks by voice or text" },
+  { "id": "manager", "zone": "people", "kind": "person", "label": "Manager", "sub": "approves changes", "icon": "user-check" },
+  { "id": "assistant", "zone": "core", "kind": "agent", "label": "Assistant", "sub": "listens and answers", "icon": "audio-lines" },
+  { "id": "planner", "zone": "core", "kind": "service", "label": "Planner", "sub": "splits work into steps", "icon": "list-checks" },
+  { "id": "docs", "zone": "systems", "kind": "system", "label": "Documents", "sub": "example system", "icon": "file-text" },
+  { "id": "mail", "zone": "systems", "kind": "system", "label": "Mail and calendar", "sub": "example system", "icon": "mail" },
+  { "id": "tickets", "zone": "systems", "kind": "system", "label": "Tickets", "sub": "example system", "icon": "ticket" },
+  { "id": "code", "zone": "systems", "kind": "system", "label": "Code", "sub": "example system", "icon": "git-branch" },
+  { "id": "ledger", "zone": "audit", "kind": "ledger", "label": "Audit record", "pos": [670, 662], "w": 360, "rows": 6 },
+  { "id": "runner", "zone": "cloud", "kind": "service", "label": "Job runner", "sub": "starts workers", "icon": "play", "pos": [1118, 760], "w": 186 }
+ ],
+ "edges": [
+  { "id": "ask", "from": "analyst", "to": "assistant", "accent": "blue" },
+  { "id": "plan", "from": "assistant", "to": "planner", "accent": "purple" },
+  { "id": "read", "from": "planner", "to": "docs", "accent": "cyan", "gate": { "scope": "documents · read", "at": 0.42 } },
+  { "id": "send", "from": "planner", "to": "mail", "accent": "cyan", "gate": { "scope": "mail · send", "at": 0.5 } },
+  { "id": "file", "from": "planner", "to": "tickets", "accent": "cyan", "gate": { "scope": "tickets · write", "at": 0.46 } },
+  { "id": "start", "from": "planner", "to": "runner", "accent": "green", "gate": { "scope": "workers · start", "at": 0.5 } },
+  { "id": "push", "from": "runner", "to": "code", "accent": "green", "gate": { "scope": "code · write", "at": 0.5 } },
+  { "id": "approve", "from": "manager", "to": "planner", "accent": "blue" },
+  { "id": "log", "from": "planner", "to": "ledger", "accent": "orange" }
+ ]
+}

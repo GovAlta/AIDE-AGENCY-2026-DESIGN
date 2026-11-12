@@ -105,7 +105,14 @@ relief and night lights through the kit's caching tile proxy, frozen clock, load
   `irrigation_all`, `province` …). Its Policy Simulator is marked "Pre-decisional. Advice to Minister": film only the public
   parts or synthetic positions, and ask the owner first.
 
-## Then, for both paths
+## Path D: architecture explainer (the network stage)
+
+For films that explain how a system is built and how work flows through it, to a layperson: `--kind network`. Describe the system as
+zones, nodes and edges in `film.config.json` `network`, then follow one request end to end before showing many. Rules: one new idea per
+shot, name every part before it moves, at most about seven labelled things on screen, zoom to what the narration is about
+(`web/modules/README.md`, `README.md`).
+
+## Then, for every path
 
 Dry run → stills → storyboard for the owner → narration → preview every 2 s → cloud render → mix → encode → QA → deliver
 → clean up. The skill has the detail; `RECIPE.md` has the commands. Render frames only in the Cloud Run job

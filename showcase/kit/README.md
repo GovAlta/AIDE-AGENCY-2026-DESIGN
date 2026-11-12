@@ -103,3 +103,12 @@ The example music is an excerpt of the owner's track for film #11; use each film
 The kit lives in `AIDE-AGENCY-2026-DESIGN/showcase/kit` and finds everything relative to itself (`tools/lib/paths.mjs`): brand files in
 `<repo>/brand`, films in `$FILMS_DIR` (default `<repo>/../films`), the inventory in `$AGENCY_INVENTORY` (optional). The reference film is
 `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/.` The rules for when to make a showcase film, and how, are in `guides/SHOWCASE-FILM.md`.
+
+## The network stage and architecture explainers (added 2026-11-12)
+
+`node tools/new-film.mjs --name <slug> --title "…" --kind network` starts an **architecture explainer**: a film that helps a layperson
+understand a system's parts, integrations, flows and opportunities. The stage is `web/modules/network-stage.js` (`"stage":
+"/kit/modules/network-stage.js"` and a `"network"` block of zones, nodes and edges in `film.config.json`): a circuit-board plane in
+perspective where requests and agents travel thin traces, stop at permission gates (allow, deny, ask a person), write lines to an audit
+record, and containers scale from a dozen to thousands. `templates/timeline-network.js` is the four-act starter (what it is, architecture,
+one request end to end, opportunities). API and legibility rules: `web/modules/README.md`. First film made with it: #1 Atlas.
