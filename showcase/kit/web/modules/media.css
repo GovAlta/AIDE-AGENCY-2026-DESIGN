@@ -33,8 +33,9 @@
 .md-bezel > .md-cap .md-dots { display: flex; gap: 8px; } .md-bezel > .md-cap .md-dots i { width: 12px; height: 12px; border-radius: 50%; background: rgba(2,44,76,.16); }
 .md-bezel > .md-cap .md-meta { margin-left: auto; font: 600 16px "Geist Mono", monospace; letter-spacing: .12em; text-transform: uppercase; color: var(--md-soft); }
 
-/* washes: white (or night) light that lets type sit on footage */
-.md-wash { position: absolute; inset: 0; pointer-events: none; }
+/* scrim: soft light only behind a block of text on footage (feathered edges, about half strength); no washes over the footage */
+.md-scrim { position: absolute; z-index: 65; pointer-events: none; border-radius: 40px; background: rgba(246,249,252,var(--md-scrim-a,.42)); filter: blur(18px); }
+.md-dark .md-scrim { background: rgba(4,27,48,var(--md-scrim-a,.42)); }
 
 /* glass: the one material for tags, cards and the band */
 .md-glass { position: absolute; color: var(--md-ink); border-radius: 26px; border: 1.5px solid var(--md-rim);

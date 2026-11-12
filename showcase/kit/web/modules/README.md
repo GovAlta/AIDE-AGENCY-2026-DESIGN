@@ -64,9 +64,12 @@ file header lists every field.
   `crop` (source px) leaves out a HUD the source burned in; `mode: 'window'` puts the footage in a glass window with a bezel and an
   optional title bar; `grow` 0..1 eases the window to full bleed (the signature move from an interface to its own render);
   `zoom` and `pan` give a slow push.
-- **Grade.** `'agency'` (default) lifts shadows, cools the light and drops saturation a little so footage and the light glass sit
-  together; `'none'` for real interface recordings; or `{ sat, con, bri, lift, cool }`. `wash` (one or a list) raises light from an
-  edge so type can sit on footage.
+- **Grade.** `'agency'` (default) keeps footage clean and in full colour; `'soft'` a light touch; `'none'` for interface recordings; or
+  `{ sat, con, bri, lift, cool }`. **No white washes, vignettes or haze over footage** (owner, film #5 review): legibility comes from the
+  glass cards and from `scrims`, a soft patch the size of a text block plus a small margin at about 0.4.
+- **Motion.** Never slow a clip below its real speed (a 30 fps source at 0.5x repeats each frame four times and reads as a low frame
+  rate). Take a longer source range or cut to a second clip. Map film frames to source frames exactly (`seq.t` = source seconds);
+  a 30 fps source on a 60 fps film then shows each frame twice, evenly.
 - **Overlays.** `tags` pin a glass label to a source pixel (`at`), mapped through crop and grow, so a tag tracks the footage when the
   timeline keys `at` over time; `stage.toFrame(id, [sx, sy])` gives the frame point. `cards` take HTML built with `md.ledger`,
   `md.checks`, `md.range`, `md.chips` (export `md`). `band` is the Agency strip (glass or `solid` navy) with chapter, place and one
