@@ -11,3 +11,8 @@ node_modules/
 **/audio-mix.wav
 # the small phone previews are the watchable record of each film (the repo root ignores *.mp4)
 !**/deliver/preview-720p-phone.mp4
+
+# film outputs never live in the repo (owner 2026-11-12); FILMS_DIR defaults to ../showcase
+kit/example/deliver/
+kit/example/out/
+reference/

@@ -11,7 +11,7 @@ film, the one command to scaffold a film (`node tools/new-film.mjs <slot>` from 
 project), and the three kinds: `app` (the app's screens as plates), `map` (its geographic data on the map stage), `data` (a kinetic data
 story with no app or map). Run `npm ci` in `showcase/kit` once.
 
-The reference film is #11, the Pan-Canadian Fibre Optics Planner (`/mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN/showcase/reference/11-pan-canadian-fibre/`: `deliver/preview-720p-phone.mp4` the film,
+The reference film is #11, the Pan-Canadian Fibre Optics Planner (`/mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN/`/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/:` `deliver/preview-720p-phone.mp4` the film,
 `stills/contact-sheet.jpg`, `PROCESS-LOG.md` every step, `NOTES.md` every figure, `film/web/timeline.js` a full 3:17 timeline, and a
 scene-by-scene map to the kit in its `README.md`). The kit is `/mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN/showcase/kit/` (read its `README.md` and `RECIPE.md`). Every tool runs with
 `--project <film dir>`; frames are a pure function of their number, so any range can be re-rendered on any machine.
@@ -53,7 +53,7 @@ Keep `PROCESS-LOG.md` current at every step (the owner wants the process reprodu
 1. **Intake.** `node /mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN/showcase/kit/tools/new-film.mjs <slot>` reads the inventory (`$AGENCY_INVENTORY`, default
    `/mnt/data/projects/agency-2026/project-inventory/inventory.json`, read-only: never write it); for a project not in the inventory use
    `--name <slug> --title "…" [--brief brief.json] --kind app|map|data`. It creates `$FILMS_DIR/<NN>-<slug>/` (default
-   `/mnt/data/projects/agency-2026/films/`, outside git) with `intake.json`, a prefilled `brief.md`, `SENSITIVITY.md`, and a
+   `/mnt/data/projects/agency-2026/showcase/`, outside git) with `intake.json`, a prefilled `brief.md`, `SENSITIVITY.md`, and a
    `film.config.json` holding this film's own ports and Cloud Run job name. Read `main_folder`, `repos`, `live_urls`,
    `suggested_video_angle`, `gaps`. Ask the owner for music, classification, the one message and the closing line.
 2. **Run the real app and capture it.** Clone (if `gh` gives 403 SAML: the owner runs `! gh-login`, then
@@ -130,3 +130,9 @@ cached base image), mixed to -16 LUFS / -2.0 dBTP and encoded; job deleted and r
 dry-runs all 11,856 frames from `showcase/reference` with no errors. `farm.sh` builds with `--network host` (the SHELL Docker bridge
 MTU is above the VM's), and each film's receiver needs a free port: if `render` says "receiver did not start", another film holds it;
 change `ports.receiver` in `film.config.json`.
+
+## Reproducibility (standard operating procedure, owner 2026-11-12)
+
+The film folder is its own git repository (`new-film.mjs` sets it up). Keep every custom script in it, fill `REPRODUCE.md` with each
+dependency and its pin, and let `encode.sh` write `deliver/BUILD.json`. Masters stay out of git. Films live in `FILMS_DIR`, outside the
+design repo. The render method: `showcase/kit/docs/RENDER-FARM.md`.

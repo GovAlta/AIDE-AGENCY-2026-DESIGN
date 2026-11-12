@@ -1,6 +1,6 @@
 // Starter timeline: MAP film (the app's own geographic data on the kit's map stage, web/modules/map-stage.js).
 // Declare layers in film.config.json "map.layers" (files from the film folder or from "mounts"), then drive them here.
-// Reference: film #11, showcase/reference/11-pan-canadian-fibre/film/web/timeline.js in the design repo (3:17 on a globe).
+// Reference: film #11, `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/film/web/timeline.js` in the design repo (3:17 on a globe).
 //
 // Theme: a light film uses basemap 'light' (NASA relief, pale); a dark film or one dark scene uses 'nasa-night'.
 // Grounds: 'none' behind the map (the map covers the frame), 'stars' only when the camera is far out on the globe.

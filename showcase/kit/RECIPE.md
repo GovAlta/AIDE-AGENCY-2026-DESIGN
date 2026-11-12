@@ -1,5 +1,7 @@
 # Recipe: one showcase film
 
+The render method is in `docs/RENDER-FARM.md`; the code-travels-with-the-film rules are in `guides/SHOWCASE-FILM.md` (Standard operating procedure).
+
 Follow in order. `F` is the film folder. Tick each line in `$F/PROCESS-LOG.md`.
 
 | # | Step | Command or action | Done when |
@@ -19,7 +21,8 @@ Follow in order. `F` is the film folder. Tick each line in `$F/PROCESS-LOG.md`.
 | 13 | Encode + QA | `tools/encode.sh $F`; `find-pops.py`; `layer-present.py`; 16-frame sheet; sensitivity review | frame count right, no dropouts |
 | 14 | Deliver | send `deliver/preview-720p-phone.mp4`; master stays in `deliver/` | owner reviews |
 | 15 | Fix | re-render only affected ranges (`farm.sh render $F a-b,c-d`), re-encode | owner approves |
-| 16 | Clean up | `cloud/farm.sh cleanup $F`; lessons into `PROCESS-LOG.md` (and the kit's SKILL.md if general) | job deleted, receiver stopped |
+| 16 | Record | commit the film folder (its own git repository); fill `REPRODUCE.md`; `deliver/BUILD.json` written by encode | someone else could regenerate it |
+| 17 | Clean up | `cloud/farm.sh cleanup $F`; lessons into `PROCESS-LOG.md` (and the kit's SKILL.md if general) | job deleted, receiver stopped |
 
 ## Never
 

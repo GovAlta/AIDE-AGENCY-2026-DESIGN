@@ -60,7 +60,7 @@ misleading, and the kit's rules now require that check. It rendered on 100 tasks
 - **Kit example:** the dry run covers 480 frames with no errors or bad numbers; three stills render, with the new wordmark in the chrome.
 - **New data film from scratch** (`--name`, no inventory): the dry run is clean, and six stills were reviewed and fixed (title art, chart
   scale, table size, dark chrome on the spectrum frame).
-- **Reference #11 from `showcase/reference`, against the planner data on disk:** the dry run covers 11,856 frames with no errors and
+- **Reference #11 (then at `showcase/reference`; moved out of the repo on 2026-11-12 to `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/`), against the planner data on disk:** the dry run covers 11,856 frames with no errors and
   no bad camera values; stills render at 25, 95 and 190 s.
 - **Cloud smoke render of the example from the repo kit:**
   - Deploy took 23 s with a cached base image.
@@ -79,3 +79,9 @@ misleading, and the kit's rules now require that check. It rendered on 100 tasks
 | The render farm's token | a secret |
 
 The masters stay on the VM, and their paths are in the reference README. A GitHub Release is the place to publish them.
+
+## Change, 2026-11-12
+
+The owner ruled that project outputs stay out of the template repo. The reference film #11 and the kit's own smoke-test output moved to
+`/mnt/data/projects/agency-2026/showcase/`, and `new-film.mjs` now makes films there by default. The repo keeps the kit, its templates and
+docs, the smoke film's inputs, and `kit/docs/WORKED-EXAMPLE-11.md`.

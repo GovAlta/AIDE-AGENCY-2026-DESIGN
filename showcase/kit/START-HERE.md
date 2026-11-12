@@ -11,12 +11,12 @@ was learned making it.
 
 | What | Where |
 |---|---|
-| The film (3:17, 1080p60) | `showcase/reference/11-pan-canadian-fibre/deliver/ (master on disk: see its README)` |
-| Every step, every fault and its fix | `showcase/reference/11-pan-canadian-fibre/PROCESS-LOG.md` |
-| Every figure and its source | `showcase/reference/11-pan-canadian-fibre/NOTES.md` |
-| A full timeline (globe, chase camera, panel, cursor, charts) | `showcase/reference/11-pan-canadian-fibre/film/web/timeline.js` |
-| The owner's words | `showcase/reference/11-pan-canadian-fibre/owner_lines.txt` |
-| This kit's 8 s smoke film | `example/` (`example/deliver/preview-720p-phone.mp4`) |
+| The film (3:17, 1080p60) | `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/deliver/` (master on disk: see its README) |
+| Every step, every fault and its fix | `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/PROCESS-LOG.md` |
+| Every figure and its source | `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/NOTES.md` |
+| A full timeline (globe, chase camera, panel, cursor, charts) | `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/film/web/timeline.js` |
+| The owner's words | `/mnt/data/projects/agency-2026/showcase/11-pan-canadian-fibre/owner_lines.txt` |
+| This kit's 8 s smoke film | inputs in `example/`; its rendered preview is local: `/mnt/data/projects/agency-2026/showcase/kit-smoke-example/deliver/` |
 
 ## One command to start
 
