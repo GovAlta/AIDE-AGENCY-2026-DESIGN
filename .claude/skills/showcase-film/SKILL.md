@@ -3,6 +3,9 @@ name: showcase-film
 description: Make an Agency 2026 showcase film (2–5 minutes, 1080p60, narrated, cut to the owner's music) for an inventory project or any other project (app, map/geospatial, or data story) — real screenshots and screen recordings of the app on a cinematic virtual camera, re-drawn UI in the Agency look, real data and real figures, rendered frame-exact in a temporary Cloud Run job. Use when asked for a "showcase film", "Agency demo video", "cinematic demo/simulation of <app>", "a film like #11 (the fibre planner)", or invoked as /showcase-film #<slot> or /showcase-film <project>.
 ---
 
+**First:** `bash /mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN/scripts/sync.sh` (GitHub `main` is the official version; the
+local clone is a working copy, and this skill is a link into it). Change the repo only by commit and push.
+
 # Showcase film
 
 **Start with `/mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN/showcase/kit/START-HERE.md`** and `guides/SHOWCASE-FILM.md` in the design repo (`/mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN`, GitHub

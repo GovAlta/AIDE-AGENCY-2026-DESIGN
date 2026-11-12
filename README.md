@@ -8,6 +8,17 @@ nine-colour spectrum.
 Everything reads one file of design tokens, `brand/tokens/tokens.json`, taken from the MVAI video kit `goa-agency`. A handout, a deck and a
 film made from this repo use the same colours, fonts, marks and footer band.
 
+## The official version
+
+GitHub `main` ([GovAlta-EMU/AIDE-AGENCY-2026-DESIGN](https://github.com/GovAlta-EMU/AIDE-AGENCY-2026-DESIGN)) is the official version of
+this repo. A local clone, such as `/mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN` on SHELL, is a working copy:
+
+- Run `bash scripts/sync.sh` before you start. It fast-forwards the clone, reports anything that differs from GitHub, and makes sure the
+  shared Claude skills (`/mnt/data/projects/.claude/skills/agency-design`, `showcase-film`) are links into this repo, not copies.
+- Change the repo only by commit and push. Work on a branch and open a pull request for anything others should review.
+- Keep no other copies of templates, brand files, the film kit or the skills. Anything copied out of the repo drifts.
+- `bash scripts/sync.sh --check` reports without changing anything (exit 1 if the clone is out of step).
+
 ## What is here
 
 | Path | What |

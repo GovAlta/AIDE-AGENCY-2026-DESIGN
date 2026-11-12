@@ -3,6 +3,9 @@ name: agency-design
 description: Make any Agency 2026 media (the Government of Alberta showcase, Dec. 7–9, 2026, Edmonton and Calgary) in the event's look from the AIDE-AGENCY-2026-DESIGN repo - handouts, fact sheets, posters, agendas, badges, table tents, certificates, reports, postcards, slide decks and PowerPoint, social posts, stories, banners, email headers, Teams backgrounds, signage, roll-up and stage backdrops, wayfinding, stickers, QR codes, Word briefing notes and memos, motion graphics (title sequence, day bumpers, lower thirds, countdowns, sizzle), the day-long run-of-show player, sound cues, narrated MVAI agency-explainer videos, stand panels and monitor kiosks, and flagship showcase films (app, map or geospatial, data story) through the showcase kit. Use whenever someone asks for anything "for Agency 2026", "in the Agency look", "with the circuit traces", or names one of these pieces for the event.
 ---
 
+**First:** `bash /mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN/scripts/sync.sh` (GitHub `main` is the official version; the
+local clone is a working copy, and this skill is a link into it). Change the repo only by commit and push.
+
 # Agency 2026 design system
 
 Everything Agency 2026 is made from one repo. You fill content files; the templates, tokens and MVAI own the design. Never choose a

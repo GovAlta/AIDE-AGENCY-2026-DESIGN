@@ -4,6 +4,9 @@ This repo is the Agency 2026 design system: the tokens, fonts, art, stylesheets,
 across print, slides, digital and video. You fill content files; the templates and MVAI own the design. You should never need to choose a
 colour, a font or a layout.
 
+**Before any work, run `bash scripts/sync.sh`.** GitHub `main` is the official version; this clone is a working copy (README,
+"The official version"). Change it only by commit and push.
+
 Read these before your first piece:
 
 | File | Read it for |

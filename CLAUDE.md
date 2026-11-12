@@ -4,6 +4,8 @@ Read `AGENTS.md` first. It holds the rules, the "which template for which piece"
 
 The key rules, repeated:
 
+- GitHub `main` is the official version. Run `bash scripts/sync.sh` first; change the repo only by commit and push.
+
 - Use only the facts you were given. Never invent names, numbers, dates, quotes or results. Record each figure's source in a `NOTES.md`.
 - Conclusions, lessons, asks, credit, closing lines and the classification come from the content owner.
 - `brand/tokens/tokens.json` is the only source of colour, type and size. Run `node scripts/build-tokens.mjs` after changing it.
