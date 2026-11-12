@@ -172,6 +172,11 @@ How it is built, and why:
   browser never showed them. Waiting two animation frames and capturing until two screenshots agree (both now in the kit) removed most,
   not all. For a film that must pass the flicker check, set `"space": { "maxGlass": 0 }`: every window takes the frosted fill, which
   is drawn the same way every time.
+- **No translucent or blurred image windows.** On the farm, a window holding an image at opacity 0.6 with a 7 px `soft` blur drew its lower
+  half blank for single frames (film #3's floating title cards, 2026-11-12; frames 132 and 136, a luminance jump of 17 in that box).
+  Bake the softness into the image (blur it and lift it toward the ground colour before the film), and show it at full opacity with
+  `soft: 0`. Footage that must step back leaves (`stage.leave`) instead of dimming. `motion-check.mjs --flicker` now measures windows
+  from opacity 0.3 up and skips frames where a window's own opacity is changing (it used to skip everything under 0.98).
 - **Inside a window, values change in fine steps.** A screen that rounds an opacity to tenths shows ten visible steps on a slow fade
   (film #1's Vector Studio window). Round to three decimals.
 - **The same inner padding on all four sides.** A screen's root pads once (do not pad a wrapper inside it as well); anything anchored to

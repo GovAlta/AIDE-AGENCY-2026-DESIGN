@@ -40,17 +40,18 @@ if (fdir) { const W = 640, H = 360, k = W / 1920, t0 = +arg('from', 0), t1 = +ar
   const ff = spawn('nice', ['ffmpeg', '-loglevel', 'error', '-threads', '4', '-start_number', String(a), '-framerate', String(FPS), '-i', path.join(path.resolve(fdir), 'f%06d.jpg'), '-frames:v', String(b - a), '-vf', `scale=${W}:${H}:flags=area`, '-f', 'rawvideo', '-pix_fmt', 'gray', '-'], { stdio: ['ignore', 'pipe', 'inherit'] });
   let buf = Buffer.alloc(0), f = a; const sz = W * H;
   const measure = (px, fr) => { const bs = boxes[fr];
-    for (const [id, al, X0, Y0, X1, Y1, depth] of bs) { if (al < 0.98) continue; const w = X1 - X0, h = Y1 - Y0;
+    for (const [id, al, X0, Y0, X1, Y1, depth] of bs) { if (al < 0.3) continue;   // translucent windows too (film #3: a 0.6-opacity card dropped a tile for one frame); fades are skipped below const w = X1 - X0, h = Y1 - Y0;
       // the part of the window nothing nearer covers is not known here; windows in front are skipped by taking only boxes no nearer box overlaps
       if (bs.some(o => o[0] !== id && o[6] < depth && o[2] < X1 && o[4] > X0 && o[3] < Y1 && o[5] > Y0)) continue;
       const x0 = Math.max(0, Math.ceil((X0 + w * 0.06) * k)), x1 = Math.min(W, Math.floor((X1 - w * 0.06) * k)), y0 = Math.max(Math.ceil(150 * k), Math.ceil((Y0 + h * 0.06) * k)), y1 = Math.min(Math.floor(930 * k), Math.floor((Y1 - h * 0.06) * k));
       if (x1 - x0 < 40 || y1 - y0 < 24 || (x1 - x0) * (y1 - y0) < 0.45 * w * h * k * k * 0.77) continue;   // mostly on screen
       let L = 0, E = 0, n = 0; for (let y = y0; y < y1; y++) { const r = y * W; for (let x = x0; x < x1 - 1; x++) { const v = px[r + x]; L += v; E += Math.abs(px[r + x + 1] - v); n++; } }
-      if (!series.has(id)) series.set(id, []); series.get(id).push({ f: fr, L: L / n, E: E / n }); } };
+      if (!series.has(id)) series.set(id, []); series.get(id).push({ f: fr, L: L / n, E: E / n, a: al }); } };
   await new Promise(res => { ff.stdout.on('data', d => { buf = buf.length ? Buffer.concat([buf, d]) : d; while (buf.length >= sz) { measure(buf.subarray(0, sz), f++); buf = buf.subarray(sz); } }); ff.on('close', res); });
   const flags = [], med = v => { const s = [...v].sort((x, y) => x - y); return s.length ? s[Math.floor(s.length / 2)] : 0; };
   for (const [id, S] of series) for (const key of ['L', 'E']) { const floor = key === 'L' ? 0.6 : 0.2, big = key === 'L' ? 4 : 1.5;
     for (let i = 8; i < S.length - 8; i++) { if (S[i].f - S[i - 8].f !== 8 || S[i + 8].f - S[i].f !== 8) continue;   // a continuous run only
+      if (S.slice(i - 3, i + 4).some(q => Math.abs(q.a - S[i].a) > 0.002)) continue;   // the window's own opacity is changing: a fade, not a flicker
       const d = S[i][key] - S[i - 1][key], around = []; for (let j = i - 7; j <= i + 7; j++) if (j !== i && j !== i + 1) around.push(Math.abs(S[j][key] - S[j - 1][key]));
       const m = med(around), drift = S[i + 6][key] - S[i - 6][key];
       // a jump: far above the local change; and not the start of a move that continues (the value 6 frames on is nearer the old value than the new, or the jump is reversed at once)
