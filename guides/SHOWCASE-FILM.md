@@ -135,8 +135,8 @@ image build, and about 5 minutes for the encode.
 - Check `cat /proc/loadavg` before local work. Local work is one niced browser: a dry run and a few stills.
 - Never stop a process you did not start, and never reuse another film's ports, job or image name (`new-film.mjs` namespaces them).
 - Delete the job and stop the receiver when the film is done (`cloud/farm.sh cleanup`).
-- Masters (hundreds of MB) stay out of git: keep them in the film's `deliver/`, a GitHub Release or a bucket. The phone preview
-  (under 30 MB) is the copy to share in chat.
+- Images and videos never go to GitHub (owner, 2026-11-12). Masters, previews, stills, captures and storyboards stay on this machine
+  at full resolution. The phone preview (under 30 MB) is the copy to share in chat.
 
 ## Where films live
 
@@ -148,16 +148,19 @@ beside the repo clone (`/mnt/data/projects/agency-2026/showcase/` on SHELL). Fra
 
 Every film must be regenerable by someone else, months later. So, for every showcase film:
 
-1. **The film folder is its own git repository.** `new-film.mjs` runs `git init` and writes a `.gitignore` that keeps frames,
-   masters and audio renders out. Commit the timeline, narration script, captures, `prep/` API answers, figure scripts, `NOTES.md`,
-   `owner_lines.txt` and `PROCESS-LOG.md` as you go. Push it to its own private repository if the film matters beyond this VM.
+1. **The film folder is its own git repository, pushed to a private GitHub repository** named
+   `GovAlta-EMU/AIDE-AGENCY-2026-FILM-NN-SLUG` (make it with `create-repo`, then `gh repo rename`). `new-film.mjs` runs `git init` and
+   writes a `.gitignore` that keeps `out/`, `deliver/`, audio renders, images and videos out. Commit the timeline, narration script,
+   `prep/` API answers, figure scripts, `NOTES.md`, `owner_lines.txt` and `PROCESS-LOG.md` as you go; GitHub holds code and text only.
 2. **Every custom script lives in the film folder**: figure derivations (#11's `cable-countries.py`, `trace-solve.mjs`), data prep,
    one-off renders. A script that would help the next film goes into the kit instead, and the film's log says so.
 3. **`REPRODUCE.md`** (from the kit template) lists every dependency with its pin: the kit commit, the app or data commit (#11: the
    planner at 2610761), the music and its licence, the voice. It ends with the exact commands to regenerate.
 4. **`deliver/BUILD.json`** is written by `encode.sh` on every encode: the kit's git commit (and whether it had uncommitted changes),
    the film folder's commit, the full `film.config.json`, the frame count, the voice settings and the encoder.
-5. **Masters are not in git.** Keep them in `deliver/` and publish them as a release asset or in a bucket; `REPRODUCE.md` says where.
+5. **Images and videos are not in git.** Captures, stills and storyboards stay in the film folder; masters stay in `deliver/`. When the
+   owner approves a cut, copy `deliver/` to `agency-2026/finals/NN-slug/` (read-only, with `SHA256SUMS`) and list it in
+   `agency-2026/finals/README.md`.
 6. **Films live outside the design repo**, in `FILMS_DIR` (default the `showcase/` folder beside the repo clone).
 7. **Apps are referenced, not copied**: the app a film shows is checked out beside the films (on SHELL, `agency-2026/apps/<app>`)
    and pinned by commit in `REPRODUCE.md`. The layout of `agency-2026/` is described in its own `README.md`.
