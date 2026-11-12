@@ -27,10 +27,10 @@ tp() { ffmpeg -hide_banner -nostats -i "$1" -map 0:a -af ebur128=peak=true -f nu
 lufs() { ffmpeg -hide_banner -nostats -i "$1" -map 0:a -af ebur128 -f null - 2>&1 | awk '/Integrated loudness:/{f=1} f&&/I:/{print $2; exit}'; }
 if [ -f out/mix.wav ]; then
   for pair in "$M:256k" "$OUT/$SLUG-1080p${FPS}-share.mp4:192k" "$OUT/preview-720p-phone.mp4:96k"; do f="${pair%:*}"; br="${pair##*:}"
-    for try in 1 2 3; do p=$(tp "$f"); over=$(node -e "const p=$p; console.log(p > -2.0 ? (p + 2.0 + 0.3).toFixed(2) : '')")
-      [ -z "$over" ] && break
-      nice ffmpeg -y -loglevel error -i "$f" -i out/mix.wav -map 0:v -map 1:a -c:v copy -af "volume=-${over}dB" -c:a aac -b:a "$br" -movflags +faststart "$f.tmp.mp4" && mv "$f.tmp.mp4" "$f"
-      echo "  $(basename "$f"): true peak was $p dBTP, sound lowered ${over} dB"; done
+    cut=0; for try in 1 2 3 4; do p=$(tp "$f"); cut=$(node -e "const p=$p, c=$cut; console.log(p > -2.0 ? (c + p + 2.0 + 0.4).toFixed(2) : '')")
+      [ -z "$cut" ] && break          # the cut adds up: each pass is made again from out/mix.wav
+      nice ffmpeg -y -loglevel error -i "$f" -i out/mix.wav -map 0:v -map 1:a -c:v copy -af "volume=-${cut}dB" -c:a aac -b:a "$br" -movflags +faststart "$f.tmp.mp4" && mv "$f.tmp.mp4" "$f"
+      echo "  $(basename "$f"): true peak was $p dBTP, sound now ${cut} dB under the mix"; done
     echo "$(basename "$f"): $(lufs "$f") LUFS, true peak $(tp "$f") dBTP"; done
 fi
 # Build record (SOP, owner 2026-11-12: the code that makes a film travels with its outputs). Everything needed to regenerate these
