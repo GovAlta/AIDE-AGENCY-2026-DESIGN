@@ -130,6 +130,12 @@ How it is built, and why:
   steps) and the shadow is the same sharp or soft. Film #1 flickered on all three before this rule. Keep `hero` (and `glass`) constant for a
   window's whole life; raise `space.maxGlass` if a film marks more windows than the default 3. `snap: true` (whole-pixel placement) is for
   a still camera only. Prove it on rendered frames: `node tools/motion-check.mjs --project <film> --flicker out/frames` must print 0 flags.
+- **Nothing about a visible window switches: not its filter, not its opacity reaching 1, not its layer.** The stage keeps a blur
+  filter on every window at all times (0.02 px when sharp) and keeps opacity at 0.999 or below, because a window drawn with a filter (or
+  inside an opacity group) takes another raster path than one without, and the change shows as a one-frame step in sharpness or fill.
+  Screens follow the same rule for their own elements (`rise()` always writes an opacity below 1 and a transform).
+- **A film without WebGL renders on the farm with `"gpu": false`** (film.config.json): the page is composited on the CPU. With the
+  software GPU, film #1's windows took a different fill for a frame or more at random frames (different frames on every render).
 - **Real backdrop glass is not stable on the render farm.** With `backdrop-filter` windows, film #1's rendered frames had one-frame
   flashes of a window's fill (whole, or in a band the size of a raster tile) at frames where nothing in the state changed; one local
   browser never showed them. Waiting two animation frames and capturing until two screenshots agree (both now in the kit) removed most,

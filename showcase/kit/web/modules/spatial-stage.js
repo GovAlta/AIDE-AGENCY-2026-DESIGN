@@ -123,7 +123,10 @@ export async function createStage(el, { config, helpers: H }) {
       if (w.snap && Math.abs(m[1]) < 1e-7 && Math.abs(m[4]) < 1e-7 && Math.abs(m[3]) < 1e-9 && Math.abs(m[7]) < 1e-9) { m[12] = Math.round(m[12] / m[15]) * m[15]; m[13] = Math.round(m[13] / m[15]) * m[15]; }
       const s = p.el.style; s.display = ''; s.width = w.w + 'px'; s.height = w.h + 'px'; s.transform = `matrix3d(${m.map(v => +v.toFixed(7)).join(',')})`;
       s.opacity = Math.min(0.999, +(w.a ?? 1).toFixed(3));   /* never exactly 1: a window that reaches it changes compositing layer and is drawn differently from that frame on */ s.zIndex = 10 + rank * 2; s.borderRadius = (w.radius ?? 38) + 'px';
-      s.filter = it.blur ? `blur(${+(it.blur / it.k).toFixed(3)}px)` : '';
+      // the blur filter is ALWAYS on (0.02 px when sharp: invisible). A window with a filter is rastered and composited by another path than one
+      // without; switching the filter on or off as a window passes through focus changed its sharpness (and the brightness of its fill) in
+      // one frame, on every render (film #1: the tiles of the nine systems, the run card, the team board).
+      s.filter = `blur(${Math.max(0.02, it.blur / it.k).toFixed(3)}px)`;
       p.el.className = `sp-win ${glass.has(w.id) ? 'sp-glass' : 'sp-frost'}${w.hero ? ' sp-hero' : ''}${w.cls ? ' ' + w.cls : ''}`;
       wins.set(w.id, { M, w, depth: it.depth, rank, k: it.k }); });
     for (const [id, p] of pool) if (!seen.has(id)) p.el.style.display = 'none';
