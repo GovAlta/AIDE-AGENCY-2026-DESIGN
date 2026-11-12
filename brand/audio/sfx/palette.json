@@ -1,0 +1,321 @@
+{
+  "$comment": "Agency 2026 interface sound palette for showcase films. Generated with ElevenLabs sound generation through Ent Tools by showcase/kit/tools/sfx.mjs. Files: <id>.wav (48 kHz, peak -3 dBFS) and <id>.m4a. gain_db is the default level of an event before the film's sfxGain. Rules of use: guides/SOUND.md, Sound effects.",
+  "version": "1.0.0",
+  "style": "Soft, modern, tactile interface sounds. Dry and close, no reverb tail, no music, no voice, no background noise.",
+  "sounds": [
+    {
+      "id": "key-1",
+      "group": "key",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -6,
+      "use": "one key press while text types",
+      "prompt": "One single soft laptop keyboard key press, quiet low-profile key, dry and close, no reverb, no background noise, isolated",
+      "file": "brand/audio/sfx/key-1.wav",
+      "take": "3 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.152,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 4,
+        "tail_db": -44.1
+      }
+    },
+    {
+      "id": "key-2",
+      "group": "key",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -6,
+      "use": "one key press (variant)",
+      "prompt": "One single soft keyboard key tap, slightly lower pitch, quiet low-profile key, dry and close, no reverb, isolated",
+      "file": "brand/audio/sfx/key-2.wav",
+      "take": "3 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.124,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 5,
+        "tail_db": -58.1
+      }
+    },
+    {
+      "id": "key-3",
+      "group": "key",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -6,
+      "use": "one key press (variant)",
+      "prompt": "One single gentle keyboard key click, slightly higher and lighter, quiet low-profile key, dry and close, no reverb, isolated",
+      "file": "brand/audio/sfx/key-3.wav",
+      "take": "2 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.177,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 4,
+        "tail_db": -43.7
+      }
+    },
+    {
+      "id": "type-loop",
+      "kind": "loop",
+      "dur": 2,
+      "gain_db": -8,
+      "use": "light typing under a field that fills",
+      "prompt": "Light fast typing on a quiet low-profile laptop keyboard, steady even rhythm, soft key taps only, dry and close, no reverb, no background noise",
+      "file": "brand/audio/sfx/type-loop.wav",
+      "take": "3 of 3",
+      "generated": "2026-11-12",
+      "length_s": 1.998,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 5,
+        "tail_db": -29.4
+      }
+    },
+    {
+      "id": "click",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -4,
+      "use": "a pressed button (Yes, Send, Merge)",
+      "prompt": "One soft modern user interface button press, short muted tactile click, premium app sound, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/click.wav",
+      "take": "3 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.071,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 4,
+        "tail_db": -62.9
+      },
+      "max_s": 0.2
+    },
+    {
+      "id": "toggle",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -5,
+      "use": "a switch turning on",
+      "prompt": "One soft user interface toggle switch turning on, two tiny muted ticks rising in pitch, premium app sound, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/toggle.wav",
+      "take": "3 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.065,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 4,
+        "tail_db": -66.8
+      }
+    },
+    {
+      "id": "whoosh-in",
+      "kind": "one",
+      "dur": 0.6,
+      "gain_db": -9,
+      "use": "a hero window arriving",
+      "prompt": "Very soft short airy whoosh rising, a light panel gliding in, subtle and smooth, no impact, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/whoosh-in.wav",
+      "take": "1 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.222,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 1,
+        "tail_db": -48.2
+      }
+    },
+    {
+      "id": "whoosh-out",
+      "kind": "one",
+      "dur": 0.6,
+      "gain_db": -10,
+      "use": "a hero window leaving",
+      "prompt": "Very soft short airy whoosh falling away, a light panel gliding out, subtle and smooth, no impact, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/whoosh-out.wav",
+      "take": "1 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.184,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 0,
+        "tail_db": -43.7
+      }
+    },
+    {
+      "id": "pop",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -5,
+      "use": "a chat message arrives",
+      "prompt": "One soft round message pop, gentle bubble notification of a chat message arriving, short, warm, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/pop.wav",
+      "take": "2 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.191,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 0,
+        "tail_db": -61
+      },
+      "max_s": 0.32
+    },
+    {
+      "id": "send",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -6,
+      "use": "a message is sent",
+      "prompt": "One soft message sent sound, short gentle upward swish with a light pluck, premium messaging app, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/send.wav",
+      "take": "1 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.213,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 4,
+        "tail_db": -56.1
+      }
+    },
+    {
+      "id": "tick",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -8,
+      "use": "a list row or record entry appears",
+      "prompt": "One single tiny dry tick, like one tick of a small clock or a pen tap on a desk, extremely short, one transient only, no tone, no ringing, isolated",
+      "file": "brand/audio/sfx/tick.wav",
+      "take": "1 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.058,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 4,
+        "tail_db": -65.2
+      },
+      "max_s": 0.12
+    },
+    {
+      "id": "step",
+      "kind": "one",
+      "dur": 0.6,
+      "gain_db": -5,
+      "use": "a step or block rises",
+      "prompt": "One soft low muted thud, a padded block settling into place, short, round, gentle, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/step.wav",
+      "take": "1 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.18,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 0,
+        "tail_db": -34.9
+      }
+    },
+    {
+      "id": "count",
+      "kind": "loop",
+      "dur": 1,
+      "gain_db": -10,
+      "use": "a counter running",
+      "prompt": "Fast even soft ticking of a mechanical number counter rolling, light delicate ticks, steady rhythm, dry, no reverb, no background noise",
+      "file": "brand/audio/sfx/count.wav",
+      "take": "1 of 3; 45 ms cut from the start by hand so the first tick is on the event time",
+      "generated": "2026-11-12",
+      "length_s": 0.955,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 4,
+        "tail_db": -72.9
+      }
+    },
+    {
+      "id": "chime",
+      "kind": "one",
+      "dur": 1.2,
+      "gain_db": -5,
+      "use": "the one success moment",
+      "prompt": "Soft success chime, two gentle marimba-like notes rising, D then F sharp, D major, short, warm, clean, minimal reverb, isolated",
+      "file": "brand/audio/sfx/chime.wav",
+      "take": "3 of 3",
+      "generated": "2026-11-12",
+      "length_s": 1.2,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 0,
+        "tail_db": -81.7
+      }
+    },
+    {
+      "id": "ring-close",
+      "kind": "one",
+      "dur": 0.8,
+      "gain_db": -6,
+      "use": "a timer ring completing",
+      "prompt": "Short soft rising tone that ends with a light bright ping, a circular progress ring completing, clean, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/ring-close.wav",
+      "take": "3 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.8,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 0,
+        "tail_db": -76.2
+      }
+    },
+    {
+      "id": "focus",
+      "kind": "one",
+      "dur": 0.8,
+      "gain_db": -12,
+      "use": "a focus change (use rarely)",
+      "prompt": "Very subtle short soft low swell, a gentle breath of air, barely audible lens focus shift, smooth, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/focus.wav",
+      "take": "3 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.569,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 9,
+        "tail_db": -25.5
+      }
+    },
+    {
+      "id": "call-connect",
+      "kind": "one",
+      "dur": 0.8,
+      "gain_db": -6,
+      "use": "a call is picked up",
+      "prompt": "Soft modern phone call connecting tone, two gentle short beeps rising, clean sine tones, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/call-connect.wav",
+      "take": "1 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.36,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 1,
+        "tail_db": -16.4
+      },
+      "max_s": 0.36
+    },
+    {
+      "id": "voice-blip",
+      "kind": "one",
+      "dur": 0.5,
+      "gain_db": -8,
+      "use": "the AI agent starts to speak",
+      "prompt": "One tiny soft round blip, a voice assistant starting to speak, short gentle sine tone, dry, no reverb, isolated",
+      "file": "brand/audio/sfx/voice-blip.wav",
+      "take": "1 of 3",
+      "generated": "2026-11-12",
+      "length_s": 0.18,
+      "measured": {
+        "peak_db": -3,
+        "onset_ms": 1,
+        "tail_db": -13.8
+      },
+      "max_s": 0.18
+    }
+  ]
+}
