@@ -3,7 +3,8 @@
 // (film.config.json "peakTP", default -2.3 dBTP: AAC encoding lifts the true peak by 0.2 to 0.3 dB and the master must stay under -2).
 // Also writes captions (SRT, VTT) from the voice's own word times.
 //   node tools/mix-audio.mjs --project <film dir>        music: film.config.json "music" (path relative to the project);
-//                                                        "musicFit": "stretch" fits the track to the film's length (see below)
+//                                                        "musicFit": "stretch" fits the track to the film's length (see below);
+//                                                        "musicStart": seconds into the track at which the film starts
 //   node tools/mix-audio.mjs --project <film dir> --no-sfx   the same mix without the sound effects
 //   node tools/mix-audio.mjs --project <film dir> --sfx-check 30   also 30 s from that second, effects and music only -> out/sfx-check.wav
 // Sound effects: when out/sfx-events.json exists (tools/sfx-events.mjs), each event is placed at its time to the sample, at its gain
@@ -60,7 +61,12 @@ let fit = '';
 if (music && cfg.musicFit === 'stretch') { const len = +execFileSync('ffprobe', ['-v', 'error', '-show_entries', 'format=duration', '-of', 'csv=p=0', music], { encoding: 'utf8' }), k = len / DUR;
   if (Math.abs(k - 1) > 0.06) console.error(`musicFit: the track is ${len.toFixed(2)} s and the film ${DUR} s (more than 6 % apart): not stretched`);
   else if (Math.abs(k - 1) > 0.0005) { fit = `rubberband=tempo=${k.toFixed(6)}:pitchq=quality,`; console.log(`musicFit: track ${len.toFixed(2)} s stretched to ${DUR} s (tempo x${k.toFixed(4)}, same pitch)`); } }
-graph.push(`[0:a]aresample=48000,${fit}atrim=0:${DUR},apad=whole_dur=${DUR},volume=${cfg.musicGain ?? 0.62}[mus]`, `[mus][key]sidechaincompress=threshold=0.02:ratio=7:attack=120:release=650:makeup=1[duck]`,
+// "musicStart": seconds into the track at which the film starts (default 0), with a short fade-in ("musicFadeIn", default 0.6 s when
+// musicStart is set). Use it to land the track's OWN ending on the film's end when the track is longer than the film: an ending the
+// composer wrote sounds finished; a fade in the middle of a phrase does not (film #2, solo piano: no stretch, start 7.8 s in).
+const mStart = +cfg.musicStart || 0, mIn = cfg.musicFadeIn ?? (mStart ? 0.6 : 0), head = `${mStart ? `atrim=start=${mStart},asetpts=PTS-STARTPTS,` : ''}${mIn ? `afade=t=in:d=${mIn},` : ''}`;
+if (mStart) console.log(`musicStart: the track starts ${mStart} s in (fade-in ${mIn} s)`);
+graph.push(`[0:a]aresample=48000,${head}${fit}atrim=0:${DUR},apad=whole_dur=${DUR},volume=${cfg.musicGain ?? 0.62}[mus]`, `[mus][key]sidechaincompress=threshold=0.02:ratio=7:attack=120:release=650:makeup=1[duck]`,
   // the effects are NOT ducked under the voice (they are short, and ducked they were not heard at all: owner, film #2). The music
   // gives way to each effect instead: about 3 dB, fast, for the length of the effect
   ...(sfx ? [`[${lines.length + 1}:a]asplit=2[fx][fxkey]`, `[duck][fxkey]sidechaincompress=threshold=0.02:ratio=2.5:attack=4:release=180:makeup=1[bed]`] : []),
@@ -72,7 +78,7 @@ execFileSync('nice', ['ffmpeg', '-y', '-loglevel', 'error', '-i', pre, '-af', `l
 console.log('mix: in', j.input_i, `LUFS -> out/mix.wav (-16 LUFS, ${TP} dBTP)`);
 // --sfx-check <start seconds>: 30 s of the effects and the music only (no voice), at the level they have in the mix -> out/sfx-check.wav
 if (sfx && process.argv.includes('--sfx-check')) { const from = +arg('sfx-check', 0) || 0, gdb = -16 - (+j.input_i);
-  const g2 = [`[0:a]aresample=48000,${fit}atrim=0:${DUR},apad=whole_dur=${DUR},volume=${cfg.musicGain ?? 0.62}[mus]`, `[1:a]asplit=2[fx][fxkey]`,
+  const g2 = [`[0:a]aresample=48000,${head}${fit}atrim=0:${DUR},apad=whole_dur=${DUR},volume=${cfg.musicGain ?? 0.62}[mus]`, `[1:a]asplit=2[fx][fxkey]`,
     `[mus][fxkey]sidechaincompress=threshold=0.02:ratio=2.5:attack=4:release=180:makeup=1[bed]`, `[bed][fx]amix=inputs=2:normalize=0:dropout_transition=0,volume=${gdb.toFixed(2)}dB[o]`];
   execFileSync('nice', ['ffmpeg', '-y', '-loglevel', 'error', ...(music ? ['-i', music] : ['-f', 'lavfi', '-t', String(DUR), '-i', 'anullsrc=r=48000:cl=stereo']), '-i', sfx, '-filter_complex', g2.join(';'), '-map', '[o]', '-ss', String(from), '-t', '30', path.join(ROOT, 'out/sfx-check.wav')]);
   console.log(`sfx check: ${from} to ${from + 30} s, effects and music only -> out/sfx-check.wav`); }

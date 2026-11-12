@@ -20,7 +20,19 @@ nice ffmpeg -y -loglevel error -i "$M" -vf "scale=1280:720:flags=lanczos,fps=30"
 nice ffmpeg -y -loglevel error -i "$M" -vf "scale=1280:720:flags=lanczos,fps=30" -c:v libx264 -preset slow -b:v "$VB" -pass 2 -passlogfile "$LOG" -threads 8 "${ACODEC[@]/256k/96k}" -movflags +faststart "$OUT/preview-720p-phone.mp4"
 [ -f out/captions.srt ] && cp out/captions.srt out/captions.vtt "$OUT/"; [ -f out/mix.wav ] && cp out/mix.wav "$OUT/audio-mix.wav"
 echo "frames in master: $(ffprobe -v error -count_frames -select_streams v -show_entries stream=nb_read_frames -of csv=p=0 "$M") of $N"
-[ -f out/mix.wav ] && ffmpeg -hide_banner -i "$M" -map 0:a -af ebur128=peak=true -f null - 2>&1 | grep -E "^\s+(I|Peak):" || true
+# Every delivered file stays under -2.0 dBTP. AAC lifts the true peak, more at a low bitrate (the 96 kb/s phone preview of film #2 peaked
+# at -1.7 while its master was at -2.4). Each file's sound is measured after encoding; one that is over is given its sound again from
+# out/mix.wav (not from the master's AAC), lowered by what it is over plus 0.3 dB, the picture copied untouched.
+tp() { ffmpeg -hide_banner -nostats -i "$1" -map 0:a -af ebur128=peak=true -f null - 2>&1 | awk '/True peak:/{f=1} f&&/Peak:/{print $2; exit}'; }
+lufs() { ffmpeg -hide_banner -nostats -i "$1" -map 0:a -af ebur128 -f null - 2>&1 | awk '/Integrated loudness:/{f=1} f&&/I:/{print $2; exit}'; }
+if [ -f out/mix.wav ]; then
+  for pair in "$M:256k" "$OUT/$SLUG-1080p${FPS}-share.mp4:192k" "$OUT/preview-720p-phone.mp4:96k"; do f="${pair%:*}"; br="${pair##*:}"
+    for try in 1 2 3; do p=$(tp "$f"); over=$(node -e "const p=$p; console.log(p > -2.0 ? (p + 2.0 + 0.3).toFixed(2) : '')")
+      [ -z "$over" ] && break
+      nice ffmpeg -y -loglevel error -i "$f" -i out/mix.wav -map 0:v -map 1:a -c:v copy -af "volume=-${over}dB" -c:a aac -b:a "$br" -movflags +faststart "$f.tmp.mp4" && mv "$f.tmp.mp4" "$f"
+      echo "  $(basename "$f"): true peak was $p dBTP, sound lowered ${over} dB"; done
+    echo "$(basename "$f"): $(lufs "$f") LUFS, true peak $(tp "$f") dBTP"; done
+fi
 # Build record (SOP, owner 2026-11-12: the code that makes a film travels with its outputs). Everything needed to regenerate these
 # files: the kit's commit, the film folder's commit, the config, the narration voice, the music and the frame count.
 KITDIR="$(cd "$(dirname "$0")/.." && pwd)"
