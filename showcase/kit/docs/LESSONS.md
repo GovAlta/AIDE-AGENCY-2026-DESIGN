@@ -101,3 +101,14 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
   depth. The flicker check now includes see-through windows.
 - **Working with the owner:** make visual contact sheets and mockups first and get a yes; then fix and deliver without repeated
   frame-by-frame rounds ("I can review"). Approved cuts go to `agency-2026/finals/NN-slug/`; images and videos never go to GitHub.
+
+## From film #4 (VSAI), owner review 2026-11-13: a seam from one farm task
+
+- **One task drew its whole chunk without the film's stylesheet.** Frames 1126-1136 (0.18 s) showed the gallery cards at their images'
+  natural size and the headline wrapped at the kit's narrower width, then snapped back. `/film.css` is linked with `onerror="this.remove()"`
+  (a film may have none), so a failed request dropped the film's look silently and the page still reported ready. Fix in `web/main.js`:
+  a missing stylesheet or @import now counts in `window.filmInitErrors` (the farm refuses the page and opens a new one); before frame 0
+  the page waits for `document.fonts.ready`, decodes every image and waits two animation frames; each `frame(n)` decodes any new image.
+- **Check seams on the rendered frames:** `python3 tools/seam-check.py <film>` finds a chunk (from the frames' write order) that jumps in
+  and back out while the frames on either side agree (ISLAND), and single jumps on a chunk boundary (BOUNDARY, look at them). Run it
+  after every farm render, with the flicker check.

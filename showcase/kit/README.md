@@ -64,6 +64,7 @@ Examples: `example/web/timeline.js` (8 s: a real screenshot plate with tilt, pus
 | `tools/sync-tokens.mjs [--fix]` | `web/film.css` colours against `brand/tokens/tokens.json` (38 tokens) |
 | `tools/capture-states.mjs` | screenshots of named app states plus exact element boxes (`marks`) |
 | `tools/capture-video.mjs` | a recorded interaction → WebM → exact JPEG sequence, with step times |
+| `tools/seam-check.py <film>` | a farm task that drew its chunk differently (stale page): islands and boundary jumps, from the frames and their write order |
 | `tools/analyze_song.py <song> <out.json>` | tempo, downbeats, energy per second, sections (needs librosa: `python3 -m venv v && v/bin/pip install librosa soundfile`) |
 | `tools/storyboard.mjs` | key frames rendered from the timeline + `storyboard.json` → `storyboard/index.html` to publish for sign-off |
 | `tools/narrate.mjs` | the approved narrator from `brand/voice/voices.json` (Matilda, eleven_v4), word timestamps, voices changed lines only, runs the repo lint (`scripts/lint/lint.py`) on every line, reports overlaps |
