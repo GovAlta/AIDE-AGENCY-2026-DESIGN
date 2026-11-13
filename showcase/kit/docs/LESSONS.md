@@ -130,3 +130,12 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
 - **A device on screen as the subject fills at least half the frame width.** Open wide, then push the camera in on the screen; put the
   cards farther back so they grow less than the screen. A phone at half the width is cropped: frame its top half.
 - A page error before the film is ready (a syntax error in timeline.js) now fails `openFilm` at once instead of waiting 15 minutes.
+
+## From film #15 (Oasis), owner review 2026-11-13: a sizzle is still a story
+
+- **Every film is narrated and tells a story.** A titles-only sizzle cut to the beat was "a real step down in quality". Follow one case
+  from start to finish with the voice; the music sits under it.
+- **Hold each screen long enough to mean something** (4–8 s): push in on the part that matters and name it. A rapid flip suits only
+  a style montage (film #3).
+- **A white screen never sits on a white ground.** Give it a contrasting ground (deeper gradient or navy), a frame and a soft shadow.
+  Keep the Agency chrome on every film: wordmark top right, classification in the navy band.
