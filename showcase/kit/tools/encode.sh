@@ -3,6 +3,9 @@
 # (the chat send limit). Refuses to run with a missing frame. Runs niced: the VM is shared.
 #   tools/encode.sh <film dir>
 set -euo pipefail
+# the kit's own folder, resolved before the cd below: run as tools/encode.sh, a relative $0 would otherwise resolve inside the film
+# folder and BUILD.json would pin the film's commit as the kit's (film #15, 2026-11-13)
+KITDIR="$(cd "$(dirname "$0")/.." && pwd)"
 P="$(cd "${1:?film dir}" && pwd)"; cd "$P"
 read -r DUR FPS SLUG < <(node -e "const c=require('./film.config.json');console.log(c.dur, c.fps||60, c.slug||'film')")
 N=$(node -e "console.log(Math.round($DUR*$FPS))"); HAVE=$(find out/frames -name 'f*.jpg' | wc -l)
@@ -36,7 +39,6 @@ if [ -f out/mix.wav ]; then
 fi
 # Build record (SOP, owner 2026-11-12: the code that makes a film travels with its outputs). Everything needed to regenerate these
 # files: the kit's commit, the film folder's commit, the config, the narration voice, the music and the frame count.
-KITDIR="$(cd "$(dirname "$0")/.." && pwd)"
 node - "$P" "$KITDIR" "$N" "$M" <<'JS' > "$OUT/BUILD.json"
 const [P, KIT, N, M] = process.argv.slice(2); const fs = require('fs'), path = require('path'), { execSync } = require('child_process');
 const git = (d) => { try { const c = execSync(`git -C "${d}" rev-parse HEAD`, { stdio: ['ignore', 'pipe', 'ignore'] }).toString().trim();

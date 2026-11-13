@@ -143,3 +143,23 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
   prototype instead of describing the end product. Stop hedging on what I'm saying."). The owner's own statements need no caveat on screen.
 - **No wall of tiny text.** A comparison shows three to five short items at 30 px or more, one at a time; a long comparison is cut,
   not shrunk.
+
+## From film #15 (Oasis) v3, the narrated rebuild, 2026-11-13
+
+- **Burned-in cursors in a product's own walkthrough films.** Pick each window still at a moment the recorded cursor is outside the crop:
+  template-match the cursor (a 24 x 32 grey crop of it) on frames every 0.2 s and list where it is. Where it never leaves, fill it flat on
+  plain ground, or copy that patch from another moment of the same screen; never inpaint over text or a coloured bar (inpainting pulled a
+  green triangle out of a header). A threshold that finds the arrow on white misses it on a grey button: look at the chosen frames.
+- **A screen with the wrong person on it breaks the story.** When the film follows one family, re-draw the screen that showed someone else
+  with the family's own (fictional) details and the product's own labels from its locale files; real labels make a re-draw read as the
+  product.
+- **Push the whole group, not the screenshot.** One slow push-in (4 to 5 % over the shot) on the windows, callouts and leader lines together
+  keeps rings locked to the UI and nothing cropped at a window edge. Lay the shot out at its end size: the lowest screen must still clear
+  the caption bar (about y 954) after the push.
+- **A film's own stage should expose its text to the dry run** (`textKeys`, `textCheck`): it caught a results row clipped at the bottom of
+  a re-drawn form, a two-line message cut off in a small window, and a statement line past the safe area, none visible in a contact sheet
+  at thumbnail size. A screen-box array written as `[[id, ...]]` matches the dry run's placeholder pattern: use objects.
+- **An opening that defines the context takes words.** Three setup lines read at Matilda's pace (about 2.1 words a second) took 22 s; two
+  lines of 29 words bring the first person on screen at 16 s.
+- **BUILD.json pinned the film's commit as the kit's** when encode ran as `tools/encode.sh` from the kit folder: the script resolved its own
+  folder after `cd` into the film. Fixed in `tools/encode.sh` (the kit folder is found first). Check `kit.path` in every BUILD.json.
