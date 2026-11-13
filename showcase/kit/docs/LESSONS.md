@@ -85,3 +85,18 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
   `tools/padding-check.mjs` measures all four gaps for every screen at three moments and fails on a 2 px difference.
 - **The centrepiece must look like the real thing.** A raw capture of a toy page read as "simplistic". A re-drawn, believable application
   in the organisation's own web look (header, breadcrumb, filters, a real-looking map, a legend, a popup, "Invented demo data") reads as a product.
+
+## From films #3 (MVAI) and #5 (Highway and Bridge), owner reviews 2026-11-13
+
+- **Never slow a clip.** Ten clips in #5 were slowed to fill their shots and read as a low frame rate. Play footage at speed 1.0 mapped
+  to the source's own frames; a long shot takes a longer source range or a second clip. Measure unique frames a second on the rendered
+  frames (24 or more for moving footage).
+- **Frost only behind text.** White washes and haze over footage "cover too much". A soft patch the size of the text block, or the
+  glass card itself, gives legibility; footage stays clean and in full colour (kit `media-stage.js` default).
+- **No busy texture behind an explanation.** A floor of tiles under the cards was "distracting". Explanation scenes use the calm glass
+  ground of #1 and #2; a product's own frames appear only where they are the subject (a style flip, a montage).
+- **See-through cards flicker on the farm.** A blurred, half-transparent card drew blank for single frames, and two cards at the same
+  depth swapped order as the camera moved. Bake the blur into the card image and show it opaque; keep overlapping cards apart in
+  depth. The flicker check now includes see-through windows.
+- **Working with the owner:** make visual contact sheets and mockups first and get a yes; then fix and deliver without repeated
+  frame-by-frame rounds ("I can review"). Approved cuts go to `agency-2026/finals/NN-slug/`; images and videos never go to GitHub.
