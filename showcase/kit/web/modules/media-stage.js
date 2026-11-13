@@ -107,6 +107,12 @@ export async function createStage(el) {
       await Promise.all(waits);
       await Promise.all([...root.querySelectorAll('img')].map(i => i.decode ? i.decode().catch(() => {}) : 0));
     },
+    // every visible window's screen box, for the flicker check (tools/motion-check.mjs --flicker): footage plates, and cards that
+    // give an fbox [x, y, w, h] hint (a card's height is set by its content, so the film states it). Nearer = smaller depth.
+    screenBoxes(w) { const m = (w && w.media) || w || {}, out = [];
+      for (const pl of m.plates || []) { const [x, y, bw, bh] = box(pl); out.push({ id: pl.id, a: pl.a ?? 1, x0: x, y0: y, x1: x + bw, y1: y + bh, depth: 1000 - (pl.z || 0) * 2 }); }
+      for (const c of m.cards || []) if (c.fbox) { const [x, y, bw, bh] = c.fbox; out.push({ id: c.id || `card@${x},${y}`, a: c.a ?? 1, x0: x, y0: y, x1: x + bw, y1: y + bh, depth: 1000 - (c.z ?? 70) }); }
+      return out; },
     project() { return null; },
     toFrame() { return null; },
     takeErrors() { const e = errors; errors = 0; return e; },

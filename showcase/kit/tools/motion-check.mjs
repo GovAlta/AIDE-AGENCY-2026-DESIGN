@@ -34,7 +34,7 @@ for (const t of list('shots')) { const ms = []; for (let i = 0; i < 4; i++) ms.p
 const fdir = arg('flicker', '');
 if (fdir) { const W = 640, H = 360, k = W / 1920, t0 = +arg('from', 0), t1 = +arg('to', 1e9);
   const { boxes, FPS, N } = await page.evaluate(() => { const { TL, FPS, DUR, stage } = window.film, N = Math.round(DUR * FPS), boxes = [];
-    for (let f = 0; f < N; f++) boxes.push(stage.screenBoxes(TL.stateAt(f / FPS).world.space).map(b => [b.id, +b.a.toFixed(3), Math.round(b.x0), Math.round(b.y0), Math.round(b.x1), Math.round(b.y1), Math.round(b.depth)])); return { boxes, FPS, N }; });
+    for (let f = 0; f < N; f++) { const w = TL.stateAt(f / FPS).world || {}; boxes.push(stage.screenBoxes(w.space ?? w).map(b => [b.id, +b.a.toFixed(3), Math.round(b.x0), Math.round(b.y0), Math.round(b.x1), Math.round(b.y1), Math.round(b.depth)])); } return { boxes, FPS, N }; });
   const a = Math.max(0, Math.round(t0 * FPS)), b = Math.min(N, Math.round(t1 * FPS)), series = new Map();   // id -> [{ f, L, E }]
   const { spawn } = await import('node:child_process');
   const ff = spawn('nice', ['ffmpeg', '-loglevel', 'error', '-threads', '4', '-start_number', String(a), '-framerate', String(FPS), '-i', path.join(path.resolve(fdir), 'f%06d.jpg'), '-frames:v', String(b - a), '-vf', `scale=${W}:${H}:flags=area`, '-f', 'rawvideo', '-pix_fmt', 'gray', '-'], { stdio: ['ignore', 'pipe', 'inherit'] });
