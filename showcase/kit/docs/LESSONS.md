@@ -127,8 +127,11 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
   now draws each moment a new text block is fully shown and measures every line's glyphs (headlines, callouts, statement, captions,
   panels, cards) against the 48 px safe area and any clipping box (`UI.textCheck`). Words not yet revealed still count, so a long line
   fails before it is shown.
-- **A device on screen as the subject fills at least half the frame width.** Open wide, then push the camera in on the screen; put the
-  cards farther back so they grow less than the screen. A phone at half the width is cropped: frame its top half.
+- **A device on screen is shown whole** (owner, 2026-11-13, review of film #12 v3: "the mobile phone display is far too big in most pages
+  ... Everything looks cut off"). A phone shows the whole device at about 80-88 % of the frame height; never crop the phone or slice its
+  screen content at the frame edge. A tablet or laptop is whole in the frame too. Push gently (1.08-1.12 at most) and keep the device in
+  frame; point at the part that matters with a highlight ring and the caption card beside the device, not with a crop. A word the film
+  must not show (a product name in a tab bar) is masked in the screen's own colour and checked on every frame.
 - A page error before the film is ready (a syntax error in timeline.js) now fails `openFilm` at once instead of waiting 15 minutes.
 
 ## From film #15 (Oasis), owner review 2026-11-13: a sizzle is still a story
