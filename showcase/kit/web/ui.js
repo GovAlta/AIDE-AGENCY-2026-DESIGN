@@ -9,7 +9,8 @@
 //                bars: [{ label, v, hl, g }], max }],
 //   panels:   [{ id, x, y, w, h, a, dx, dy, scale, title, tabs: [..], tab, html, scroll }],   glass panels with any HTML (data-k targets inside)
 //   caption:  { text, a }, statement: { words: [{ w, a }], a, dy },
-//   card:     { kind: 'title', kicker, lines: [...], sub, traces, a, dy } | { kind: 'end', dates, kicker, title, sources: [...], traces, a },
+//   card:     { kind: 'title', kicker, lines: [...], sub, traces, a, dy } | { kind: 'end', dates, kicker, title (one sentence a line), titleLines, sources: [...] (two short lines), traces, a }
+//             | { kind: 'credits', title, lines: [...] } (a plain card after the end card for the full credits; no traces). Card text is fitted clear of the traces.
 //   cursor:   { from, to, k, press, a }   targets: 'pt:x,y' | 'map:lng,lat' | 'plate:<id>:x,y' | any data-k in a panel, plate spot or overlay,
 //   labels:   [{ lonLat | xy: [x, y] | plate: ['id', x, y], text, sub, n, kind: 'big'|'small'|'none', side: 'l'|'r', a }],
 // }
@@ -28,6 +29,32 @@ const accVars = a => (!a ? '--acc:var(--t-cyan);--accf:var(--f-cyan)' : /^[a-z]+
 // title cards: 124 px for a short name, smaller for a long one, so it never runs into the trace art (about 22 characters a line at 124 px)
 const titleSize = lines => { const n = Math.max(...lines.map(l => String(l).length)), rows = lines.length; return Math.round(Math.max(64, Math.min(124, 124 * 22 / Math.max(22, n), rows > 2 ? 100 : 124))); };
 const LOGOS = { light: { wm: '/brand/logos/agency-2026-wordmark-outlined.svg', goa: '/brand/logos/goa-signature.png' }, dark: { wm: '/brand/logos/agency-2026-wordmark-white-outlined.svg', goa: '/brand/logos/goa-signature-white.png' } };
+
+// ---- the trace art's line segments, so title and end cards keep their text clear of the traces (owner, film #6: the closing line
+// ran the full width and sat on a trace). Every text block on a card is fitted into the clear band between the traces at its height,
+// at least SAFE px from the nearest trace; film.UI.cardCheck(m) lists any text that still comes within m px of a trace (the dry run).
+const SAFE = 120, SEGS = {};
+async function loadTraces(url) {
+  if (SEGS[url]) return SEGS[url];
+  try { const txt = await fetch(url).then(r => (r.ok ? r.text() : ''));
+    const segs = []; for (const m of txt.matchAll(/ d="([^"]+)"/g)) { const pts = [...m[1].matchAll(/(-?[\d.]+)[ ,](-?[\d.]+)/g)].map(q => [+q[1], +q[2]]);
+      for (let i = 1; i < pts.length; i++) segs.push([pts[i - 1], pts[i]]); }
+    return (SEGS[url] = segs); } catch { return (SEGS[url] = []); }
+}
+const nearTrace = (segs, r, m) => segs.some(([[ax, ay], [bx, by]]) => { const n = Math.max(1, Math.ceil(Math.hypot(bx - ax, by - ay) / 4));
+  for (let i = 0; i <= n; i++) { const x = ax + (bx - ax) * i / n, y = ay + (by - ay) * i / n; if (x > r.x - m && x < r.x + r.w + m && y > r.y - m && y < r.y + r.h + m) return true; } return false; });
+const stageRect = el => { const s0 = document.getElementById('stage').getBoundingClientRect(), k = s0.width / 1920, r = el.getBoundingClientRect();
+  return { x: (r.left - s0.left) / k, y: (r.top - s0.top) / k, w: r.width / k, h: r.height / k }; };
+// each text block keeps clear of the traces: the end card's closing line by SAFE px, every other block by 40 px. A block too close is wrapped
+// narrower and set smaller, step by step, until it is clear (the dry run then checks every card at 40 px).
+function fitCard(ce, segs) {
+  for (const el of ce.querySelectorAll('.endwrap > *:not(img), .titlewrap > *:not(.bus), .creditswrap > *')) {
+    if (el.dataset.fs === undefined) el.dataset.fs = el.style.fontSize; el.style.maxWidth = ''; el.style.fontSize = el.dataset.fs;
+    const m = el.tagName === 'H1' && el.closest('.endwrap') ? SAFE : 40;
+    for (let i = 0; i < 30 && nearTrace(segs, stageRect(el), m); i++) { const r = stageRect(el);
+      el.style.maxWidth = `${Math.max(360, r.w * 0.94)}px`; el.style.fontSize = `${parseFloat(getComputedStyle(el).fontSize) * 0.96}px`; } }
+}
+const sentences = t => String(t ?? '').split(/(?<=[.!?])\s+(?=[A-Z])/);
 
 export function createUI(root, labelsRoot) {
   root.innerHTML = `
@@ -53,7 +80,14 @@ export function createUI(root, labelsRoot) {
   const platePoint = (id, x, y) => { const el = document.querySelector(`#plates .plate[data-id="${CSS.escape(id)}"]`) || [...document.querySelectorAll('#plates .plate')].find(e => e.__id === id);
     if (!el) return null; const probe = el.__probe || (el.__probe = Object.assign(document.createElement('i'), { className: 'probe' })); if (!probe.parentNode) el.appendChild(probe);
     probe.style.left = `${x}px`; probe.style.top = `${y}px`; const r = probe.getBoundingClientRect(), s0 = document.getElementById('stage').getBoundingClientRect(); return { x: r.left - s0.left, y: r.top - s0.top }; };
+  let cardUrl = null;
+  const ready = Promise.all(['/art/traces-end.svg', '/art/traces-end-light.svg', '/art/traces-title.svg', '/art/traces-title-light.svg'].map(loadTraces));
   return {
+    ready,
+    // text on the current card that comes within m px of a trace: [{ text, rect }] (empty when clear)
+    cardCheck(m = 40) { const ce = $('card'); if (!cardUrl || +ce.style.opacity < 0.01) return []; const segs = SEGS[cardUrl] || [];
+      return [...ce.querySelectorAll('.endwrap > *, .titlewrap > *:not(.bus), .creditswrap > *')].filter(el => el.textContent.trim())
+        .map(el => ({ text: el.textContent.trim().slice(0, 60), rect: stageRect(el) })).filter(o => nearTrace(segs, o.rect, m)); },
     takeErrors() { const n = errors; errors = 0; return n; },
     render(u, ctx) {
       $('chrome').style.opacity = u.chrome ?? 0; $('fade').style.opacity = u.fade ?? 0;
@@ -76,9 +110,14 @@ export function createUI(root, labelsRoot) {
       if (st) { set('statement', ste, st.words.map(w => w.w === '\n' ? '<br>' : `<span style="opacity:${w.a}">${esc(w.w)}</span>`).join(' ')); ste.style.transform = `translateY(${st.dy || 0}px)`; }
       // ---- title / end card (traces art per theme: art/traces-*.svg on night, art/traces-*-light.svg on board)
       const c = u.card, ce = $('card'); ce.style.opacity = c ? (c.a ?? 1) : 0;
-      if (c) set('card', ce, c.kind === 'end'
-        ? `<img class="traces" src="/art/traces-end${sfx}.svg" style="opacity:${c.traces ?? 1}"><div class="endwrap"><img class="wmbig" src="${L.wm}"><div class="dates">${esc(c.dates)}</div><div class="kick">${esc(c.kicker)}</div><h1>${esc(c.title)}</h1><div class="src">${(c.sources || []).map(esc).join('<br>')}</div></div>`
-        : `<img class="traces" src="/art/traces-title${sfx}.svg" style="opacity:${c.traces ?? 1}"><div class="titlewrap" style="transform:translateY(${c.dy || 0}px)"><div class="kick">${esc(c.kicker)}</div><h1 style="font-size:${titleSize(c.lines)}px">${c.lines.map(esc).join('<br>')}</h1><div class="bus"><i></i><i></i><i></i></div>${c.sub ? `<p>${esc(c.sub)}</p>` : ''}</div>`);
+      if (c) { const url = c.kind === 'credits' ? null : `/art/traces-${c.kind === 'end' ? 'end' : 'title'}${sfx}.svg`;
+        const html = c.kind === 'end'
+        ? `<img class="traces" src="${url}" style="opacity:${c.traces ?? 1}"><div class="endwrap"><img class="wmbig" src="${L.wm}"><div class="dates">${esc(c.dates)}</div><div class="kick">${esc(c.kicker)}</div><h1>${(c.titleLines || sentences(c.title)).map(esc).join('<br>')}</h1><div class="src">${(c.sources || []).map(esc).join('<br>')}</div></div>`
+        : c.kind === 'credits'
+        ? `<div class="creditswrap">${c.title ? `<div class="kick">${esc(c.title)}</div>` : ''}${(c.lines || []).map(l => `<p>${esc(l)}</p>`).join('')}</div>`
+        : `<img class="traces" src="${url}" style="opacity:${c.traces ?? 1}"><div class="titlewrap" style="transform:translateY(${c.dy || 0}px)"><div class="kick">${esc(c.kicker)}</div><h1 style="font-size:${titleSize(c.lines)}px">${c.lines.map(esc).join('<br>')}</h1><div class="bus"><i></i><i></i><i></i></div>${c.sub ? `<p>${esc(c.sub)}</p>` : ''}</div>`;
+        cardUrl = url; if (last.card !== html) { set('card', ce, html); if (url) fitCard(ce, SEGS[url] || []); } }
+      else cardUrl = null;
       // ---- labels (on the world map, on a plate, or at a screen point)
       let lh = '';
       for (const l of u.labels || []) { if ((l.a ?? 1) <= 0.001) continue;

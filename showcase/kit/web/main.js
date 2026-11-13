@@ -30,6 +30,7 @@ if (config.stage) { const mod = await import(config.stage); stage = await mod.cr
 
 const UI = createUI(document.getElementById('ui'), document.getElementById('labels'));
 const plates = createPlates(document.getElementById('plates'));
+await UI.ready;   // the trace art's geometry, so card text is fitted the same way on every renderer
 for (const w of [400, 500, 600, 700, 800]) await document.fonts.load(`${w} 20px Inter`);
 for (const w of [500, 600]) await document.fonts.load(`${w} 20px "Geist Mono"`);
 await document.fonts.ready;

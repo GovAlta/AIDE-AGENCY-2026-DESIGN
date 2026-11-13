@@ -178,7 +178,10 @@ html, body { margin: 0; background: #000; overflow: hidden; }
 .endwrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
 .endwrap .wmbig { height: 150px; } .endwrap .dates { font: 700 30px Inter; color: var(--t-maroon); margin: 10px 0 46px; }
 .endwrap h1 { font: 800 64px/1.1 Inter; letter-spacing: -.025em; margin: 12px 0 40px; color: var(--ink); }
-.endwrap .src { font: 500 15px/1.6 "Geist Mono", monospace; color: var(--soft); max-width: 1500px; }
+.endwrap .src { font: 500 22px/1.5 Inter; color: var(--soft); max-width: 1300px; }
+.creditswrap { position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; gap: 6px; }
+.creditswrap p { font: 500 28px/1.45 Inter; color: var(--ink); max-width: 1500px; margin: 0; }
+.creditswrap .kick { margin-bottom: 18px; }
 #cursor { position: absolute; left: 0; top: 0; width: 34px; height: 34px; filter: drop-shadow(0 3px 8px rgba(2,27,48,.45)); transform-origin: 4px 2px; }
 #fade { position: absolute; inset: 0; background: var(--fade); }
 
