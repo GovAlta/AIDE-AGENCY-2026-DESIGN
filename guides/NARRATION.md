@@ -154,6 +154,7 @@ These came from the owner's review of a script that had passed the lint. The lin
 | **Say what exists today, and how it grows** | "The 9 systems is also what is currently available today and needs to clearly identify new integrations take minutes to add" | "Atlas reaches nine systems." | "Today, Atlas reads nine systems… A new system takes minutes to add through MCP, an open standard…" |
 | **Match the register of the reference film.** On-screen lines name what is shown; pitch lines are the owner's own words | "The #11 video was very clear." | "One conversation. One set of permissions. One record." | "Chat, your systems and coding agents, in one place" |
 | **No template or instruction text in a frame, ever**, and no slide written about itself | "A slide written like this is awful and deeply inappropriate for this kind of showcase event" | a starter's placeholder sentence | the owner's line, or nothing |
+| **No teaser, idiom or mood openings. Every line names who does what to what** (film #15, 2026-11-13) | "This language isn't helpful." | "A school year runs on one thing: the student record. Registration, attendance, marks… all depend on it." | "Every Alberta school keeps a record for each student, with their registration, courses, attendance, marks, report cards and fees. OASIS is a student information system, one place where registrars, teachers and parents all work from that same record." |
 
 Before voicing, read the whole script aloud once and ask of every line: would the owner say this sentence to a minister?
 
