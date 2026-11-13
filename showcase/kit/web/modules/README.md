@@ -9,6 +9,8 @@ export async function createStage(el, { config, helpers }) {
     async apply(world, state) {},   // draw state.world; resolve when the frame is fully drawn (all tiles and data loaded)
     project(lonLat) {},             // screen point {x, y} for labels and the cursor, or null when hidden
     takeErrors() { return 0; },     // load errors since the last call (a frame with errors is rejected)
+    // optional: screenBoxes(world) for tools/motion-check.mjs --flicker; a stage that draws its own text adds
+    // textKeys(world) (one key per text block fully shown) and textCheck(m) (glyphs outside the safe area) for the dry run's fit check
   };
 }
 ```

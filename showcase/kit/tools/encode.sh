@@ -20,14 +20,15 @@ nice ffmpeg -y -loglevel error -i "$M" -vf "scale=1280:720:flags=lanczos,fps=30"
 nice ffmpeg -y -loglevel error -i "$M" -vf "scale=1280:720:flags=lanczos,fps=30" -c:v libx264 -preset slow -b:v "$VB" -pass 2 -passlogfile "$LOG" -threads 8 "${ACODEC[@]/256k/96k}" -movflags +faststart "$OUT/preview-720p-phone.mp4"
 [ -f out/captions.srt ] && cp out/captions.srt out/captions.vtt "$OUT/"; [ -f out/mix.wav ] && cp out/mix.wav "$OUT/audio-mix.wav"
 echo "frames in master: $(ffprobe -v error -count_frames -select_streams v -show_entries stream=nb_read_frames -of csv=p=0 "$M") of $N"
-# Every delivered file stays under -2.0 dBTP. AAC lifts the true peak, more at a low bitrate (the 96 kb/s phone preview of film #2 peaked
+# Every delivered file stays under -2.0 dBTP, with 0.1 dB to spare (a share copy of film #12 measured exactly -2.0, which "under -2" does not
+# allow): a file above -2.1 is lowered. AAC lifts the true peak, more at a low bitrate (the 96 kb/s phone preview of film #2 peaked
 # at -1.7 while its master was at -2.4). Each file's sound is measured after encoding; one that is over is given its sound again from
 # out/mix.wav (not from the master's AAC), lowered by what it is over plus 0.3 dB, the picture copied untouched.
 tp() { ffmpeg -hide_banner -nostats -i "$1" -map 0:a -af ebur128=peak=true -f null - 2>&1 | awk '/True peak:/{f=1} f&&/Peak:/{print $2; exit}'; }
 lufs() { ffmpeg -hide_banner -nostats -i "$1" -map 0:a -af ebur128 -f null - 2>&1 | awk '/Integrated loudness:/{f=1} f&&/I:/{print $2; exit}'; }
 if [ -f out/mix.wav ]; then
   for pair in "$M:256k" "$OUT/$SLUG-1080p${FPS}-share.mp4:192k" "$OUT/preview-720p-phone.mp4:96k"; do f="${pair%:*}"; br="${pair##*:}"
-    cut=0; for try in 1 2 3 4; do p=$(tp "$f"); cut=$(node -e "const p=$p, c=$cut; console.log(p > -2.0 ? (c + p + 2.0 + 0.4).toFixed(2) : '')")
+    cut=0; for try in 1 2 3 4; do p=$(tp "$f"); cut=$(node -e "const p=$p, c=$cut; console.log(p > -2.1 ? (c + p + 2.1 + 0.3).toFixed(2) : '')")
       [ -z "$cut" ] && break          # the cut adds up: each pass is made again from out/mix.wav
       nice ffmpeg -y -loglevel error -i "$f" -i out/mix.wav -map 0:v -map 1:a -c:v copy -af "volume=-${cut}dB" -c:a aac -b:a "$br" -movflags +faststart "$f.tmp.mp4" && mv "$f.tmp.mp4" "$f"
       echo "  $(basename "$f"): true peak was $p dBTP, sound now ${cut} dB under the mix"; done
