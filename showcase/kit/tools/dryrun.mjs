@@ -1,4 +1,6 @@
 // Evaluates stateAt for every frame without drawing: catches script errors, bad numbers and missing captions before any render.
+// Then draws each moment a new text block is fully shown and fails on any text outside the 48 px safe area or clipped (UI.textCheck),
+// and checks the title and end cards against their trace art (UI.cardCheck).
 //   node tools/dryrun.mjs --project <film dir>
 import { openFilm } from './lib/film-page.mjs';
 const { page, close, info } = await openFilm();
@@ -16,5 +18,22 @@ for (const [kind, t] of Object.entries(r.cards)) { await page.evaluate(t => wind
   for (const o of near) r.errors.push(`${t.toFixed(2)} s: ${kind} card text within 40 px of the traces: "${o.text}"`);
   r.cardText.push(`${kind} at ${t.toFixed(2)} s: ${near.length ? near.length + ' too close' : 'clear'}`); }
 delete r.cards;
+// every on-screen text block (headlines, callouts, the statement or pitch line, captions, panels, cards) at the moment it is fully shown:
+// its glyphs must sit inside the safe area and inside any box that clips them (film #12: a pitch line ran off the right edge)
+const shown = await page.evaluate(() => { const { TL, DUR, FPS } = window.film, n = Math.round(DUR * FPS), times = [], seen = new Set();
+  const full = o => o && (o.a ?? 1) > 0.99 && (!o.words || o.words.every(w => w.w === '\n' || (w.a ?? 1) > 0.99));
+  for (let f = 0; f < n; f += 6) { const u = TL.stateAt(f / FPS).ui || {}; const keys = [];
+    for (const c of u.callouts || []) if (full(c)) keys.push('c:' + JSON.stringify([c.kicker, c.big, c.sub, c.note, (c.words || []).map(w => w.w)]));
+    if (full(u.statement)) keys.push('s:' + u.statement.words.map(w => w.w).join(' '));
+    if (u.caption && (u.caption.a ?? 1) > 0.99) keys.push('t:' + u.caption.text);
+    if (u.card && (u.card.a ?? 1) > 0.99) keys.push('k:' + JSON.stringify([u.card.kind, u.card.kicker, u.card.title, u.card.lines]));
+    for (const p of u.panels || []) if ((p.a ?? 1) > 0.99) keys.push('p:' + String(p.html || p.id || '').slice(0, 200));
+    const fresh = keys.filter(k => !seen.has(k)); if (fresh.length) { fresh.forEach(k => seen.add(k)); times.push(f / FPS); } }
+  return times; });
+const textIssues = new Map();
+for (const t of shown) { await page.evaluate(t => window.film.seek(t), t);
+  for (const o of await page.evaluate(() => window.film.UI.textCheck(48))) { const k = o.where + '|' + o.text; if (!textIssues.has(k)) textIssues.set(k, { t, ...o }); } }
+for (const o of textIssues.values()) r.errors.push(`${o.t.toFixed(2)} s: ${o.where} text ${o.why} (x ${o.rect.x}..${o.rect.x + o.rect.w}, y ${o.rect.y}..${o.rect.y + o.rect.h}): "${o.text}"`);
+r.textCheck = `${shown.length} moments checked, ${textIssues.size} text block(s) outside the safe area or clipped`;
 console.log(JSON.stringify({ ...info, ...r }, null, 1));
 await close(); process.exit(r.errors.length || r.nonFinite.length ? 1 : 0);

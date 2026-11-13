@@ -88,6 +88,31 @@ export function createUI(root, labelsRoot) {
     cardCheck(m = 40) { const ce = $('card'); if (!cardUrl || +ce.style.opacity < 0.01) return []; const segs = SEGS[cardUrl] || [];
       return [...ce.querySelectorAll('.endwrap > *, .titlewrap > *:not(.bus), .creditswrap > *')].filter(el => el.textContent.trim())
         .map(el => ({ text: el.textContent.trim().slice(0, 60), rect: stageRect(el) })).filter(o => nearTrace(segs, o.rect, m)); },
+    // every line of on-screen text (headlines and callouts, the statement or pitch line, the caption, panels, cards) measured by its
+    // glyphs: [{ where, text, rect, why }] for text that leaves the safe area (m px inside the 1920 x 1080 frame) or is cut by a box
+    // that clips its content. Words not yet revealed (opacity 0) still take their place, so a line that will overflow is caught early.
+    textCheck(m = 48) {
+      const out = [], S = { x0: m, y0: m, x1: 1920 - m, y1: 1080 - m };
+      for (const where of ['callouts', 'statement', 'caption', 'panels', 'card']) {
+        const box = $(where); if (+getComputedStyle(box).opacity < 0.01) continue;
+        const walk = document.createTreeWalker(box, NodeFilter.SHOW_TEXT, { acceptNode: n => n.textContent.trim() ? NodeFilter.FILTER_ACCEPT : NodeFilter.FILTER_REJECT });
+        for (let n; (n = walk.nextNode());) {
+          const el = n.parentElement; if (!el || getComputedStyle(el).display === 'none' || getComputedStyle(el).visibility === 'hidden') continue;
+          const rg = document.createRange(); rg.selectNodeContents(n);
+          for (const cr of rg.getClientRects()) {
+            if (cr.width < 1 || cr.height < 1) continue;
+            const s0 = document.getElementById('stage').getBoundingClientRect(), k = s0.width / 1920;
+            const r = { x: (cr.left - s0.left) / k, y: (cr.top - s0.top) / k, w: cr.width / k, h: cr.height / k };
+            const text = n.textContent.trim().slice(0, 60), rect = { x: Math.round(r.x), y: Math.round(r.y), w: Math.round(r.w), h: Math.round(r.h) };
+            // the card's own art has its own fit check (cardCheck); its text must still stay in frame
+            if (r.x < S.x0 - 0.5 || r.y < S.y0 - 0.5 || r.x + r.w > S.x1 + 0.5 || r.y + r.h > S.y1 + 0.5) { out.push({ where, text, rect, why: 'outside the safe area' }); continue; }
+            for (let a = el; a && a !== box; a = a.parentElement) { const cs = getComputedStyle(a);
+              if (cs.overflowX !== 'visible' || cs.overflowY !== 'visible') { const b = stageRect(a);
+                if (r.x < b.x - 0.5 || r.y < b.y - 0.5 || r.x + r.w > b.x + b.w + 0.5 || r.y + r.h > b.y + b.h + 0.5) { out.push({ where, text, rect, why: 'clipped by its box' }); break; } } }
+          }
+        }
+      }
+      return out; },
     takeErrors() { const n = errors; errors = 0; return n; },
     render(u, ctx) {
       $('chrome').style.opacity = u.chrome ?? 0; $('fade').style.opacity = u.fade ?? 0;
