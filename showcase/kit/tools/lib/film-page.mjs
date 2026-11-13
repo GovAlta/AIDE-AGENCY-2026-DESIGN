@@ -16,9 +16,12 @@ export async function openFilm({ project = arg('project', '.'), port = arg('port
     await new Promise((res, rej) => { server.stdout.on('data', d => { if (String(d).includes('film server')) res(); }); server.on('exit', c => rej(new Error('server exited ' + c))); }); }
   const browser = await chromium.launch({ args: GL_ARGS });
   const page = await browser.newPage({ viewport: { width: 1920, height: 1080 }, deviceScaleFactor: 1 });
-  page.on('pageerror', e => console.log('PAGEERROR', e.message.slice(0, 300)));
+  // an error before the page is ready (a syntax error in timeline.js) fails at once instead of waiting out the 15-minute timeout
+  let failStart; const startFailed = new Promise((_, rej) => { failStart = rej; });
+  page.on('pageerror', e => { console.log('PAGEERROR', e.message.slice(0, 300)); failStart(new Error('the film page threw before it was ready: ' + e.message.slice(0, 200))); });
   await page.goto(`http://127.0.0.1:${port}/${query ? '?' + query : ''}`, { waitUntil: 'load' });
-  await page.waitForFunction('window.filmReady === true', null, { timeout: 900000 });
+  try { await Promise.race([page.waitForFunction('window.filmReady === true', null, { timeout: 900000 }), startFailed]); }
+  catch (e) { await browser.close().catch(() => {}); if (server) server.kill('SIGTERM'); throw e; }
   const initErrors = await page.evaluate(() => window.filmInitErrors);
   if (initErrors) throw new Error(`page started with ${initErrors} load error(s): fix the asset paths before rendering`);
   const close = async () => { await browser.close().catch(() => {}); if (server) server.kill('SIGTERM'); };

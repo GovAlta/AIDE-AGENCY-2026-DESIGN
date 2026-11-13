@@ -120,3 +120,13 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
   for 11 frames). The kit now refuses such a page and settles fonts and images before frame 0; `tools/seam-check.py` flags a jump on a
   task boundary that is not a planned cut. Run it on every render.
 - **Run `encode.sh` from the kit**, not from a copy in the film folder: BUILD.json records the kit commit from the script's own place.
+
+## From film #12 (Alberta App), owner review 2026-11-14
+
+- **A pitch line ran off the right edge** ("…test it with Al…") and passed the dry run, whose fit check covered end cards only. The dry run
+  now draws each moment a new text block is fully shown and measures every line's glyphs (headlines, callouts, statement, captions,
+  panels, cards) against the 48 px safe area and any clipping box (`UI.textCheck`). Words not yet revealed still count, so a long line
+  fails before it is shown.
+- **A device on screen as the subject fills at least half the frame width.** Open wide, then push the camera in on the screen; put the
+  cards farther back so they grow less than the screen. A phone at half the width is cropped: frame its top half.
+- A page error before the film is ready (a syntax error in timeline.js) now fails `openFilm` at once instead of waiting 15 minutes.
