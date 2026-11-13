@@ -139,3 +139,7 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
   a style montage (film #3).
 - **A white screen never sits on a white ground.** Give it a contrasting ground (deeper gradient or navy), a frame and a soft shadow.
   Keep the Agency chrome on every film: wordmark top right, classification in the navy band.
+- **Describe the end product, not the prototype, and say the owner's claims plainly** (film #12, 2026-11-13: "It fixated on the
+  prototype instead of describing the end product. Stop hedging on what I'm saying."). The owner's own statements need no caveat on screen.
+- **No wall of tiny text.** A comparison shows three to five short items at 30 px or more, one at a time; a long comparison is cut,
+  not shrunk.
