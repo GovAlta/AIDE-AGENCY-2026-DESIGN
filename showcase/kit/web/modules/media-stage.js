@@ -18,7 +18,7 @@
 //     a, z }],
 //   tags: [{ plate, at: [sx, sy], label, sub, dx, dy, accent, a }],      // at = a source pixel; the stage maps it through crop and grow
 //   cards: [{ html, x, y, w, h, a, cls }],               // glass cards: the film writes their HTML with the .md-* helpers
-//   scrims: [{ x, y, w, h, a }],                          // a soft light patch the size of a text block plus a small margin, behind type on footage (a ~0.4)
+//   scrims: RETIRED 2026-11-13 (owner: no foggy white behind text); ignored unless legacyScrims: true. Was: a soft light patch the size of a text block plus a small margin, behind type on footage (a ~0.4)
 //   band: { chap, place, stat: { num, label }, solid, a, bottom }, credit: 'Imagery: ...', letterbox: 0..1 }
 //
 // Tags track the footage when the timeline gives `at` per frame (from the source film's camera log, or keyed by hand and joined
@@ -27,7 +27,7 @@
 const ease = u => u <= 0 ? 0 : u >= 1 ? 1 : u * u * (3 - 2 * u);
 const lerp = (a, b, u) => a + (b - a) * u;
 // 'agency' keeps the footage clean and in full colour (owner, film #5 review 2026-11-12: "the frosted white covers too much"): no white
-// lift, no cool cast. Legibility comes from glass cards and from scrims sized to a text block, never from a wash over the footage.
+// lift, no cool cast. Legibility comes from glass cards or a solid navy band, never from a wash, haze or scrim over the footage.
 const GRADES = { agency: { sat: 1, con: 1.02, bri: 1.0, lift: 0, cool: 0 }, soft: { sat: .92, con: .96, bri: 1.03, lift: .04, cool: 0 }, none: { sat: 1, con: 1, bri: 1, lift: 0, cool: 0 } };
 
 export async function createStage(el) {
@@ -94,7 +94,9 @@ export async function createStage(el) {
           + `<div class="md-pin" style="left:${p[0]}px;top:${p[1]}px"></div>`
           + `<div class="md-glass" style="left:${lx}px;top:${ly}px;transform:translate(${left ? '-100%' : '0'},-50%)"><b>${t.label}</b>${t.sub ? `<span>${t.sub}</span>` : ''}</div></div>`);
       }
-      for (const r of m.scrims || []) html.push(`<div class="md-scrim" style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px;opacity:${r.a ?? 1};--md-scrim-a:${r.k ?? 0.42}"></div>`);
+      // scrims are retired (owner, 2026-11-13: no foggy white background behind text in any more videos). Film #5, made before, pins its kit commit.
+      if ((m.scrims || []).length && !m.legacyScrims) console.warn('media-stage: scrims are retired; put text on a glass card or a solid band');
+      for (const r of (m.legacyScrims ? m.scrims || [] : [])) html.push(`<div class="md-scrim" style="left:${r.x}px;top:${r.y}px;width:${r.w}px;height:${r.h}px;opacity:${r.a ?? 1};--md-scrim-a:${r.k ?? 0.42}"></div>`);
       for (const c of m.cards || []) html.push(`<div class="md-glass md-card ${c.cls || ''}" style="left:${c.x}px;top:${c.y}px;width:${c.w}px;${c.h ? `height:${c.h}px;` : ''}opacity:${c.a ?? 1};z-index:${c.z ?? 70}">${c.html}</div>`);
       if (m.letterbox) { const h = 110 * ease(m.letterbox); html.push(`<div class="md-letter" style="top:0;height:${h}px;z-index:80"></div><div class="md-letter" style="bottom:0;height:${h}px;z-index:80"></div>`); }
       if (m.band) { const b = m.band; html.push(`<div class="md-glass md-band${b.solid ? ' md-solid' : ''}" style="opacity:${b.a ?? 1};z-index:90;${b.bottom != null ? `bottom:${b.bottom}px;` : ''}">`

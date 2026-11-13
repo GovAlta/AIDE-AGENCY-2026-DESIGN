@@ -91,8 +91,9 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
 - **Never slow a clip.** Ten clips in #5 were slowed to fill their shots and read as a low frame rate. Play footage at speed 1.0 mapped
   to the source's own frames; a long shot takes a longer source range or a second clip. Measure unique frames a second on the rendered
   frames (24 or more for moving footage).
-- **Frost only behind text.** White washes and haze over footage "cover too much". A soft patch the size of the text block, or the
-  glass card itself, gives legibility; footage stays clean and in full colour (kit `media-stage.js` default).
+- **No frost, haze or foggy white anywhere on footage, not even behind text.** Washes "cover too much" (film #5, first cut); the soft
+  patch behind headlines that replaced them was also rejected (owner, 2026-11-13: "don't use that foggy white background behind text
+  in any more videos"). Put text on a glass card or a solid navy band; footage stays clean and in full colour. `scrims` are retired.
 - **No busy texture behind an explanation.** A floor of tiles under the cards was "distracting". Explanation scenes use the calm glass
   ground of #1 and #2; a product's own frames appear only where they are the subject (a style flip, a montage).
 - **See-through cards flicker on the farm.** A blurred, half-transparent card drew blank for single frames, and two cards at the same

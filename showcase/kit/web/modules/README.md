@@ -66,7 +66,8 @@ file header lists every field.
   `zoom` and `pan` give a slow push.
 - **Grade.** `'agency'` (default) keeps footage clean and in full colour; `'soft'` a light touch; `'none'` for interface recordings; or
   `{ sat, con, bri, lift, cool }`. **No white washes, vignettes or haze over footage** (owner, film #5 review): legibility comes from the
-  glass cards and from `scrims`, a soft patch the size of a text block plus a small margin at about 0.4.
+  glass cards or a solid navy band. **No foggy white patch behind text either** (owner, 2026-11-13, after film #5: "don't use that
+  foggy white background behind text in any more videos"): `scrims` are retired and ignored.
 - **Motion.** Never slow a clip below its real speed (a 30 fps source at 0.5x repeats each frame four times and reads as a low frame
   rate). Take a longer source range or cut to a second clip. Map film frames to source frames exactly (`seq.t` = source seconds);
   a 30 fps source on a 60 fps film then shows each frame twice, evenly.
