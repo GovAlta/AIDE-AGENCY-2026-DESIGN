@@ -14,7 +14,8 @@ export async function createTimeline({ config, timing, helpers: H }) {
   // capture/states.json is written by tools/capture-states.mjs: { name: { file, w, h, marks: { key: {x,y,w,h} } } }
   const states = await fetch('/capture/states.json').then(r => (r.ok ? r.json() : {})).catch(() => ({}));
   const first = Object.values(states)[0];
-  const cam = H.track([[3, 960, 540, 0.62, 6, -10], [DUR, 760, 520, 0.86, 2, -3]]);
+  // a static framing: slow push-ins and zoom creep are not available (owner, 2026-11-13); change the framing by a cut or a quick move
+  const cam = () => [760, 520, 0.86, 2, -3];
 
   function stateAt(t) {
     const ui = { chrome: H.ramp(t, 0.4, 1.4), bandTitle: config.bandTitle, credits: '', caption: H.captionAt(CAPS, t),

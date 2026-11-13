@@ -65,7 +65,7 @@ The film folder goes to `$FILMS_DIR` (default `films/` beside the repo, outside 
 ## Path A: app films
 
 Capture named states of the running app (`tools/capture-states.mjs`, with `marks` for exact element boxes). Record interactions as exact
-image sequences (`tools/capture-video.mjs`). Put them on plates: push-ins, tilts, a browser frame, spotlights locked to the marked
+image sequences (`tools/capture-video.mjs`). Put them on plates (a still framing: no slow push-ins, owner 2026-11-13): tilts, a browser frame, spotlights locked to the marked
 boxes, and a cursor travelling between targets. Where the real UI is too small to read on a stage screen, re-draw it as a glass panel
 in the Agency look, keeping the app's real labels, numbers and warnings.
 

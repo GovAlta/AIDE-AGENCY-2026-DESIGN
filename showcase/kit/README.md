@@ -42,7 +42,7 @@ cloud/farm.sh cleanup $F
 | `theme` | optional `'light' \| 'dark'` for this frame; default `film.config.json` `theme` (light, the Agency default). Swaps every colour token, the logos and the card art |
 | `bg` | `{ kind: 'board' \| 'paper' \| 'night' \| 'navy' \| 'spectrum' \| 'stars' \| 'none', glow, lift }` an Agency ground (missing kind = the theme's ground). `stars` only for globe/space shots |
 | `world` | handed to the optional stage (e.g. the map module, `web/modules/README.md`) |
-| `plates` | real material on a virtual camera: `src` (screenshot), `seq` (image sequence from `capture-video.mjs`), or `video`; `w, h, x, y, cam {cx, cy, s}, rotX, rotY, rotZ, a, z, frame: 'browser', url, radius, shadow, grade, dim, spots [{x, y, w, h, k}], overlays [{x, y, w, h, html, k}]` — geometry in the plate's own pixels, so spotlights and overlays stay locked to the UI through push-ins and tilts |
+| `plates` | real material on a virtual camera: `src` (screenshot), `seq` (image sequence from `capture-video.mjs`), or `video`; `w, h, x, y, cam {cx, cy, s}, rotX, rotY, rotZ, a, z, frame: 'browser', url, radius, shadow, grade, dim, spots [{x, y, w, h, k}], overlays [{x, y, w, h, html, k}]` — geometry in the plate's own pixels, so spotlights and overlays stay locked to the UI; `cam` is a still framing (slow push-ins are not available: the dry run fails them) |
 | `ui.chrome`, `bandTitle`, `credits`, `fade` | Agency chrome (wordmark, GoA signature, band, UNCLASSIFIED pill), credits line, fade to black |
 | `ui.callouts` | big numbers with kicker, sub and note; `bars` for a ranked bar chart (one scale, values in text colour, one row highlighted); `panel: true` for a night-ground card |
 | `ui.panels` | glass panels with any HTML: re-draw an app panel in the Agency look (`.row .cb .sw .btn .sl .select .input fieldset table .cost` widgets); `data-k` on any element makes it a cursor target |
@@ -53,7 +53,7 @@ cloud/farm.sh cleanup $F
 
 `helpers`: `clamp lerp ss ramp win env bump outBack count mono track smoothPath captionsFrom captionAt cursorAt mulberry`.
 
-Examples: `example/web/timeline.js` (8 s: a real screenshot plate with tilt, push-in, spotlight, cursor, callout, caption);
+Examples: `example/web/timeline.js` (8 s: a real screenshot plate with tilt, spotlight, cursor, callout, caption; the framing holds still);
 `templates/timeline.js` (what `new-film` starts from); film #11's `film/web/timeline.js` (3:17 on the map stage).
 
 ## Tools

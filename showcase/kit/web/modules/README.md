@@ -9,7 +9,8 @@ export async function createStage(el, { config, helpers }) {
     async apply(world, state) {},   // draw state.world; resolve when the frame is fully drawn (all tiles and data loaded)
     project(lonLat) {},             // screen point {x, y} for labels and the cursor, or null when hidden
     takeErrors() { return 0; },     // load errors since the last call (a frame with errors is rejected)
-    // optional: screenBoxes(world) for tools/motion-check.mjs --flicker; a stage that draws its own text adds
+    // optional: scales(world) -> [{ id, s, a }] for the dry run's slow-scale check (else screenBoxes widths are used);
+    // screenBoxes(world) for tools/motion-check.mjs --flicker; a stage that draws its own text adds
     // textKeys(world) (one key per text block fully shown) and textCheck(m) (glyphs outside the safe area) for the dry run's fit check
   };
 }
@@ -65,7 +66,8 @@ file header lists every field.
 - **Plates.** An image or an image sequence (`seq: { pattern, fps, start, t }`, so frames stay a pure function of time in the cloud).
   `crop` (source px) leaves out a HUD the source burned in; `mode: 'window'` puts the footage in a glass window with a bezel and an
   optional title bar; `grow` 0..1 eases the window to full bleed (the signature move from an interface to its own render);
-  `zoom` and `pan` give a slow push.
+  `zoom` and `pan` set a static framing only: slow push-ins, zoom creep and Ken Burns are not available (owner, 2026-11-13; the dry
+  run fails any slow scale during a hold).
 - **Grade.** `'agency'` (default) keeps footage clean and in full colour; `'soft'` a light touch; `'none'` for interface recordings; or
   `{ sat, con, bri, lift, cool }`. **No white washes, vignettes or haze over footage** (owner, film #5 review): legibility comes from the
   glass cards or a solid navy band. **No foggy white patch behind text either** (owner, 2026-11-13, after film #5: "don't use that

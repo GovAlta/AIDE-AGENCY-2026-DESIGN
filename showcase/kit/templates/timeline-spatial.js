@@ -39,16 +39,19 @@ export async function createTimeline({ config, timing, stage, helpers: H }) {
   const ctr = w => [w.x, w.y, w.z];
   const K = (t, c, focus) => { const f = focus || c.focus; return [t, c.x, c.y, c.z, c.yaw, c.pitch, c.aperture ?? 1, f[0], f[1], f[2]]; };
   const ALL = [ASK, ...SYS];
+  // the camera holds still on each framing and moves between framings in 0.4 s: slow push-ins, orbits and zoom creep are not available
+  // (owner, 2026-11-13: "The slow push always looks bad"); the dry run fails any slow scale during a hold
+  const hold = (a, b, c, focus) => [K(a, c, focus), K(b, c, focus)];
+  const F1 = stage.frame([ASK], 1.06, { yaw: 4 }), F2 = stage.frame([ASK, SYS[0], SYS[1]], 0.98, { yaw: 7 }), F3 = stage.frame(ALL, 0.96, { yaw: 0, pitch: 2 });
+  const F4 = stage.frame([ASK, GATE], 0.98, { yaw: 8 }), F5 = stage.frame([GATE, REC], 1.0, { yaw: 14, pitch: 2 });
+  const W1 = stage.wallFrame(WALL, 1 / 30, 1.3, { yaw: 28, pitch: 2, shift: [230, 110] }), W2 = stage.wallFrame(WALL, 5 / 30, 0.8, { yaw: 38, pitch: 5, shift: [120, 130] });
   const CAM = H.track([
-    K(0, stage.frame([ASK], 1.3, { yaw: 9, pitch: -2 }), ctr(ASK)), K(6.2, stage.frame([ASK], 1.06, { yaw: -4 }), ctr(ASK)),                  // act 1: push in on the main window
-    K(7.8, stage.frame([ASK, SYS[0], SYS[1]], 0.98, { yaw: 7 }), ctr(SYS[0])), K(9.0, stage.frame([ASK, SYS[0], SYS[1]], 0.98, { yaw: 9 }), ctr(SYS[1])),   // act 2: each system as it is named
-    K(10.3, stage.frame(ALL, 0.96, { yaw: 3, pitch: 2 }), ctr(SYS[2])), K(11.6, stage.frame(ALL, 0.96, { yaw: -6, pitch: 2 }), ctr(SYS[3])),
-    K(12.9, stage.frame(ALL, 0.96, { yaw: -9 }), ctr(SYS[4])), K(14.6, stage.frame(ALL, 0.94, { yaw: -2, pitch: 2 }), ctr(ASK)),
-    K(16.4, stage.frame([ASK, SYS[0]], 0.98, { yaw: 5 }), ctr(ASK)), K(18.2, stage.frame([ASK, GATE], 0.98, { yaw: 8 }), ctr(GATE)),              // act 3: follow the request
-    K(20.2, stage.frame([GATE, REC], 1.0, { yaw: 12 }), ctr(GATE)), K(20.9, stage.frame([GATE, REC], 0.98, { yaw: 15, pitch: 2 }), ctr(REC)),
-    K(23.2, stage.frame([GATE, REC], 1.0, { yaw: 17, pitch: 2 }), ctr(REC)),
-    K(25.8, stage.wallFrame(WALL, 1 / 30, 1.3, { yaw: 28, pitch: 2, shift: [230, 110] })), K(28.8, stage.wallFrame(WALL, 4 / 30, 0.8, { yaw: 36, pitch: 4, shift: [140, 150] })),   // act 4: on to the wall: one block, then along it to the horizon
-    K(DUR, stage.wallFrame(WALL, 5 / 30, 0.8, { yaw: 38, pitch: 5, shift: [120, 130] })),
+    ...hold(0, 7.4, F1, ctr(ASK)),                                     // act 1: the main window
+    ...hold(7.8, 9.8, F2, ctr(SYS[0])),                                // act 2: the systems as they are named
+    ...hold(10.2, 15.8, F3, ctr(ASK)),
+    ...hold(16.2, 19.8, F4, ctr(GATE)),                                // act 3: follow the request
+    ...hold(20.2, 25.4, F5, ctr(REC)),
+    ...hold(25.8, 28.4, W1), ...hold(28.8, DUR, W2),                   // act 4: the wall: one block, then the horizon (a cut-like 0.4 s move)
   ]);
 
   // ---- window interiors (EXAMPLE content; a real film uses its own screens) ----

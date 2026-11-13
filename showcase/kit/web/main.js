@@ -17,6 +17,9 @@ import { createPlates } from '/kit/plates.js';
 import { drawBackground, loadGrounds } from '/kit/background.js';
 
 const config = await fetch('/film.config.json').then(r => (r.ok ? r.json() : {})).catch(() => ({}));
+// slow push-ins, zoom creep and Ken Burns are not available (owner, 2026-11-13: "The slow push always looks bad"): the dry run fails on
+// any slow scale during a hold, and a config that asks for it is refused
+const configErrors = config.allowSlowScale !== undefined ? (console.error('film.config.json allowSlowScale is not supported: slow push-ins are not available'), 1) : 0;
 const timing = await fetch('/narration/timing.json').then(r => (r.ok ? r.json() : {})).catch(() => ({}));
 const TLmod = await import('/timeline.js');
 await loadGrounds();
@@ -69,7 +72,7 @@ const settle = async () => {
 await apply(TL.stateAt(0));
 await settle();
 await apply(TL.stateAt(0));
-window.filmInitErrors = takeErrors() + await cssErrors();
+window.filmInitErrors = takeErrors() + await cssErrors() + configErrors;
 window.film = { TL, DUR, FPS, config, theme: THEME, stage, plates, UI, apply, seek: t => apply(TL.stateAt(t)),
   // after the state is applied, let the compositor produce two frames before the capture: a screenshot taken at once can catch a
   // backdrop-filter (the spatial stage's glass) that has not been re-drawn yet, which showed as one-frame flashes of a window's fill on

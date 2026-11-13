@@ -7,7 +7,8 @@ export async function createTimeline({ config, timing, helpers: H }) {
   const VO = Object.fromEntries(script.lines.map(l => [l.id, l.at]));   // narration start times: one source for voice, mix and captions
   const CAPS = H.captionsFrom(VO, timing);
   // the camera on the plate: keys [t, cx, cy, s, rotX, rotY] through a monotone spline (smooth, no overshoot)
-  const cam = H.track([[0, 960, 540, 0.66, 7, -12], [3.0, 760, 560, 0.8, 4, -6], [8, 470, 520, 1.02, 2, -2]]);
+  // a static framing (slow push-ins are not available, owner 2026-11-13): the plate holds still
+  const cam = () => [760, 560, 0.8, 4, -6];
   const CREDIT = 'Data: OGL – Canada, Alberta · © TeleGeography, CC BY-NC-SA 3.0 (unconfirmed) · © OpenStreetMap contributors';
 
   function stateAt(t) {

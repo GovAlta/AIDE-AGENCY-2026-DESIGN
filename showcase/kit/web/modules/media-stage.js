@@ -12,7 +12,8 @@
 //     crop: [x, y, w, h],                                 // the part of the source to show (source px); hides a burned-in HUD
 //     mode: 'full' | 'window', rect: [x, y, w, h],        // window: its box in frame px. grow 0..1 eases it to full bleed
 //     grow, radius, bezel: { pad, cap: 'Title', meta: 'Right text' },      // window: a glass bezel with an optional title bar
-//     zoom: 1, pan: [0, 0],                               // a slow push: zoom about the crop centre, pan in source px
+//     zoom: 1, pan: [0, 0],                               // static framing: zoom about the crop centre, pan in source px. NOT for a slow push:
+//                                                         // slow push-ins and zoom creep are not available (owner 2026-11-13; the dry run fails them)
 //     grade: 'agency' | 'none' | { sat, con, bri, lift, cool },            // 'agency' = lifted shadows, cool light, less saturation
 //     wash: { side, a, reach } or a list   // AVOID over footage (owner review of film #5): use scrims behind the text instead
 //     a, z }],

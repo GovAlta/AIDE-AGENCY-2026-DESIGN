@@ -61,7 +61,7 @@ For most projects: web apps, dashboards, chat tools, forms, data products.
 2. `node tools/capture-states.mjs --project <film>` writes `capture/<state>.png` and `capture/states.json` (sizes, boxes).
    For motion, `node tools/capture-video.mjs` records an interaction as an image sequence (exact; prefer it to WebM).
 3. Check every capture against `SENSITIVITY.md` before it goes into a plate.
-4. Build `web/timeline.js` from the starter: plates on a virtual camera (push-in, tilt, browser frame), spotlights on the
+4. Build `web/timeline.js` from the starter: plates on a still framing (tilt, browser frame), spotlights on the
    marked boxes, the cursor travelling between `plate:<id>:x,y` targets, callouts and ranked bars for real figures,
    re-drawn glass panels where the real UI is too small to read. Ground: `board` in a light film.
 
@@ -111,6 +111,11 @@ For films that explain how a system is built and how work flows through it, to a
 zones, nodes and edges in `film.config.json` `network`, then follow one request end to end before showing many. Rules: one new idea per
 shot, name every part before it moves, at most about seven labelled things on screen, zoom to what the narration is about
 (`web/modules/README.md`, `README.md`).
+
+## Never a slow push
+
+No slow push-ins or zoom creep: a held screen stays still; sub-pixel scaling jitters (owner, 2026-11-13). Slow push, zoom creep and Ken Burns are not available in the kit: the dry run fails any slow scale during a hold, with no override. Change a framing by a cut or a quick move (under 0.5 s); draw attention with a ring, a spotlight or a
+caption card.
 
 ## Then, for every path
 

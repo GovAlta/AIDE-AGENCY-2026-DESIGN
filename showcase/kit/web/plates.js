@@ -8,7 +8,8 @@
 //   video: { src: 'capture/rec.webm', at: 12.4 },                              a recording seeked to `at` (prefer seq: exact and cheaper)
 //   w: 1920, h: 1080,                    the material's size in px (required)
 //   x: 960, y: 540,                      where the focus point lands on screen
-//   cam: { cx, cy, s },                  focus point in plate px and scale: push-ins, Ken Burns and zoom-to-region are just cam keys
+//   cam: { cx, cy, s },                  focus point in plate px and scale: a static framing. Slow push-ins, Ken Burns and zoom creep are not
+//                                        available (owner, 2026-11-13): change cam only by a cut or a quick move (the dry run fails a slow one)
 //   rotX, rotY, rotZ,                    degrees; a tilt reads as a screen on a table or a wall (#plates has perspective)
 //   a: 1, z: 0,                          opacity and stacking order
 //   frame: 'browser' | 'none',           browser chrome around the plate, with url: 'planner.alberta.ca'

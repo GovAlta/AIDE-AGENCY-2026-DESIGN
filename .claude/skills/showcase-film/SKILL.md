@@ -63,7 +63,7 @@ Keep `PROCESS-LOG.md` current at every step (the owner wants the process reprodu
    `suggested_video_angle`, `gaps`. Ask the owner for music, classification, the one message and the closing line.
 2. **Run the real app and capture it.** Clone (if `gh` gives 403 SAML: the owner runs `! gh-login`, then
    `source ~/.sandbox-env` in your shell), build, run on a free port, and screenshot every main screen for reference.
-   Write `capture/states.script.json` and run `tools/capture-states.mjs` (named states, `scale: 2` for crisp push-ins, `marks`
+   Write `capture/states.script.json` and run `tools/capture-states.mjs` (named states, `scale: 2` for crisp detail, `marks`
    record exact element boxes for spotlights and cursor targets). Record interactions with `tools/capture-video.mjs`
    (→ an exact image sequence plus step times). Call the app's real API for the scenario you will show (as #11 did with
    `api/solve`, `api/estimate`), and save the responses in `prep/`. Seed synthetic data first when sensitivity is HIGH.

@@ -166,3 +166,13 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
   lines of 29 words bring the first person on screen at 16 s.
 - **BUILD.json pinned the film's commit as the kit's** when encode ran as `tools/encode.sh` from the kit folder: the script resolved its own
   folder after `cd` into the film. Fixed in `tools/encode.sh` (the kit folder is found first). Check `kit.path` in every BUILD.json.
+
+## From film #12 (Alberta App), owner reviews 2026-11-13: no slow push
+
+- **No slow push-ins or zoom creep:** a held screen stays still; sub-pixel scaling jitters (owner, 2026-11-13). Slow push, zoom creep and Ken Burns are not available in the kit: the dry run fails any slow scale during a hold, with no override. ("there's a very minor scaling effect ... 100% to like 103% ... causes everything to
+  jitter ... very disorienting"; then "The slow push always looks bad, so let's disable that fully for these videos and future.")
+- Devices, screens, cards and the camera hold still for the whole hold. Entrances and exits may fade or slide; a framing changes by a cut or
+  a quick move. Attention comes from rings, spotlights and caption cards. The dry run measures every element's size each frame (a stage's
+  `scales(world)`, else its `screenBoxes` widths; plates' `cam.s`; scaled callouts and panels) and fails a run of change longer than 0.5 s
+  under 15 %, or any longer than 1.5 s. A `film.config.json` `allowSlowScale` is refused at start-up. The starters hold still.
+

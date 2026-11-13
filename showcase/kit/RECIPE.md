@@ -14,7 +14,7 @@ Follow in order. `F` is the film folder. Tick each line in `$F/PROCESS-LOG.md`.
 | 6 | Music | `tools/analyze_song.py` | downbeats and energy known |
 | 7 | Storyboard | timeline scenes + `storyboard.json` → `tools/storyboard.mjs` → publish | **owner signs off** |
 | 8 | Narration | `narration/script.json` → `tools/narrate.mjs` | 0 lint findings, 0 overlaps, names transcribe back right |
-| 9 | Timeline | `web/timeline.js`; `tools/dryrun.mjs`; `tools/still-at.mjs`; `tools/camcheck.mjs` | clean dry run; stills look right |
+| 9 | Timeline | `web/timeline.js`; `tools/dryrun.mjs`; `tools/still-at.mjs`; `tools/camcheck.mjs` | clean dry run (0 slow scale runs); stills look right |
 | 10 | Preview | `cloud/farm.sh deploy $F`; `cloud/farm.sh render $F <one frame every 2 s>` | contact sheet approved |
 | 11 | Render | `cloud/farm.sh render $F missing`; `cloud/farm.sh wait $F` | all frames on disk |
 | 12 | Sound | `tools/mix-audio.mjs --project $F` | -16 LUFS, peak ≤ -2.0 dBTP |
@@ -26,7 +26,7 @@ Follow in order. `F` is the film folder. Tick each line in `$F/PROCESS-LOG.md`.
 
 ## Never
 
-Render on the shared VM · stop a process you did not start · write to the inventory · show credentials, git remotes, logs
+Slow push-ins, zoom creep or Ken Burns (a held screen stays still) · render on the shared VM · stop a process you did not start · write to the inventory · show credentials, git remotes, logs
 with project IDs or real personal data · draft the owner's conclusion · use a figure without a source in `NOTES.md`.
 
 ## Expectations (from film #11 and the kit smoke test)
