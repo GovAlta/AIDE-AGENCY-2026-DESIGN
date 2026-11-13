@@ -112,3 +112,11 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
 - **Check seams on the rendered frames:** `python3 tools/seam-check.py <film>` finds a chunk (from the frames' write order) that jumps in
   and back out while the frames on either side agree (ISLAND), and single jumps on a chunk boundary (BOUNDARY, look at them). Run it
   after every farm render, with the flicker check.
+- **Explain how it works; do not dwell on what is unknown** (film #6, 2026-11-13: "it didnt really explain how the simulation
+  worked, and mostly focused on the things we dont know"). Most of a film walks the mechanism step by step on one real case, with
+  built visuals for each step; the proof is stated briefly; limits get one line with the standard caveat. An open question about the
+  case is not the story.
+- **A farm task can render a whole chunk without the film's stylesheet** (film #4, 18 s: cards at full image size, headline re-wrapped
+  for 11 frames). The kit now refuses such a page and settles fonts and images before frame 0; `tools/seam-check.py` flags a jump on a
+  task boundary that is not a planned cut. Run it on every render.
+- **Run `encode.sh` from the kit**, not from a copy in the film folder: BUILD.json records the kit commit from the script's own place.
