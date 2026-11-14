@@ -75,6 +75,11 @@ NARRATION = [
     ("warn", "teaser or idiom ('runs on', 'it all', 'one thing'): name who does what to what", r"\bruns? on\b|\bit all\b|\bone thing\b"),
     # owner, film #12 (2026-11-13): "Stop hedging on what I'm saying." Describe the end product; state the owner's claims plainly
     ("warn", "hedging: describe the end product and state the owner's claims plainly", r"\b(prototypes?|planned|concepts?|could|the owner (states|says|claims))\b"),
+    # owner, film #16 (2026-11-14): "A business case doesn't ask for anything." A document, record or idea is never the actor:
+    # a person or the system acts on it
+    ("warn", "a thing as the actor: a person or the system does this (a document does not ask, a request does not land)",
+     r"\b(business case|charter|case|request|file|files|notes|slides|section|document|process|plan|record|claim|gap|list|report)s? "
+     r"(asks?|wants?|says?|tells?|names?|decides?|disagrees?|agrees?|lands?|renews?|needs?|shows?|lists?|came from|sets? out|turns?)\b"),
 ]
 INTRO_PRAISE = ("error", "praise in an introduction (name, title, organization only)",
                 r"\b(distinguished|renowned|esteemed|illustrious|visionary|thought leader|rock ?star|legendary|needs no introduction|without further ado|very special guest|put your hands together|give it up for|get ready for)\b")
