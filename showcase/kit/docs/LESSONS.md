@@ -1,8 +1,9 @@
-# Lessons from films #1 (Atlas) and #2 (Contact Alberta)
+# Lessons from films #1 to #15
 
-Written 2026-11-12/13 after both films were made in one night. Read this before starting a film. Each film's own `PROCESS-LOG.md` has
-the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-alberta`). The owner's wording rules are in
-`guides/NARRATION.md` ("Owner rules from the review of film #1").
+Started 2026-11-12/13 after films #1 (Atlas) and #2 (Contact Alberta), and extended after each owner review since. Each film's own
+`PROCESS-LOG.md` has the detail (`/mnt/data/projects/agency-2026/showcase/<film>/`). **The short list to follow is the owner rules in
+`guides/SHOWCASE-FILM.md`** ("Owner rules: read before every film"); the wording rules are in `guides/NARRATION.md` ("Owner rules").
+This page keeps the history. A line marked **Superseded** was right when written and is now wrong: follow the rule it names.
 
 ## The order that works
 
@@ -30,7 +31,8 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
 
 ## What makes a frame market quality
 
-- **The hero fills the frame**: 55–70 % of the width, key text 30 px or more. Supporting windows are readable, or soft shapes in clear
+- **The hero fills the frame**: 55–70 % of the width, key text 30 px or more. A device is the exception: it is shown whole (a phone at
+  80–88 % of the frame height; film #12 below). Supporting windows are readable, or soft shapes in clear
   depth cropped by the frame. A wide frame of many small windows always reads as a diagram.
 - **Type is a designed element**: headlines Inter 800 at 76–96 px, arriving by word; pitch statements full frame at 110–150 px on a calm
   ground with everything else far back, dimmed and defocused before the first word.
@@ -50,7 +52,9 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
 
 - Measure frame cost in the cloud job's first minute, not on the shared VM (load there made numbers 2–4 times too high).
 - A stuck last task is normal: start a second small execution for the missing frames instead of waiting.
-- AAC encoding lifts the true peak by about 0.2–0.3 dB: mix to −2.3 dBTP if the master must stay under −2.
+- AAC encoding lifts the true peak by about 0.2–0.3 dB: mix to −2.3 dBTP. `encode.sh` then lowers a file that still overshoots, which
+  leaves it under −16 LUFS; `tools/deliver-audio.sh <film>` (from films #6, #9 and #15) re-muxes each file from the mix through a limiter
+  instead, so every file stays at −16 LUFS and under −2 dBTP.
 
 ## Working with agents on a film
 
@@ -129,16 +133,17 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
   fails before it is shown.
 - **A device on screen is shown whole** (owner, 2026-11-13, review of film #12 v3: "the mobile phone display is far too big in most pages
   ... Everything looks cut off"). A phone shows the whole device at about 80-88 % of the frame height; never crop the phone or slice its
-  screen content at the frame edge. A tablet or laptop is whole in the frame too. Push gently (1.08-1.12 at most) and keep the device in
-  frame; point at the part that matters with a highlight ring and the caption card beside the device, not with a crop. A word the film
+  screen content at the frame edge. A tablet or laptop is whole in the frame too. Keep the device in frame and still; point at the part that matters with a highlight ring and the caption card beside the device, not with a crop. A word the film
   must not show (a product name in a tab bar) is masked in the screen's own colour and checked on every frame.
+- **Superseded** by the whole-device rule above: the earlier film #12 rules "devices fill at least half the frame width" and, for a phone,
+  "frame its top half" (a close-up 980 px wide), and "push gently (1.08-1.12 at most)" (superseded by no slow push, below).
 - A page error before the film is ready (a syntax error in timeline.js) now fails `openFilm` at once instead of waiting 15 minutes.
 
 ## From film #15 (Oasis), owner review 2026-11-13: a sizzle is still a story
 
 - **Every film is narrated and tells a story.** A titles-only sizzle cut to the beat was "a real step down in quality". Follow one case
   from start to finish with the voice; the music sits under it.
-- **Hold each screen long enough to mean something** (4–8 s): push in on the part that matters and name it. A rapid flip suits only
+- **Hold each screen long enough to mean something** (4–8 s), still, with a ring on the part that matters, and name it in the narration. A rapid flip suits only
   a style montage (film #3).
 - **A white screen never sits on a white ground.** Give it a contrasting ground (deeper gradient or navy), a frame and a soft shadow.
   Keep the Agency chrome on every film: wordmark top right, classification in the navy band.
@@ -156,9 +161,9 @@ the detail (`/mnt/data/projects/agency-2026/showcase/01-atlas`, `02-contact-albe
 - **A screen with the wrong person on it breaks the story.** When the film follows one family, re-draw the screen that showed someone else
   with the family's own (fictional) details and the product's own labels from its locale files; real labels make a re-draw read as the
   product.
-- **Push the whole group, not the screenshot.** One slow push-in (4 to 5 % over the shot) on the windows, callouts and leader lines together
-  keeps rings locked to the UI and nothing cropped at a window edge. Lay the shot out at its end size: the lowest screen must still clear
-  the caption bar (about y 954) after the push.
+- **Superseded** by no slow push (below): "Push the whole group, not the screenshot. One slow push-in (4 to 5 % over the shot)". What
+  still holds: move the windows, callouts and leader lines as one group (a cut or a quick move), so rings stay locked to the UI; the lowest
+  screen clears the caption bar (about y 954).
 - **A film's own stage should expose its text to the dry run** (`textKeys`, `textCheck`): it caught a results row clipped at the bottom of
   a re-drawn form, a two-line message cut off in a small window, and a statement line past the safe area, none visible in a contact sheet
   at thumbnail size. A screen-box array written as `[[id, ...]]` matches the dry run's placeholder pattern: use objects.

@@ -2,7 +2,7 @@
 //   node tools/capture-states.mjs --project <film dir> [--script capture/states.script.json]
 // script: { "url": "...", "viewport": [1920, 1080], "scale": 1, "webgl": true, "settle": 1500,
 //           "states": [{ "name": "layers", "steps": [...], "marks": { "solve": "role=button[name='Solve']" }, "fresh": false }] }
-// writes capture/<name>.png and capture/states.json { name: { file, w, h, marks } }. Use scale 2 for crisp push-ins.
+// writes capture/<name>.png and capture/states.json { name: { file, w, h, marks } }. Use scale 2 for crisp re-framing (a cut to a closer framing; no slow push-ins).
 import fs from 'node:fs';
 import path from 'node:path';
 import { chromium } from 'playwright';

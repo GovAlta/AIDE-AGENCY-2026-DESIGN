@@ -1,8 +1,9 @@
 // Starter timeline: APP film (real screenshots and recordings of the app as plates). Runs as soon as the folder exists:
 // a title card, then one plate per captured state in capture/ (capture/states.script.json -> tools/capture-states.mjs).
-// Reference: the kit's example/web/timeline.js (a plate with a push-in, spotlight, cursor, callout and caption).
+// Reference: the kit's example/web/timeline.js (a plate on a still framing, spotlight, cursor, callout and caption).
 //
-// Ground: "board" (white) is the Agency default and the right ground behind an app screenshot. Use "night" only in a dark
+// Ground: "board" (white) is the Agency default, but never behind a white app screen (owner, film #15): use "navy" with a dark frame and
+// a soft shadow (the dry run warns on a white screen on a white ground). Use "night" only in a dark
 // film (film.config.json "theme": "dark"); never "stars" behind an app (stars are for globe/space shots only).
 // stateAt(t) must be pure: the same t always gives the same picture (no Date, no Math.random, no state kept between calls).
 export const DUR = 12, FPS = 60;   // set DUR to the music length, and keep film.config.json "dur" equal to it

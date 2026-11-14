@@ -1,6 +1,7 @@
 // Deterministic backgrounds on the #bg canvas: the Agency 2026 grounds (brand/tokens/tokens.json "grounds").
 //   state.bg = { kind: 'board' | 'paper' | 'night' | 'navy' | 'spectrum' | 'stars' | 'none', glow: [x, y], lift: 0..1, dx, dy, alpha }
-// - board (white) is the Agency default and the right ground for app screenshots and recordings in a light film.
+// - board (white) is the Agency default for title, chapter and end cards and for dark screens. Never put a white app screen on it
+//   (owner, film #15: "white on a white background"): use navy, a dark frame and a soft shadow; the dry run warns.
 // - paper is the quiet alternate; night and navy are the dark grounds (dark films, chapter cards, a dark map scene).
 // - spectrum (blue) is for the one line people should remember: use it once per film.
 // - stars is night plus a star field. Use it only for a globe or space shot, never behind an app screenshot.

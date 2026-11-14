@@ -15,7 +15,7 @@
 //     zoom: 1, pan: [0, 0],                               // static framing: zoom about the crop centre, pan in source px. NOT for a slow push:
 //                                                         // slow push-ins and zoom creep are not available (owner 2026-11-13; the dry run fails them)
 //     grade: 'agency' | 'none' | { sat, con, bri, lift, cool },            // 'agency' = lifted shadows, cool light, less saturation
-//     wash: { side, a, reach } or a list   // AVOID over footage (owner review of film #5): use scrims behind the text instead
+//     wash: { side, a, reach } or a list   // AVOID over footage (owner review of film #5): put text on a glass card or a navy band
 //     a, z }],
 //   tags: [{ plate, at: [sx, sy], label, sub, dx, dy, accent, a }],      // at = a source pixel; the stage maps it through crop and grow
 //   cards: [{ html, x, y, w, h, a, cls }],               // glass cards: the film writes their HTML with the .md-* helpers

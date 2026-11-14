@@ -133,7 +133,8 @@ Round only when rounding is honest ("about 2.5 million"), and say "about". A rat
   and on -ise forms (organise).
 - **Serial comma:** none, unless it prevents a misreading ("speed, accuracy and timing").
 - **Ampersand** only inside an official title ("Research & the Future AI Economy"). Otherwise "and".
-- **Colons and semicolons:** a colon may introduce a list or an example. Never join two sentences with a semicolon; write two sentences.
+- **Colons and semicolons:** on a page or a screen, a colon may introduce a list or an example. In narration, do not use one: a spoken
+  colon reads as a teaser (owner, film #15; `guides/NARRATION.md`, Owner rules). Never join two sentences with a semicolon; write two sentences.
 - **Parentheses:** allowed sparingly in print; never in narration or on a slide.
 - **Quotation marks:** curly in print (“ ” ’). A quote is the speaker's approved words, attributed.
 - **Exclamation marks:** none.

@@ -22,7 +22,7 @@ export async function createTimeline({ config, timing, helpers: H }) {
     const k = H.win(t, 3.6, 7.6, 0.7, 0.5);
     if (k > 0) ui.callouts.push({ x: 1824, y: 150, align: 'right', kicker: 'Layers · data/layers/manifest.json', big: H.count(t, 23, 3.7, 1.4), sub: 'layers of public open data', note: 'Real screenshot of the running planner, Layers tab', accent: 'cyan', a: k, dy: (1 - H.ramp(t, 3.6, 4.4)) * 26 });
     return {
-      bg: { kind: 'board' },   // an app screenshot sits on the Agency board ground; stars are for globe/space shots only
+      bg: { kind: 'board' },   // this capture is a light app screen: a new film puts a white screen on navy (the dry run warns here); stars are for globe/space shots only
       plates: [{ id: 'layers', src: 'capture/layers.png', w: 1920, h: 1080, x: 1010, y: 560, cam: { cx, cy, s }, rotX, rotY,
         frame: 'browser', url: 'fiber-planner · internal', radius: 14, shadow: 1,
         dim: 0.55 * spotA, spots: [{ x: 8, y: 258, w: 344, h: 320, r: 10, a: spotA, color: 'cyan' }] }],

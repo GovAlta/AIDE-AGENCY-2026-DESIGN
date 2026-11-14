@@ -171,6 +171,17 @@ word, then the standard, then MVAI's own defaults and examples. Its core:
 6. **Dynamic screens.** The screen shows and the narration explains. Prefer screens that build on the cue over static text.
 7. **Frame QA.** Look at the end frame of every scene before delivery.
 
+The owner's rules for showcase films hold for MVAI videos too, as far as MVAI allows. The list, with the owner's words, is in
+`guides/SHOWCASE-FILM.md`, "Owner rules: read before every film". In short:
+- no slow push, zoom creep, Ken Burns or slowly enlarging text;
+- each screen held 4 to 8 s;
+- no white screen on a white ground;
+- no frost, haze or foggy white behind text;
+- devices shown whole;
+- no wall of tiny text;
+- captions clear of screen content;
+- the end product described plainly, with no hedging.
+
 Keep three files beside each spec: the builder or spec, `NOTES.md` (sources by figure, caveats, open confirmations) and `owner_lines.txt`
 (dictated lines, never edited). `contact-alberta/docs/video/agency/` is a complete worked example.
 

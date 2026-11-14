@@ -142,9 +142,10 @@ tags or SSML. Mix and loudness follow `guides/SOUND.md` (−16 LUFS, music ducke
 7. **Turn each piece of owner feedback into a rule**: quote it with the date in this guide or the owner's standard, fix every other place
    it occurs, and add a lint rule when the fault is mechanical.
 
-### Owner rules from the review of film #1 (Atlas), 2026-11-12
+### Owner rules (films #1 to #15, from 2026-11-12)
 
-These came from the owner's review of a script that had passed the lint. The lint checks words and shapes; these check meaning.
+These came from the owner's reviews of scripts that had passed the lint. The lint checks words and shapes; these check meaning. For showcase
+films, the full list (story, picture, sound, process) is in `guides/SHOWCASE-FILM.md`, "Owner rules: read before every film".
 
 | Rule | The owner's words | Before | After |
 |---|---|---|---|
@@ -154,7 +155,11 @@ These came from the owner's review of a script that had passed the lint. The lin
 | **Say what exists today, and how it grows** | "The 9 systems is also what is currently available today and needs to clearly identify new integrations take minutes to add" | "Atlas reaches nine systems." | "Today, Atlas reads nine systems… A new system takes minutes to add through MCP, an open standard…" |
 | **Match the register of the reference film.** On-screen lines name what is shown; pitch lines are the owner's own words | "The #11 video was very clear." | "One conversation. One set of permissions. One record." | "Chat, your systems and coding agents, in one place" |
 | **No template or instruction text in a frame, ever**, and no slide written about itself | "A slide written like this is awful and deeply inappropriate for this kind of showcase event" | a starter's placeholder sentence | the owner's line, or nothing |
-| **No teaser, idiom or mood openings. Every line names who does what to what** (film #15, 2026-11-13) | "This language isn't helpful." | "A school year runs on one thing: the student record. Registration, attendance, marks… all depend on it." | "Every Alberta school keeps a record for each student, with their registration, courses, attendance, marks, report cards and fees. OASIS is a student information system, one place where registrars, teachers and parents all work from that same record." |
+| **No teaser, idiom or mood openings. Every line names who does what to what** (film #15, 2026-11-13). The lint warns on a colon, "runs on", "it all" and "one thing" | "This language isn't helpful." | "A school year runs on one thing: the student record. Registration, attendance, marks… all depend on it." | "Every Alberta school keeps a record for each student, with their registration, courses, attendance, marks, report cards and fees. OASIS is a student information system, one place where registrars, teachers and parents all work from that same record." |
+| **Build the story on the product's main point, as the owner frames it, shown through its main users.** Follow one fictional case or person from start to finish (film #15, 2026-11-13) | OASIS is "a one stop student information system… for parents, teachers, and registrars" | A film about translating messages for families | One family's student record, used by the registrar, the teacher and the parent in turn |
+| **Describe the end product, not the prototype. State the owner's claims plainly.** No "prototype", "planned", "concept", "could" or "the owner states". Fact-check code and third-party claims, not the owner's own statements (film #12, 2026-11-13). The lint warns on these words | "It fixated on the prototype instead of describing the end product. Stop hedging on what I'm saying." | "The prototype could one day let Albertans…" | "The Alberta App is coming in twenty twenty seven." |
+| **Use the owner's spelling of product names**, on screen and in the script; respell only in `lexicon.json` `write` if the voice needs it (film #15) | OASIS, in capitals | "Oasis" | "OASIS" |
+| **Say that synthetic people are fictional when they are first named**, not only on the end card | | "The Haddad family registers…" | "The Haddad family, a fictional family, registers…" |
 
 Before voicing, read the whole script aloud once and ask of every line: would the owner say this sentence to a minister?
 

@@ -3,7 +3,7 @@ name: showcase-film
 description: Make an Agency 2026 showcase film (2–5 minutes, 1080p60, narrated, cut to the owner's music) for an inventory project or any other project (app, map/geospatial, or data story) — real screenshots and screen recordings of the app on a cinematic virtual camera, re-drawn UI in the Agency look, real data and real figures, rendered frame-exact in a temporary Cloud Run job. Use when asked for a "showcase film", "Agency demo video", "cinematic demo/simulation of <app>", "a film like #11 (the fibre planner)", or invoked as /showcase-film #<slot> or /showcase-film <project>.
 ---
 
-**Read `showcase/kit/docs/LESSONS.md` before you start** (facts → look as rendered frames → script approved as text → picture → sheet reviews → cloud render; the framing, type and wording rules from films #1 and #2).
+**Read the owner rules in `guides/SHOWCASE-FILM.md` ("Owner rules: read before every film") before you start, and run its "Before you send a cut" list before every delivery.** Then read `showcase/kit/docs/LESSONS.md` (facts → look as rendered frames → script approved as text → picture → sheet reviews → cloud render; the framing, type and wording rules from films #1 and #2).
 
 **First:** `bash /mnt/data/projects/agency-2026/AIDE-AGENCY-2026-DESIGN/scripts/sync.sh` (GitHub `main` is the official version; the
 local clone is a working copy, and this skill is a link into it). Change the repo only by commit and push.
@@ -88,8 +88,11 @@ Keep `PROCESS-LOG.md` current at every step (the owner wants the process reprodu
 9. **Preview in the cloud.** `cloud/farm.sh deploy <film>`, then `cloud/farm.sh render <film> <every-2-s ranges>`; build a
    contact sheet; send the owner a silent preview if useful.
 10. **Full render.** `cloud/farm.sh render <film> missing`, `cloud/farm.sh wait <film>`. Re-render only what changed.
-11. **Sound.** `tools/mix-audio.mjs` (voice at its cues, music ducked, -16 LUFS, -2.0 dBTP, SRT and VTT captions).
-12. **Encode and QA.** `tools/encode.sh <film>` (master, share copy, phone preview under 30 MB). Check: frame count, loudness and
+11. **Sound.** `tools/mix-audio.mjs` (voice at its cues, music ducked, -16 LUFS, -2.3 dBTP, SRT and VTT captions); `tools/sfx-audible.py`
+    (each effect 6 dB or more over the bed).
+12. **Encode and QA.** `tools/encode.sh <film>` from the kit (master, share copy, phone preview under 30 MB), then
+    `tools/deliver-audio.sh <film>` (each file re-muxed from the mix through a limiter: -16 LUFS, under -2.0 dBTP). After every farm
+    render: `tools/seam-check.py <film>` and `tools/motion-check.mjs --flicker <film>/out/frames`. Check: frame count, loudness and
     peak, `tools/find-pops.py` (short flickers), `tools/layer-present.py` over long scenes (dropouts of one element; leave
     fades out of the range), a 16-frame contact sheet across the film, and the sensitivity review.
 13. **Deliver** to `<film>/deliver/` and send the phone preview (SendUserFile; 30 MB limit). Ask for review notes; fix by
@@ -111,7 +114,8 @@ Keep `PROCESS-LOG.md` current at every step (the owner wants the process reprodu
 - Several films render at once: `farm.sh` caps each film's tasks to share about 100 tasks in all (`FARM_TOTAL_TASKS`); lower
   `--tasks` when the owner is waiting on several films.
 - `timeout` on a Playwright script orphans its browsers; the kit's tools close theirs on SIGTERM.
-- AAC adds about 0.7 dB of peak: master at -2.0 dBTP to stay under the Agency -1.5 ceiling.
+- AAC lifts the true peak by 0.2 to 0.7 dB, most at a low bitrate: mix at -2.3 dBTP and run `tools/deliver-audio.sh`, so every delivered
+  file stays under -2.0 dBTP at -16 LUFS.
 - Chat attachments are limited to 30 MB: send `deliver/preview-720p-phone.mp4`; the master stays on the VM.
 - Narration that runs long: move the line to an earlier downbeat rather than speeding it up; re-render only frames whose
   captions changed.

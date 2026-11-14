@@ -4,6 +4,9 @@ You are making an Agency 2026 showcase film for one project in the inventory. Re
 `showcase-film` skill (`.claude/skills/showcase-film/SKILL.md` in the repo, installed for SHELL at `/mnt/data/projects/.claude/skills/showcase-film/`) for the rules and phases, and
 `RECIPE.md` for the checklist. `README.md` is the reference for every API.
 
+**Must read before any work: the owner rules** in `guides/SHOWCASE-FILM.md` ("Owner rules: read before every film"). They list every
+fault the owner rejected in films #1 to #15, with the owner's words, and end with the check list to run before you send a cut.
+
 ## The reference film: #11
 
 Film #11, the Pan-Canadian Fibre Optics Planner, is the bar ("excellent", the owner, 2026-11-11). Everything in this kit
@@ -45,8 +48,8 @@ then pick a path. `--brief` takes the same keys as an inventory row (`program`, 
 
 - `film.config.json` `"theme": "light"` (default, the Agency board: white ground, navy ink) or `"dark"` (night ground).
   A state can override it for one scene: `return { theme: 'dark', ... }` for a night map inside a light film.
-- `bg.kind`: `board` (white, behind app screenshots in a light film), `paper` (quiet alternate), `night` / `navy` (dark
-  films, chapter moments), `spectrum` (blue, once per film, the line to remember), `none` (a map stage covers the frame),
+- `bg.kind`: `board` (white: title cards and dark screens; never behind a white screen), `paper` (quiet alternate), `night` / `navy` (dark
+  films, chapter moments, the ground behind a white app screen), `spectrum` (blue, once per film, the line to remember), `none` (a map stage covers the frame),
   `stars` (only for a globe seen from space; never behind an app screenshot). Leave it out to get the theme's ground.
 - Accents are names (`accent: 'cyan'`, `color: 'green'`): the kit picks the text-safe value for the theme and the raw fill
   for bars, spots and lines. `node tools/contrast.mjs` checks every text style in both themes (all pass at 4.5:1 or more).
@@ -61,9 +64,10 @@ For most projects: web apps, dashboards, chat tools, forms, data products.
 2. `node tools/capture-states.mjs --project <film>` writes `capture/<state>.png` and `capture/states.json` (sizes, boxes).
    For motion, `node tools/capture-video.mjs` records an interaction as an image sequence (exact; prefer it to WebM).
 3. Check every capture against `SENSITIVITY.md` before it goes into a plate.
-4. Build `web/timeline.js` from the starter: plates on a still framing (tilt, browser frame), spotlights on the
-   marked boxes, the cursor travelling between `plate:<id>:x,y` targets, callouts and ranked bars for real figures,
-   re-drawn glass panels where the real UI is too small to read. Ground: `board` in a light film.
+4. Build `web/timeline.js` from the starter: plates on a still framing (a dark browser or device frame, a soft shadow), rings on the
+   marked boxes, callouts and ranked bars for real figures, each screen held 4 to 8 s, each device whole,
+   opaque re-drawn panels where the real UI is too small to read. Ground: `navy` or a deeper gradient behind a white screen
+   (the dry run warns on a white screen on a white ground).
 
 ## Path B: map film (the app's own geographic data)
 
@@ -119,6 +123,7 @@ caption card.
 
 ## Then, for every path
 
-Dry run → stills → storyboard for the owner → narration → preview every 2 s → cloud render → mix → encode → QA → deliver
+Dry run → stills → the plain-text script and four to six mockup stills for the owner's yes → narration → preview every 2 s → cloud
+render → `seam-check.py` and `motion-check.mjs --flicker` → mix → `encode.sh` → `deliver-audio.sh` → QA against "Before you send a cut" → deliver
 → clean up. The skill has the detail; `RECIPE.md` has the commands. Render frames only in the Cloud Run job
 (`cloud/farm.sh`), never on the shared VM, and never stop a process you did not start.
