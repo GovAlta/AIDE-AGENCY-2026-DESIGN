@@ -26,6 +26,12 @@ export function mono(keys) {
     const h = xs[i + 1] - xs[i], u = (x - xs[i]) / h, u2 = u * u, u3 = u2 * u;
     return (2 * u3 - 3 * u2 + 1) * ys[i] + (u3 - 2 * u2 + u) * h * m[i] + (-2 * u3 + 3 * u2) * ys[i + 1] + (u3 - u2) * h * m[i + 1]; };
 }
+/** hold each camera key until a quick move into the next (no slow push or zoom creep): keys [[t, ...], ...] -> keys with holds */
+export function holdKeys(keys, move = 0.4) {
+  const out = [];
+  keys.forEach((k, i) => { out.push(k); const nx = keys[i + 1]; if (nx && nx[0] - k[0] > move + 0.05) out.push([nx[0] - move, ...k.slice(1)]); });
+  return out;
+}
 /** a multi-channel camera track: keys [[t, a, b, c, ...], ...] -> t => [a, b, c, ...] (missing channels are 0) */
 export function track(keys, channels = keys.reduce((m, k) => Math.max(m, k.length - 1), 0)) {
   const f = Array.from({ length: channels }, (_, c) => mono(keys.map(k => [k[0], k[c + 1] ?? 0])));

@@ -21,16 +21,16 @@ export async function createTimeline({ config, timing, stage, helpers: H }) {
   // ---- camera: stage.frame(ids, pad, tilt, rot) fits nodes or zones in the safe area as seen at that tilt; H.track joins the keys ----
   const K = (t, c, dx = 0) => [t, c.x, c.y, c.zoom, c.tilt, c.rot, c.ox + dx, c.oy], f = (ids, pad, tilt, rot) => stage.frame(ids, pad, tilt, rot);
   const BOARD = ['people', 'core', 'systems', 'audit', 'cloud'];
-  const CAM = H.track([
+  const CAM = H.track(H.holdKeys([
     K(0, f(['people', 'core'], 1.5)), K(5.4, f(['people', 'core'], 1.35)),                                  // act 1: the people and the assistant
     K(7.0, f(['core', 'systems'], 1.12)), K(8.8, f(['core', 'audit'], 1.2)),                                 // act 2: one zone at a time
     K(10.4, f(['core', 'cloud', 'audit'], 1.1)), K(12.6, f(BOARD, 0.94, 50, -6)),                             //        then the whole board, tilted
-    K(15.0, f(BOARD, 0.92, 46, -3)), K(18.0, f(BOARD, 0.9, 48, 3)),                                       // act 3: a slow push while the request travels
+    K(15.0, f(BOARD, 0.92, 46, -3)), K(18.0, f(BOARD, 0.9, 48, 3)),                                       // act 3: the whole board while the request travels
     K(20.8, f(BOARD, 0.94, 52, 6)),
     K(22.3, stage.spawnFrame('cloud', 1200, 12, 1.5, 28), 200), K(23.6, stage.spawnFrame('cloud', 1200, 12, 1.5, 28), 200),   // act 4: twelve workers, close
     K(25.8, f(['cloud'], 1.5, 40), 220),                                                                    //        then the pull-back: more than a thousand
     K(27.6, f(BOARD, 1.08, 56, -8), 0), K(DUR, f(BOARD, 1.14, 58, -4), 0),                                    //        the network effect
-  ]);
+  ]));
 
   // ---- act 3: the flow. EXAMPLE scopes, names and ledger lines ----
   const LEDGER = [   // t = when the line is written (the moment a gate decides)
