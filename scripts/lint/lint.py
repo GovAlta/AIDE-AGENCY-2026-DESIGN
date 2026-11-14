@@ -15,7 +15,8 @@ The rules are the three guides, as far as a program can check them:
   bullets in a list.
 - guides/NARRATION.md (spoken fields: narration, say, line, announce, voiceover, script): 25-word sentences, numbers as words, no
   parentheses, semicolons or dashes, no wayfinding, softeners, slogans or dramatic colons, questions only as staged questions, "select"
-  not "click", pronoun openings and unowned "we", plus the introduction formulas: any object tagged "intro": "<id>" must match its
+  not "click", pronoun openings and unowned "we", teaser colons and idioms ("runs on", "it all", "one thing"), hedging words
+  ("prototype", "planned", "concept", "could", "the owner states"), plus the introduction formulas: any object tagged "intro": "<id>" must match its
   formula in brand/voice/intros.json, and the fixed explainer lines there are allowed as written.
 --ai-agent adds the Contact Alberta sponsor rule (a bare "agent" is an error where staff are also called agents).
 --owner-lines FILE: sentences in FILE (one per line, # comments) were dictated by the owner and are never flagged.
@@ -69,6 +70,11 @@ NARRATION = [
     ("warn", "say 'automatically', not 'in code'", r"\bin code\b"),
     ("warn", "pronoun opening (repeat the noun)", r"^(it|they|this|these|that|those|he|she)\b(?! is (true|why))"),
     ("warn", "unowned we/our/us (name the actor)", r"\b(we|our|us|ourselves)\b"),
+    # owner, film #15 (2026-11-13): "This language isn't helpful." Name who does what to what; no teaser, idiom or mood openings
+    ("warn", "teaser: a colon in narration (say who does what to what in one sentence)", r":"),
+    ("warn", "teaser or idiom ('runs on', 'it all', 'one thing'): name who does what to what", r"\bruns? on\b|\bit all\b|\bone thing\b"),
+    # owner, film #12 (2026-11-13): "Stop hedging on what I'm saying." Describe the end product; state the owner's claims plainly
+    ("warn", "hedging: describe the end product and state the owner's claims plainly", r"\b(prototypes?|planned|concepts?|could|the owner (states|says|claims))\b"),
 ]
 INTRO_PRAISE = ("error", "praise in an introduction (name, title, organization only)",
                 r"\b(distinguished|renowned|esteemed|illustrious|visionary|thought leader|rock ?star|legendary|needs no introduction|without further ado|very special guest|put your hands together|give it up for|get ready for)\b")

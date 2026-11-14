@@ -68,7 +68,7 @@ fs.writeFileSync(path.join(dir, 'intake.json'), JSON.stringify(row, null, 1));
 // SOP (owner 2026-11-12): the film folder is its own git repository, so the code that makes the film travels with its outputs.
 // Frames, masters, images and videos stay out of git (deliver/BUILD.json records the kit commit and settings; REPRODUCE.md says how to regenerate).
 fs.copyFileSync(path.join(T, 'REPRODUCE.md'), path.join(dir, 'REPRODUCE.md'));
-fs.writeFileSync(path.join(dir, '.gitignore'), ['node_modules/', 'out/', '**/.farm-token', 'cache/', 'deliver/', '*.wav', '# images and videos stay on this machine at full resolution; GitHub holds code and text only', '*.jpg', '*.jpeg', '*.png', '*.webp', '*.gif', '*.mp4', '*.mov', '*.webm', ''].join('\n'));
+fs.writeFileSync(path.join(dir, '.gitignore'), ['node_modules/', 'out/', '**/.farm-token', 'cache/', 'deliver/', '*.wav', '# farm and build logs can name the cloud project ID: never commit them', 'prep/*.log', '*.log', '# images and videos stay on this machine at full resolution; GitHub holds code and text only', '*.jpg', '*.jpeg', '*.png', '*.webp', '*.gif', '*.mp4', '*.mov', '*.webm', ''].join('\n'));
 // this film's own circuit-trace art for the title and end cards (Agency rule: same seed = same art; record the seed)
 { const AG = REPO; if (!repoOk()) throw new Error('design repo not found');
   // the title card's text starts 200 px from the left (web/film.css .titlewrap), so its left-edge art stops short of it

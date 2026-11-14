@@ -2,9 +2,11 @@
 // Then draws each moment a new text block is fully shown and fails on any text outside the 48 px safe area or clipped (UI.textCheck),
 // and checks the title and end cards against their trace art (UI.cardCheck). A world stage that draws its own text takes part when it
 // offers textKeys(world) (one key per text block fully shown) and textCheck(m) (the same glyph measure as UI.textCheck).
-// Last, it fails on any slow scale during a hold: a slow push-in, zoom creep or Ken Burns (no override).
-//   node tools/dryrun.mjs --project <film dir>
+// It fails on any slow scale during a hold: a slow push-in, zoom creep or Ken Burns (no override).
+// Last, it warns (does not fail) where a white screen sits on a near-white ground: its edge cannot be seen (tools/lib/ground-check.mjs).
+//   node tools/dryrun.mjs --project <film dir> [--no-ground]
 import { openFilm } from './lib/film-page.mjs';
+import { groundCheck } from './lib/ground-check.mjs';
 const { page, close, info } = await openFilm();
 const r = await page.evaluate(() => { const { TL, DUR, FPS } = window.film, errs = [], bad = []; const t0 = performance.now(); const n = Math.round(DUR * FPS);
   const finite = (o, p = '') => { if (o === null || o === undefined) return; if (typeof o === 'number') { if (!Number.isFinite(o)) bad.push(p); return; } if (typeof o === 'object') for (const [k, v] of Object.entries(o)) if (typeof v !== 'function') finite(v, p + '.' + k); };
@@ -66,5 +68,10 @@ for (const t of shown) { await page.evaluate(t => window.film.seek(t), t);
   for (const o of await page.evaluate(() => [...window.film.UI.textCheck(48), ...(window.film.stage?.textCheck ? window.film.stage.textCheck(48) : [])])) { const k = o.where + '|' + o.text; if (!textIssues.has(k)) textIssues.set(k, { t, ...o }); } }
 for (const o of textIssues.values()) r.errors.push(`${o.t.toFixed(2)} s: ${o.where} text ${o.why} (x ${o.rect.x}..${o.rect.x + o.rect.w}, y ${o.rect.y}..${o.rect.y + o.rect.h}): "${o.text}"`);
 r.textCheck = `${shown.length} moments checked, ${textIssues.size} text block(s) outside the safe area or clipped`;
+// a white screen on a white ground (owner, film #15): a warning every 2 s of film, once per screen; --no-ground skips it
+r.warnings = [];
+if (!process.argv.includes('--no-ground')) { const g = await groundCheck(page);
+  for (const o of g.flags) r.warnings.push(`${o.t} s: ${o.id} is a white screen on a near-white ground (edge ${o.inside}, ground ${o.ground}, contrast ${o.contrast}:1): give it a dark frame, a soft shadow and a deeper gradient or navy behind it`);
+  r.groundCheck = `${g.screens} screen views checked, ${g.flags.length} white on white`; }
 console.log(JSON.stringify({ ...info, ...r }, null, 1));
 await close(); process.exit(r.errors.length || r.nonFinite.length ? 1 : 0);
