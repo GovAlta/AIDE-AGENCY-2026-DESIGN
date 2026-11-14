@@ -181,3 +181,16 @@ This page keeps the history. A line marked **Superseded** was right when written
   `scales(world)`, else its `screenBoxes` widths; plates' `cam.s`; scaled callouts and panels) and fails a run of change longer than 0.5 s
   under 15 %, or any longer than 1.5 s. A `film.config.json` `allowSlowScale` is refused at start-up. The starters hold still.
 
+
+## Film #32, first cut (owner, 2026-11-14)
+
+- **Nothing draws over or under a caption.** The bottom traces of the title card ran through the caption bar. The kit now fades card
+  art out above the caption zone (`web/film.css`), `new-film.mjs` makes title art with no bottom traces, and the dry run fails on
+  any element over or under the caption bar (`UI.captionCheck`, `tools/lib/ground-check.mjs`).
+- **Text on a card keeps its own ink.** A film that puts light glass cards over a dark-theme scene (a map) must not let the scene's
+  theme tokens (`--body`, `--mute`, the text accents) turn the card's text light. The dry run now measures every text on a card
+  against the card behind it and fails under 3:1.
+- **Typed text is one element.** Typed and untyped parts placed as separate items in a flex field each wrapped on their own, and a
+  caret with width moved the line breaks. Use `helpers.typed(text, p)`.
+- **A check that measures nothing reports zero.** Prove a new check can fail: put the fault back in a test page and see the flag
+  (film #32 `tools/test-new-checks.mjs`).

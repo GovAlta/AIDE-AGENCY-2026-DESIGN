@@ -88,6 +88,18 @@ export function createUI(root, labelsRoot) {
     cardCheck(m = 40) { const ce = $('card'); if (!cardUrl || +ce.style.opacity < 0.01) return []; const segs = SEGS[cardUrl] || [];
       return [...ce.querySelectorAll('.endwrap > *, .titlewrap > *:not(.bus), .creditswrap > *')].filter(el => el.textContent.trim())
         .map(el => ({ text: el.textContent.trim().slice(0, 60), rect: stageRect(el) })).filter(o => nearTrace(segs, o.rect, m)); },
+    // the caption bar's box on the stage, or null when no caption shows
+    captionRect() { const ce = $('caption'), sp = ce.querySelector('span'); return sp && +ce.style.opacity > 0.01 && sp.textContent.trim() ? stageRect(sp) : null; },
+    // anything the interface draws over or under the caption bar (owner, film #32: "the circuit boards cover up subtitles"): the trace
+    // art of a card, a card's own text, a callout, a glass panel, a label. [{ what, rect }] (empty when the caption is clear)
+    captionCheck(m = 6) { const R = this.captionRect(); if (!R) return []; const out = [];
+      const hit = r => r.w > 0 && r.h > 0 && r.x < R.x + R.w + m && r.x + r.w > R.x - m && r.y < R.y + R.h + m && r.y + r.h > R.y - m;
+      const ce = $('card'); if (cardUrl && +ce.style.opacity > 0.01 && nearTrace(SEGS[cardUrl] || [], R, m)) { const tr = ce.querySelector('.traces'), cs = tr && getComputedStyle(tr);
+        // the kit masks the art below the caption zone (film.css); art that is still drawn there is a fault
+        if (!cs || !/gradient/.test(cs.maskImage || cs.webkitMaskImage || '')) out.push({ what: 'card trace art', rect: R }); }
+      for (const el of [...ce.querySelectorAll('.endwrap > *, .titlewrap > *:not(.bus), .creditswrap > *'), ...root.querySelectorAll('#callouts .callout, #panels .gpanel, #statement'), ...labelsRoot.children]) {
+        if (!el.textContent.trim() || +getComputedStyle(el.closest('#card, #statement') || el).opacity < 0.01) continue; const r = stageRect(el); if (hit(r)) out.push({ what: el.textContent.trim().slice(0, 40), rect: r }); }
+      return out; },
     // every line of on-screen text (headlines and callouts, the statement or pitch line, the caption, panels, cards) measured by its
     // glyphs: [{ where, text, rect, why }] for text that leaves the safe area (m px inside the 1920 x 1080 frame) or is cut by a box
     // that clips its content. Words not yet revealed (opacity 0) still take their place, so a line that will overflow is caught early.

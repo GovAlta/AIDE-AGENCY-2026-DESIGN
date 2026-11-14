@@ -1,6 +1,12 @@
 // Timeline helpers. Everything here is a pure function: the same input always gives the same output.
 export const clamp = (x, a = 0, b = 1) => Math.max(a, Math.min(b, x));
 export const lerp = (a, b, k) => a + (b - a) * k;
+// Typed text that looks like a person typing into a real field (owner, film #32: "the typing ... keeps breaking to second lines").
+// typed(text, p) -> html. The whole final text is laid out once, at its final line breaks, as ONE element (so a flex field cannot
+// split it); characters show left to right up to p (0..1); the rest keeps its place, invisible; the caret takes no width, so no word
+// ever jumps to a new line and the field never resizes. Size the field to hold the final text; prefer one line. { caret: false } hides the caret.
+export const typed = (text, p, { caret = true } = {}) => { const s = String(text), n = Math.round(s.length * clamp(p)), e = x => x.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  return `<span class="typed"><span>${e(s.slice(0, n))}</span>${caret ? '<span class="typed-caret"></span>' : ''}<span style="opacity:0">${e(s.slice(n))}</span></span>`; };
 /** smoothstep 0..1 */
 export const ss = x => { x = clamp(x); return x * x * (3 - 2 * x); };
 /** 0 -> 1 between seconds a and b, eased */

@@ -168,7 +168,13 @@ html, body { margin: 0; background: #000; overflow: hidden; }
 
 /* ---------- title and end cards (circuit traces belong here only: BRAND.md) ---------- */
 #card { position: absolute; inset: 0; background: var(--ground); }
-#card .traces { position: absolute; inset: 0; width: 100%; height: 100%; }
+#card .traces { position: absolute; inset: 0; width: 100%; height: 100%;
+  /* nothing draws over or under a caption (owner, film #32): the art fades out above the caption zone (the bar's top is near y 930) */
+  -webkit-mask-image: linear-gradient(to bottom, #000 0, #000 836px, transparent 876px); mask-image: linear-gradient(to bottom, #000 0, #000 836px, transparent 876px); }
+/* typed text (helpers.typed): one element, laid out once at its final line breaks; the caret takes no width, so no word ever moves */
+.typed { flex: 1 1 auto; min-width: 0; text-align: left; }
+.typed-caret { position: relative; }
+.typed-caret::after { content: ""; position: absolute; left: 0.05em; bottom: -0.14em; width: 0.075em; height: 1.08em; border-radius: 1px; background: var(--typed-caret, #0177CD); }
 .titlewrap { position: absolute; left: 200px; top: 300px; width: 1500px; }
 #card .kick { font: 600 24px "Geist Mono", monospace; letter-spacing: .18em; text-transform: uppercase; color: var(--t-cyan); }
 .titlewrap h1 { font: 800 124px/1.02 Inter; letter-spacing: -.03em; margin: 18px 0 26px; color: var(--ink); }

@@ -72,7 +72,7 @@ fs.writeFileSync(path.join(dir, '.gitignore'), ['node_modules/', 'out/', '**/.fa
 // this film's own circuit-trace art for the title and end cards (Agency rule: same seed = same art; record the seed)
 { const AG = REPO; if (!repoOk()) throw new Error('design repo not found');
   // the title card's text starts 200 px from the left (web/film.css .titlewrap), so its left-edge art stops short of it
-  const TITLE_DEPTH = 'l=0.085,t=0.2,r=0.16,b=0.2';
+  const TITLE_DEPTH = 'l=0.085,t=0.2,r=0.16,b=0.02';   // b: no art in the caption zone (owner, film #32: nothing draws over or under a caption)
   fs.mkdirSync(path.join(dir, 'web/art'), { recursive: true });
   // both grounds, same seeds: the UI picks traces-*.svg on dark scenes and traces-*-light.svg on light ones
   try { for (const [f, seed] of [['traces-title', `film-${tag}`], ['traces-end', `film-${tag}-end`]]) for (const [sfx, ground] of [['', 'night'], ['-light', 'board']])

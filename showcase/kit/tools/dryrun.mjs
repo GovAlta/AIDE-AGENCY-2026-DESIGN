@@ -3,6 +3,7 @@
 // and checks the title and end cards against their trace art (UI.cardCheck). A world stage that draws its own text takes part when it
 // offers textKeys(world) (one key per text block fully shown) and textCheck(m) (the same glyph measure as UI.textCheck).
 // It fails on any slow scale during a hold: a slow push-in, zoom creep or Ken Burns (no override).
+// Every 2 s it also fails on text under 3:1 contrast against the card behind it, and on anything drawn over or under the caption bar.
 // Last, it warns (does not fail) where a white screen sits on a near-white ground: its edge cannot be seen (tools/lib/ground-check.mjs).
 //   node tools/dryrun.mjs --project <film dir> [--no-ground]
 import { openFilm } from './lib/film-page.mjs';
@@ -72,6 +73,10 @@ r.textCheck = `${shown.length} moments checked, ${textIssues.size} text block(s)
 r.warnings = [];
 if (!process.argv.includes('--no-ground')) { const g = await groundCheck(page);
   for (const o of g.flags) r.warnings.push(`${o.t} s: ${o.id} is a white screen on a near-white ground (edge ${o.inside}, ground ${o.ground}, contrast ${o.contrast}:1): give it a dark frame, a soft shadow and a deeper gradient or navy behind it`);
-  r.groundCheck = `${g.screens} screen views checked, ${g.flags.length} white on white`; }
+  r.groundCheck = `${g.screens} screen views checked, ${g.flags.length} white on white`;
+  // text against the card behind it, and anything over or under the caption bar (owner, film #32): both fail the dry run
+  for (const o of g.text) r.errors.push(`${o.t} s: text "${o.text}" on ${o.card} has contrast ${o.contrast}:1 (${o.fg} on ${o.bg}): text on a card is dark on light or light on dark, 3:1 or more`);
+  for (const o of g.captions) r.errors.push(`${o.t} s: ${o.what} overlaps the caption bar: nothing draws over or under a caption`);
+  r.textContrast = `${g.text.length} text block(s) under 3:1 on their card`; r.captionClear = `${g.captions.length} element(s) over or under the caption bar`; }
 console.log(JSON.stringify({ ...info, ...r }, null, 1));
 await close(); process.exit(r.errors.length || r.nonFinite.length ? 1 : 0);

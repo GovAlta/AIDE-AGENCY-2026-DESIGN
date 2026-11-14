@@ -71,6 +71,9 @@ in `showcase/kit/docs/LESSONS.md` and in each film's `PROCESS-LOG.md`. The spoke
 | **Show a device whole.** A phone is about 80 to 88 % of the frame height, never cropped or sliced at the frame edge. A ring and a caption card point at the part that matters | "the mobile phone display is far too big in most pages ... Everything looks cut off" (#12) | A phone 980 px wide showing its top half → the whole phone at 900 px high, a ring on the field |
 | **No wall of tiny text.** A comparison shows three to five items in large type (30 px or more), one at a time | (#12, #15) | A 12-row table → four rows, each shown alone. A long comparison is cut, not shrunk |
 | **Captions and burned subtitles never cover screen content** | (#15) | Keep screens above the caption bar (about y 954) |
+| **Nothing draws over or under a caption**, not even the trace art of a title or end card | "the circuit boards cover up subtitles on the first frame" (#32) | Trace art crossing the caption bar → the kit fades card art out above the caption zone. Check: the dry run fails on any element over or under the caption bar |
+| **Text on a card is dark on light or light on dark, 3:1 or more.** A card over a map or a dark scene keeps its own ink: do not let the scene's theme turn its text light | "white text on a white background for the login" (#32) | Body text that followed the dark theme on a white glass card → card ink fixed to navy. Check: the dry run measures every text on a card against the card behind it |
+| **Typed text looks like a person typing into a real field.** Lay the final text out once, at its final line breaks, in a field sized to hold it; reveal it in place with a caret; prefer one line | "the typing doesn't fill up the text window properly. It's all jagged ... It keeps breaking to second lines" (#32) | Typed and untyped parts as separate flex items, each wrapping → `helpers.typed(text, p)` |
 | **Never slow a clip.** Footage plays at speed 1.0 | (#5: slowed clips "read as a low frame rate") | A long shot takes a longer source range or a second clip |
 | **Bake the blur into see-through cards and show them opaque** | flicker on the farm (#5) | Check: `motion-check.mjs --flicker` |
 | **Remove recorded cursors from captures** | (#15) | Pick cursor-free moments, or fill the cursor flat on plain ground; never inpaint over text |
@@ -93,7 +96,7 @@ in `showcase/kit/docs/LESSONS.md` and in each film's `PROCESS-LOG.md`. The spoke
 - [ ] The script is the one the owner approved, voiced by Matilda, and it follows one case from start to finish.
 - [ ] `lint.py --owner-lines owner_lines.txt` shows 0 errors, and each teaser or hedging warning is fixed or is the owner's own line.
 - [ ] Product names use the owner's spelling; each synthetic person is called fictional at first naming.
-- [ ] `dryrun.mjs`: 0 errors, 0 slow scale runs, 0 text outside the safe area, and no white-on-white warning left unexplained.
+- [ ] `dryrun.mjs`: 0 errors, 0 slow scale runs, 0 text outside the safe area, 0 text under 3:1 on its card, 0 elements over or under the caption bar, and no white-on-white warning left unexplained.
 - [ ] Each screen holds 4 to 8 s and stays still; each device is whole; no frost, haze or texture; no recorded cursor.
 - [ ] Captions clear the screens; comparisons show 3 to 5 items at 30 px or more.
 - [ ] `seam-check.py` and `motion-check.mjs --flicker` pass on the farm frames.
