@@ -16,8 +16,9 @@ nice ffmpeg -y -loglevel error -framerate "$FPS" -i out/frames/f%06d.jpg "${AIN[
   -vf "scale=in_range=full:out_range=tv:out_color_matrix=bt709,format=yuv420p" -color_primaries bt709 -color_trc bt709 -colorspace bt709 \
   -c:v libx264 -preset slow -crf 15 -threads 12 "${ACODEC[@]}" -movflags +faststart "$M"
 nice ffmpeg -y -loglevel error -i "$M" -c:v libx264 -preset medium -crf 23 -maxrate 9M -bufsize 18M -threads 8 "${ACODEC[@]/256k/192k}" -movflags +faststart "$OUT/$SLUG-1080p${FPS}-share.mp4"
-# phone preview: total bitrate sized to stay under 28 MB for any length
-VB=$(node -e "console.log(Math.min(4000, Math.max(300, Math.floor(28*8*1024/$DUR - 100))))")k
+# phone preview: total bitrate sized to stay under 28 MiB for any length, counting the 128 kb/s sound that tools/deliver-audio.sh
+# muxes in afterwards (film #16, 4:40: with 100 kb/s reserved the phone file came out at 30.2 MB after deliver-audio)
+VB=$(node -e "console.log(Math.min(4000, Math.max(300, Math.floor(28*8*1024/$DUR - 140))))")k
 LOG="$(mktemp -d)/pass"
 nice ffmpeg -y -loglevel error -i "$M" -vf "scale=1280:720:flags=lanczos,fps=30" -c:v libx264 -preset slow -b:v "$VB" -pass 1 -passlogfile "$LOG" -threads 8 -an -f mp4 /dev/null
 nice ffmpeg -y -loglevel error -i "$M" -vf "scale=1280:720:flags=lanczos,fps=30" -c:v libx264 -preset slow -b:v "$VB" -pass 2 -passlogfile "$LOG" -threads 8 "${ACODEC[@]/256k/96k}" -movflags +faststart "$OUT/preview-720p-phone.mp4"
