@@ -69,12 +69,13 @@ Examples: `example/web/timeline.js` (8 s: a real screenshot plate with tilt, spo
 | `tools/analyze_song.py <song> <out.json>` | tempo, downbeats, energy per second, sections (needs librosa: `python3 -m venv v && v/bin/pip install librosa soundfile`) |
 | `tools/storyboard.mjs` | key frames rendered from the timeline + `storyboard.json` → `storyboard/index.html` to publish for sign-off |
 | `tools/narrate.mjs` | the approved narrator from `brand/voice/voices.json` (Matilda, eleven_v4), word timestamps, voices changed lines only, runs the repo lint (`scripts/lint/lint.py`) on every line, reports overlaps |
-| `tools/dryrun.mjs`, `tools/still-at.mjs`, `tools/camcheck.mjs` | every frame evaluates, fails a slow scale, text outside the safe area, text under 3:1 contrast on its card or anything over or under the caption bar, warns on a white screen on a near-white ground (`--no-ground` skips it); chosen seconds as JPEGs; camera speed and shake |
+| `tools/dryrun.mjs`, `tools/still-at.mjs`, `tools/camcheck.mjs` | every frame evaluates, fails a slow scale, text outside the safe area, text under 3:1 contrast on its card, text that overlaps or is clipped inside a card, or anything over or under the caption bar, warns on a white screen on a near-white ground (`--no-ground` skips it); chosen seconds as JPEGs; camera speed and shake |
 | `tools/mix-audio.mjs` | voice at cues, music ducked, sound effects from `out/sfx-events.json` (`--no-sfx` skips; stem `out/sfx.wav`), -16 LUFS / -2.3 dBTP (`peakTP`), SRT + VTT; `"music": "cue:<id>"` takes a cue from `brand/audio/cues.json` |
 | `tools/sfx-events.mjs` | reads the film's `SFX` events (`web/timeline.js`), checks the ids against the palette, warns on crowding, writes `out/sfx-events.json` |
 | `tools/sfx.mjs` | the sound-effect palette (`brand/audio/sfx`): `list`, `generate`, `check`; see `guides/SOUND.md` "Sound effects" |
 | `tools/encode.sh <film>` | master (CRF 15), share copy, phone preview under 30 MB |
 | `tools/deliver-audio.sh <film>` | after encode: each file's sound re-muxed from `out/mix.wav` through a 4x-oversampled limiter, so every file stays at -16 LUFS and under -2.0 dBTP (fails otherwise); the picture is copied untouched |
+| `tools/duck-check.py <film>` | is the voice clearly over the music: per line, the short-term loudness of the voice stem and the music stem (`out/stem-voice.wav`, `out/stem-music.wav`, written by every mix) and the margin; fails under 18 dB for a film with `"duck"` in `film.config.json` (the planned ducking: music level from the voice's word times and measured loudness, one fixed master gain and a limiter), warns for a film on the old sidechain; `deliver-audio.sh` runs it |
 | `tools/find-pops.py`, `tools/layer-present.py` | frame QA: short flickers; an element missing over a range |
 | `cloud/farm.sh deploy\|render\|status\|wait\|missing\|cleanup <film>` | the Cloud Run job farm |
 

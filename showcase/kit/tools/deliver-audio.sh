@@ -22,3 +22,6 @@ for pair in "$SLUG-1080p${FPS}.mp4:256k" "$SLUG-1080p${FPS}-share.mp4:192k" "pre
   echo "$(basename "$f") ($br): $i LUFS, true peak $p dBTP $ok"
 done
 [ "$bad" = 0 ] || { echo "a file is not under -2.0 dBTP: lower peakTP in film.config.json, mix again and run this again"; exit 1; }
+# the voice must sit clearly over the music: at least 18 dB while a line is spoken (owner, film #32). Fails a film mixed with "duck";
+# a film on the old sidechain ducking gets the table and a warning
+python3 "$(dirname "$0")/duck-check.py" "$P" --brief

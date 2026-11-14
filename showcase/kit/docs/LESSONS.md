@@ -194,3 +194,21 @@ This page keeps the history. A line marked **Superseded** was right when written
   caret with width moved the line breaks. Use `helpers.typed(text, p)`.
 - **A check that measures nothing reports zero.** Prove a new check can fail: put the fault back in a test page and see the flag
   (film #32 `tools/test-new-checks.mjs`).
+
+## Film #32, French edition (2026-11-14)
+
+- **A translated edition must be laid out again, not only translated.** French titles wrapped to two lines and pushed the line
+  under them into the button row of three cards; looking at a contact sheet by eye missed it. The dry run now measures every text
+  element inside every card and fails on an overlap, on text outside its card and on text that does not fit its box.
+- **Lines run about 20 percent longer in French.** Plan two holds a line and more of the music; a line must not start more than
+  about 0.4 s before its own shot.
+- **Measure the ducking; do not trust that a compressor did it.** The owner heard no ducking in the French film #32 and an intro
+  that was too loud. The stems showed why: the sidechain compressor held the music only about 7 to 10 dB under the voice (its depth
+  depends on how hard each voice drives it, and it lets go in every pause), and two-pass loudnorm had fallen into its dynamic mode
+  and lifted the music-only intro about 3 dB over the rest. Films now set `"duck": {}`: the music's level comes from the voice's
+  word times and the measured loudness of both, the master is one fixed gain and a limiter, and `tools/duck-check.py` fails a film
+  whose music is less than 18 dB under the voice in any 3 s of any line.
+- **Choose a voice by measuring it, not by its description.** A library voice described as warm and narrative had 99 percent of its
+  energy under 5.8 kHz and read as a telephone. Measure candidates on the same lines (loudness, true peak, noise floor, the frequency
+  under which 99 percent of the energy sits, energy above 8 kHz, transcribe-back) against an approved voice, and let the owner hear
+  a loudness-matched comparison clip. Ask for `mp3_44100_192` (`script.voice.output_format`).

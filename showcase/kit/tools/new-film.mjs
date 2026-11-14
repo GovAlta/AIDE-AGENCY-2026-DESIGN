@@ -80,7 +80,7 @@ fs.writeFileSync(path.join(dir, '.gitignore'), ['node_modules/', 'out/', '**/.fa
     console.log(`traces: seeds film-${tag}, film-${tag}-end`); }
   catch { fs.rmSync(path.join(dir, 'web/art'), { recursive: true, force: true }); console.log('traces: Agency design repo not usable here, the kit default art is used'); } }
 const label = slotN ? `#${slotN} ${row.title}` : row.title;
-const config = { title: label, slot: slotN ? slot : '', slug, kind: KIND, theme: THEME, dur: KIND === 'map' ? 16 : KIND === 'data' ? 14 : KIND === 'network' ? 30 : KIND === 'spatial' ? 32 : 12, fps: 60, music: 'assets/<owner music>.mp3', musicGain: 0.62,
+const config = { title: label, slot: slotN ? slot : '', slug, kind: KIND, theme: THEME, dur: KIND === 'map' ? 16 : KIND === 'data' ? 14 : KIND === 'network' ? 30 : KIND === 'spatial' ? 32 : 12, fps: 60, music: 'assets/<owner music>.mp3', musicGain: 0.62, duck: {},
   bandTitle: slotN ? `#${slotN} · ${row.title}` : row.title, sensitivity: row.sensitivity || 'not stated: ask the owner', mounts: {},
   ports, cloud: { job: `shell-${dev}-film-${tag}`, image: `shell-app-${dev}-film-${tag}:job` } };
 if (KIND === 'map') Object.assign(config, { stage: '/kit/modules/map-stage.js',

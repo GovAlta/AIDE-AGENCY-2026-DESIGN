@@ -34,6 +34,9 @@ console.log(`voice: ${role} ${R.name} (${voice.voice_id}), ${voice.model_id}`);
   fs.unlinkSync(tmp);
   const out = (r.stdout || '') + (r.stderr || ''); if (out.trim()) console.log(out.trim().split('\n').map(x => 'LINT ' + x).join('\n'));
   if (r.status && process.argv.includes('--strict')) process.exit(1); }
+// script.voice.output_format: mp3_44100_128 (default) or mp3_44100_192 (the highest MP3 quality the gateway gives; film #32 French)
+const FORMAT = script.voice?.output_format || 'mp3_44100_128';
+if (!/^mp3_44100_(128|192)$/.test(FORMAT)) { console.error(`output_format ${FORMAT}: use mp3_44100_128 or mp3_44100_192 (the lines are saved as .mp3)`); process.exit(2); }
 const timingFile = path.join(DIR, 'timing.json');
 const timing = fs.existsSync(timingFile) ? JSON.parse(fs.readFileSync(timingFile)) : {};
 const { ENT_TOOLS_URL, ENT_TOOLS_API_KEY } = process.env;
@@ -49,7 +52,7 @@ for (const l of script.lines) {
 if (!process.argv.includes('--check-only')) for (const line of script.lines) {
   const mp3 = path.join(DIR, `${line.id}.mp3`);
   if (timing[line.id]?.text === line.text && fs.existsSync(mp3) && !process.argv.includes('--force')) { console.log(line.id, 'kept', timing[line.id].duration.toFixed(2)); continue; }
-  const r = await fetch(`${ENT_TOOLS_URL}/v1/proxy/elevenlabs/v1/text-to-speech/${voice.voice_id}/with-timestamps?output_format=mp3_44100_128`, { method: 'POST',
+  const r = await fetch(`${ENT_TOOLS_URL}/v1/proxy/elevenlabs/v1/text-to-speech/${voice.voice_id}/with-timestamps?output_format=${FORMAT}`, { method: 'POST',
     headers: { 'X-API-Key': ENT_TOOLS_API_KEY, 'Content-Type': 'application/json' }, body: JSON.stringify({ text: line.text, model_id: voice.model_id, voice_settings: voice.settings }) });
   if (!r.ok) { console.log(line.id, 'FAILED', r.status, (await r.text()).slice(0, 300)); continue; }
   const j = await r.json();
