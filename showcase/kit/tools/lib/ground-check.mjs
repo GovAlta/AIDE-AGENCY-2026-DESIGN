@@ -27,6 +27,7 @@ const TEXT_CONTRAST = (min) => { const out = [], lin = c => (c <= 0.04045 ? c / 
 // In the page, for every fully shown card (a stage window .sp-win, a glass panel): every element that holds text of its own, placed
 // in the card's own layout (offsets, so a card turned in 3D is measured flat). Three faults: two such elements overlap (neither
 // inside the other); an element runs outside its card; an element does not fit its own box (an ellipsis, or a one-line field).
+// And for every drawn child (a check, a tag, a well, a light): it lies inside its card and inside the pill or panel that holds it.
 const CARD_LAYOUT = () => { const out = [];
   for (const card of document.querySelectorAll('#world .sp-win, #panels .gpanel')) {
     let ra = 1; for (let e = card; e && e !== document.body; e = e.parentElement) ra *= +getComputedStyle(e).opacity;
@@ -40,6 +41,22 @@ const CARD_LAYOUT = () => { const out = [];
       const host = el.closest('.typed') || el;   // typed text is measured on its one wrapping element
       if (host.clientWidth > 0 && host.scrollWidth > host.clientWidth + 1 && (cs.whiteSpace === 'nowrap' || cs.overflow === 'hidden' || cs.textOverflow === 'ellipsis' || host !== el)) out.push({ card: id, what: `"${text}" does not fit its box (${host.scrollWidth} px of text in ${host.clientWidth} px)` });
       if (b.x < -1 || b.y < -1 || b.x + b.w > W + 1 || b.y + b.h > H + 1) out.push({ card: id, what: `"${text}" runs outside its card` }); }
+    // DRAWN CHILDREN (film #19: a check mark hung over the right edge of a pill whose label was longer than its neighbours'; the text
+    // check above could not see it, because a check mark holds no text). Every child with a box of its own (a background, a shadow or a
+    // border: a check, a tag, an icon well, a status light, a chip, a meter) must lie inside the card, inside the nearest pill or panel
+    // that holds it, and, when it is a small element, at least EDGE px from the card's edge. data-bleed on an element opts it out.
+    { const EDGE = 6, name = el => (String(el.className && el.className.baseVal !== undefined ? el.className.baseVal : el.className).trim().split(/\s+/).slice(0, 2).join('.') || el.tagName.toLowerCase());
+      const isDrawn = cs => cs.boxShadow !== 'none' || cs.backgroundImage !== 'none' || !/^(rgba\(0, 0, 0, 0\)|transparent)$/.test(cs.backgroundColor) || parseFloat(cs.borderTopWidth) > 0 || parseFloat(cs.borderLeftWidth) > 0;
+      const drawn = [];
+      for (const el of card.querySelectorAll('*')) { if (!(el instanceof HTMLElement) || el.closest('[data-bleed]')) continue; const cs = getComputedStyle(el); if (cs.display === 'none' || cs.visibility === 'hidden' || !isDrawn(cs)) continue;
+        let a = 1; for (let e = el; e && e !== card; e = e.parentElement) a *= +getComputedStyle(e).opacity; if (a < 0.5) continue;
+        const b = box(el); if (!b || b.w < 4 || b.h < 4) continue; drawn.push({ el, b }); }
+      for (const { el, b } of drawn) { const over = Math.max(-b.x, -b.y, b.x + b.w - W, b.y + b.h - H), small = b.w < W * 0.6 && b.h < H * 0.6;
+        const gap = Math.min(b.x, b.y, W - b.x - b.w, H - b.y - b.h);
+        if (over > 1) out.push({ card: id, what: `a drawn element (${name(el)}) runs ${Math.round(over)} px outside its card` });
+        else if (small && gap < EDGE) out.push({ card: id, what: `a drawn element (${name(el)}) sits ${Math.round(gap)} px from its card's edge (at least ${EDGE})` });
+        const par = drawn.filter(d => d.el !== el && d.el.contains(el)).pop();   // the nearest drawn ancestor: the pill or panel that holds it
+        if (par) { const o2 = Math.max(par.b.x - b.x, par.b.y - b.y, b.x + b.w - par.b.x - par.b.w, b.y + b.h - par.b.y - par.b.h); if (o2 > 1) out.push({ card: id, what: `a drawn element (${name(el)}) runs ${Math.round(o2)} px outside the ${name(par.el)} that holds it` }); } } }
     for (let i = 0; i < items.length; i++) for (let j = i + 1; j < items.length; j++) { const p = items[i], q = items[j]; if (p.el.contains(q.el) || q.el.contains(p.el)) continue;
       const ox = Math.min(p.b.x + p.b.w, q.b.x + q.b.w) - Math.max(p.b.x, q.b.x), oy = Math.min(p.b.y + p.b.h, q.b.y + q.b.h) - Math.max(p.b.y, q.b.y);
       if (ox > 3 && oy > 3) out.push({ card: id, what: `"${p.text}" overlaps "${q.text}" (${Math.round(ox)} x ${Math.round(oy)} px)` }); } }
