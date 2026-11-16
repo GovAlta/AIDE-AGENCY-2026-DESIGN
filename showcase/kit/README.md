@@ -77,6 +77,7 @@ Examples: `example/web/timeline.js` (8 s: a real screenshot plate with tilt, spo
 | `tools/deliver-audio.sh <film>` | after encode: each file's sound re-muxed from `out/mix.wav` through a 4x-oversampled limiter, so every file stays at -16 LUFS and under -2.0 dBTP (fails otherwise); the picture is copied untouched |
 | `tools/duck-check.py <film>` | is the voice clearly over the music: per line, the short-term loudness of the voice stem and the music stem (`out/stem-voice.wav`, `out/stem-music.wav`, written by every mix) and the margin; fails under 18 dB for a film with `"duck"` in `film.config.json` (the planned ducking: music level from the voice's word times and measured loudness, one fixed master gain and a limiter), warns for a film on the old sidechain; `deliver-audio.sh` runs it |
 | `tools/find-pops.py`, `tools/layer-present.py` | frame QA: short flickers; an element missing over a range |
+| `tools/ground-sat-check.py <master.mp4 or folder of stills>` | are the colour washes at the approved level: mean saturation of the light pixels at most 31 (film #20: 27.7) and at most 5 % of them over 50 % saturation (film #20: 3.7 %); fails a film above that, or one scene far above the rest. Run it on stills of every scene before the render and on the master after |
 | `cloud/farm.sh deploy\|render\|status\|wait\|missing\|cleanup <film>` | the Cloud Run job farm |
 
 ## The cloud farm

@@ -16,11 +16,11 @@ Follow in order. `F` is the film folder. Tick each line in `$F/PROCESS-LOG.md`.
 | 6 | Music | `tools/analyze_song.py` | downbeats and energy known |
 | 7 | Storyboard | the plain-text script, then four to six rendered mockup stills (`storyboard.json` → `tools/storyboard.mjs`) | **owner says yes to both**; then fix and deliver without frame-by-frame rounds |
 | 8 | Narration | `narration/script.json` → `tools/narrate.mjs` (Matilda) | 0 lint errors, no teaser or hedging warning left, 0 overlaps, names transcribe back right |
-| 9 | Timeline | `web/timeline.js`; `tools/dryrun.mjs`; `tools/still-at.mjs`; `tools/camcheck.mjs` | clean dry run (0 slow scale runs, 0 text outside the safe area, no white-on-white warning); stills look right |
+| 9 | Timeline | `web/timeline.js`; `tools/dryrun.mjs`; `tools/still-at.mjs`; `tools/camcheck.mjs` | clean dry run (0 slow scale runs, 0 text outside the safe area, no white-on-white warning); stills look right; `python3 tools/ground-sat-check.py <stills of every scene>` prints GROUND OK |
 | 10 | Preview | `cloud/farm.sh deploy $F`; `cloud/farm.sh render $F <one frame every 2 s>` | contact sheet approved |
 | 11 | Render | `cloud/farm.sh render $F missing`; `cloud/farm.sh wait $F`; `python3 tools/seam-check.py $F`; `node tools/motion-check.mjs --flicker $F/out/frames` | all frames on disk; no seam, no flicker |
 | 12 | Sound | `tools/mix-audio.mjs --project $F`; `python3 tools/sfx-audible.py $F` | -16 LUFS, -2.3 dBTP; each effect 6 dB or more over the bed |
-| 13 | Encode + QA | `tools/encode.sh $F` (the kit's copy); `tools/deliver-audio.sh $F`; `find-pops.py`; `layer-present.py`; 16-frame sheet; sensitivity review | frame count right, no dropouts; every file at -16 LUFS and under -2.0 dBTP |
+| 13 | Encode + QA | `tools/encode.sh $F` (the kit's copy); `tools/deliver-audio.sh $F`; `find-pops.py`; `layer-present.py`; `ground-sat-check.py` on the master; 16-frame sheet; sensitivity review | frame count right, no dropouts; every file at -16 LUFS and under -2.0 dBTP |
 | 14 | Deliver | run "Before you send a cut"; send `deliver/preview-720p-phone.mp4`; master stays in `deliver/` | owner reviews |
 | 15 | Fix | re-render only affected ranges (`farm.sh render $F a-b,c-d`), re-encode, re-run `deliver-audio.sh` | owner approves; copy `deliver/` to `agency-2026/finals/NN-slug/` |
 | 16 | Record | commit the film folder (its own git repository); fill `REPRODUCE.md`; `deliver/BUILD.json` written by encode | someone else could regenerate it |

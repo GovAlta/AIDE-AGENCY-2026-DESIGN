@@ -212,3 +212,23 @@ This page keeps the history. A line marked **Superseded** was right when written
   energy under 5.8 kHz and read as a telephone. Measure candidates on the same lines (loudness, true peak, noise floor, the frequency
   under which 99 percent of the energy sits, energy above 8 kHz, transcribe-back) against an approved voice, and let the owner hear
   a loudness-matched comparison clip. Ask for `mp3_44100_192` (`script.voice.output_format`).
+
+## Ground saturation drifts when each film copies the last (film #40, 2026-11-16)
+
+The owner, on film #40's motion test: "the background colours are getting pretty strong. Is this gradually drifting toward higher
+contrast?" and "They also seem to be covering the cards". Measured on the masters (light pixels only; mean HLS saturation, 95th
+percentile, share over 50 %): #1 Atlas 29.7 / 46.4 / 3.1 %; #20 Prototype Lab 27.7 / 44.6 / 3.7 %; #19 29.2 / 47.7 / 4.5 %; #31 27.9 /
+46.4 / 4.2 %; #22 28.3 / 46.8 / 6.8 %; #21 PIA Builder 32.5 / 53.7 / 11.5 %. Film #40, built on #21, measured 30.4 / 50.3 / 9.1 % on
+the same footing before the fix; after it, 29.8 / 48.9 / 3.6 % on stills of every scene and 29.9 / 46.8 / 3.2 % on the master.
+
+- **Cause 1: a window's glow grows with the window.** On the spatial stage the light behind a window has a radius of `glowR` x the
+  window's longer side x its scale. Films #21 and #40 scaled their hero windows up (1.1 to 1.4) to fill the frame, and kept the same
+  `glowA`, so each wash covered most of the frame. Fix in the film: one wash a scene, behind the hero only, with a fixed radius
+  (`glowR = R / (max(w, h) * scale)`, R about 400 px) and a fixed, low strength (`glowA` about 0.17); no glow on companion cards.
+- **Cause 2: the frosted fill is half transparent.** `--sp-frost-b` is 52 % opaque, so a wash behind a window tints its face. Fix in
+  the film's `film.css`: `.sp-win.sp-frost` with a nearly opaque, neutral gradient (about 96 %), so every card face reads the same.
+- **The check:** `tools/ground-sat-check.py` on stills of every scene before the render and on the master after. Limits: mean at most
+  31, at most 5 % over 50 %, and no scene far above the rest.
+- **Measure on the same footing.** The measure is very sensitive near white. A full-range JPEG still read directly, or a quick test
+  encode that skips the kit's range conversion, reads about 6 to 10 points higher than a master made by `encode.sh` (film #40's test
+  encode read 40.7 and 26.3 %; the same look encoded as a master read 30.4 and 9.1 %). The tool encodes stills as a master first.
