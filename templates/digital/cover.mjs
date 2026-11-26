@@ -23,7 +23,8 @@ const COVER_CSS = `
   background: radial-gradient(closest-side, color-mix(in srgb, var(--cyan) 30%, transparent), transparent); }
 `;
 
-export const meta = { kind: 'png', width: 1280, height: 720, about: 'Video cover with a still from the film, title block left', css: CSS + COVER_CSS };
+// Drawn at 2x by default (2560x1440 PNG, the same layout): YouTube shows custom thumbnails up to 4K screens; "scale": 1 gives 1280x720.
+export const meta = (d = {}) => ({ kind: 'png', width: 1280, height: 720, scale: d.scale ?? 2, about: 'Video cover with a still from the film, title block left (2x)', css: CSS + COVER_CSS });
 
 function dataUri(d, ctx) {
   if (!d.image) return '';
